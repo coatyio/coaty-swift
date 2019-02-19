@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'CoatySwift_Example' do
+  pod 'CoatySwift', :path => '../'
+
+  target 'CoatySwift_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

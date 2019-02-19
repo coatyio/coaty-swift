@@ -1,0 +1,16 @@
+PODS:
+  - CoatySwift (0.1.0)
+
+DEPENDENCIES:
+  - CoatySwift (from `../`)
+
+EXTERNAL SOURCES:
+  CoatySwift:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  CoatySwift: 21bbcb730759cf097e6d5b68ef02c4a5653977bf
+
+PODFILE CHECKSUM: 2361b1b029a09f9817ac136ac15bb5bc0a747fbd
+
+COCOAPODS: 1.5.3
