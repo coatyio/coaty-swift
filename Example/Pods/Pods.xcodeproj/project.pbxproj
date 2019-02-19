@@ -234,6 +234,7 @@
 		BA971790F7F23B4CBE55176F6BD61BC0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54F21296C6589DF587929D60F4639B7F /* Foundation.framework */; };
 		BBC74DED9635DB1CFFD6074C09F9924A /* Repeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0B5767595453509899143EF5B64F6 /* Repeat.swift */; };
 		BC4BD252F8AA2409C69DAFFB2224DD91 /* UIStepper+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6952CEFA9A514D1BF78FA70F64ABA26 /* UIStepper+Rx.swift */; };
+		BCA66971221C530400D05B08 /* MQTTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA66970221C530400D05B08 /* MQTTManager.swift */; };
 		BD85EA2D85CCC516125D4AF13A89A444 /* TakeUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1A564169AA9ADE070922CFD790994 /* TakeUntil.swift */; };
 		BE3A7CD9A4EFF7ED3C469327E99389CB /* DispatchQueueConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1639244CFCF425AC93DCFCDA71CF6464 /* DispatchQueueConfiguration.swift */; };
 		BEF487C4A18E4C871A6636610B6D1D64 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 764534A14317117E1539F8E1BDB05E53 /* Security.framework */; };
