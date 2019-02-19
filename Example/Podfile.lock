@@ -3,7 +3,6 @@ PODS:
     - CocoaMQTT (~> 1.1.3)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
-    - SwiftLint (~> 0.30.1)
   - CocoaAsyncSocket (7.6.3)
   - CocoaMQTT (1.1.3):
     - CocoaAsyncSocket (~> 7.6.3)
@@ -12,7 +11,6 @@ PODS:
     - RxSwift (~> 4.0)
   - RxSwift (4.4.1):
     - RxAtomic (~> 4.4)
-  - SwiftLint (0.30.1)
 
 DEPENDENCIES:
   - CoatySwift (from `../`)
@@ -24,20 +22,18 @@ SPEC REPOS:
     - RxAtomic
     - RxCocoa
     - RxSwift
-    - SwiftLint
 
 EXTERNAL SOURCES:
   CoatySwift:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CoatySwift: 19f5999caccf6407189e2cb7f23ebad43fec74c2
+  CoatySwift: ee16c055d338da8de7acad293ecea3ebbd6dca80
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   CocoaMQTT: b506d38ad3bbe1c55a4f8ee8c9fd02c35da1a7d8
   RxAtomic: f8d6adc1ccb87a767811269e4875887bc74dbf19
   RxCocoa: 2f35a76bf8887872e28a1914112395b11b8e0e64
   RxSwift: 92fcf68dfef21f3e2ab1965363d9e7b3d787597e
-  SwiftLint: a54bf1fe12b55c68560eb2a7689dfc81458508f7
 
 PODFILE CHECKSUM: 2361b1b029a09f9817ac136ac15bb5bc0a747fbd
 
