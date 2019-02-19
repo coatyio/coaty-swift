@@ -1,15 +1,26 @@
 PODS:
-  - CoatySwift (0.1.0)
+  - CoatySwift (0.1.0):
+    - CocoaMQTT (~> 1.1.3)
+  - CocoaAsyncSocket (7.6.3)
+  - CocoaMQTT (1.1.3):
+    - CocoaAsyncSocket (~> 7.6.3)
 
 DEPENDENCIES:
   - CoatySwift (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - CocoaAsyncSocket
+    - CocoaMQTT
 
 EXTERNAL SOURCES:
   CoatySwift:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CoatySwift: 21bbcb730759cf097e6d5b68ef02c4a5653977bf
+  CoatySwift: ffcc8130196f250a1dfb9d95a2396eb40b566877
+  CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
+  CocoaMQTT: b506d38ad3bbe1c55a4f8ee8c9fd02c35da1a7d8
 
 PODFILE CHECKSUM: 2361b1b029a09f9817ac136ac15bb5bc0a747fbd
 
