@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A023AC9221DBC7200241F1B /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A023AC8221DBC7200241F1B /* Topic.swift */; };
+		2A023ACC221DBCF700241F1B /* CoatySwiftError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A023ACB221DBCF700241F1B /* CoatySwiftError.swift */; };
 		4E1D24F9E2A0EDBDC06D17D9 /* Pods_CoatySwift_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E7B9E4B075D67F225727267 /* Pods_CoatySwift_Tests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
@@ -38,6 +40,8 @@
 
 /* Begin PBXFileReference section */
 		0E082A6916A9EE8CD84E196D /* CoatySwift.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = CoatySwift.podspec; path = ../CoatySwift.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		2A023AC8221DBC7200241F1B /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
+		2A023ACB221DBCF700241F1B /* CoatySwiftError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoatySwiftError.swift; sourceTree = "<group>"; };
 		4E7B9E4B075D67F225727267 /* Pods_CoatySwift_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoatySwift_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B9CCE17A7ADBB73A053ACB4 /* Pods_CoatySwift_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoatySwift_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* CoatySwift_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoatySwift_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +100,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2A023ACA221DBCC600241F1B /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				2A023ACB221DBCF700241F1B /* CoatySwiftError.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +132,7 @@
 		607FACD21AFB9204008FA782 /* Example for CoatySwift */ = {
 			isa = PBXGroup;
 			children = (
+				2A023ACA221DBCC600241F1B /* Common */,
 				BC7BA594221DB24D00657BF2 /* Communication */,
 				BCB005DB221D82E80085DC24 /* Model */,
 				BCB005D9221D82D60085DC24 /* PayloadCoder.swift */,
@@ -187,6 +200,7 @@
 				BC7BA597221DB27700657BF2 /* OperatingState.swift */,
 				BC7BA592221D849500657BF2 /* CommunicationManager.swift */,
 				BC7BA599221DBB5E00657BF2 /* CommunicationConstants.swift */,
+				2A023AC8221DBC7200241F1B /* Topic.swift */,
 			);
 			path = Communication;
 			sourceTree = "<group>";
@@ -255,12 +269,12 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 45E39Y8V9N;
+						DevelopmentTeam = MVY877MQV7;
 						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 45E39Y8V9N;
+						DevelopmentTeam = MVY877MQV7;
 						LastSwiftMigration = 0900;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -390,8 +404,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				2A023AC9221DBC7200241F1B /* Topic.swift in Sources */,
 				BCB005D7221D82C10085DC24 /* Advertise.swift in Sources */,
 				BCB005DA221D82D70085DC24 /* PayloadCoder.swift in Sources */,
+				2A023ACC221DBCF700241F1B /* CoatySwiftError.swift in Sources */,
 				BCB005D8221D82C10085DC24 /* CoreType.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				BC7BA596221DB26F00657BF2 /* CommunicationState.swift in Sources */,
@@ -545,7 +561,7 @@
 			baseConfigurationReference = E0DCD879F1B72E4B86ED5D50 /* Pods-CoatySwift_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 45E39Y8V9N;
+				DEVELOPMENT_TEAM = MVY877MQV7;
 				INFOPLIST_FILE = CoatySwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -561,7 +577,7 @@
 			baseConfigurationReference = 940FCFEA809ED5A86291D93D /* Pods-CoatySwift_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 45E39Y8V9N;
+				DEVELOPMENT_TEAM = MVY877MQV7;
 				INFOPLIST_FILE = CoatySwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -576,7 +592,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C87AF40D4ACD8A212C6EC978 /* Pods-CoatySwift_Tests.debug.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 45E39Y8V9N;
+				DEVELOPMENT_TEAM = MVY877MQV7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -599,7 +615,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DD23F046978D94FF26EBCE73 /* Pods-CoatySwift_Tests.release.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 45E39Y8V9N;
+				DEVELOPMENT_TEAM = MVY877MQV7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

@@ -2,8 +2,6 @@
 //  ViewController.swift
 //  CoatySwift
 //
-//  Created by Sandra Grujovic on 02/19/2019.
-//  Copyright (c) 2019 Sandra Grujovic. All rights reserved.
 //
 
 import UIKit
