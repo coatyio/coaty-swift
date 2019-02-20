@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import XCGLogger
 
 class ViewController: UIViewController {
     
