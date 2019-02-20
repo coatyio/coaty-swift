@@ -48,11 +48,6 @@
 		27E65272B811DF94A7562F028A5D5422 /* RefCountDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E9BEE229569DB17D93764825CCA37 /* RefCountDisposable.swift */; };
 		28262604777EC5E110D08E49F73DD74A /* DeprecationWarner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6A6B799F2776B947B3E9C14CB0AFDB /* DeprecationWarner.swift */; };
 		28BFCDA4A61120DC3A64379A4C566878 /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9C0791987A8AF91797D258E49C2B0A6 /* CocoaAsyncSocket.framework */; };
-		2A8B0CDC221C613F00EA6694 /* CoreType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8B0CDB221C613F00EA6694 /* CoreType.swift */; };
-		2A8B0CDE221C616E00EA6694 /* CoatyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8B0CDD221C616E00EA6694 /* CoatyObject.swift */; };
-		2A8B0CE0221C624700EA6694 /* ContainerCodingKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8B0CDF221C624700EA6694 /* ContainerCodingKeys.swift */; };
-		2A8B0CE2221C62A100EA6694 /* Advertise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8B0CE1221C62A100EA6694 /* Advertise.swift */; };
-		2A8B0CE6221C632F00EA6694 /* PayloadCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8B0CE5221C632F00EA6694 /* PayloadCoder.swift */; };
 		2ADE9F00DCAEF545103167C27D06C6B9 /* Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F364C81A57D5DB14AE3577A8FEB43A3A /* Merge.swift */; };
 		2CAA4560C8DEF6EB8723FCEB43AE68D0 /* NSControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C016610B637E4BA3C6590191BCB51E /* NSControl+Rx.swift */; };
 		2DEFE9B4E59B9E635C741A721A0B5AC5 /* ObservableConvertibleType+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3FE2F21168AA964D1EA9A95165E9F9 /* ObservableConvertibleType+Driver.swift */; };
@@ -506,11 +501,6 @@
 		27DBC8CD151F6D59332D1E83184AA99F /* UIPickerView+Rx.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIPickerView+Rx.swift"; path = "RxCocoa/iOS/UIPickerView+Rx.swift"; sourceTree = "<group>"; };
 		284501054D86D82CAEF41E4192F08984 /* Zip.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Zip.swift; path = RxSwift/Observables/Zip.swift; sourceTree = "<group>"; };
 		290354B645E403B61D34A7809053D04F /* AsyncLock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AsyncLock.swift; path = RxSwift/Concurrency/AsyncLock.swift; sourceTree = "<group>"; };
-		2A8B0CDB221C613F00EA6694 /* CoreType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreType.swift; sourceTree = "<group>"; };
-		2A8B0CDD221C616E00EA6694 /* CoatyObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoatyObject.swift; sourceTree = "<group>"; };
-		2A8B0CDF221C624700EA6694 /* ContainerCodingKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerCodingKeys.swift; sourceTree = "<group>"; };
-		2A8B0CE1221C62A100EA6694 /* Advertise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertise.swift; sourceTree = "<group>"; };
-		2A8B0CE5221C632F00EA6694 /* PayloadCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PayloadCoder.swift; path = CoatySwift/Classes/PayloadCoder.swift; sourceTree = "<group>"; };
 		2B28B633740FBD4E68D5D2A522511983 /* RxPickerViewAdapter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxPickerViewAdapter.swift; path = RxCocoa/iOS/DataSources/RxPickerViewAdapter.swift; sourceTree = "<group>"; };
 		2C1B74EC2DE6FA8C6255E8743FF30996 /* UISlider+Rx.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UISlider+Rx.swift"; path = "RxCocoa/iOS/UISlider+Rx.swift"; sourceTree = "<group>"; };
 		2D9FC00774605A2DC689EE9877E43399 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
@@ -972,13 +962,9 @@
 		2A8B0CDA221C613F00EA6694 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				2A8B0CDB221C613F00EA6694 /* CoreType.swift */,
-				2A8B0CDD221C616E00EA6694 /* CoatyObject.swift */,
-				2A8B0CDF221C624700EA6694 /* ContainerCodingKeys.swift */,
-				2A8B0CE1221C62A100EA6694 /* Advertise.swift */,
 			);
 			name = Model;
-			path = CoatySwift/Classes/Model;
+			path = Example/CoatySwift/Model;
 			sourceTree = "<group>";
 		};
 		35A061D41E9C08B5086DBB8566CC3356 /* Pods-CoatySwift_Example */ = {
@@ -1451,7 +1437,6 @@
 		FF2EB7972E7E524213BBE0EEBEBF3138 /* CoatySwift */ = {
 			isa = PBXGroup;
 			children = (
-				2A8B0CE5221C632F00EA6694 /* PayloadCoder.swift */,
 				2A8B0CDA221C613F00EA6694 /* Model */,
 				3CD9E76769F64DBF75E6983CA67D4F37 /* ReplaceMe.swift */,
 				9CC883B9D494EACC53F7C65F3D59EC26 /* Pod */,
@@ -2121,12 +2106,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73DA0585F1418C06BDBC6AF1163126AE /* CoatySwift-dummy.m in Sources */,
-				2A8B0CE2221C62A100EA6694 /* Advertise.swift in Sources */,
-				2A8B0CE6221C632F00EA6694 /* PayloadCoder.swift in Sources */,
-				2A8B0CE0221C624700EA6694 /* ContainerCodingKeys.swift in Sources */,
 				807B182E736464BA517625629841DE0D /* ReplaceMe.swift in Sources */,
-				2A8B0CDC221C613F00EA6694 /* CoreType.swift in Sources */,
-				2A8B0CDE221C616E00EA6694 /* CoatyObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
