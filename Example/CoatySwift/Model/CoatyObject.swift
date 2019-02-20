@@ -21,4 +21,16 @@ protocol CoatyObject: Codable {
     var assigneeUserId: UUID? { get set }
     var locationId: UUID? { get set }
     var isDeactivated: Bool? { get set }
+    
+    // MARK: - Encoding properties.
+    var json: String { get }
+    
+}
+
+// MARK: - Extension enable easy access to JSON representation of Coaty object.
+extension CoatyObject {
+    var json: String { get {
+        return PayloadCoder.encode(self)
+        }
+    }
 }

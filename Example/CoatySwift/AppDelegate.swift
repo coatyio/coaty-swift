@@ -8,16 +8,22 @@
 
 import UIKit
 
+var window: UIWindow?
+let comManager = CommunicationManager()
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    let manager = MQTTManager()
-    
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        // Set starting point for application
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let vc = ViewController()
+        window?.rootViewController = vc
+        window?.makeKeyAndVisible()
         
         return true
     }
