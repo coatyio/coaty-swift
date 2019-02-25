@@ -17,7 +17,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         advertiseEventButton.backgroundColor = .red
         advertiseEventButton.setTitle("Publish Advertises", for: .normal)
@@ -45,80 +44,68 @@ class ViewController: UIViewController {
         self.view.addSubview(receiveEventCoreTypeDif)
         receiveEventCoreTypeDif.addTarget(self, action: #selector(receiveAdvertisementsForDifCoreType), for: .touchUpInside)
         
-        
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @objc func advertiseButtonTapped() {
         let coatyTopic = "Unicorn"
-        comManager.publishAdvertise(topic: coatyTopic, objectType: "SandraObjectType", name: "PublishedName")
+        comManager.publishAdvertise(topic: coatyTopic, objectType: "SpecialObjectType", name: "Foo")
     }
     
+    // MARK: - Receive advertisements for object types.
+    
     @objc func receiveAdvertisementsForObjectType() {
-        // Register for receiving of events.
-        
-        // FIXME: These two values are currently just garbage values, will be incorporated later.
+        // FIXME: These two values are currently just garbage values.
         let coatyTopic = "Unicorn"
-        let advertiseCoatyObject = Advertise(coreType: .CoatyObject, objectType: "SandraObjectType", objectId: .init(), name: "SandraName")
+        let advertiseCoatyObject = Advertise(coreType: .CoatyObject, objectType: "SpecialObjectType", objectId: .init(), name: "SpecialName")
         
-        _ = comManager.observeAdvertiseWithObjectType(topic: coatyTopic, target: advertiseCoatyObject, objectType: "SandraObjectType")?.subscribe({ (advertiseEvent) in
+        _ = comManager.observeAdvertiseWithObjectType(topic: coatyTopic, target: advertiseCoatyObject, objectType: "SpecialObjectType")?.subscribe({ (advertiseEvent) in
             print("Received Advertise from blue button:")
             if let advertiseEvent = advertiseEvent.element {
                 print(advertiseEvent.json)
             }
-            
         })
     }
     
     @objc func receiveAdvertisementsForDifObjectType() {
-        // FIXME: These two values are currently just garbage values, will be incorporated later.
+        // FIXME: These two values are currently just garbage values.
         let coatyTopic = "Unicorn"
-        let advertiseCoatyObject = Advertise(coreType: .CoatyObject, objectType: "WrongObjectType", objectId: .init(), name: "SandraName")
+        let advertiseCoatyObject = Advertise(coreType: .CoatyObject, objectType: "WrongObjectType", objectId: .init(), name: "SpecialName")
         
         _ = comManager.observeAdvertiseWithObjectType(topic: coatyTopic, target: advertiseCoatyObject, objectType: "WrongObjectType")?.subscribe({ (advertiseEvent) in
             print("Received Advertise from yellow button:")
             if let advertiseEvent = advertiseEvent.element {
                 print(advertiseEvent.json)
             }
-            
         })
     }
     
+    // MARK: - Receive advertisements for core types.
+    
     @objc func receiveAdvertisementsForCoreType() {
-        // Register for receiving of events.
-        
-        // FIXME: These two values are currently just garbage values, will be incorporated later.
+        // FIXME: These two values are currently just garbage values.
         let coatyTopic = "Unicorn"
-        let advertiseCoatyObject = Advertise(coreType: .CoatyObject, objectType: "SandraObjectType", objectId: .init(), name: "SandraName")
+        let advertiseCoatyObject = Advertise(coreType: .CoatyObject, objectType: "SpecialObjectType", objectId: .init(), name: "SpecialName")
         
         _ = comManager.observeAdvertiseWithCoreType(topic: coatyTopic, target: advertiseCoatyObject, coreType: .Component)?.subscribe({ (advertiseEvent) in
             print("Received Advertise from green button:")
             if let advertiseEvent = advertiseEvent.element {
                 print(advertiseEvent.json)
             }
-            
         })
     }
     
     @objc func receiveAdvertisementsForDifCoreType() {
-        // FIXME: These two values are currently just garbage values, will be incorporated later.
+        // FIXME: These two values are currently just garbage values.
         let coatyTopic = "Unicorn"
-        let advertiseCoatyObject = Advertise(coreType: .CoatyObject, objectType: "WrongObjectType", objectId: .init(), name: "SandraName")
+        let advertiseCoatyObject = Advertise(coreType: .CoatyObject, objectType: "WrongObjectType", objectId: .init(), name: "SpecialName")
         
         _ = comManager.observeAdvertiseWithCoreType(topic: coatyTopic, target: advertiseCoatyObject, coreType: .IoActor)?.subscribe({ (advertiseEvent) in
             print("Received Advertise from purple button:")
             if let advertiseEvent = advertiseEvent.element {
                 print(advertiseEvent.json)
             }
-            
         })
     }
     
-    
-
 }
 
