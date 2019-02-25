@@ -14,7 +14,9 @@ class CommunicationManager {
     
     private var brokerClientId: String?
     private var disposeBag = DisposeBag()
+    private let protocolVersion = 1
     var mqtt: CocoaMQTT?
+    
     
     // MARK: - RXSwift Disposebag.
     
@@ -28,19 +30,34 @@ class CommunicationManager {
     /// Observable emitting raw (topic, payload) values.
     let rawMessages: PublishSubject<(String, String)> = PublishSubject<(String, String)>()
     
-    /// Map holding topics and corresponding observables.
-    /// FIXME: Currently it's only one observable per topic but technically there can be
-    /// multiple ones.
+    /// Map holding topics and corresponding observables listening to these topics.
     var observableMap = [String: Observable<CoatyObject>]()
     
     // MARK: - Convenience methods for accessing observable map.
     
+    /// Creates an observable listening to a specific type of event, e.g. Advertise.
+    private func createObservable<T: CoatyObject>() -> Observable<T> {
+        
+        return rawMessages.map {(rawMessage) -> T? in
+            let (_, rawMessagePayload) = rawMessage
+            
+            if let eventType: T = PayloadCoder.decode(rawMessagePayload) {
+                return eventType
+            }
+            return nil
+            
+            }.flatMap { Observable.from(optional: $0) }.asObservable()
+        
+    }
+    
+    /// Saves an observable and the corresponding topic to the observable map.
     private func setObservable<T: CoatyObject>(topic: String, observable: Observable<T>) {
         observableMap[topic] = observable.map({ (coatyObject) -> CoatyObject in
             return coatyObject as CoatyObject
         })
     }
     
+    /// Gets the observable based on the given topic.
     private func getObservable<T: CoatyObject>(topic: String) -> Observable<T>? {
         if let observable = observableMap[topic] {
             return observable.map { (genericObject) -> T? in
@@ -50,43 +67,75 @@ class CommunicationManager {
         return nil
     }
     
-    private func createObservable<T: CoatyObject>() -> Observable<T> {
-        return rawMessages.map {(rawMessage) -> T? in
-            let (_, payload) = rawMessage
-            
-            // FIXME: Move to topic based matching. For debugging purposes, matching
-            // types of messages for the moment.
-            if let eventType: T = PayloadCoder.decode(payload) {
-                return eventType
-            }
-            return nil
-            
-        }.flatMap { Observable.from(optional: $0) }.asObservable()
-        
-    }
-    
     // MARK: - Observe methods.
     
-    func observeAdvertise(topic: String) -> Observable<Advertise> {
+    /// TODO: Checking of eventTarget fields.
+    /// TODO: Topic should use the convenience methods of Topic.swift rather than String.
+    /// This method should not be called directly, use observeAdvertiseWithCoreType method
+    /// or observeAdvertiseWithObjectType method instead.
+    private func observeAdvertise(topic: String,
+                                  eventTarget: CoatyObject,
+                                  coreType: CoreType?,
+                                  objectType: String?) throws -> Observable<Advertise> {
+        
+        
+         if coreType != nil && objectType != nil {
+         throw CoatySwiftError.InvalidArgument(
+            "Either coreType or objectType must be specified, but not both"
+            )
+         }
+         
+         if coreType == nil && objectType == nil {
+         throw CoatySwiftError.InvalidArgument("Either coreType or objectType must be specified")
+         }
         
         // TODO: Subscribe only if not already subscribed.
         mqtt!.subscribe(topic)
         
-        // Check whether there is an already existing Observable for the topic.
-        if let observable: Observable<Advertise> = getObservable(topic: topic) {
-            return observable
-        } else {
-            // Create new one.
-            let advertiseObservable: Observable<Advertise> = createObservable()
-            setObservable(topic: topic, observable: advertiseObservable)
-            
-            return advertiseObservable
+        var returnedObservable: Observable<Advertise>
+        
+            // Check whether there is an already existing Observable for the topic.
+            if let observable: Observable<Advertise> = getObservable(topic: topic) {
+                returnedObservable = observable
+            } else {
+                // Create new one.
+                let advertiseObservable: Observable<Advertise> = createObservable()
+                setObservable(topic: topic, observable: advertiseObservable)
+                returnedObservable = advertiseObservable
+            }
+        
+        // Perform filtering.
+        return returnedObservable.filter { $0.objectType == objectType || $0.coreType == coreType}
+
+    }
+    
+    func observeAdvertiseWithCoreType(topic: String, target: CoatyObject,
+                                      coreType: CoreType) -> Observable<Advertise>? {
+        do {
+            return try observeAdvertise(topic: topic, eventTarget: target,
+                                        coreType: coreType, objectType: nil)
+        } catch {
+            // FIXME: Advanced error handling? Should we rethrow the error rather than work with
+            // optionals here?
+            return nil
+        }
+    }
+    
+    func observeAdvertiseWithObjectType(topic: String, target: CoatyObject,
+                                        objectType: String) -> Observable<Advertise>? {
+        do {
+            return try observeAdvertise(topic: topic, eventTarget: target,
+                                        coreType: nil, objectType: objectType)
+        } catch {
+            // FIXME: Advanced error handling? Should we rethrow the error rather than work with
+            // optionals here?
+            return nil
         }
     }
     
     // MARK: - Publish methods.
     
-    /// Simplistic Advertise for debugging purposes.
+    /// Advertises an object.
     func publishAdvertise(topic: String, objectType: String, name: String) {
         let advertiseMessage = Advertise(coreType: .Component, objectType: objectType,
                                          objectId: .init(), name: name)
@@ -94,7 +143,7 @@ class CommunicationManager {
         mqtt?.publish(message)
     }
 
-    /// Simplistic AdvertiseIdentity for debugging purposes.
+    /// Advertises the identity.
     func publishAdvertiseIdentity(topic: String) {
         let objectType = COATY_PREFIX + CoreType.Component.rawValue
         let advertiseIdentityMessage = Advertise(coreType: .Component,
@@ -106,13 +155,13 @@ class CommunicationManager {
     
     // MARK: - Init.
     
-    public init() {
+    public init(host: String, port: Int) {
         brokerClientId = generateClientId()
-        mqtt = CocoaMQTT(clientID: getBrokerClientId(), host: getHost(), port: getPort())
+        mqtt = CocoaMQTT(clientID: getBrokerClientId(), host: host, port: UInt16(port))
         configureBroker()
         
         
-        // TODO: Find subscribers for operatingState and communicationState...
+        // FIXME: Remove debugging statements at later point in development.
         operatingState.subscribe { (event) in
             print("Operating State: \(String(describing: event.element!))")
         }.disposed(by: disposeBag)
@@ -189,16 +238,6 @@ class CommunicationManager {
         }
         brokerClientId = generateClientId()
         return brokerClientId!
-    }
-    
-    /// FIXME: Hardcoded value.
-    func getHost() -> String {
-        return "192.168.1.120"
-    }
-    
-    /// FIXME: Hardcoded value.
-    func getPort() -> UInt16 {
-        return UInt16(1883)
     }
     
     // MARK: - Communication methods.
