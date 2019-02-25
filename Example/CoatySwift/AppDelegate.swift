@@ -7,7 +7,7 @@
 import UIKit
 
 var window: UIWindow?
-let comManager = CommunicationManager()
+let comManager = CommunicationManager(host: "192.168.1.21", port: 1883)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
