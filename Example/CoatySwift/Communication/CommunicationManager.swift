@@ -40,7 +40,6 @@ class CommunicationManager {
         
         return rawMessages.map {(rawMessage) -> T? in
             let (_, rawMessagePayload) = rawMessage
-            
             if let eventType: T = PayloadCoder.decode(rawMessagePayload) {
                 return eventType
             }
@@ -73,10 +72,10 @@ class CommunicationManager {
     /// TODO: Topic should use the convenience methods of Topic.swift rather than String.
     /// This method should not be called directly, use observeAdvertiseWithCoreType method
     /// or observeAdvertiseWithObjectType method instead.
-    private func observeAdvertise(topic: String,
+    private func observeAdvertise<T: Advertise>(topic: String,
                                   eventTarget: CoatyObject,
                                   coreType: CoreType?,
-                                  objectType: String?) throws -> Observable<Advertise> {
+                                  objectType: String?) throws -> Observable<T> {
         
         
          if coreType != nil && objectType != nil {
@@ -92,14 +91,13 @@ class CommunicationManager {
         // TODO: Subscribe only if not already subscribed.
         mqtt!.subscribe(topic)
         
-        var returnedObservable: Observable<Advertise>
-        
+        var returnedObservable: Observable<T>
             // Check whether there is an already existing Observable for the topic.
-            if let observable: Observable<Advertise> = getObservable(topic: topic) {
+            if let observable: Observable<T> = getObservable(topic: topic) {
                 returnedObservable = observable
             } else {
                 // Create new one.
-                let advertiseObservable: Observable<Advertise> = createObservable()
+                let advertiseObservable: Observable<T> = createObservable()
                 setObservable(topic: topic, observable: advertiseObservable)
                 returnedObservable = advertiseObservable
             }
@@ -109,48 +107,62 @@ class CommunicationManager {
 
     }
     
-    func observeAdvertiseWithCoreType(topic: String, target: CoatyObject,
-                                      coreType: CoreType) -> Observable<Advertise>? {
-        do {
-            return try observeAdvertise(topic: topic, eventTarget: target,
-                                        coreType: coreType, objectType: nil)
-        } catch {
-            // FIXME: Advanced error handling? Should we rethrow the error rather than work with
-            // optionals here?
-            return nil
-        }
+    func observeAdvertiseWithCoreType<T: Advertise>(eventTarget: CoatyObject,
+                                      coreType: CoreType) throws -> Observable<T> {
+        // TODO: Create correct topic structure, similar to CommunicationTopic.createByLevels()
+        let topic = "/coaty/+/Advertise:\(coreType.rawValue)/+/+/+/"
+        
+        return try observeAdvertise(topic: topic, eventTarget: eventTarget,
+                                    coreType: coreType, objectType: nil)
     }
     
-    func observeAdvertiseWithObjectType(topic: String, target: CoatyObject,
-                                        objectType: String) -> Observable<Advertise>? {
-        do {
-            return try observeAdvertise(topic: topic, eventTarget: target,
+    func observeAdvertiseWithObjectType<T: Advertise>(eventTarget: CoatyObject,
+                                                      objectType: String) throws -> Observable<T> {
+             // TODO: Create correct topic structure, similar to CommunicationTopic.createByLevels()
+            let topic = "/coaty/+/Advertise::\(objectType)/+/+/+/"
+        
+            return try observeAdvertise(topic: topic, eventTarget: eventTarget,
                                         coreType: nil, objectType: objectType)
-        } catch {
-            // FIXME: Advanced error handling? Should we rethrow the error rather than work with
-            // optionals here?
-            return nil
-        }
+    }
+    
+    // TODO: Implement me.
+    func observeChannel(eventTarget: CoatyObject, channelId: String) {
+        
     }
     
     // MARK: - Publish methods.
     
     /// Advertises an object.
-    func publishAdvertise(topic: String, objectType: String, name: String) {
+    func publishAdvertise(eventTarget: CoatyObject, objectType: String) throws {
+        
+        // TODO: Topic creation factory missing.
+        let topic = try Topic.init(protocolVersion: protocolVersion, event: "Advertise::\(objectType)",
+                                   associatedUserId: "-",
+                                   sourceObjectId: "\(eventTarget.objectId)",
+                                   messageToken: "-")
+        
         let advertiseMessage = Advertise(coreType: .Component, objectType: objectType,
-                                         objectId: .init(), name: name)
-        let message = CocoaMQTTMessage(topic: topic, string: advertiseMessage.json)
+                                         objectId: .init(), name: eventTarget.name)
+        let message = CocoaMQTTMessage(topic: topic.string, string: advertiseMessage.json)
         mqtt?.publish(message)
     }
 
     /// Advertises the identity.
-    func publishAdvertiseIdentity(topic: String) {
+    func publishAdvertiseIdentity(eventTarget: CoatyObject) throws {
+        
+        // TODO: Topic creation factory missing.
+        let topic = try Topic.init(protocolVersion: protocolVersion, event: "Advertise:Component",
+                                   associatedUserId: "-",
+                                   sourceObjectId: "\(eventTarget.objectId)",
+                                   messageToken: "-")
+        
         let objectType = COATY_PREFIX + CoreType.Component.rawValue
         let advertiseIdentityMessage = Advertise(coreType: .Component,
-                                                     objectType: objectType,
+                                                 objectType: objectType,
                                                  objectId: .init(), name: "CommunicationManager")
-        let message = CocoaMQTTMessage(topic: topic, string: advertiseIdentityMessage.json)
+        let message = CocoaMQTTMessage(topic: topic.string, string: advertiseIdentityMessage.json)
         mqtt?.publish(message)
+        
     }
     
     // MARK: - Init.
@@ -279,7 +291,7 @@ extension CommunicationManager: CocoaMQTTDelegate {
     }
     
     public func mqtt(_ mqtt: CocoaMQTT, didSubscribeTopic topic: String) {
-        print("Subscribed to topic \(topic).")
+        print("Subscribed to topic \(topic)")
     }
     
     public func mqtt(_ mqtt: CocoaMQTT, didUnsubscribeTopic topic: String) {

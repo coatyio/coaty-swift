@@ -17,6 +17,8 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		7DC4D4F34380C5B9D465F0F9 /* Pods_CoatySwift_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B9CCE17A7ADBB73A053ACB4 /* Pods_CoatySwift_Example.framework */; };
+		BC25E873222422AC00AE03A6 /* CommunicationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC25E872222422AC00AE03A6 /* CommunicationEvent.swift */; };
+		BC25E87522247C1100AE03A6 /* Demo+Advertise.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC25E87422247C1100AE03A6 /* Demo+Advertise.swift */; };
 		BC7BA593221D849500657BF2 /* CommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7BA592221D849500657BF2 /* CommunicationManager.swift */; };
 		BC7BA596221DB26F00657BF2 /* CommunicationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7BA595221DB26F00657BF2 /* CommunicationState.swift */; };
 		BC7BA598221DB27700657BF2 /* OperatingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7BA597221DB27700657BF2 /* OperatingState.swift */; };
@@ -57,6 +59,8 @@
 		940FCFEA809ED5A86291D93D /* Pods-CoatySwift_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example.release.xcconfig"; sourceTree = "<group>"; };
 		9914431535FD0B653582AF30 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		ADEEFD5354A32F3127D3F18E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		BC25E872222422AC00AE03A6 /* CommunicationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationEvent.swift; sourceTree = "<group>"; };
+		BC25E87422247C1100AE03A6 /* Demo+Advertise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Demo+Advertise.swift"; sourceTree = "<group>"; };
 		BC7BA592221D849500657BF2 /* CommunicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationManager.swift; sourceTree = "<group>"; };
 		BC7BA595221DB26F00657BF2 /* CommunicationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationState.swift; sourceTree = "<group>"; };
 		BC7BA597221DB27700657BF2 /* OperatingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatingState.swift; sourceTree = "<group>"; };
@@ -201,6 +205,7 @@
 				BC7BA592221D849500657BF2 /* CommunicationManager.swift */,
 				BC7BA599221DBB5E00657BF2 /* CommunicationConstants.swift */,
 				2A023AC8221DBC7200241F1B /* Topic.swift */,
+				BC25E872222422AC00AE03A6 /* CommunicationEvent.swift */,
 			);
 			path = Communication;
 			sourceTree = "<group>";
@@ -212,6 +217,7 @@
 				BCB005D2221D82C00085DC24 /* CoatyObject.swift */,
 				BCB005D1221D82C00085DC24 /* ContainerCodingKeys.swift */,
 				BCB005D3221D82C00085DC24 /* Advertise.swift */,
+				BC25E87422247C1100AE03A6 /* Demo+Advertise.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -269,12 +275,12 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = MVY877MQV7;
+						DevelopmentTeam = 45E39Y8V9N;
 						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = MVY877MQV7;
+						DevelopmentTeam = 45E39Y8V9N;
 						LastSwiftMigration = 0900;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -418,8 +424,10 @@
 				BC7BA59A221DBB5E00657BF2 /* CommunicationConstants.swift in Sources */,
 				BC7BA593221D849500657BF2 /* CommunicationManager.swift in Sources */,
 				BCB005D5221D82C10085DC24 /* ContainerCodingKeys.swift in Sources */,
+				BC25E873222422AC00AE03A6 /* CommunicationEvent.swift in Sources */,
 				BCB005D6221D82C10085DC24 /* CoatyObject.swift in Sources */,
 				BC7BA598221DB27700657BF2 /* OperatingState.swift in Sources */,
+				BC25E87522247C1100AE03A6 /* Demo+Advertise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,7 +573,7 @@
 			baseConfigurationReference = E0DCD879F1B72E4B86ED5D50 /* Pods-CoatySwift_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = MVY877MQV7;
+				DEVELOPMENT_TEAM = 45E39Y8V9N;
 				INFOPLIST_FILE = CoatySwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -581,7 +589,7 @@
 			baseConfigurationReference = 940FCFEA809ED5A86291D93D /* Pods-CoatySwift_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = MVY877MQV7;
+				DEVELOPMENT_TEAM = 45E39Y8V9N;
 				INFOPLIST_FILE = CoatySwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -596,7 +604,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C87AF40D4ACD8A212C6EC978 /* Pods-CoatySwift_Tests.debug.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = MVY877MQV7;
+				DEVELOPMENT_TEAM = 45E39Y8V9N;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -619,7 +627,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DD23F046978D94FF26EBCE73 /* Pods-CoatySwift_Tests.release.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = MVY877MQV7;
+				DEVELOPMENT_TEAM = 45E39Y8V9N;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
