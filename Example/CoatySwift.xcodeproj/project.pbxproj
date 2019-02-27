@@ -26,6 +26,9 @@
 		BC7BA598221DB27700657BF2 /* OperatingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7BA597221DB27700657BF2 /* OperatingState.swift */; };
 		BC7BA59A221DBB5E00657BF2 /* CommunicationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7BA599221DBB5E00657BF2 /* CommunicationConstants.swift */; };
 		BC8591EF2226AD9700E53BFA /* Codable+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8591EE2226AD9700E53BFA /* Codable+JSON.swift */; };
+		BC8591F12226BD8100E53BFA /* CommunicationManager+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8591F02226BD8100E53BFA /* CommunicationManager+Util.swift */; };
+		BC8591F32226D4C900E53BFA /* Deadvertise.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8591F22226D4C900E53BFA /* Deadvertise.swift */; };
+		BC8591F52226D8DC00E53BFA /* DeadvertiseEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8591F42226D8DC00E53BFA /* DeadvertiseEvent.swift */; };
 		BCB005D6221D82C10085DC24 /* CoatyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB005D2221D82C00085DC24 /* CoatyObject.swift */; };
 		BCB005D7221D82C10085DC24 /* Advertise.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB005D3221D82C00085DC24 /* Advertise.swift */; };
 		BCB005D8221D82C10085DC24 /* CoreType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB005D4221D82C10085DC24 /* CoreType.swift */; };
@@ -70,6 +73,9 @@
 		BC7BA597221DB27700657BF2 /* OperatingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatingState.swift; sourceTree = "<group>"; };
 		BC7BA599221DBB5E00657BF2 /* CommunicationConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationConstants.swift; sourceTree = "<group>"; };
 		BC8591EE2226AD9700E53BFA /* Codable+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+JSON.swift"; sourceTree = "<group>"; };
+		BC8591F02226BD8100E53BFA /* CommunicationManager+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunicationManager+Util.swift"; sourceTree = "<group>"; };
+		BC8591F22226D4C900E53BFA /* Deadvertise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deadvertise.swift; sourceTree = "<group>"; };
+		BC8591F42226D8DC00E53BFA /* DeadvertiseEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeadvertiseEvent.swift; sourceTree = "<group>"; };
 		BCB005D2221D82C00085DC24 /* CoatyObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoatyObject.swift; sourceTree = "<group>"; };
 		BCB005D3221D82C00085DC24 /* Advertise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertise.swift; sourceTree = "<group>"; };
 		BCB005D4221D82C10085DC24 /* CoreType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreType.swift; sourceTree = "<group>"; };
@@ -213,6 +219,8 @@
 				BC25E872222422AC00AE03A6 /* CommunicationEvent.swift */,
 				2A095C1022258B6A00FE2FD8 /* CommunicationEventType.swift */,
 				2A095C1222258BFB00FE2FD8 /* AdvertiseEvent.swift */,
+				BC8591F02226BD8100E53BFA /* CommunicationManager+Util.swift */,
+				BC8591F42226D8DC00E53BFA /* DeadvertiseEvent.swift */,
 			);
 			path = Communication;
 			sourceTree = "<group>";
@@ -224,6 +232,7 @@
 				BCB005D2221D82C00085DC24 /* CoatyObject.swift */,
 				BCB005D3221D82C00085DC24 /* Advertise.swift */,
 				BC25E87422247C1100AE03A6 /* Demo+Advertise.swift */,
+				BC8591F22226D4C900E53BFA /* Deadvertise.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -419,14 +428,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC8591F52226D8DC00E53BFA /* DeadvertiseEvent.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				2A095C1122258B6A00FE2FD8 /* CommunicationEventType.swift in Sources */,
+				BC8591F32226D4C900E53BFA /* Deadvertise.swift in Sources */,
 				2A023AC9221DBC7200241F1B /* Topic.swift in Sources */,
 				BCB005D7221D82C10085DC24 /* Advertise.swift in Sources */,
 				BCB005DA221D82D70085DC24 /* PayloadCoder.swift in Sources */,
 				2A023ACC221DBCF700241F1B /* CoatySwiftError.swift in Sources */,
 				BC8591EF2226AD9700E53BFA /* Codable+JSON.swift in Sources */,
 				BCB005D8221D82C10085DC24 /* CoreType.swift in Sources */,
+				BC8591F12226BD8100E53BFA /* CommunicationManager+Util.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				BC7BA596221DB26F00657BF2 /* CommunicationState.swift in Sources */,
 				BC7BA59A221DBB5E00657BF2 /* CommunicationConstants.swift in Sources */,
