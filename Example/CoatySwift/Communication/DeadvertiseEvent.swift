@@ -1,9 +1,72 @@
 //
-//  Deadvertise.swift
-//  CoatySwift_Example
+//  DeadvertiseEvent.swift
+//  CoatySwift
 //
-//  Created by Sandra Grujovic on 27.02.19.
-//  Copyright © 2019 CocoaPods. All rights reserved.
 //
 
-import Foundation
+/// Deadvertise provides a generic implementation for all DeadvertiseEvents.
+/// Note that this class should preferably initialized via its withObject() method.
+class DeadvertiseEvent<GenericDeadvertise: Deadvertise>: CommunicationEvent<DeadvertiseEventData<GenericDeadvertise>> {
+    
+    /// TODO: This method should never be called directly by application programmers.
+    /// Inside the framework, calling is ok.
+    override init(eventSource: CoatyObject, eventData: DeadvertiseEventData<GenericDeadvertise>) throws {
+        try super.init(eventSource: eventSource, eventData: eventData)
+    }
+    
+    /// Convenience factory method that configures an instance of and DeadvertiseEvent with
+    /// a Deadvertisement Object. Note that the event source should be the controller that
+    /// creates the DeadvertiseEvent.
+    /// FIXME: Replace CoatyObject with Component object.
+    static func withObject(eventSource: CoatyObject,
+                           object: GenericDeadvertise) throws -> DeadvertiseEvent {
+        
+        let deadvertiseEventData = DeadvertiseEventData(object: object)
+        return try .init(eventSource: eventSource, eventData: deadvertiseEventData)
+    }
+    
+    // MARK: - Codable methods.
+    
+    required init(from decoder: Decoder) throws {
+        try super.init(from: decoder)
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+    }
+}
+
+
+/// DeadvertiseEventData provides a wrapper object that stores the entire message payload data
+/// for a DeadvertiseEvent.
+class DeadvertiseEventData<S: Deadvertise>: CommunicationEventData {
+    
+    // MARK: - Public attributes.
+    
+    var object: S
+    
+    // MARK: - Initializers.
+    
+    init(object: S) {
+        self.object = object
+        // TODO: hasValidParameters() ?
+        super.init()
+    }
+    
+    static func createFrom(eventData: S) -> DeadvertiseEventData {
+        return .init(object: eventData)
+    }
+    
+    // MARK: - Codable methods.
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.object = try container.decode(S.self)
+        try super.init(from: decoder)
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(self.object)
+    }
+}
