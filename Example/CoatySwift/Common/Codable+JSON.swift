@@ -7,13 +7,7 @@
 import Foundation
 import CoreGraphics
 
-//
-//
-// Adapted from:
-//
-// Original: https://gist.github.com/loudmouth/332e8d89d8de2c1eaf81875cfcd22e24
-// Adds encoding: https://github.com/3D4Medical/glTFSceneKit/blob/master/Sources/glTFSceneKit/GLTF/JSONCodingKeys.swift
-// Adds fix for null inside arrays causing infinite loop: https://gist.github.com/loudmouth/332e8d89d8de2c1eaf81875cfcd22e24#gistcomment-2807855
+/// SOURCE: https://gist.github.com/mikebuss/17142624da4baf9cdcc337861e256533
 struct JSONCodingKeys: CodingKey {
     var stringValue: String
     

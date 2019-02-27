@@ -55,7 +55,9 @@ class ViewController: UIViewController {
     }
     
     @objc func advertiseButtonTapped() {
-        try? comManager.publishAdvertise(eventTarget: identity, objectType: "SpecialObjectType")
+        let advertiseEvent = try? AdvertiseEvent.withObject(eventSource: self.identity, object: Advertise(coreType: .CoatyObject, objectType: "Derp", objectId: .init(), name: "sandra"), privateData: nil)
+        
+        try? comManager.publishAdvertise(advertiseEvent: advertiseEvent!, eventTarget: identity)
     }
     
     // FIXME: Use proper Component Object for identity.
