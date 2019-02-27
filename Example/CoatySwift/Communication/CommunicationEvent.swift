@@ -19,7 +19,7 @@ class CommunicationEvent<T: CommunicationEventData>: Codable {
     
     // private var eventSource: CoatyObject.Type
     private var eventSourceId: UUID?
-    private var eventData: T
+    var eventData: T
     private var eventUserId: String? // or UUID?
     
     // MARK: - Initializer.

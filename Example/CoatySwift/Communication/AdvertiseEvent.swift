@@ -57,13 +57,13 @@ class AdvertiseEventData<GenericAdvertise: Advertise>: CommunicationEventData {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.object = try container.decode(GenericAdvertise.self, forKey: .object)
-        self.privateData = try container.decodeIfPresent([String: String].self, forKey: .privateData)
+        try? self.privateData = container.decodeIfPresent([String: String].self, forKey: .privateData)
         try super.init(from: decoder)
     }
     
     override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.object, forKey: .object)
-        try container.encode(self.privateData, forKey: .privateData)
+        try container.encodeIfPresent(self.privateData, forKey: .privateData)
     }
 }

@@ -3,7 +3,6 @@
 //  CoatySwift
 //
 //
-
 import Foundation
 import CocoaMQTT
 import RxSwift
@@ -29,50 +28,14 @@ class CommunicationManager {
     
     /// Observable emitting raw (topic, payload) values.
     let rawMessages: PublishSubject<(String, String)> = PublishSubject<(String, String)>()
-    
-    /// Map holding topics and corresponding observables listening to these topics.
-    var observableMap = [String: Observable<CoatyObject>]()
-    
-    // MARK: - Convenience methods for accessing observable map.
-    
-    /// Creates an observable listening to a specific type of event, e.g. Advertise.
-    private func createObservable<T: CoatyObject>() -> Observable<T> {
-        
-        return rawMessages.map {(rawMessage) -> T? in
-            let (_, rawMessagePayload) = rawMessage
-            if let eventType: T = PayloadCoder.decode(rawMessagePayload) {
-                return eventType
-            }
-            return nil
-            
-            }.flatMap { Observable.from(optional: $0) }.asObservable()
-        
-    }
-    
-    /// Saves an observable and the corresponding topic to the observable map.
-    private func setObservable<T: CoatyObject>(topic: String, observable: Observable<T>) {
-        observableMap[topic] = observable.map({ (coatyObject) -> CoatyObject in
-            return coatyObject as CoatyObject
-        })
-    }
-    
-    /// Gets the observable based on the given topic.
-    private func getObservable<T: CoatyObject>(topic: String) -> Observable<T>? {
-        if let observable = observableMap[topic] {
-            return observable.map { (genericObject) -> T? in
-                return genericObject as? T
-            }.flatMap { Observable.from(optional: $0) }.asObservable()
-        }
-        return nil
-    }
-    
+
     // MARK: - Observe methods.
     
     /// TODO: Checking of eventTarget fields.
     /// TODO: Topic should use the convenience methods of Topic.swift rather than String.
     /// This method should not be called directly, use observeAdvertiseWithCoreType method
     /// or observeAdvertiseWithObjectType method instead.
-    private func observeAdvertise<T: Advertise>(topic: String,
+    private func observeAdvertise<S: Advertise, T: AdvertiseEvent<S>>(topic: String,
                                   eventTarget: CoatyObject,
                                   coreType: CoreType?,
                                   objectType: String?) throws -> Observable<T> {
@@ -91,38 +54,57 @@ class CommunicationManager {
         // TODO: Subscribe only if not already subscribed.
         mqtt!.subscribe(topic)
         
-        var returnedObservable: Observable<T>
-            // Check whether there is an already existing Observable for the topic.
-            if let observable: Observable<T> = getObservable(topic: topic) {
-                returnedObservable = observable
-            } else {
-                // Create new one.
-                let advertiseObservable: Observable<T> = createObservable()
-                setObservable(topic: topic, observable: advertiseObservable)
-                returnedObservable = advertiseObservable
+        // FIXME: Move this topic mapping to a higher level method.
+        return rawMessages.map({ (rawMessage) -> (Topic, String) in
+            
+            let (topic, payload) = rawMessage
+            return try (Topic(topic), payload)
+        }).filter({ (rawMessageWithTopic) -> Bool in
+            let (topic, _) = rawMessageWithTopic
+            
+            // FIXME: Implement getter for communicationEventType on Topic.swift.
+            // FIXME: Use CommunicationEventTypes.
+            return topic.event.contains("Advertise")
+        })
+            .filter({ (rawMessageWithTopic) -> Bool in
+            let (topic, _) = rawMessageWithTopic
+            
+            if (objectType != nil) {
+                return objectType == topic.objectType
             }
-        
-        // Perform filtering.
-        return returnedObservable.filter { $0.objectType == objectType || $0.coreType == coreType}
+            
+            if (coreType != nil) {
+                return coreType == topic.coreType
+            }
+            
+            return false
+        })
+            .map({ (message) -> T in
+            let (_, payload) = message
+            // FIXME: Remove force unwrap.
+            return PayloadCoder.decode(payload)!
+        })
 
     }
     
-    func observeAdvertiseWithCoreType<T: Advertise>(eventTarget: CoatyObject,
+    func observeAdvertiseWithCoreType<S: Advertise, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
                                       coreType: CoreType) throws -> Observable<T> {
         // TODO: Create correct topic structure, similar to CommunicationTopic.createByLevels()
         let topic = "/coaty/+/Advertise:\(coreType.rawValue)/+/+/+/"
         
-        return try observeAdvertise(topic: topic, eventTarget: eventTarget,
+        let observable: Observable<T> = try observeAdvertise(topic: topic, eventTarget: eventTarget,
                                     coreType: coreType, objectType: nil)
+        return observable
     }
     
-    func observeAdvertiseWithObjectType<T: Advertise>(eventTarget: CoatyObject,
+    func observeAdvertiseWithObjectType<S: Advertise, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
                                                       objectType: String) throws -> Observable<T> {
              // TODO: Create correct topic structure, similar to CommunicationTopic.createByLevels()
             let topic = "/coaty/+/Advertise::\(objectType)/+/+/+/"
         
-            return try observeAdvertise(topic: topic, eventTarget: eventTarget,
+        let observable: Observable<T> = try observeAdvertise(topic: topic, eventTarget: eventTarget,
                                         coreType: nil, objectType: objectType)
+        return observable
     }
     
     // TODO: Implement me.

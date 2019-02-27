@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     let receiveEventObjectTypeDif = UIButton(frame: CGRect(x: 0, y: 300, width: 350, height: 50))
     let receiveEventCoreTypeSame =  UIButton(frame: CGRect(x: 0, y: 400, width: 350, height: 50))
     let receiveEventCoreTypeDif =  UIButton(frame: CGRect(x: 0, y: 500, width: 350, height: 50))
-    /* let receiveCustomAdvertise = UIButton(frame: CGRect(x: 0, y: 600, width: 350, height: 50)) */
+    let receiveCustomAdvertise = UIButton(frame: CGRect(x: 0, y: 600, width: 350, height: 50))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,10 +46,10 @@ class ViewController: UIViewController {
         self.view.addSubview(receiveEventCoreTypeDif)
         receiveEventCoreTypeDif.addTarget(self, action: #selector(receiveAdvertisementsForDifCoreType), for: .touchUpInside)
         
-        /* receiveCustomAdvertise.backgroundColor = .gray
+        receiveCustomAdvertise.backgroundColor = .gray
         receiveCustomAdvertise.setTitle("Observe Demo-Advertises", for: .normal)
         self.view.addSubview(receiveCustomAdvertise)
-        receiveCustomAdvertise.addTarget(self, action: #selector(receiveDemoMessageAdvertise), for: .touchUpInside) */
+        receiveCustomAdvertise.addTarget(self, action: #selector(receiveDemoMessageAdvertise), for: .touchUpInside)
         
         
     }
@@ -67,7 +67,7 @@ class ViewController: UIViewController {
     @objc func receiveAdvertisementsForObjectType() {
         // FIXME: These two values are currently just garbage values.
         
-        try? _ = comManager.observeAdvertiseWithObjectType(eventTarget: identity, objectType: "Special?ObjectType").subscribe({ (advertiseEvent) in
+        try? _ = comManager.observeAdvertiseWithObjectType(eventTarget: identity, objectType: "SpecialObjectType").subscribe({ (advertiseEvent) in
             print("Received Advertise from blue button:")
             if let advertiseEvent = advertiseEvent.element {
                 print(advertiseEvent.json)
@@ -85,18 +85,20 @@ class ViewController: UIViewController {
         })
     }
     
-    /* @objc func receiveDemoMessageAdvertise() {
+    @objc func receiveDemoMessageAdvertise() {
         // FIXME: These two values are currently just garbage values.
-        let observable: Observable<DemoAdvertise>? = comManager.observeAdvertiseWithObjectType(eventTarget: identity, objectType: "org.example.coaty.demo-message")
-
-        _ = observable?.subscribe({ (advertiseEvent) in
-            if let advertiseEvent = advertiseEvent.element {
-                print(advertiseEvent.message)
-                print(advertiseEvent.json)
-                print(PayloadCoder.encode(advertiseEvent))
-            }
-        })
-    }*/
+        do {
+            let observable: Observable<AdvertiseEvent<DemoAdvertise>> = try comManager.observeAdvertiseWithObjectType(eventTarget: identity, objectType: "org.example.coaty.demo-message")
+            
+            _ = observable.subscribe({ (advertiseEvent) in
+                if let advertiseEvent = advertiseEvent.element {
+                    print(advertiseEvent.json)
+                }
+            })
+        } catch  {
+            print("Cannot parse as DemoMessageAdvertise")
+        }
+    }
     
     // MARK: - Receive advertisements for core types.
     
