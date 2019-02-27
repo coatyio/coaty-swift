@@ -136,6 +136,39 @@ class Topic {
         )
     }
     
+    // MARK: - Helper methods.
+
+    /// Helper method that creates a topic string with wildcards.
+    /// See [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-filters)
+    /// - Parameters:
+    ///   - eventType: CommunicationEventType (e.g. Advertise)
+    ///   - eventTypeFilter: may either be a core type (e.g. Component) or an object type
+    ///     (e.g. org.example.object)
+    ///   - associatedUserId: an optional UUID String, if the parameter is ommitted it is replaced
+    ///     with a wildcard.
+    ///   - sourceObject: the Coaty object that issued the method call, if the parameter is ommitted
+    ///     it is replaced with a wildcard.
+    ///   - messageToken: if ommitted it is replaced with a wildcard.
+    /// - Returns: A topic string with correct wildcards.
+    static func createTopicStringByLevels(eventType: CommunicationEventType, eventTypeFilter: String, associatedUserId: String?, sourceObject: CoatyObject?, messageToken: String?) -> String {
+        
+        // Choose the correct separator.
+        let separator = isCoreType(eventTypeFilter) ? CORE_TYPE_SEPARATOR : OBJECT_TYPE_SEPARATOR
+        let event = eventType.rawValue + separator + eventTypeFilter
+        
+        return "\(TOPIC_SEPARATOR)\(COATY)"
+            + "\(TOPIC_SEPARATOR)\(WILDCARD_TOPIC)"
+            + "\(TOPIC_SEPARATOR)\(event)"
+            + "\(TOPIC_SEPARATOR)\(associatedUserId ?? WILDCARD_TOPIC)"
+            + "\(TOPIC_SEPARATOR)\(sourceObject?.objectId.uuidString ?? WILDCARD_TOPIC)"
+            + "\(TOPIC_SEPARATOR)\(messageToken ?? WILDCARD_TOPIC)"
+            + "\(TOPIC_SEPARATOR)"
+    }
+    
+    private static func isCoreType(_ eventTypeFilter: String) -> Bool {
+        return CoreType(rawValue: eventTypeFilter) != nil
+    }
+    
     // MARK: - Parsing helper methods.
     
     private static func extractObjectType(_ event: String) -> String? {
@@ -151,12 +184,12 @@ class Topic {
     
     private static func extractCoreType(_ event: String) -> CoreType? {
         // Core types are separated as follows: "Advertise:<coreType>".
-        if !event.contains(FILTER_SEPARATOR) {
+        if !event.contains(CORE_TYPE_SEPARATOR) {
             return nil
         }
         
         // Take the second element (the core type) and return it.
-        let eventTypeComponents = event.components(separatedBy: FILTER_SEPARATOR).dropFirst()
+        let eventTypeComponents = event.components(separatedBy: CORE_TYPE_SEPARATOR).dropFirst()
         guard let coreTypeString = eventTypeComponents.first else {
             return nil
         }
@@ -165,12 +198,12 @@ class Topic {
     }
     
     private static func extractEventType(_ event: String) throws -> CommunicationEventType {
-        if !(event.contains(FILTER_SEPARATOR) || event.contains(OBJECT_TYPE_SEPARATOR)) {
+        if !(event.contains(CORE_TYPE_SEPARATOR) || event.contains(OBJECT_TYPE_SEPARATOR)) {
             throw CoatySwiftError.InvalidArgument("Event needs to contain a valid CommunicationEventType")
         }
         
         guard let communicationEventTypeString = event.components(
-            separatedBy: FILTER_SEPARATOR).first else {
+            separatedBy: CORE_TYPE_SEPARATOR).first else {
             throw CoatySwiftError.InvalidArgument("Event needs to contain a valid CommunicationEventType")
         }
         
