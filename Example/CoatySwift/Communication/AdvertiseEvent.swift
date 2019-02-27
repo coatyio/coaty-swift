@@ -4,8 +4,8 @@
 //
 //
 
-import Foundation
-
+/// AdvertiseEvent provides a generic implementation for all AdvertiseEvents.
+/// Note that this class should preferably initialized via its withObject() method.
 class AdvertiseEvent<GenericAdvertise: Advertise>: CommunicationEvent<AdvertiseEventData<GenericAdvertise>> {
     
     /// TODO: This method should never be called directly by application programmers.
@@ -14,7 +14,10 @@ class AdvertiseEvent<GenericAdvertise: Advertise>: CommunicationEvent<AdvertiseE
         try super.init(eventSource: eventSource, eventData: eventData)
     }
     
-    // FIXME: Replace CoatyObject with Component object.
+    /// Convenience factory method that configures an instance of and AdvertiseEvent with
+    /// an object and privateData. Note that the event source should be the controller that
+    /// creates the AdvertiseEvent.
+    /// FIXME: Replace CoatyObject with Component object.
     static func withObject(eventSource: CoatyObject,
                            object: GenericAdvertise,
                            privateData: [String: Any]? = nil) throws -> AdvertiseEvent {
@@ -24,6 +27,7 @@ class AdvertiseEvent<GenericAdvertise: Advertise>: CommunicationEvent<AdvertiseE
     }
     
     // MARK: - Codable methods.
+    
     required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
@@ -33,18 +37,26 @@ class AdvertiseEvent<GenericAdvertise: Advertise>: CommunicationEvent<AdvertiseE
     }
 }
 
-class AdvertiseEventData<GenericAdvertise: Advertise>: CommunicationEventData {
-    var object: GenericAdvertise
-    var privateData: [String: Any]? // FIXME: Default value.
+
+/// AdvertiseEventData provides a wrapper object that stores the entire message payload data
+/// for an AdvertiseEvent including the object itself as well as the associated private data.
+class AdvertiseEventData<S: Advertise>: CommunicationEventData {
     
-    init(object: GenericAdvertise, privateData: [String: Any]? = nil) {
+    // MARK: - Public attributes.
+    
+    var object: S
+    var privateData: [String: Any]?
+    
+    // MARK: - Initializers.
+    
+    init(object: S, privateData: [String: Any]? = nil) {
         self.object = object
         self.privateData = privateData
         // TODO: hasValidParameters() ?
         super.init()
     }
     
-    static func createFrom(eventData: GenericAdvertise) -> AdvertiseEventData {
+    static func createFrom(eventData: S) -> AdvertiseEventData {
         return .init(object: eventData)
     }
     
@@ -54,9 +66,10 @@ class AdvertiseEventData<GenericAdvertise: Advertise>: CommunicationEventData {
         case object
         case privateData
     }
+    
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.decode(GenericAdvertise.self, forKey: .object)
+        self.object = try container.decode(S.self, forKey: .object)
         try? self.privateData = container.decodeIfPresent([String: Any].self, forKey: .privateData)
         try super.init(from: decoder)
     }

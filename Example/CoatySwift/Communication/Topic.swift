@@ -9,12 +9,17 @@ import Foundation
 /// Topic represents a Coaty topic as defined in
 /// https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-structure
 /// TODO: Ability to generate readable topics.
+/// TODO: Convenience method that creates topic (string) from levels.
 class Topic {
     
-    // MARK: - Attributes.
+    // MARK: - Public Attributes.
     
     var protocolVersion: Int
+    
+    /// event returns the entire event string including separators and filters,
+    /// e.g. Advertise:Component or Advertise::org.example.object
     var event: String
+    var eventType: CommunicationEventType
     var coreType: CoreType?
     var objectType: String?
     var associatedUserId: UUID?
@@ -33,6 +38,8 @@ class Topic {
         }
     }
     
+    // MARK: - Initializers.
+    
     /// This initializer checks all required conditions to return a valid Coaty Topic.
     /// Note that it also accepts arguments taken from readable topics.
     init(protocolVersion: Int, event: String, associatedUserId: String, sourceObjectId: String,
@@ -47,6 +54,7 @@ class Topic {
         
         // Initialize event fields.
         self.event = event
+        self.eventType = try Topic.extractEventType(event)
         let coreType = Topic.extractCoreType(event)
         let objectType = Topic.extractObjectType(event)
         
@@ -76,7 +84,7 @@ class Topic {
             throw CoatySwiftError.InvalidArgument("Could not sanitize sourceObjectId.")
         }
         
-        // Parse associatedUserId
+        // Parse associatedUserId.
         guard let sourceObjectIdAsUUID = UUID.init(uuidString: sanitizedSourceObjectId) else {
             throw CoatySwiftError.InvalidArgument("Invalid sourceObjectId.")
         }
@@ -96,6 +104,8 @@ class Topic {
     /// Initializes a Topic object from a string value.
     /// The expected structure therefore looks like:
     /// /coaty/<ProtocolVersion>/<Event>/<AssociatedUserId>/<SourceObjectId>/<MessageToken>/
+    /// - Parameters:
+    ///   - topic: string representation of a Coaty communication topic.
     convenience init(_ topic: String) throws {
         var topicLevels = topic.components(separatedBy: TOPIC_SEPARATOR)
         
@@ -152,6 +162,24 @@ class Topic {
         }
         
         return CoreType(rawValue: coreTypeString)
+    }
+    
+    private static func extractEventType(_ event: String) throws -> CommunicationEventType {
+        if !(event.contains(FILTER_SEPARATOR) || event.contains(OBJECT_TYPE_SEPARATOR)) {
+            throw CoatySwiftError.InvalidArgument("Event needs to contain a valid CommunicationEventType")
+        }
+        
+        guard let communicationEventTypeString = event.components(
+            separatedBy: FILTER_SEPARATOR).first else {
+            throw CoatySwiftError.InvalidArgument("Event needs to contain a valid CommunicationEventType")
+        }
+        
+        guard let communicationEventType = CommunicationEventType(
+            rawValue: communicationEventTypeString) else {
+            throw CoatySwiftError.InvalidArgument("Unknown CommunicationEventType")
+        }
+        
+        return communicationEventType
     }
     
     /// Returns the Id from a string that was created using readable topic names.

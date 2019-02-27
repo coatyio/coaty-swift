@@ -4,8 +4,7 @@
 //
 //
 
-import Foundation
-
+/// Operating state indicates the current state of a CommunicationManager.
 enum OperatingState {
     case initial
     case starting

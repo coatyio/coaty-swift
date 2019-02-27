@@ -6,29 +6,28 @@
 
 import Foundation
 
-class CommunicationEventData: Codable {
-    
-}
-
+/// CommunicationEvent is a generic supertype for AdvertiseEvent, DeadvertiseEvent etc.
 class CommunicationEvent<T: CommunicationEventData>: Codable {
     
     // MARK: - Public attributes.
+    
     var eventType: CommunicationEventType?
     
+    /// Event data that conforms for CommunicationEventData, e.g. AdvertiseEventData.
+    var eventData: T
+
     // MARK: - Private attributes.
     
     // private var eventSource: CoatyObject.Type
     private var eventSourceId: UUID?
-    var eventData: T
     private var eventUserId: String? // or UUID?
     
     // MARK: - Initializer.
     
+    /// TODO: Only accept components as eventSource.
     init(eventSource: CoatyObject, eventData: T) throws {
-        // TODO: Only accept components as eventSource.
-        
         if eventSource.coreType != .Component {
-            // throw CoatySwiftError.InvalidArgument("EventSource needs to have core type 'Component'")
+            throw CoatySwiftError.InvalidArgument("EventSource needs to have core type 'Component'")
         }
         
         self.eventSourceId = eventSource.objectId
@@ -38,8 +37,9 @@ class CommunicationEvent<T: CommunicationEventData>: Codable {
     }
     
     // MARK: - Codable methods.
+    
     required init(from decoder: Decoder) throws {
-        var container = try decoder.singleValueContainer()
+        let container = try decoder.singleValueContainer()
         self.eventData = try container.decode(T.self)
     }
     
@@ -50,9 +50,15 @@ class CommunicationEvent<T: CommunicationEventData>: Codable {
 }
 
 // MARK: - Extension enable easy access to JSON representation of DemoAdvertise object.
+
 extension CommunicationEvent {
-    var json: String { get {
-        return PayloadCoder.encode(self)
+    var json: String {
+        get {
+            return PayloadCoder.encode(self)
         }
     }
 }
+
+/// CommunicationEventData provides the generic type required by the CommunicationEvent.
+/// Note that this cannot be a type alias since we need it to be an actual class.
+class CommunicationEventData: Codable {}

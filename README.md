@@ -1,6 +1,5 @@
 # CoatySwift
 
-[![CI Status](https://img.shields.io/travis/Sandra Grujovic/CoatySwift.svg?style=flat)](https://travis-ci.org/Sandra Grujovic/CoatySwift)
 [![Version](https://img.shields.io/cocoapods/v/CoatySwift.svg?style=flat)](https://cocoapods.org/pods/CoatySwift)
 [![License](https://img.shields.io/cocoapods/l/CoatySwift.svg?style=flat)](https://cocoapods.org/pods/CoatySwift)
 [![Platform](https://img.shields.io/cocoapods/p/CoatySwift.svg?style=flat)](https://cocoapods.org/pods/CoatySwift)
@@ -20,9 +19,10 @@ it, simply add the following line to your Podfile:
 pod 'CoatySwift'
 ```
 
-## Author
+## Authors
 
 Sandra Grujovic, sandra.grujovic@siemens.com
+Johannes Rohwer, johannes.rohwer@siemens.com
 
 ## License
 

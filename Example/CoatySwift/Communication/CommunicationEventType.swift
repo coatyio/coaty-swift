@@ -1,11 +1,12 @@
 //
 //  CommunicationEventType.swift
+//  CoatySwift
 //
 //
 
-import Foundation
-
-enum CommunicationEventType {
+/// CommunicationEventType provides the different cases to discover, distribute, and share data.
+/// See coaty-js/src/com/communication-event.ts
+enum CommunicationEventType: String {
     case Raw
     case Advertise
     case Deadvertise
