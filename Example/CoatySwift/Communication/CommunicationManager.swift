@@ -83,8 +83,8 @@ class CommunicationManager {
     
     /// Observes advertises with a particular coreType.
     /// - Parameters:
-    ///     - eventTarget: TODO
-    ///     - coreType: TODO
+    ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
+    ///     - coreType: coreType core type of objects to be observed.
     /// - Returns: An observable emitting the advertise events, that have the wanted coreType.
     func observeAdvertiseWithCoreType<S: Advertise, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
                                                                           coreType: CoreType) throws -> Observable<T> {
@@ -98,9 +98,9 @@ class CommunicationManager {
     
     /// Observes advertises with a particular objectType.
     /// - Parameters:
-    ///     - eventTarget: TODO
-    ///     - coreType: TODO
-    /// - Returns: An observable emitting the advertise events, that have the wanted coreType.
+    ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
+    ///     - objectType: objectType object type of objects to be observed.
+    /// - Returns: An observable emitting the advertise events, that have the wanted objectType.
     func observeAdvertiseWithObjectType<S: Advertise, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
                                                                             objectType: String) throws -> Observable<T> {
         // TODO: Create correct topic structure, similar to CommunicationTopic.createByLevels()
