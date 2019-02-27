@@ -25,6 +25,7 @@
 		BC7BA596221DB26F00657BF2 /* CommunicationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7BA595221DB26F00657BF2 /* CommunicationState.swift */; };
 		BC7BA598221DB27700657BF2 /* OperatingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7BA597221DB27700657BF2 /* OperatingState.swift */; };
 		BC7BA59A221DBB5E00657BF2 /* CommunicationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7BA599221DBB5E00657BF2 /* CommunicationConstants.swift */; };
+		BC8591EF2226AD9700E53BFA /* Codable+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8591EE2226AD9700E53BFA /* Codable+JSON.swift */; };
 		BCB005D6221D82C10085DC24 /* CoatyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB005D2221D82C00085DC24 /* CoatyObject.swift */; };
 		BCB005D7221D82C10085DC24 /* Advertise.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB005D3221D82C00085DC24 /* Advertise.swift */; };
 		BCB005D8221D82C10085DC24 /* CoreType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB005D4221D82C10085DC24 /* CoreType.swift */; };
@@ -68,6 +69,7 @@
 		BC7BA595221DB26F00657BF2 /* CommunicationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationState.swift; sourceTree = "<group>"; };
 		BC7BA597221DB27700657BF2 /* OperatingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatingState.swift; sourceTree = "<group>"; };
 		BC7BA599221DBB5E00657BF2 /* CommunicationConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationConstants.swift; sourceTree = "<group>"; };
+		BC8591EE2226AD9700E53BFA /* Codable+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+JSON.swift"; sourceTree = "<group>"; };
 		BCB005D2221D82C00085DC24 /* CoatyObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoatyObject.swift; sourceTree = "<group>"; };
 		BCB005D3221D82C00085DC24 /* Advertise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertise.swift; sourceTree = "<group>"; };
 		BCB005D4221D82C10085DC24 /* CoreType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreType.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				2A023ACB221DBCF700241F1B /* CoatySwiftError.swift */,
+				BC8591EE2226AD9700E53BFA /* Codable+JSON.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				BCB005D7221D82C10085DC24 /* Advertise.swift in Sources */,
 				BCB005DA221D82D70085DC24 /* PayloadCoder.swift in Sources */,
 				2A023ACC221DBCF700241F1B /* CoatySwiftError.swift in Sources */,
+				BC8591EF2226AD9700E53BFA /* Codable+JSON.swift in Sources */,
 				BCB005D8221D82C10085DC24 /* CoreType.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				BC7BA596221DB26F00657BF2 /* CommunicationState.swift in Sources */,

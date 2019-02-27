@@ -93,6 +93,8 @@ class ViewController: UIViewController {
             _ = observable.subscribe({ (advertiseEvent) in
                 if let advertiseEvent = advertiseEvent.element {
                     print(advertiseEvent.json)
+                    let encodedAdvertiseEvent = PayloadCoder.encode(advertiseEvent)
+                    print(encodedAdvertiseEvent)
                 }
             })
         } catch  {
