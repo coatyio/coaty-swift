@@ -41,25 +41,25 @@ class Advertise: CoatyObject {
     
     required init(from decoder: Decoder) throws {
         // Unpack "object" key from container.
-        let container = try decoder.container(keyedBy: ContainerCodingKeys.self)
-        let object = try container.nestedContainer(keyedBy: AdvertiseCodingKeys.self, forKey: .object)
+        let container = try decoder.container(keyedBy: AdvertiseCodingKeys.self)
+        // let object = try container.nestedContainer(keyedBy: AdvertiseCodingKeys.self, forKey: .object)
         
         // Decode attributes.
-        objectId = try object.decode(UUID.self, forKey: .objectId)
-        coreType = try object.decode(CoreType.self, forKey: .coreType)
-        objectType = try object.decode(String.self, forKey: .objectType)
-        name = try object.decode(String.self, forKey: .name)
+        objectId = try container.decode(UUID.self, forKey: .objectId)
+        coreType = try container.decode(CoreType.self, forKey: .coreType)
+        objectType = try container.decode(String.self, forKey: .objectType)
+        name = try container.decode(String.self, forKey: .name)
     }
     
     func encode(to encoder: Encoder) throws {
         // Use "object" key for container.
-        var container = encoder.container(keyedBy: ContainerCodingKeys.self)
-        var object = container.nestedContainer(keyedBy: AdvertiseCodingKeys.self, forKey: .object)
+        var container = encoder.container(keyedBy: AdvertiseCodingKeys.self)
+        // var object = container.nestedContainer(keyedBy: AdvertiseCodingKeys.self, forKey: .object)
         
         // Encode attributes.
-        try object.encode(objectId, forKey: .objectId)
-        try object.encode(coreType, forKey: .coreType)
-        try object.encode(objectType, forKey: .objectType)
-        try object.encode(name, forKey: .name)
+        try container.encode(objectId, forKey: .objectId)
+        try container.encode(coreType, forKey: .coreType)
+        try container.encode(objectType, forKey: .objectType)
+        try container.encode(name, forKey: .name)
     }
 }

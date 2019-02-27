@@ -1,49 +1,58 @@
 //
 //  CommunicationEvent.swift
-//  CoatySwift_Example
+//  CoatySwift
 //
-//  Created by Sandra Grujovic on 25.02.19.
-//  Copyright © 2019 CocoaPods. All rights reserved.
 //
 
 import Foundation
-
-enum CommunicationEventType {
-    case Raw
-    case Advertise
-    case Deadvertise
-    case Channel
-    case Discover
-    case Resolve
-    case Query
-    case Retrieve
-    case Update
-    case Complete
-    case Associate
-    case IoValue
-}
 
 class CommunicationEventData: Codable {
     
 }
 
-/* class CommunicationEvent<T:CommunicationEventData> {
+class CommunicationEvent<T: CommunicationEventData>: Codable {
     
     // MARK: - Public attributes.
-    var eventType: CommunicationEventType
+    var eventType: CommunicationEventType?
     
     // MARK: - Private attributes.
     
     // private var eventSource: CoatyObject.Type
-    private var eventSourceId: UUID
+    private var eventSourceId: UUID?
     private var eventData: T
-    private var eventUserId: String // or UUID?
+    private var eventUserId: String? // or UUID?
     
     // MARK: - Initializer.
     
-    init() {
+    init(eventSource: CoatyObject, eventData: T) throws {
+        // TODO: Only accept components as eventSource.
         
+        if eventSource.coreType != .Component {
+            // throw CoatySwiftError.InvalidArgument("EventSource needs to have core type 'Component'")
+        }
+        
+        self.eventSourceId = eventSource.objectId
+        self.eventUserId = "default-user-id" // FIXME: Default value.
+        self.eventData = eventData
+        self.eventType = .Advertise // FIXME: Default value.
     }
     
-}*/ 
+    // MARK: - Codable methods.
+    required init(from decoder: Decoder) throws {
+        var container = try decoder.singleValueContainer()
+        self.eventData = try container.decode(T.self)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(eventData)
+    }
+}
 
+// MARK: - Extension enable easy access to JSON representation of DemoAdvertise object.
+extension CommunicationEvent {
+    var json: String { get {
+        return PayloadCoder.encode(self)
+        }
+    }
+}
