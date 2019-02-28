@@ -10,10 +10,12 @@ import Foundation
 /// Note that this class should preferably initialized via its withObject() method.
 class DiscoverEvent<GenericDiscover: Discover>: CommunicationEvent<DiscoverEventData<GenericDiscover>> {
     
+    
     /// TODO: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
     override init(eventSource: Component, eventData: DiscoverEventData<GenericDiscover>) {
         super.init(eventSource: eventSource, eventData: eventData)
+        eventType = .Discover
     }
     
     /// Convenience factory method that configures an instance of and AdvertiseEvent with

@@ -18,18 +18,18 @@ class CommunicationEvent<T: CommunicationEventData>: Codable {
 
     // MARK: - Private attributes.
     
-    // private var eventSource: CoatyObject.Type
-    private var eventSourceId: UUID?
-    private var eventUserId: String? // or UUID?
+    var eventSource: Component?
+    var eventSourceId: UUID?
+    var eventUserId: String? // or UUID?
     
     // MARK: - Initializer.
     
     /// TODO: Only accept components as eventSource.
     init(eventSource: Component, eventData: T) {
+        self.eventSource = eventSource
         self.eventSourceId = eventSource.objectId
         self.eventUserId = "default-user-id" // FIXME: Default value.
         self.eventData = eventData
-        self.eventType = .Advertise // FIXME: Default value.
     }
     
     // MARK: - Codable methods.

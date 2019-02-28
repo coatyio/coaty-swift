@@ -5,6 +5,4 @@
 
 import Foundation
 
-class Resolve: Codable {
-    
-}
+typealias Resolve = CoatyObject

@@ -20,15 +20,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let discover = Discover(externalId: "sandy", objectTypes: ["joey", "joe"], coreTypes: [.Annotation, .CoatyObject])
-        let discoverEvent = DiscoverEvent.withCoreTypes(eventSource: self.identity, coreTypes: [.Annotation, .Config])
+        /*let privateData: [String: Any] = ["so": "private"]
+        let dummy = DemoObject(coreType: .Device, objectType: "com.objtype.x", objectId: .init(), name: "some name", message: "henlo world")
+        let resolveEvent = ResolveEvent.withObjectAndRelatedObjects(eventSource: identity, object: dummy, relatedObjects: [dummy, dummy], privateData: privateData)
 
-        
-        let encoded = PayloadCoder.encode(discoverEvent)
+        let encoded = PayloadCoder.encode(resolveEvent)
         print(encoded)
-        let decoded: DiscoverEvent<Discover> = PayloadCoder.decode(encoded)!
-        print(PayloadCoder.encode(decoded))
-        
+        let decoded: ResolveEvent<CoatyObject> = PayloadCoder.decode(encoded)!
+        print(PayloadCoder.encode(decoded))*/
         
         
         advertiseEventButton.backgroundColor = .red
@@ -66,9 +65,14 @@ class ViewController: UIViewController {
     }
     
     @objc func advertiseButtonTapped() {
-        let advertiseEvent = try? AdvertiseEvent.withObject(eventSource: self.identity, object: CoatyObject(coreType: .CoatyObject, objectType: "Derp", objectId: .init(), name: "sandra"), privateData: nil)
+        let discoverEvent = DiscoverEvent.withExternalId(eventSource: identity, externalId: "asdf")
+        let observable: Observable<ResolveEvent<DemoObject>> = comManager.publishDiscover(event: discoverEvent)
+            
+            _ = observable.subscribe(onNext: { (resolveEvent) in
+            print("Received Resolve:")
+                print(resolveEvent.json)
+        }, onError: { error in print(error)}, onCompleted: nil, onDisposed: nil)
         
-        try? comManager.publishAdvertise(advertiseEvent: advertiseEvent!, eventTarget: identity)
     }
     
     // FIXME: Use proper Component Object for identity.

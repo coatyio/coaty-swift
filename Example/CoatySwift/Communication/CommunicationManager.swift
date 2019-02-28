@@ -47,13 +47,13 @@ class CommunicationManager {
         
         
          if coreType != nil && objectType != nil {
-         throw CoatySwiftError.InvalidArgument(
-            "Either coreType or objectType must be specified, but not both"
-            )
+            throw CoatySwiftError.InvalidArgument(
+                "Either coreType or objectType must be specified, but not both"
+                )
          }
          
          if coreType == nil && objectType == nil {
-         throw CoatySwiftError.InvalidArgument("Either coreType or objectType must be specified")
+            throw CoatySwiftError.InvalidArgument("Either coreType or objectType must be specified")
          }
         
         // TODO: Subscribe only if not already subscribed.
@@ -153,11 +153,43 @@ class CommunicationManager {
             return
         }
         
-        let advertiseIdentityEvent = try AdvertiseEvent.withObject(eventSource: identity,
+        let advertiseIdentityEvent = AdvertiseEvent.withObject(eventSource: identity,
                                                                    object: identity,
                                                                    privateData: nil)
       
         try publishAdvertise(advertiseEvent: advertiseIdentityEvent, eventTarget: identity)
+    }
+    
+    func publishDiscover<S: Discover, T: DiscoverEvent<S>, U: CoatyObject, V: ResolveEvent<U>>(event: T) -> Observable<ResolveEvent<U>> {
+        let discoverMessageToken = UUID.init().uuidString
+        let topic = Topic.createTopicStringByLevelsForPublish(eventType: .Discover, eventTypeFilter: nil, associatedUserId: nil, sourceObject: event.eventSource, messageToken: discoverMessageToken)
+        publish(topic: topic, message: event.json)
+        print("published discover!")
+        
+        // FIXME: Subscribe to resolve topic.
+        let resolveTopic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Resolve, eventTypeFilter: nil, associatedUserId: nil, sourceObject: nil, messageToken: discoverMessageToken)
+        subscribe(topic: resolveTopic)
+        
+        return rawMessages.map(convertToTupleFormat)
+            .filter(isResolve)
+            .filter({ (rawMessageWithTopic) -> Bool in
+                // Filter messages according to message token.
+                let (topic, _) = rawMessageWithTopic
+                print("Filter: \(topic)")
+                return topic.messageToken == discoverMessageToken
+            })
+            .map({ (message) -> V in
+                let (_, payload) = message
+                // FIXME: Remove force unwrap.
+                print(payload)
+                return PayloadCoder.decode(payload)!
+            })
+        
+        
+        /*//let resolve: U = U(coreType: .CoatyObject, objectType: "asdf", objectId: .init(), name: "asdf")
+        let resolve: U = DemoObject(coreType: .CoatyObject, objectType: "asdf", objectId: .init(), name: "eh", message: "asdf") as! U
+        let resolveEvent = V.withObject(eventSource: identity!, object: resolve)
+        return Observable.just(resolveEvent)*/
     }
     
     

@@ -48,7 +48,7 @@ class CoatyObject: Codable {
     
     // MARK: - Initializers.
     
-    init(coreType: CoreType, objectType: String, objectId: UUID, name: String) {
+    required init(coreType: CoreType, objectType: String, objectId: UUID, name: String) {
         self.coreType = coreType
         self.objectId = objectId
         self.objectType = objectType

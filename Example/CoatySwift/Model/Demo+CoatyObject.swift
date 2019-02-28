@@ -36,6 +36,10 @@ class DemoObject: CoatyObject {
         try super.init(from: decoder)
     }
     
+    required init(coreType: CoreType, objectType: String, objectId: UUID, name: String) {
+        fatalError("init(coreType:objectType:objectId:name:) has not been implemented")
+    }
+    
     override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)

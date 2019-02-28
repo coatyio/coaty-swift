@@ -59,14 +59,14 @@ class Topic {
         let objectType = Topic.extractObjectType(event)
         
         // Check if event could be parsed.
-        if (coreType == nil && objectType == nil) {
-            throw CoatySwiftError.InvalidArgument("Event could not be parsed.")
-        }
+        // if (coreType == nil && objectType == nil) {
+        //     throw CoatySwiftError.InvalidArgument("Event could not be parsed.")
+        // }
         
         // Fill either coreType or objectType.
-        if (coreType == nil && objectType == nil) || (coreType != nil && objectType != nil) {
-            throw CoatySwiftError.InvalidArgument("You can only specify coreType OR objectType.")
-        }
+        // if (coreType == nil && objectType == nil) || (coreType != nil && objectType != nil) {
+        //    throw CoatySwiftError.InvalidArgument("You can only specify coreType OR objectType.")
+        // }
         
         self.coreType = coreType
         self.objectType = objectType
@@ -153,14 +153,18 @@ class Topic {
     /// - Returns: A topic string with correct wildcards.
     private static func createTopicStringByLevels(coatyVersion: Int?,
                                           eventType: CommunicationEventType,
-                                          eventTypeFilter: String,
+                                          eventTypeFilter: String? = nil,
                                           associatedUserId: String? = nil,
                                           sourceObject: CoatyObject? = nil,
                                           messageToken: String? = nil) -> String {
         
         // Choose the correct separator.
-        let separator = isCoreType(eventTypeFilter) ? CORE_TYPE_SEPARATOR : OBJECT_TYPE_SEPARATOR
-        let event = eventType.rawValue + separator + eventTypeFilter
+        var event = eventType.rawValue
+        if let eventTypeFilter = eventTypeFilter {
+            let separator = isCoreType(eventTypeFilter) ? CORE_TYPE_SEPARATOR : OBJECT_TYPE_SEPARATOR
+            event = eventType.rawValue + separator + eventTypeFilter
+        }
+        
         
         // Build correct version string.
         var versionString = WILDCARD_TOPIC
@@ -178,7 +182,7 @@ class Topic {
     }
     
     static func createTopicStringByLevelsForPublish(eventType: CommunicationEventType,
-                                          eventTypeFilter: String,
+                                          eventTypeFilter: String? = nil,
                                           associatedUserId: String? = nil,
                                           sourceObject: CoatyObject? = nil,
                                           messageToken: String? = nil) -> String {
@@ -192,7 +196,7 @@ class Topic {
     }
     
     static func createTopicStringByLevelsForSubscribe(eventType: CommunicationEventType,
-                                                      eventTypeFilter: String,
+                                                      eventTypeFilter: String? = nil,
                                                       associatedUserId: String? = nil,
                                                       sourceObject: CoatyObject? = nil,
                                                       messageToken: String? = nil) -> String {
@@ -239,9 +243,14 @@ class Topic {
     
     private static func extractEventType(_ event: String) throws -> CommunicationEventType {
         if !(event.contains(CORE_TYPE_SEPARATOR) || event.contains(OBJECT_TYPE_SEPARATOR)) {
-            throw CoatySwiftError.InvalidArgument("Event needs to contain a valid CommunicationEventType")
+            guard let communicationEventType = CommunicationEventType(rawValue: event) else {
+                throw CoatySwiftError.InvalidArgument("Event needs to contain a valid CommunicationEventType")
+            }
+            
+            return communicationEventType
         }
         
+        // This is required to parse Advertise events correct. (In the future: Channels).
         guard let communicationEventTypeString = event.components(
             separatedBy: CORE_TYPE_SEPARATOR).first else {
             throw CoatySwiftError.InvalidArgument("Event needs to contain a valid CommunicationEventType")

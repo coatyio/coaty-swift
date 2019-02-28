@@ -12,11 +12,13 @@ extension CommunicationManager {
         return try (Topic(topic), payload)
     }
     
-    func isAdvertise(rawMesssage: (Topic, String)) -> Bool {
-        let (topic, _) = rawMesssage
-        
-        // FIXME: Implement getter for communicationEventType on Topic.swift.
-        // FIXME: Use CommunicationEventTypes.
-        return topic.event.contains("Advertise")
+    func isAdvertise(rawMessage: (Topic, String)) -> Bool {
+        let (topic, _) = rawMessage
+        return topic.eventType == CommunicationEventType.Advertise
+    }
+    
+    func isResolve(rawMessage: (Topic, String)) -> Bool {
+        let (topic, _) = rawMessage
+        return topic.eventType == CommunicationEventType.Resolve
     }
 }
