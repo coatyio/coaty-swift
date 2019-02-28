@@ -10,19 +10,19 @@ class DeadvertiseEvent<GenericDeadvertise: Deadvertise>: CommunicationEvent<Dead
     
     /// TODO: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
-    override init(eventSource: CoatyObject, eventData: DeadvertiseEventData<GenericDeadvertise>) throws {
-        try super.init(eventSource: eventSource, eventData: eventData)
+    override init(eventSource: Component, eventData: DeadvertiseEventData<GenericDeadvertise>) {
+        super.init(eventSource: eventSource, eventData: eventData)
     }
     
     /// Convenience factory method that configures an instance of and DeadvertiseEvent with
     /// a Deadvertisement Object. Note that the event source should be the controller that
     /// creates the DeadvertiseEvent.
     /// FIXME: Replace CoatyObject with Component object.
-    static func withObject(eventSource: CoatyObject,
+    static func withObject(eventSource: Component,
                            object: GenericDeadvertise) throws -> DeadvertiseEvent {
         
         let deadvertiseEventData = DeadvertiseEventData(object: object)
-        return try .init(eventSource: eventSource, eventData: deadvertiseEventData)
+        return .init(eventSource: eventSource, eventData: deadvertiseEventData)
     }
     
     // MARK: - Codable methods.

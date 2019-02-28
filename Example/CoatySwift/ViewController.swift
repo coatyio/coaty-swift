@@ -20,6 +20,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let discover = Discover(externalId: "sandy", objectTypes: ["joey", "joe"], coreTypes: [.Annotation, .CoatyObject])
+        let discoverEvent = DiscoverEvent.withCoreTypes(eventSource: self.identity, coreTypes: [.Annotation, .Config])
+
+        
+        let encoded = PayloadCoder.encode(discoverEvent)
+        print(encoded)
+        let decoded: DiscoverEvent<Discover> = PayloadCoder.decode(encoded)!
+        print(PayloadCoder.encode(decoded))
+        
+        
+        
         advertiseEventButton.backgroundColor = .red
         advertiseEventButton.setTitle("Publish Advertises", for: .normal)
         self.view.addSubview(advertiseEventButton)
@@ -55,14 +66,14 @@ class ViewController: UIViewController {
     }
     
     @objc func advertiseButtonTapped() {
-        let advertiseEvent = try? AdvertiseEvent.withObject(eventSource: self.identity, object: Advertise(coreType: .CoatyObject, objectType: "Derp", objectId: .init(), name: "sandra"), privateData: nil)
+        let advertiseEvent = try? AdvertiseEvent.withObject(eventSource: self.identity, object: CoatyObject(coreType: .CoatyObject, objectType: "Derp", objectId: .init(), name: "sandra"), privateData: nil)
         
         try? comManager.publishAdvertise(advertiseEvent: advertiseEvent!, eventTarget: identity)
     }
     
     // FIXME: Use proper Component Object for identity.
     // Currently just a garbage object.
-    let identity = Advertise(coreType: .CoatyObject, objectType: "SpecialObjectType", objectId: .init(), name: "ControllerIdentity")
+    let identity = Component(coreType: .Component, objectType: "SpecialObjectType", objectId: .init(), name: "ControllerIdentity")
     
     // MARK: - Receive advertisements for object types.
     
@@ -90,7 +101,7 @@ class ViewController: UIViewController {
     @objc func receiveDemoMessageAdvertise() {
         // FIXME: These two values are currently just garbage values.
         do {
-            let observable: Observable<AdvertiseEvent<DemoAdvertise>> = try comManager.observeAdvertiseWithObjectType(eventTarget: identity, objectType: "org.example.coaty.demo-message")
+            let observable: Observable<AdvertiseEvent<DemoObject>> = try comManager.observeAdvertiseWithObjectType(eventTarget: identity, objectType: "org.example.coaty.demo-message")
             
             _ = observable.subscribe({ (advertiseEvent) in
                 if let advertiseEvent = advertiseEvent.element {

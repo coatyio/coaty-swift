@@ -10,20 +10,20 @@ class AdvertiseEvent<GenericAdvertise: CoatyObject>: CommunicationEvent<Advertis
     
     /// TODO: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
-    override init(eventSource: CoatyObject, eventData: AdvertiseEventData<GenericAdvertise>) throws {
-        try super.init(eventSource: eventSource, eventData: eventData)
+    override init(eventSource: Component, eventData: AdvertiseEventData<GenericAdvertise>) {
+        super.init(eventSource: eventSource, eventData: eventData)
     }
     
     /// Convenience factory method that configures an instance of and AdvertiseEvent with
     /// an object and privateData. Note that the event source should be the controller that
     /// creates the AdvertiseEvent.
     /// FIXME: Replace CoatyObject with Component object.
-    static func withObject(eventSource: CoatyObject,
+    static func withObject(eventSource: Component,
                            object: GenericAdvertise,
-                           privateData: [String: Any]? = nil) throws -> AdvertiseEvent {
+                           privateData: [String: Any]? = nil) -> AdvertiseEvent {
         
         let advertiseEventData = AdvertiseEventData(object: object, privateData: privateData)
-        return try .init(eventSource: eventSource, eventData: advertiseEventData)
+        return .init(eventSource: eventSource, eventData: advertiseEventData)
     }
     
     // MARK: - Codable methods.

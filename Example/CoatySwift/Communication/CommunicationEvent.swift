@@ -25,11 +25,7 @@ class CommunicationEvent<T: CommunicationEventData>: Codable {
     // MARK: - Initializer.
     
     /// TODO: Only accept components as eventSource.
-    init(eventSource: CoatyObject, eventData: T) throws {
-        if eventSource.coreType != .Component {
-            throw CoatySwiftError.InvalidArgument("EventSource needs to have core type 'Component'")
-        }
-        
+    init(eventSource: Component, eventData: T) {
         self.eventSourceId = eventSource.objectId
         self.eventUserId = "default-user-id" // FIXME: Default value.
         self.eventData = eventData

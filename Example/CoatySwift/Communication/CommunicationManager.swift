@@ -15,7 +15,7 @@ class CommunicationManager {
     private var brokerClientId: String?
     private var disposeBag = DisposeBag()
     private let protocolVersion = 1
-    private var identity: CoatyObject? // TODO: This should probably be of type Component.
+    private var identity: Component?
     var mqtt: CocoaMQTT?
     
     // MARK: - RXSwift Disposebag.
@@ -147,7 +147,7 @@ class CommunicationManager {
     /// Advertises the identity of a CommunicationManager.
     /// TODO: Re-use the implementation of publishAdvertise. Currently not possible because of
     /// missing topic creations.
-    func publishAdvertiseIdentity(eventTarget: CoatyObject) throws {
+    func publishAdvertiseIdentity(eventTarget: Component) throws {
         guard let identity = self.identity else {
             // TODO: Handle error.
             return
@@ -192,7 +192,7 @@ class CommunicationManager {
     // TODO: This should most likely return a Component object in the future.
     public func initIdentity() {
         let objectType = COATY_PREFIX + CoreType.Component.rawValue
-        identity = CoatyObject(coreType: .Component,
+        identity = Component(coreType: .Component,
                                   objectType: objectType,
                                   objectId: .init(), name: "CommunicationManager")
     }
