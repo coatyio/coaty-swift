@@ -6,11 +6,11 @@
 
 import Foundation
 
-/// DemoAdvertise implements a customized Advertise message for demonstration purposes.
-/// When implementing a custom Advertise message make sure to conform to Codable by implementing
-/// the required methods and call their super implementation inside them.
-/// It may be altered or entirely removed in the future.
-class DemoAdvertise: CoatyObject {
+/// DemoObjects shows a custom implementation of a CoatyObject for demonstration purposes.
+/// When implementing a CoatyObject remember to conform to Codable by implementing
+/// the required methods and call their super implementation inside them, e.g. in
+/// encode(to encoder: Encoder) and init(from decoder: Decoder).
+class DemoObject: CoatyObject {
     
     // MARK: - Public Attributes.
     
