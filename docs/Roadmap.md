@@ -9,3 +9,6 @@ already implements caching functionality
 - Broker Discovery (can be found in coaty-js: node.ts) based on Bonjour, 
 ask Maxim for more details about his setup
 - As a demo: Rewrite coaty-js hello-world for swift
+- Overall guide: Project should be compatible with OS X as well as iOS. 
+ Separate OS X and iOS modules if needed.
+- Integration of unit tests -> look at coaty-js tests.
