@@ -3,6 +3,7 @@
 //  CoatySwift
 //
 //
+
 import Foundation
 import CocoaMQTT
 import RxSwift
@@ -14,6 +15,7 @@ class CommunicationManager {
     private var brokerClientId: String?
     private var disposeBag = DisposeBag()
     private let protocolVersion = 1
+    private var identity: Advertise? // TODO: This should probably be of type Component.
     var mqtt: CocoaMQTT?
     
     // MARK: - RXSwift Disposebag.
@@ -88,9 +90,8 @@ class CommunicationManager {
     /// - Returns: An observable emitting the advertise events, that have the wanted coreType.
     func observeAdvertiseWithCoreType<S: Advertise, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
                                                                           coreType: CoreType) throws -> Observable<T> {
-        // TODO: Create correct topic structure, similar to CommunicationTopic.createByLevels()
-        let topic = "/coaty/+/Advertise:\(coreType.rawValue)/+/+/+/"
-        
+       
+        let topic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: coreType.rawValue)
         let observable: Observable<T> = try observeAdvertise(topic: topic, eventTarget: eventTarget,
                                                              coreType: coreType, objectType: nil)
         return observable
@@ -103,9 +104,8 @@ class CommunicationManager {
     /// - Returns: An observable emitting the advertise events, that have the wanted objectType.
     func observeAdvertiseWithObjectType<S: Advertise, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
                                                                             objectType: String) throws -> Observable<T> {
-        // TODO: Create correct topic structure, similar to CommunicationTopic.createByLevels()
-        let topic = "/coaty/+/Advertise::\(objectType)/+/+/+/"
-        
+
+        let topic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: objectType)
         let observable: Observable<T> = try observeAdvertise(topic: topic, eventTarget: eventTarget,
                                                              coreType: nil, objectType: objectType)
         return observable
@@ -126,45 +126,45 @@ class CommunicationManager {
     func publishAdvertise<S: Advertise,T: AdvertiseEvent<S>> (advertiseEvent: T,
                                                                   eventTarget: CoatyObject) throws {
         
-        // TODO: Topic creation factory missing.
-        let topic = try Topic.init(protocolVersion: protocolVersion, event: "Advertise::\(advertiseEvent.eventData.object.objectType)",
-                                   associatedUserId: "-",
-                                   sourceObjectId: "\(eventTarget.objectId)",
-                                   messageToken: "-")
-        
+        let topicForObjectType = Topic.createTopicStringByLevelsForPublish(eventType: .Advertise,
+                                                    eventTypeFilter: advertiseEvent.eventData.object.objectType,
+                                                    associatedUserId: "-",
+                                                    sourceObject: eventTarget,
+                                                    messageToken: UUID.init().uuidString
+                                                    )
+        let topicForCoreType = Topic.createTopicStringByLevelsForPublish(eventType: .Advertise,
+                                        eventTypeFilter: advertiseEvent.eventData.object.coreType.rawValue,
+                                        associatedUserId: "-",
+                                        sourceObject: eventTarget,
+                                        messageToken: UUID.init().uuidString
+                                        )
 
-        let message = CocoaMQTTMessage(topic: topic.string, string: advertiseEvent.json)
-        mqtt?.publish(message)
+        // Publish the advertise for core AND object type.
+        publish(topic: topicForCoreType, message: advertiseEvent.json)
+        publish(topic: topicForObjectType, message: advertiseEvent.json)
     }
 
     /// Advertises the identity of a CommunicationManager.
     /// TODO: Re-use the implementation of publishAdvertise. Currently not possible because of
     /// missing topic creations.
     func publishAdvertiseIdentity(eventTarget: CoatyObject) throws {
+        guard let identity = self.identity else {
+            // TODO: Handle error.
+            return
+        }
         
-        // TODO: Topic creation factory missing.
-        let topic = try Topic.init(protocolVersion: protocolVersion, event: "Advertise:Component",
-                                   associatedUserId: "-",
-                                   sourceObjectId: "\(eventTarget.objectId)",
-                                   messageToken: "-")
-        
-        let objectType = COATY_PREFIX + CoreType.Component.rawValue
-        
-        let advertise = Advertise(coreType: .Component,
-                                  objectType: objectType,
-                                  objectId: .init(), name: "CommunicationManager")
-        
-        let advertiseIdentityEvent = try AdvertiseEvent.withObject(eventSource: eventTarget,
-                                                               object: advertise,
-                                                               privateData: nil)
-        
-        let message = CocoaMQTTMessage(topic: topic.string, string: advertiseIdentityEvent.json)
-        mqtt?.publish(message)
+        let advertiseIdentityEvent = try AdvertiseEvent.withObject(eventSource: identity,
+                                                                   object: identity,
+                                                                   privateData: nil)
+      
+        try publishAdvertise(advertiseEvent: advertiseIdentityEvent, eventTarget: identity)
     }
+    
     
     // MARK: - Init.
     
     public init(host: String, port: Int) {
+        initIdentity()
         brokerClientId = generateClientId()
         mqtt = CocoaMQTT(clientID: getBrokerClientId(), host: host, port: UInt16(port))
         configureBroker()
@@ -180,6 +180,21 @@ class CommunicationManager {
         
         startClient()
         
+        // TODO: opt-out: shouldAdvertiseIdentity from configuration.
+        communicationState
+            .filter { $0 == .online }
+            .subscribe { (event) in
+                // FIXME: Remove force unwrap.
+                try? self.publishAdvertiseIdentity(eventTarget: self.identity!)
+            }.disposed(by: disposeBag)
+    }
+    
+    // TODO: This should most likely return a Component object in the future.
+    public func initIdentity() {
+        let objectType = COATY_PREFIX + CoreType.Component.rawValue
+        identity = Advertise(coreType: .Component,
+                                  objectType: objectType,
+                                  objectId: .init(), name: "CommunicationManager")
     }
     
     // MARK: - Broker methods.

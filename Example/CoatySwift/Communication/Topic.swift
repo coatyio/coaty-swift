@@ -141,6 +141,7 @@ class Topic {
     /// Helper method that creates a topic string with wildcards.
     /// See [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-filters)
     /// - Parameters:
+    ///   - coatyVersion: the current Coaty version.
     ///   - eventType: CommunicationEventType (e.g. Advertise)
     ///   - eventTypeFilter: may either be a core type (e.g. Component) or an object type
     ///     (e.g. org.example.object)
@@ -150,19 +151,58 @@ class Topic {
     ///     it is replaced with a wildcard.
     ///   - messageToken: if ommitted it is replaced with a wildcard.
     /// - Returns: A topic string with correct wildcards.
-    static func createTopicStringByLevels(eventType: CommunicationEventType, eventTypeFilter: String, associatedUserId: String?, sourceObject: CoatyObject?, messageToken: String?) -> String {
+    private static func createTopicStringByLevels(coatyVersion: Int?,
+                                          eventType: CommunicationEventType,
+                                          eventTypeFilter: String,
+                                          associatedUserId: String? = nil,
+                                          sourceObject: CoatyObject? = nil,
+                                          messageToken: String? = nil) -> String {
         
         // Choose the correct separator.
         let separator = isCoreType(eventTypeFilter) ? CORE_TYPE_SEPARATOR : OBJECT_TYPE_SEPARATOR
         let event = eventType.rawValue + separator + eventTypeFilter
         
+        // Build correct version string.
+        var versionString = WILDCARD_TOPIC
+        if let version = coatyVersion {
+            versionString = "\(version)"
+        }
+        
         return "\(TOPIC_SEPARATOR)\(COATY)"
-            + "\(TOPIC_SEPARATOR)\(WILDCARD_TOPIC)"
+            + "\(TOPIC_SEPARATOR)\(versionString)"
             + "\(TOPIC_SEPARATOR)\(event)"
             + "\(TOPIC_SEPARATOR)\(associatedUserId ?? WILDCARD_TOPIC)"
             + "\(TOPIC_SEPARATOR)\(sourceObject?.objectId.uuidString ?? WILDCARD_TOPIC)"
             + "\(TOPIC_SEPARATOR)\(messageToken ?? WILDCARD_TOPIC)"
             + "\(TOPIC_SEPARATOR)"
+    }
+    
+    static func createTopicStringByLevelsForPublish(eventType: CommunicationEventType,
+                                          eventTypeFilter: String,
+                                          associatedUserId: String? = nil,
+                                          sourceObject: CoatyObject? = nil,
+                                          messageToken: String? = nil) -> String {
+        
+        return createTopicStringByLevels(coatyVersion: PROTOCOL_VERSION,
+                                         eventType: eventType,
+                                         eventTypeFilter: eventTypeFilter,
+                                         associatedUserId: associatedUserId,
+                                         sourceObject: sourceObject,
+                                         messageToken: messageToken)
+    }
+    
+    static func createTopicStringByLevelsForSubscribe(eventType: CommunicationEventType,
+                                                      eventTypeFilter: String,
+                                                      associatedUserId: String? = nil,
+                                                      sourceObject: CoatyObject? = nil,
+                                                      messageToken: String? = nil) -> String {
+        
+        return createTopicStringByLevels(coatyVersion: nil,
+                                         eventType: eventType,
+                                         eventTypeFilter: eventTypeFilter,
+                                         associatedUserId: associatedUserId,
+                                         sourceObject: sourceObject,
+                                         messageToken: messageToken)
     }
     
     private static func isCoreType(_ eventTypeFilter: String) -> Bool {
