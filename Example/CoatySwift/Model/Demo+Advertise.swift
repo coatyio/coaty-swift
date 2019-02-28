@@ -10,7 +10,7 @@ import Foundation
 /// When implementing a custom Advertise message make sure to conform to Codable by implementing
 /// the required methods and call their super implementation inside them.
 /// It may be altered or entirely removed in the future.
-class DemoAdvertise: Advertise {
+class DemoAdvertise: CoatyObject {
     
     // MARK: - Public Attributes.
     

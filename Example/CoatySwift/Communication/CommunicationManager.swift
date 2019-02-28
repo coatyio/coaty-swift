@@ -15,7 +15,7 @@ class CommunicationManager {
     private var brokerClientId: String?
     private var disposeBag = DisposeBag()
     private let protocolVersion = 1
-    private var identity: Advertise? // TODO: This should probably be of type Component.
+    private var identity: CoatyObject? // TODO: This should probably be of type Component.
     var mqtt: CocoaMQTT?
     
     // MARK: - RXSwift Disposebag.
@@ -40,7 +40,7 @@ class CommunicationManager {
     ///     - eventTarget: Usually, your identity.
     ///     - coreType: observed coreType.
     ///     - objectType: observed objectType.
-    private func observeAdvertise<S: Advertise, T: AdvertiseEvent<S>>(topic: String,
+    private func observeAdvertise<S: CoatyObject, T: AdvertiseEvent<S>>(topic: String,
                                   eventTarget: CoatyObject,
                                   coreType: CoreType?,
                                   objectType: String?) throws -> Observable<T> {
@@ -88,7 +88,7 @@ class CommunicationManager {
     ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
     ///     - coreType: coreType core type of objects to be observed.
     /// - Returns: An observable emitting the advertise events, that have the wanted coreType.
-    func observeAdvertiseWithCoreType<S: Advertise, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
+    func observeAdvertiseWithCoreType<S: CoatyObject, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
                                                                           coreType: CoreType) throws -> Observable<T> {
        
         let topic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: coreType.rawValue)
@@ -102,7 +102,7 @@ class CommunicationManager {
     ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
     ///     - objectType: objectType object type of objects to be observed.
     /// - Returns: An observable emitting the advertise events, that have the wanted objectType.
-    func observeAdvertiseWithObjectType<S: Advertise, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
+    func observeAdvertiseWithObjectType<S: CoatyObject, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
                                                                             objectType: String) throws -> Observable<T> {
 
         let topic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: objectType)
@@ -123,7 +123,7 @@ class CommunicationManager {
     /// - Parameters:
     ///     - advertiseEvent: The event that should be advertised.
     ///     - eventTarget: (OBSOLETE!) Identity object,
-    func publishAdvertise<S: Advertise,T: AdvertiseEvent<S>> (advertiseEvent: T,
+    func publishAdvertise<S: CoatyObject,T: AdvertiseEvent<S>> (advertiseEvent: T,
                                                                   eventTarget: CoatyObject) throws {
         
         let topicForObjectType = Topic.createTopicStringByLevelsForPublish(eventType: .Advertise,
@@ -192,7 +192,7 @@ class CommunicationManager {
     // TODO: This should most likely return a Component object in the future.
     public func initIdentity() {
         let objectType = COATY_PREFIX + CoreType.Component.rawValue
-        identity = Advertise(coreType: .Component,
+        identity = CoatyObject(coreType: .Component,
                                   objectType: objectType,
                                   objectId: .init(), name: "CommunicationManager")
     }

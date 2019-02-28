@@ -6,7 +6,7 @@
 
 /// AdvertiseEvent provides a generic implementation for all AdvertiseEvents.
 /// Note that this class should preferably initialized via its withObject() method.
-class AdvertiseEvent<GenericAdvertise: Advertise>: CommunicationEvent<AdvertiseEventData<GenericAdvertise>> {
+class AdvertiseEvent<GenericAdvertise: CoatyObject>: CommunicationEvent<AdvertiseEventData<GenericAdvertise>> {
     
     /// TODO: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
@@ -40,7 +40,7 @@ class AdvertiseEvent<GenericAdvertise: Advertise>: CommunicationEvent<AdvertiseE
 
 /// AdvertiseEventData provides a wrapper object that stores the entire message payload data
 /// for an AdvertiseEvent including the object itself as well as the associated private data.
-class AdvertiseEventData<S: Advertise>: CommunicationEventData {
+class AdvertiseEventData<S: CoatyObject>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
