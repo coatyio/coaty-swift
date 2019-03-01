@@ -6,16 +6,17 @@
 
 import Foundation
 
-/// Topic represents a Coaty topic as defined in
-/// https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-structure
-/// TODO: Ability to generate readable topics.
-/// TODO: Convenience method that creates topic (string) from levels.
+/// Topic represents a Coaty topic as defined in the
+/// [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-structure)
+///
+/// - TODO: Rename to CommunicationTopic to match Coaty-js implementation.
+/// - TODO: Ability to generate readable topics.
+/// - TODO: Add support for Channel events.
 class Topic {
     
     // MARK: - Public Attributes.
     
     var protocolVersion: Int
-    
     /// event returns the entire event string including separators and filters,
     /// e.g. Advertise:Component or Advertise::org.example.object
     var event: String
@@ -57,17 +58,6 @@ class Topic {
         self.eventType = try Topic.extractEventType(event)
         let coreType = Topic.extractCoreType(event)
         let objectType = Topic.extractObjectType(event)
-        
-        // Check if event could be parsed.
-        // if (coreType == nil && objectType == nil) {
-        //     throw CoatySwiftError.InvalidArgument("Event could not be parsed.")
-        // }
-        
-        // Fill either coreType or objectType.
-        // if (coreType == nil && objectType == nil) || (coreType != nil && objectType != nil) {
-        //    throw CoatySwiftError.InvalidArgument("You can only specify coreType OR objectType.")
-        // }
-        
         self.coreType = coreType
         self.objectType = objectType
         
@@ -137,7 +127,7 @@ class Topic {
     }
     
     // MARK: - Helper methods.
-
+    
     /// Helper method that creates a topic string with wildcards.
     /// See [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-filters)
     /// - Parameters:
@@ -152,13 +142,13 @@ class Topic {
     ///   - messageToken: if ommitted it is replaced with a wildcard.
     /// - Returns: A topic string with correct wildcards.
     private static func createTopicStringByLevels(coatyVersion: Int?,
-                                          eventType: CommunicationEventType,
-                                          eventTypeFilter: String? = nil,
-                                          associatedUserId: String? = nil,
-                                          sourceObject: CoatyObject? = nil,
-                                          messageToken: String? = nil) -> String {
+                                                  eventType: CommunicationEventType,
+                                                  eventTypeFilter: String? = nil,
+                                                  associatedUserId: String? = nil,
+                                                  sourceObject: CoatyObject? = nil,
+                                                  messageToken: String? = nil) -> String {
         
-        // Choose the correct separator.
+        // Select the correct separator.
         var event = eventType.rawValue
         if let eventTypeFilter = eventTypeFilter {
             let separator = isCoreType(eventTypeFilter) ? CORE_TYPE_SEPARATOR : OBJECT_TYPE_SEPARATOR
@@ -181,11 +171,23 @@ class Topic {
             + "\(TOPIC_SEPARATOR)"
     }
     
+    /// Convenience Method to create a topic string that can be used for publications.
+    /// See [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-filters)
+    /// - Parameters:
+    ///   - eventType: CommunicationEventType (e.g. Advertise)
+    ///   - eventTypeFilter: may either be a core type (e.g. Component) or an object type
+    ///     (e.g. org.example.object)
+    ///   - associatedUserId: an optional UUID String, if the parameter is ommitted it is replaced
+    ///     with a wildcard.
+    ///   - sourceObject: the Coaty object that issued the method call, if the parameter is ommitted
+    ///     it is replaced with a wildcard.
+    ///   - messageToken: if ommitted it is replaced with a wildcard.
+    /// - Returns: A topic string that can be used for publications.
     static func createTopicStringByLevelsForPublish(eventType: CommunicationEventType,
-                                          eventTypeFilter: String? = nil,
-                                          associatedUserId: String? = nil,
-                                          sourceObject: CoatyObject? = nil,
-                                          messageToken: String? = nil) -> String {
+                                                    eventTypeFilter: String? = nil,
+                                                    associatedUserId: String? = nil,
+                                                    sourceObject: CoatyObject? = nil,
+                                                    messageToken: String? = nil) -> String {
         
         return createTopicStringByLevels(coatyVersion: PROTOCOL_VERSION,
                                          eventType: eventType,
@@ -195,6 +197,18 @@ class Topic {
                                          messageToken: messageToken)
     }
     
+    /// Convenience Method to create a topic string that can be used for subscriptions.
+    /// See [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-filters)
+    /// - Parameters:
+    ///   - eventType: CommunicationEventType (e.g. Advertise)
+    ///   - eventTypeFilter: may either be a core type (e.g. Component) or an object type
+    ///     (e.g. org.example.object)
+    ///   - associatedUserId: an optional UUID String, if the parameter is ommitted it is replaced
+    ///     with a wildcard.
+    ///   - sourceObject: the Coaty object that issued the method call, if the parameter is ommitted
+    ///     it is replaced with a wildcard.
+    ///   - messageToken: if ommitted it is replaced with a wildcard.
+    /// - Returns: A topic string that can be used for subscriptions.
     static func createTopicStringByLevelsForSubscribe(eventType: CommunicationEventType,
                                                       eventTypeFilter: String? = nil,
                                                       associatedUserId: String? = nil,
@@ -209,11 +223,11 @@ class Topic {
                                          messageToken: messageToken)
     }
     
+    // MARK: - Parsing helper methods.
+    
     private static func isCoreType(_ eventTypeFilter: String) -> Bool {
         return CoreType(rawValue: eventTypeFilter) != nil
     }
-    
-    // MARK: - Parsing helper methods.
     
     private static func extractObjectType(_ event: String) -> String? {
         // Object types are separated as follows: "Advertise::<coreType>".
@@ -253,12 +267,12 @@ class Topic {
         // This is required to parse Advertise events correct. (In the future: Channels).
         guard let communicationEventTypeString = event.components(
             separatedBy: CORE_TYPE_SEPARATOR).first else {
-            throw CoatySwiftError.InvalidArgument("Event needs to contain a valid CommunicationEventType")
+                throw CoatySwiftError.InvalidArgument("Event needs to contain a valid CommunicationEventType")
         }
         
         guard let communicationEventType = CommunicationEventType(
             rawValue: communicationEventTypeString) else {
-            throw CoatySwiftError.InvalidArgument("Unknown CommunicationEventType")
+                throw CoatySwiftError.InvalidArgument("Unknown CommunicationEventType")
         }
         
         return communicationEventType

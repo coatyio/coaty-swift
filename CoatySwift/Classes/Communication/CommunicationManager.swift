@@ -8,20 +8,19 @@ import Foundation
 import CocoaMQTT
 import RxSwift
 
+/// Manages a set of predefined communication events and event patterns to query, distribute, and
+/// share Coaty objects across decantralized application components using publish-subscribe on top
+/// of MQTT messaging.
 public class CommunicationManager {
     
     // MARK: - Variables.
     
     private var brokerClientId: String?
+    /// Dispose bag for all RxSwift subscriptions.
     private var disposeBag = DisposeBag()
     private let protocolVersion = 1
     private var identity: Component?
-    public let VISIBLE = true
-    var mqtt: CocoaMQTT?
-    
-    // MARK: - RXSwift Disposebag.
-    
-    let disposeBack = DisposeBag()
+    private var mqtt: CocoaMQTT?
     
     // MARK: - Observables.
     
@@ -30,171 +29,8 @@ public class CommunicationManager {
     
     /// Observable emitting raw (topic, payload) values.
     let rawMessages: PublishSubject<(String, String)> = PublishSubject<(String, String)>()
-
-    // MARK: - Observe methods.
     
-    /// TODO: Checking of eventTarget fields.
-    /// This method should not be called directly, use observeAdvertiseWithCoreType method
-    /// or observeAdvertiseWithObjectType method instead.
-    /// - Parameters:
-    ///     - topic: TODO: Meaningful description?
-    ///     - eventTarget: Usually, your identity.
-    ///     - coreType: observed coreType.
-    ///     - objectType: observed objectType.
-    private func observeAdvertise<S: CoatyObject, T: AdvertiseEvent<S>>(topic: String,
-                                  eventTarget: CoatyObject,
-                                  coreType: CoreType?,
-                                  objectType: String?) throws -> Observable<T> {
-        
-        
-         if coreType != nil && objectType != nil {
-            throw CoatySwiftError.InvalidArgument(
-                "Either coreType or objectType must be specified, but not both"
-                )
-         }
-         
-         if coreType == nil && objectType == nil {
-            throw CoatySwiftError.InvalidArgument("Either coreType or objectType must be specified")
-         }
-        
-        // TODO: Subscribe only if not already subscribed.
-        mqtt!.subscribe(topic)
-        
-        return rawMessages.map(convertToTupleFormat)
-            .filter(isAdvertise)
-            .filter({ (rawMessageWithTopic) -> Bool in
-                
-                // Filter messages according to coreType or objectType.
-                let (topic, _) = rawMessageWithTopic
-                if (objectType != nil) {
-                    return objectType == topic.objectType
-                }
-                
-                if (coreType != nil) {
-                    return coreType == topic.coreType
-                }
-                
-                return false
-            })
-            .map({ (message) -> T in
-            let (_, payload) = message
-            // FIXME: Remove force unwrap.
-            return PayloadCoder.decode(payload)!
-        })
-
-    }
-    
-    /// Observes advertises with a particular coreType.
-    /// - Parameters:
-    ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
-    ///     - coreType: coreType core type of objects to be observed.
-    /// - Returns: An observable emitting the advertise events, that have the wanted coreType.
-    public func observeAdvertiseWithCoreType<S: CoatyObject, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
-                                                                          coreType: CoreType) throws -> Observable<T> {
-       
-        let topic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: coreType.rawValue)
-        let observable: Observable<T> = try observeAdvertise(topic: topic, eventTarget: eventTarget,
-                                                             coreType: coreType, objectType: nil)
-        return observable
-    }
-    
-    /// Observes advertises with a particular objectType.
-    /// - Parameters:
-    ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
-    ///     - objectType: objectType object type of objects to be observed.
-    /// - Returns: An observable emitting the advertise events, that have the wanted objectType.
-    public func observeAdvertiseWithObjectType<S: CoatyObject, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
-                                                                            objectType: String) throws -> Observable<T> {
-
-        let topic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: objectType)
-        let observable: Observable<T> = try observeAdvertise(topic: topic, eventTarget: eventTarget,
-                                                             coreType: nil, objectType: objectType)
-        return observable
-    }
-    
-    // TODO: Implement me.
-    func observeChannel(eventTarget: CoatyObject, channelId: String) {
-        
-    }
-    
-    // MARK: - Publish methods.
-    
-    /// Publishes a given advertise event.
-    /// TODO: eventTarget is NOT part of the original coat implementation, remove it ASAP.
-    /// - Parameters:
-    ///     - advertiseEvent: The event that should be advertised.
-    ///     - eventTarget: (OBSOLETE!) Identity object,
-    func publishAdvertise<S: CoatyObject,T: AdvertiseEvent<S>> (advertiseEvent: T,
-                                                                  eventTarget: CoatyObject) throws {
-        
-        let topicForObjectType = Topic.createTopicStringByLevelsForPublish(eventType: .Advertise,
-                                                    eventTypeFilter: advertiseEvent.eventData.object.objectType,
-                                                    associatedUserId: "-",
-                                                    sourceObject: eventTarget,
-                                                    messageToken: UUID.init().uuidString
-                                                    )
-        let topicForCoreType = Topic.createTopicStringByLevelsForPublish(eventType: .Advertise,
-                                        eventTypeFilter: advertiseEvent.eventData.object.coreType.rawValue,
-                                        associatedUserId: "-",
-                                        sourceObject: eventTarget,
-                                        messageToken: UUID.init().uuidString
-                                        )
-
-        // Publish the advertise for core AND object type.
-        publish(topic: topicForCoreType, message: advertiseEvent.json)
-        publish(topic: topicForObjectType, message: advertiseEvent.json)
-    }
-
-    /// Advertises the identity of a CommunicationManager.
-    /// TODO: Re-use the implementation of publishAdvertise. Currently not possible because of
-    /// missing topic creations.
-    func publishAdvertiseIdentity(eventTarget: Component) throws {
-        guard let identity = self.identity else {
-            // TODO: Handle error.
-            return
-        }
-        
-        let advertiseIdentityEvent = AdvertiseEvent.withObject(eventSource: identity,
-                                                                   object: identity,
-                                                                   privateData: nil)
-      
-        try publishAdvertise(advertiseEvent: advertiseIdentityEvent, eventTarget: identity)
-    }
-    
-    public func publishDiscover<S: Discover, T: DiscoverEvent<S>, U: CoatyObject, V: ResolveEvent<U>>(event: T) -> Observable<ResolveEvent<U>> {
-        let discoverMessageToken = UUID.init().uuidString
-        let topic = Topic.createTopicStringByLevelsForPublish(eventType: .Discover, eventTypeFilter: nil, associatedUserId: nil, sourceObject: event.eventSource, messageToken: discoverMessageToken)
-        publish(topic: topic, message: event.json)
-        print("published discover!")
-        
-        // FIXME: Subscribe to resolve topic.
-        let resolveTopic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Resolve, eventTypeFilter: nil, associatedUserId: nil, sourceObject: nil, messageToken: discoverMessageToken)
-        subscribe(topic: resolveTopic)
-        
-        return rawMessages.map(convertToTupleFormat)
-            .filter(isResolve)
-            .filter({ (rawMessageWithTopic) -> Bool in
-                // Filter messages according to message token.
-                let (topic, _) = rawMessageWithTopic
-                print("Filter: \(topic)")
-                return topic.messageToken == discoverMessageToken
-            })
-            .map({ (message) -> V in
-                let (_, payload) = message
-                // FIXME: Remove force unwrap.
-                print(payload)
-                return PayloadCoder.decode(payload)!
-            })
-        
-        
-        /*//let resolve: U = U(coreType: .CoatyObject, objectType: "asdf", objectId: .init(), name: "asdf")
-        let resolve: U = DemoObject(coreType: .CoatyObject, objectType: "asdf", objectId: .init(), name: "eh", message: "asdf") as! U
-        let resolveEvent = V.withObject(eventSource: identity!, object: resolve)
-        return Observable.just(resolveEvent)*/
-    }
-    
-    
-    // MARK: - Init.
+    // MARK: - Initializers.
     
     public init(host: String, port: Int) {
         initIdentity()
@@ -205,11 +41,11 @@ public class CommunicationManager {
         // FIXME: Remove debugging statements at later point in development.
         operatingState.subscribe { (event) in
             print("Operating State: \(String(describing: event.element!))")
-        }.disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
         
         communicationState.subscribe { (event) in
             print("Comm. State: \(String(describing: event.element!))")
-        }.disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
         
         startClient()
         
@@ -222,12 +58,34 @@ public class CommunicationManager {
             }.disposed(by: disposeBag)
     }
     
-    // TODO: This should most likely return a Component object in the future.
+    /// - TODO: This should most likely return a Component object in the future.
     public func initIdentity() {
         let objectType = COATY_PREFIX + CoreType.Component.rawValue
         identity = Component(coreType: .Component,
-                                  objectType: objectType,
-                                  objectId: .init(), name: "CommunicationManager")
+                             objectType: objectType,
+                             objectId: .init(), name: "CommunicationManager")
+    }
+    
+    // MARK: - Setup methods.
+    
+    /// - TODO: Copy will implementation from Coaty.
+    func setLastWill() {
+        mqtt?.willMessage = CocoaMQTTWill(topic: "TEST", message: "TEST")
+    }
+    
+    /// Generates Coaty client Id.
+    /// - TODO: Adjust to MQTT specification (maximum length is currently ignored).
+    func generateClientId() -> String {
+        return "COATY-\(UUID.init())"
+    }
+    
+    /// - NOTE: In case there was no brokerClientId before, it is set.
+    func getBrokerClientId() -> String {
+        if let brokerClientId = brokerClientId {
+            return brokerClientId
+        }
+        brokerClientId = generateClientId()
+        return brokerClientId!
     }
     
     // MARK: - Broker methods.
@@ -236,8 +94,6 @@ public class CommunicationManager {
         mqtt?.keepAlive = 60
         mqtt?.allowUntrustCACertificate = true
         mqtt?.delegate = self
-        
-        // FIXME: Correct will format.
         setLastWill()
     }
     
@@ -273,29 +129,6 @@ public class CommunicationManager {
         updateOperatingState(.stopped)
     }
     
-    // MARK: - Setup methods.
-    
-    // FIXME: Copy will implementation from Coaty.
-    func setLastWill() {
-        mqtt?.willMessage = CocoaMQTTWill(topic: "TEST", message: "TEST")
-        
-    }
-    
-    /// Generates COATY Client ID.
-    /// TODO: Validation missing. Adjust to specified format.
-    func generateClientId() -> String {
-        return "COATY-\(UUID.init())"
-    }
-    
-    /// Note: In case there was no brokerClientId before, it is set.
-    func getBrokerClientId() -> String {
-        if let brokerClientId = brokerClientId {
-            return brokerClientId
-        }
-        brokerClientId = generateClientId()
-        return brokerClientId!
-    }
-    
     // MARK: - Communication methods.
     
     func subscribe(topic: String) {
@@ -312,9 +145,191 @@ public class CommunicationManager {
     
 }
 
-// MARK: CocoaMQTTDelegate methods.
-// TODO: Move extension to new file at some later point.
+// MARK: - Publish methods.
 
+extension CommunicationManager {
+    
+    /// Publishes a given advertise event.
+    ///
+    /// - Parameters:
+    ///     - advertiseEvent: The event that should be advertised.
+    public func publishAdvertise<S: CoatyObject,T: AdvertiseEvent<S>>(advertiseEvent: T,
+                                                               eventTarget: CoatyObject) throws {
+        
+        let topicForObjectType = Topic.createTopicStringByLevelsForPublish(eventType: .Advertise,
+                                        eventTypeFilter: advertiseEvent.eventData.object.objectType,
+                                        associatedUserId: "-",
+                                        sourceObject: advertiseEvent.eventSource,
+                                        messageToken: UUID.init().uuidString)
+        let topicForCoreType = Topic.createTopicStringByLevelsForPublish(eventType: .Advertise,
+                                eventTypeFilter: advertiseEvent.eventData.object.coreType.rawValue,
+                                associatedUserId: "-",
+                                sourceObject: advertiseEvent.eventSource,
+                                messageToken: UUID.init().uuidString)
+        
+        // Publish the advertise for core AND object type.
+        publish(topic: topicForCoreType, message: advertiseEvent.json)
+        publish(topic: topicForObjectType, message: advertiseEvent.json)
+    }
+    
+    /// Advertises the identity of a CommunicationManager.
+    ///
+    /// - TODO: Re-use the implementation of publishAdvertise. Currently not possible because of
+    /// missing topic creations.
+    public func publishAdvertiseIdentity(eventTarget: Component) throws {
+        guard let identity = self.identity else {
+            // TODO: Handle error.
+            return
+        }
+        
+        let advertiseIdentityEvent = AdvertiseEvent.withObject(eventSource: identity,
+                                                               object: identity,
+                                                               privateData: nil)
+        
+        try publishAdvertise(advertiseEvent: advertiseIdentityEvent, eventTarget: identity)
+    }
+    
+    /// Find discoverable objects and receive Resolve events for them emitted by the hot
+    /// observable returned.
+    ///
+    /// - TODO: Implement the lazy behavior.
+    /// - Parameters:
+    ///     - event: the Discover event to be published.
+    /// - Returns: a hot observable on which associated Resolve events are emitted.
+    public func publishDiscover<S: Discover,
+                                T: DiscoverEvent<S>,
+                                U: CoatyObject,
+                                V: ResolveEvent<U>>(event: T) -> Observable<ResolveEvent<U>> {
+        let discoverMessageToken = UUID.init().uuidString
+        let topic = Topic.createTopicStringByLevelsForPublish(eventType: .Discover,
+                                                              eventTypeFilter: nil,
+                                                              associatedUserId: nil,
+                                                              sourceObject: event.eventSource,
+                                                              messageToken: discoverMessageToken)
+        publish(topic: topic, message: event.json)
+        
+        // FIXME: Subscribe to resolve topic.
+        let resolveTopic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Resolve,
+                                                                    eventTypeFilter: nil,
+                                                                    associatedUserId: nil,
+                                                                    sourceObject: nil,
+                                                                    messageToken: discoverMessageToken)
+        subscribe(topic: resolveTopic)
+        
+        return rawMessages.map(convertToTupleFormat)
+            .filter(isResolve)
+            .filter({ (rawMessageWithTopic) -> Bool in
+                // Filter messages according to message token.
+                let (topic, _) = rawMessageWithTopic
+                return topic.messageToken == discoverMessageToken
+            })
+            .map({ (message) -> V in
+                let (_, payload) = message
+                // FIXME: Remove force unwrap.
+                print(payload)
+                return PayloadCoder.decode(payload)!
+            })
+    }
+}
+
+// MARK: - Observe methods.
+
+extension CommunicationManager {
+    
+    /// This method should not be called directly, use observeAdvertiseWithCoreType method
+    /// or observeAdvertiseWithObjectType method instead.
+    ///
+    /// - Parameters:
+    ///     - topic: topic string in coaty format.
+    ///     - eventTarget: Usually, your identity.
+    ///     - coreType: observed coreType.
+    ///     - objectType: observed objectType.
+    private func observeAdvertise<S: CoatyObject, T: AdvertiseEvent<S>>(topic: String,
+                                                                        eventTarget: CoatyObject,
+                                                                        coreType: CoreType?,
+                                                                        objectType: String?) throws -> Observable<T> {
+        
+        if coreType != nil && objectType != nil {
+            throw CoatySwiftError.InvalidArgument(
+                "Either coreType or objectType must be specified, but not both"
+            )
+        }
+        
+        if coreType == nil && objectType == nil {
+            throw CoatySwiftError.InvalidArgument("Either coreType or objectType must be specified")
+        }
+        
+        // TODO: Subscribe only if not already subscribed.
+        mqtt!.subscribe(topic)
+        
+        return rawMessages.map(convertToTupleFormat)
+            .filter(isAdvertise)
+            .filter({ (rawMessageWithTopic) -> Bool in
+                
+                // Filter messages according to coreType or objectType.
+                let (topic, _) = rawMessageWithTopic
+                if (objectType != nil) {
+                    return objectType == topic.objectType
+                }
+                
+                if (coreType != nil) {
+                    return coreType == topic.coreType
+                }
+                
+                return false
+            })
+            .map({ (message) -> T in
+                let (_, payload) = message
+                // FIXME: Remove force unwrap.
+                return PayloadCoder.decode(payload)!
+            })
+        
+    }
+    
+    /// Observes advertises with a particular coreType.
+    ///
+    /// - Parameters:
+    ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
+    ///     - coreType: coreType core type of objects to be observed.
+    /// - Returns: An observable emitting the advertise events, that have the wanted coreType.
+    public func observeAdvertiseWithCoreType<S: CoatyObject,
+                                             T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
+                                                                   coreType: CoreType) throws -> Observable<T> {
+        let topic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise,
+                                                                eventTypeFilter: coreType.rawValue)
+        let observable: Observable<T> = try observeAdvertise(topic: topic,
+                                                             eventTarget: eventTarget,
+                                                             coreType: coreType,
+                                                             objectType: nil)
+        return observable
+    }
+    
+    /// Observes advertises with a particular objectType.
+    /// - Parameters:
+    ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
+    ///     - objectType: objectType object type of objects to be observed.
+    /// - Returns: An observable emitting the advertise events, that have the wanted objectType.
+    public func observeAdvertiseWithObjectType<S: CoatyObject,
+                                               T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
+                                                                     objectType: String) throws -> Observable<T> {
+        let topic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: objectType)
+        let observable: Observable<T> = try observeAdvertise(topic: topic,
+                                                             eventTarget: eventTarget,
+                                                             coreType: nil,
+                                                             objectType: objectType)
+        return observable
+    }
+    
+    /// - TODO: Implement me.
+    func observeChannel(eventTarget: CoatyObject, channelId: String) {
+        
+    }
+    
+}
+
+// MARK: - CocoaMQTTDelegate methods.
+
+/// TODO: Move extension to new file at some later point.
 extension CommunicationManager: CocoaMQTTDelegate {
     public func mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck) {
         print("didConnect : \(ack)")
@@ -356,5 +371,5 @@ extension CommunicationManager: CocoaMQTTDelegate {
         updateCommunicationState(.offline)
     }
 }
-    
+
 
