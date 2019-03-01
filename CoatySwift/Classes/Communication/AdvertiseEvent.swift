@@ -18,7 +18,7 @@ public class AdvertiseEvent<GenericAdvertise: CoatyObject>: CommunicationEvent<A
     /// an object and privateData. Note that the event source should be the controller that
     /// creates the AdvertiseEvent.
     /// FIXME: Replace CoatyObject with Component object.
-    static func withObject(eventSource: Component,
+    public static func withObject(eventSource: Component,
                            object: GenericAdvertise,
                            privateData: [String: Any]? = nil) -> AdvertiseEvent {
         

@@ -7,7 +7,7 @@ import Foundation
 
 /// ResolveEvent provides a generic implementation for all ResolveEvents.
 /// Note that this class should preferably initialized via its withObject() method.
-public class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<ResolveEventData<GenericCoatyObject>> {
+class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<ResolveEventData<GenericCoatyObject>> {
     
     // MARK: - Initializers.
     

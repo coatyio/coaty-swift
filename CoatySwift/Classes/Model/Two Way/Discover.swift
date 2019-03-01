@@ -43,7 +43,7 @@ public class Discover: Codable {
         self.coreTypes = coreTypes
     }
 
-    // MARK: - Convenience initialiser that cover all permitted parameter combinations.
+    // MARK: - Convenience initializers that cover all permitted parameter combinations.
     
     required init(objectId: UUID) {
         self.objectId = objectId

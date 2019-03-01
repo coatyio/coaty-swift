@@ -7,7 +7,7 @@
 import Foundation
 
 /// Deadvertise implements the common fields from a standard Coaty Deadvertise message as defined in
-/// https://coatyio.github.io/coaty-js/man/communication-protocol/
+/// the [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/)
 public class Deadvertise: Codable {
     
     // MARK: - Required attributes.

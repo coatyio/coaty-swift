@@ -21,8 +21,8 @@ pod 'CoatySwift'
 
 ## Authors
 
-Sandra Grujovic, sandra.grujovic@siemens.com
-Johannes Rohwer, johannes.rohwer@siemens.com
+- Sandra Grujovic, sandra.grujovic@siemens.com
+- Johannes Rohwer, johannes.rohwer@siemens.com
 
 ## License
 

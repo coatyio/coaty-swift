@@ -18,7 +18,7 @@ public class DemoObject: CoatyObject {
     
     // MARK: - Initializers.
     
-    init(coreType: CoreType, objectType: String, objectId: UUID,
+    public init(coreType: CoreType, objectType: String, objectId: UUID,
          name: String, message: String) {
         self.message = message
         super.init(coreType: coreType, objectType: objectType, objectId: objectId, name: name)

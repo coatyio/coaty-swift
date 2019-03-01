@@ -64,6 +64,11 @@ class ViewController: UIViewController {
     }
     
     @objc func advertiseButtonTapped() {
+        
+        let demoMessage = DemoObject(coreType: .CoatyObject, objectType: "com.demo.obj", objectId: .init(), name: "NAME", message: "hiii")
+        let advertiseEvent = AdvertiseEvent.withObject(eventSource: identity, object: demoMessage)
+        try? comManager.publishAdvertise(advertiseEvent: advertiseEvent, eventTarget: identity)
+        
         let discoverEvent = DiscoverEvent.withExternalId(eventSource: identity, externalId: "asdf")
         let observable: Observable<ResolveEvent<DemoObject>> = comManager.publishDiscover(event: discoverEvent)
             
