@@ -6,7 +6,7 @@
 
 /// AdvertiseEvent provides a generic implementation for all AdvertiseEvents.
 /// Note that this class should preferably initialized via its withObject() method.
-class AdvertiseEvent<GenericAdvertise: CoatyObject>: CommunicationEvent<AdvertiseEventData<GenericAdvertise>> {
+public class AdvertiseEvent<GenericAdvertise: CoatyObject>: CommunicationEvent<AdvertiseEventData<GenericAdvertise>> {
     
     /// TODO: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
@@ -28,11 +28,11 @@ class AdvertiseEvent<GenericAdvertise: CoatyObject>: CommunicationEvent<Advertis
     
     // MARK: - Codable methods.
     
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
     }
 }
@@ -40,7 +40,7 @@ class AdvertiseEvent<GenericAdvertise: CoatyObject>: CommunicationEvent<Advertis
 
 /// AdvertiseEventData provides a wrapper object that stores the entire message payload data
 /// for an AdvertiseEvent including the object itself as well as the associated private data.
-class AdvertiseEventData<S: CoatyObject>: CommunicationEventData {
+public class AdvertiseEventData<S: CoatyObject>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
@@ -67,14 +67,14 @@ class AdvertiseEventData<S: CoatyObject>: CommunicationEventData {
         case privateData
     }
     
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.object = try container.decode(S.self, forKey: .object)
         try? self.privateData = container.decodeIfPresent([String: Any].self, forKey: .privateData)
         try super.init(from: decoder)
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.object, forKey: .object)
         try container.encodeIfPresent(self.privateData, forKey: CodingKeys.privateData)

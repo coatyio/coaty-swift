@@ -7,6 +7,7 @@
 import UIKit
 import XCGLogger
 import RxSwift
+import CoatySwift
 
 class ViewController: UIViewController {
     
@@ -60,8 +61,6 @@ class ViewController: UIViewController {
         receiveCustomAdvertise.setTitle("Observe Demo-Advertises", for: .normal)
         self.view.addSubview(receiveCustomAdvertise)
         receiveCustomAdvertise.addTarget(self, action: #selector(receiveDemoMessageAdvertise), for: .touchUpInside)
-        
-        
     }
     
     @objc func advertiseButtonTapped() {

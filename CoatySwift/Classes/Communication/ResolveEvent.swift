@@ -8,7 +8,7 @@ import Foundation
 /// TODO: Comment me.
 /// AdvertiseEvent provides a generic implementation for all AdvertiseEvents.
 /// Note that this class should preferably initialized via its withObject() method.
-class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<ResolveEventData<GenericCoatyObject>> {
+public class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<ResolveEventData<GenericCoatyObject>> {
     
     /// TODO: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
@@ -20,7 +20,7 @@ class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<ResolveE
     /// an object and privateData. Note that the event source should be the controller that
     /// creates the AdvertiseEvent.
     /// FIXME: COMMENT
-    static func withObject(eventSource: Component,
+    public static func withObject(eventSource: Component,
                            object: GenericCoatyObject,
                            privateData: [String: Any]? = nil) -> ResolveEvent<GenericCoatyObject> {
         
@@ -28,7 +28,7 @@ class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<ResolveE
         return .init(eventSource: eventSource, eventData: resolveEventData)
     }
     
-    static func withRelatedObjects(eventSource: Component,
+    public static func withRelatedObjects(eventSource: Component,
                            relatedObjects: [GenericCoatyObject],
                            privateData: [String: Any]? = nil) -> ResolveEvent<GenericCoatyObject> {
         
@@ -37,7 +37,7 @@ class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<ResolveE
         return .init(eventSource: eventSource, eventData: resolveEventData)
     }
     
-    static func withObjectAndRelatedObjects(eventSource: Component,
+    public static func withObjectAndRelatedObjects(eventSource: Component,
                                             object: GenericCoatyObject,
                                             relatedObjects: [GenericCoatyObject],
                                             privateData: [String: Any]? = nil) -> ResolveEvent<GenericCoatyObject> {
@@ -54,7 +54,7 @@ class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<ResolveE
         try super.init(from: decoder)
     }
     
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
     }
 }
@@ -62,7 +62,7 @@ class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<ResolveE
 // TODO: COMMENT ME I'M BEGGING YOU
 /// AdvertiseEventData provides a wrapper object that stores the entire message payload data
 /// for an AdvertiseEvent including the object itself as well as the associated private data.
-class ResolveEventData<S: Resolve>: CommunicationEventData {
+public class ResolveEventData<S: Resolve>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
@@ -112,7 +112,7 @@ class ResolveEventData<S: Resolve>: CommunicationEventData {
         try super.init(from: decoder)
     }
     
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.object, forKey: .object)
         try container.encodeIfPresent(self.relatedObjects, forKey: .relatedObjects)

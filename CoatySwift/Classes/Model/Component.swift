@@ -5,6 +5,6 @@
 
 import Foundation
 
-class Component: CoatyObject {
+public class Component: CoatyObject {
     
 }

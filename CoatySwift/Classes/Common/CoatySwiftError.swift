@@ -7,6 +7,6 @@
 import Foundation
 
 /// The base error for all CoatySwift related errors.
-enum CoatySwiftError: Error {
+public enum CoatySwiftError: Error {
     case InvalidArgument(String)
 }

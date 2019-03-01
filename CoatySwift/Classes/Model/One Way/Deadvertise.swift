@@ -8,7 +8,7 @@ import Foundation
 
 /// Deadvertise implements the common fields from a standard Coaty Deadvertise message as defined in
 /// https://coatyio.github.io/coaty-js/man/communication-protocol/
-class Deadvertise: Codable {
+public class Deadvertise: Codable {
     
     // MARK: - Required attributes.
     var objectIds: [UUID]
@@ -25,7 +25,7 @@ class Deadvertise: Codable {
         case objectIds
     }
     
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: DeadvertiseCodingKeys.self)
         
         // Decode required attributes.
@@ -33,7 +33,7 @@ class Deadvertise: Codable {
 
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: DeadvertiseCodingKeys.self)
         
         // Encode required attributes.

@@ -7,7 +7,7 @@
 import Foundation
 
 /// CommunicationEvent is a generic supertype for AdvertiseEvent, DeadvertiseEvent etc.
-class CommunicationEvent<T: CommunicationEventData>: Codable {
+public class CommunicationEvent<T: CommunicationEventData>: Codable {
     
     // MARK: - Public attributes.
     
@@ -34,12 +34,12 @@ class CommunicationEvent<T: CommunicationEventData>: Codable {
     
     // MARK: - Codable methods.
     
-    required init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         self.eventData = try container.decode(T.self)
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(eventData)
     }
@@ -48,7 +48,7 @@ class CommunicationEvent<T: CommunicationEventData>: Codable {
 // MARK: - Extension enable easy access to JSON representation of DemoAdvertise object.
 
 extension CommunicationEvent {
-    var json: String {
+    public var json: String {
         get {
             return PayloadCoder.encode(self)
         }
@@ -57,4 +57,4 @@ extension CommunicationEvent {
 
 /// CommunicationEventData provides the generic type required by the CommunicationEvent.
 /// Note that this cannot be a type alias since we need it to be an actual class.
-class CommunicationEventData: Codable {}
+public class CommunicationEventData: Codable {}

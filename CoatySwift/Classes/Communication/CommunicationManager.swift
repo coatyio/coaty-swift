@@ -8,7 +8,7 @@ import Foundation
 import CocoaMQTT
 import RxSwift
 
-class CommunicationManager {
+public class CommunicationManager {
     
     // MARK: - Variables.
     
@@ -16,6 +16,7 @@ class CommunicationManager {
     private var disposeBag = DisposeBag()
     private let protocolVersion = 1
     private var identity: Component?
+    public let VISIBLE = true
     var mqtt: CocoaMQTT?
     
     // MARK: - RXSwift Disposebag.
@@ -88,7 +89,7 @@ class CommunicationManager {
     ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
     ///     - coreType: coreType core type of objects to be observed.
     /// - Returns: An observable emitting the advertise events, that have the wanted coreType.
-    func observeAdvertiseWithCoreType<S: CoatyObject, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
+    public func observeAdvertiseWithCoreType<S: CoatyObject, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
                                                                           coreType: CoreType) throws -> Observable<T> {
        
         let topic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: coreType.rawValue)
@@ -102,7 +103,7 @@ class CommunicationManager {
     ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
     ///     - objectType: objectType object type of objects to be observed.
     /// - Returns: An observable emitting the advertise events, that have the wanted objectType.
-    func observeAdvertiseWithObjectType<S: CoatyObject, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
+    public func observeAdvertiseWithObjectType<S: CoatyObject, T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
                                                                             objectType: String) throws -> Observable<T> {
 
         let topic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: objectType)
@@ -160,7 +161,7 @@ class CommunicationManager {
         try publishAdvertise(advertiseEvent: advertiseIdentityEvent, eventTarget: identity)
     }
     
-    func publishDiscover<S: Discover, T: DiscoverEvent<S>, U: CoatyObject, V: ResolveEvent<U>>(event: T) -> Observable<ResolveEvent<U>> {
+    public func publishDiscover<S: Discover, T: DiscoverEvent<S>, U: CoatyObject, V: ResolveEvent<U>>(event: T) -> Observable<ResolveEvent<U>> {
         let discoverMessageToken = UUID.init().uuidString
         let topic = Topic.createTopicStringByLevelsForPublish(eventType: .Discover, eventTypeFilter: nil, associatedUserId: nil, sourceObject: event.eventSource, messageToken: discoverMessageToken)
         publish(topic: topic, message: event.json)

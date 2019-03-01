@@ -8,7 +8,7 @@ import Foundation
 
 /// Discover implements the common fields from a standard Coaty Discover message as defined in
 /// https://coatyio.github.io/coaty-js/man/communication-protocol/
-class Discover: Codable {
+public class Discover: Codable {
     
     // MARK: - Attributes.
     
@@ -101,7 +101,7 @@ class Discover: Codable {
         case coreTypes
     }
     
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: DiscoverKeys.self)
         
         // Decode attributes.
@@ -112,7 +112,7 @@ class Discover: Codable {
 
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: DiscoverKeys.self)
     
         // Encode attributes.
