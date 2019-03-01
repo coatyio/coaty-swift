@@ -5,9 +5,9 @@
 //
 
 import UIKit
-
+import CoatySwift
 var window: UIWindow?
-let comManager = CommunicationManager(host: "192.168.1.21", port: 1883)
+let comManager = CommunicationManager(host: "192.168.1.10", port: 1883)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
