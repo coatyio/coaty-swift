@@ -10,7 +10,7 @@ import Foundation
 /// https://coatyio.github.io/coaty-js/man/communication-protocol/
 class Discover: Codable {
     
-    // MARK: - Required attributes.
+    // MARK: - Attributes.
     
     var externalId: String?
     var objectId: UUID?
@@ -19,7 +19,7 @@ class Discover: Codable {
     
     // MARK: - Initializers.
     
-    /// Create a DiscoverEventData instance for the given IDs or types.
+    /// Create a Discover instance for the given IDs or types.
     ///
     /// The following combinations of parameters are valid (use undefined for unused parameters):
     /// - externalId can be used exclusively or in combination with objectId property.
@@ -36,14 +36,14 @@ class Discover: Codable {
     ///     - objectId: The internal UUID of the object to be discovered or undefined.
     ///     - objectTypes: Restrict objects by object types (logical OR).
     ///     - coreTypes: Restrict objects by core types (logical OR).
-    init(externalId: String?, objectId: UUID?, objectTypes: [String]?, coreTypes: [CoreType]?) {
+    private init(externalId: String?, objectId: UUID?, objectTypes: [String]?, coreTypes: [CoreType]?) {
         self.externalId = externalId
         self.objectId = objectId
         self.objectTypes = objectTypes
         self.coreTypes = coreTypes
     }
 
-    // MARK: - First condition in valid parameters.
+    // MARK: - Convenience initialiser that cover all permitted parameter combinations.
     
     required init(objectId: UUID) {
         self.objectId = objectId
@@ -92,20 +92,13 @@ class Discover: Codable {
         self.objectId = objectId
     }
     
+    // MARK: - Codable methods.
+    
     enum DiscoverKeys: String, CodingKey {
         case externalId
         case objectId
         case objectTypes
         case coreTypes
-    }
-    
-    private func hasValidParameters() -> Bool {
-        return (
-            (objectId != nil && externalId == nil && objectTypes == nil && coreTypes == nil)
-        || (externalId != nil && objectId == nil && (objectTypes == nil || objectTypes != nil)  && (coreTypes == nil || coreTypes != nil))
-        || (objectId != nil && externalId != nil && objectTypes == nil && coreTypes == nil)
-        || (objectId == nil && externalId == nil && ((objectTypes == nil && coreTypes != nil) || (coreTypes == nil && objectTypes != nil)))
-        )
     }
     
     required init(from decoder: Decoder) throws {

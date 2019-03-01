@@ -6,67 +6,108 @@
 
 import Foundation
 
-/// AdvertiseEvent provides a generic implementation for all AdvertiseEvents.
+/// DiscoverEvent provides a generic implementation for all DiscoverEvents.
 /// Note that this class should preferably initialized via its withObject() method.
 class DiscoverEvent<GenericDiscover: Discover>: CommunicationEvent<DiscoverEventData<GenericDiscover>> {
     
-    
-    /// TODO: This method should never be called directly by application programmers.
+    // TODO: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
     override init(eventSource: Component, eventData: DiscoverEventData<GenericDiscover>) {
         super.init(eventSource: eventSource, eventData: eventData)
         eventType = .Discover
     }
     
-    /// Convenience factory method that configures an instance of and AdvertiseEvent with
-    /// an object and privateData. Note that the event source should be the controller that
-    /// creates the AdvertiseEvent.
-    /// FIXME: Replace CoatyObject with Component object.
-    /* static func withObject(eventSource: CoatyObject,
-                           object: GenericDiscover,
-                           privateData: [String: Any]? = nil) throws -> DiscoverEvent {
-        
-        let advertiseEventData = AdvertiseEventData(object: object, privateData: privateData)
-        return try .init(eventSource: eventSource, eventData: advertiseEventData)
-    }*/
+    // MARK: - Accessible Initialiser for DiscoverEvent.
     
-    static func withExternalId(eventSource: Component, externalId: String) -> DiscoverEvent<GenericDiscover> {
+    
+    /// Create a DiscoverEvent instance for discovering objects with the given external Id.
+    ///
+    /// - Parameters:
+    ///     - eventSource: the event source component
+    ///     - externalId: the external ID to discover
+    static func withExternalId(eventSource: Component,
+                               externalId: String) -> DiscoverEvent<GenericDiscover> {
         let discover = GenericDiscover(externalId: externalId)
         let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
         return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
     }
     
-    static func withExternalIdAndCoreTypes(eventSource: Component, externalId: String, coreTypes: [CoreType]) -> DiscoverEvent {
+    /// Create a DiscoverEvent instance for discovering objects with the given external Id and
+    /// core types.
+    ///
+    /// - Parameters:
+    ///     - eventSource: the event source component
+    ///     - externalId: the external ID to discover
+    ///     - coreTypes: an array of core types to discover
+    static func withExternalIdAndCoreTypes(eventSource: Component,
+                                           externalId: String,
+                                           coreTypes: [CoreType]) -> DiscoverEvent {
         let discover = GenericDiscover(externalId: externalId, coreTypes: coreTypes)
         let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
         return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
     }
     
-    static func withExternalIdAndObjectTypes(eventSource: Component, externalId: String, objectTypes: [String]) -> DiscoverEvent<GenericDiscover> {
+    /// Create a DiscoverEvent instance for discovering objects with the given external Id and
+    /// object types.
+    ///
+    /// - Parameters:
+    ///   - eventSource: the event source component.
+    ///   - externalId: the external ID to discover.
+    ///   - objectTypes: an array of object types to discover.
+    static func withExternalIdAndObjectTypes(eventSource: Component,
+                                             externalId: String,
+                                             objectTypes: [String]) -> DiscoverEvent<GenericDiscover> {
         let discover = GenericDiscover(externalId: externalId, objectTypes: objectTypes)
         let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
         return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
     }
     
-    static func withObjectId(eventSource: Component, objectId: UUID) -> DiscoverEvent<GenericDiscover> {
+    /// Create a DiscoverEvent instance for discovering objects with the given object Id.
+    ///
+    /// - Parameters:
+    ///   - eventSource: the event source component
+    ///   - objectId: the object ID to discover
+    static func withObjectId(eventSource: Component,
+                             objectId: UUID) -> DiscoverEvent<GenericDiscover> {
         let discover = GenericDiscover(objectId: objectId)
         let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
         return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
     }
     
-    static func withExternalAndObjectId(eventSource: Component, externalId: String, objectId: UUID) -> DiscoverEvent<GenericDiscover> {
+    /// Create a DiscoverEvent instance for discovering objects with the given external Id and
+    /// object Id.
+    ///
+    /// - Parameters:
+    ///   - eventSource: the event source component
+    ///   - externalId: the external ID to discover
+    ///   - objectId: the object ID to discover
+    static func withExternalAndObjectId(eventSource: Component,
+                                        externalId: String,
+                                        objectId: UUID) -> DiscoverEvent<GenericDiscover> {
         let discover = GenericDiscover(objectId: objectId, externalId: externalId)
         let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
         return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
     }
     
-    static func withCoreTypes(eventSource: Component, coreTypes: [CoreType]) -> DiscoverEvent<GenericDiscover> {
+    /// Create a DiscoverEvent instance for discovering objects with the given core types.
+    ///
+    /// - Parameters:
+    ///   - eventSource: the event source component
+    ///   - coreTypes: coreTypes the core types to discover
+    static func withCoreTypes(eventSource: Component,
+                              coreTypes: [CoreType]) -> DiscoverEvent<GenericDiscover> {
         let discover = GenericDiscover(coreTypes: coreTypes)
         let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
         return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
     }
     
-    static func withObjectTypes(eventSource: Component, objectTypes: [String]) -> DiscoverEvent<GenericDiscover> {
+    /// Create a DiscoverEvent instance for discovering objects with the given object types.
+    ///
+    /// - Parameters:
+    ///   - eventSource: the event source component
+    ///   - objectTypes: the object types to discover
+    static func withObjectTypes(eventSource: Component,
+                                objectTypes: [String]) -> DiscoverEvent<GenericDiscover> {
         let discover = GenericDiscover(objectTypes: objectTypes)
         let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
         return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
@@ -84,8 +125,8 @@ class DiscoverEvent<GenericDiscover: Discover>: CommunicationEvent<DiscoverEvent
 }
 
 
-/// AdvertiseEventData provides a wrapper object that stores the entire message payload data
-/// for an AdvertiseEvent including the object itself as well as the associated private data.
+/// DiscoverEventData provides a wrapper object that stores the entire message payload data
+/// for a DiscoverEventData.
 class DiscoverEventData<S: Discover>: CommunicationEventData {
     
     // MARK: - Public attributes.
