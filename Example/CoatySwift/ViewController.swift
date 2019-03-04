@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     
     let advertiseEventButton = UIButton(frame: CGRect(x: 0, y: 100, width: 350, height: 50))
     let receiveEventObjectTypeSame = UIButton(frame: CGRect(x: 0, y: 200, width: 350, height: 50))
-    let receiveEventObjectTypeDif = UIButton(frame: CGRect(x: 0, y: 300, width: 350, height: 50))
+    let channelEventButton = UIButton(frame: CGRect(x: 0, y: 300, width: 350, height: 50))
     let receiveEventCoreTypeSame =  UIButton(frame: CGRect(x: 0, y: 400, width: 350, height: 50))
     let receiveEventCoreTypeDif =  UIButton(frame: CGRect(x: 0, y: 500, width: 350, height: 50))
     let receiveCustomAdvertise = UIButton(frame: CGRect(x: 0, y: 600, width: 350, height: 50))
@@ -41,11 +41,11 @@ class ViewController: UIViewController {
         self.view.addSubview(receiveEventObjectTypeSame)
         receiveEventObjectTypeSame.addTarget(self, action: #selector(receiveAdvertisementsForObjectType), for: .touchUpInside)
         
-        receiveEventObjectTypeDif.backgroundColor = .yellow
-        receiveEventObjectTypeDif.setTitle("Observe Advertises with dif. objectType", for: .normal)
-        self.view.addSubview(receiveEventObjectTypeDif)
-        receiveEventObjectTypeDif.setTitleColor(.black, for: .normal)
-        receiveEventObjectTypeDif.addTarget(self, action: #selector(receiveAdvertisementsForDifObjectType), for: .touchUpInside)
+        channelEventButton.backgroundColor = .yellow
+        channelEventButton.setTitle("Channel Events", for: .normal)
+        self.view.addSubview(channelEventButton)
+        channelEventButton.setTitleColor(.black, for: .normal)
+        channelEventButton.addTarget(self, action: #selector(receiveChannelEvents), for: .touchUpInside)
         
         receiveEventCoreTypeSame.backgroundColor = .green
         receiveEventCoreTypeSame.setTitle("Observe Advertises with same coreType", for: .normal)
@@ -96,12 +96,12 @@ class ViewController: UIViewController {
         })
     }
     
-    @objc func receiveAdvertisementsForDifObjectType() {
-        // FIXME: These two values are currently just garbage values.
-        try? _ = comManager.observeAdvertiseWithObjectType(eventTarget: identity, objectType: "WrongObjectType").subscribe({ (advertiseEvent) in
-            print("Received Advertise from yellow button:")
-            if let advertiseEvent = advertiseEvent.element {
-                print(advertiseEvent.json)
+    @objc func receiveChannelEvents() {
+        let test: Observable<ChannelEvent<DemoObject>> = comManager.observeChannel(eventTarget: identity, channelId: "123456")
+            test.subscribe({ (channelEvent) in
+            print("Received Channel from yellow button:")
+            if let channelEvent = channelEvent.element {
+                print(channelEvent.json)
             }
         })
     }

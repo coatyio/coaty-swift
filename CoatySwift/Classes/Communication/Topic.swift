@@ -11,7 +11,6 @@ import Foundation
 ///
 /// - TODO: Rename to CommunicationTopic to match Coaty-js implementation.
 /// - TODO: Ability to generate readable topics.
-/// - TODO: Add support for Channel events.
 class Topic {
     
     // MARK: - Public Attributes.

@@ -154,7 +154,7 @@ extension CommunicationManager {
     /// - Parameters:
     ///     - advertiseEvent: The event that should be advertised.
     public func publishAdvertise<S: CoatyObject,T: AdvertiseEvent<S>>(advertiseEvent: T,
-                                                               eventTarget: CoatyObject) throws {
+                                                               eventTarget: Component) throws {
         
         let topicForObjectType = Topic.createTopicStringByLevelsForPublish(eventType: .Advertise,
                                         eventTypeFilter: advertiseEvent.eventData.object.objectType,
@@ -245,7 +245,7 @@ extension CommunicationManager {
     ///     - coreType: observed coreType.
     ///     - objectType: observed objectType.
     private func observeAdvertise<S: CoatyObject, T: AdvertiseEvent<S>>(topic: String,
-                                                                        eventTarget: CoatyObject,
+                                                                        eventTarget: Component,
                                                                         coreType: CoreType?,
                                                                         objectType: String?) throws -> Observable<T> {
         
@@ -293,7 +293,7 @@ extension CommunicationManager {
     ///     - coreType: coreType core type of objects to be observed.
     /// - Returns: An observable emitting the advertise events, that have the wanted coreType.
     public func observeAdvertiseWithCoreType<S: CoatyObject,
-                                             T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
+                                             T: AdvertiseEvent<S>>(eventTarget: Component,
                                                                    coreType: CoreType) throws -> Observable<T> {
         let topic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise,
                                                                 eventTypeFilter: coreType.rawValue)
@@ -310,7 +310,7 @@ extension CommunicationManager {
     ///     - objectType: objectType object type of objects to be observed.
     /// - Returns: An observable emitting the advertise events, that have the wanted objectType.
     public func observeAdvertiseWithObjectType<S: CoatyObject,
-                                               T: AdvertiseEvent<S>>(eventTarget: CoatyObject,
+                                               T: AdvertiseEvent<S>>(eventTarget: Component,
                                                                      objectType: String) throws -> Observable<T> {
         let topic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: objectType)
         let observable: Observable<T> = try observeAdvertise(topic: topic,
@@ -320,8 +320,44 @@ extension CommunicationManager {
         return observable
     }
     
-    /// - TODO: Implement me.
-    func observeChannel(eventTarget: CoatyObject, channelId: String) {
+   
+    /// Observe Channel events for the given target and the given
+    /// channel identifier emitted by the hot observable returned.
+    ///
+    /// - TODO: The channel identifier must be a non-empty string that does not contain
+    /// the following characters: `NULL (U+0000)`, `# (U+0023)`, `+ (U+002B)`,
+    /// `/ (U+002F)`.
+    ///
+    /// - TODO: Channel events that originate from the given event target, i.e.
+    /// that have been published by specifying the given event target as
+    //// event source, will not be emitted by the observable returned.
+    ///
+    /// - Parameters:
+    ///   - eventTarget: target for which Channel events should be emitted
+    ///   - channelId: a channel identifier
+    /// - Returns: a hot observable emitting incoming Channel events.
+    public func observeChannel<S: CoatyObject, T: ChannelEvent<S>>(eventTarget: Component,
+                                                            channelId: String) -> Observable<T> {
+        // TODO: Unsure about associatedUserId parameters. Is it really assigneeUserId?
+        let channelTopic = Topic.createTopicStringByLevelsForChannel(channelId: channelId, associatedUserId: eventTarget.assigneeUserId?.uuidString, sourceObject: nil, messageToken: nil)
+        
+        mqtt?.subscribe(channelTopic)
+        
+        return rawMessages.map(convertToTupleFormat)
+            .filter({ (rawMessageTopic) -> Bool in
+                let (topic, _) = rawMessageTopic
+                return topic.channelId != nil
+            })
+            .filter({ (rawMessageWithTopic) -> Bool in
+                // Filter messages according to channelId.
+                let (topic, _) = rawMessageWithTopic
+                return topic.channelId == channelId
+            })
+            .map({ (message) -> T in
+                let (_, payload) = message
+                // FIXME: Remove force unwrap.
+                return PayloadCoder.decode(payload)!
+            })
         
     }
     
