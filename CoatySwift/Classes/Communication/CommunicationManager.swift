@@ -337,7 +337,7 @@ extension CommunicationManager {
     ///   - channelId: a channel identifier
     /// - Returns: a hot observable emitting incoming Channel events.
     public func observeChannel<S: CoatyObject, T: ChannelEvent<S>>(eventTarget: Component,
-                                                            channelId: String) -> Observable<T> {
+                                                                   channelId: String) -> Observable<T> {
         // TODO: Unsure about associatedUserId parameters. Is it really assigneeUserId?
         let channelTopic = Topic.createTopicStringByLevelsForChannel(channelId: channelId, associatedUserId: eventTarget.assigneeUserId?.uuidString, sourceObject: nil, messageToken: nil)
         
@@ -355,10 +355,10 @@ extension CommunicationManager {
             })
             .map({ (message) -> T in
                 let (_, payload) = message
+                
                 // FIXME: Remove force unwrap.
                 return PayloadCoder.decode(payload)!
             })
-        
     }
     
 }

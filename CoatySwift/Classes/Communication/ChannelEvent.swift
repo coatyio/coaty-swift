@@ -81,9 +81,9 @@ public class ChannelEventData<S: CoatyObject>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
-    var object: S?
-    var objects: [S]?
-    var privateData: [String: Any]?
+    public var object: S?
+    public var objects: [S]?
+    public var privateData: [String: Any]?
     
     // MARK: - Initializers.
     

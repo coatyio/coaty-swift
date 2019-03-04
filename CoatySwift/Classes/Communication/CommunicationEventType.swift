@@ -6,7 +6,7 @@
 
 /// CommunicationEventType provides the different cases to discover, distribute, and share data.
 /// See coaty-js/src/com/communication-event.ts
-enum CommunicationEventType: String {
+public enum CommunicationEventType: String {
     case Raw = "Raw"
     case Advertise = "Advertise"
     case Deadvertise = "Deadvertise"
