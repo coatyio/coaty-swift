@@ -26,6 +26,7 @@ class Topic {
     var associatedUserId: UUID?
     var sourceObjectId: UUID
     var messageToken: String
+    var channelId: String?
     
     /// String representation for the topic.
     var string: String { get {
@@ -58,7 +59,14 @@ class Topic {
         self.eventType = try Topic.extractEventType(event)
         let coreType = Topic.extractCoreType(event)
         let objectType = Topic.extractObjectType(event)
-        self.coreType = coreType
+        
+        // Extract the channelId if the event is a Channel event. Otherwise just use the coreType.
+        if eventType == .Channel {
+            self.channelId = Topic.extractChannelId(event)
+        } else {
+            self.coreType = coreType
+        }
+
         self.objectType = objectType
         
         // Try to parse a associatedUserId, if none is set, the topic will contain "-" here and the
@@ -150,9 +158,16 @@ class Topic {
         
         // Select the correct separator.
         var event = eventType.rawValue
+        
         if let eventTypeFilter = eventTypeFilter {
-            let separator = isCoreType(eventTypeFilter) ? CORE_TYPE_SEPARATOR : OBJECT_TYPE_SEPARATOR
-            event = eventType.rawValue + separator + eventTypeFilter
+            // Support creation of channel and corresponding channelId.
+            if eventType == .Channel {
+                let separator = CORE_TYPE_SEPARATOR
+                event = eventType.rawValue + separator + eventTypeFilter
+            } else {
+                let separator = isCoreType(eventTypeFilter) ? CORE_TYPE_SEPARATOR : OBJECT_TYPE_SEPARATOR
+                event = eventType.rawValue + separator + eventTypeFilter
+            }
         }
         
         
@@ -223,6 +238,19 @@ class Topic {
                                          messageToken: messageToken)
     }
     
+    static func createTopicStringByLevelsForChannel(channelId: String? = nil,
+                                                    associatedUserId: String? = nil,
+                                                    sourceObject: CoatyObject? = nil,
+                                                    messageToken: String? = nil) -> String {
+        
+        return createTopicStringByLevels(coatyVersion: nil,
+                                         eventType: .Channel,
+                                         eventTypeFilter: channelId,
+                                         associatedUserId: associatedUserId,
+                                         sourceObject: sourceObject,
+                                         messageToken: messageToken)
+    }
+    
     // MARK: - Parsing helper methods.
     
     private static func isCoreType(_ eventTypeFilter: String) -> Bool {
@@ -253,6 +281,16 @@ class Topic {
         }
         
         return CoreType(rawValue: coreTypeString)
+    }
+    
+    private static func extractChannelId(_ event: String) -> String? {
+        if !event.contains("Channel\(CORE_TYPE_SEPARATOR)") {
+            return nil
+        }
+        
+        // Take the second element (the channelId) and return it.
+        let eventTypeComponents = event.components(separatedBy: CORE_TYPE_SEPARATOR).dropFirst()
+        return eventTypeComponents.first
     }
     
     private static func extractEventType(_ event: String) throws -> CommunicationEventType {
