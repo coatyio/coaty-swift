@@ -268,6 +268,7 @@
 		B9360C79DFF646AF458069619B5939AF /* MainScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7E0A7404560E7E535F977BF6D8017 /* MainScheduler.swift */; };
 		BB3DA5F290941C521C68D626D2751130 /* UIPickerView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C903C83D08ECA413CBB7FDF53909FD3 /* UIPickerView+Rx.swift */; };
 		BC1B02C9D2D2013D2D7418D397D98577 /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56ED81C3AFFA7B019C51D33FB03E998 /* UITextField+Rx.swift */; };
+		BC43BEBE222D2293007F26D8 /* ChannelEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC43BEBD222D2293007F26D8 /* ChannelEvent.swift */; };
 		BC859257222982E400E53BFA /* Codable+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC859255222982E400E53BFA /* Codable+JSON.swift */; };
 		BC859258222982E400E53BFA /* CoatySwiftError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC859256222982E400E53BFA /* CoatySwiftError.swift */; };
 		BC85926A2229838D00E53BFA /* DeadvertiseEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC85925E2229838D00E53BFA /* DeadvertiseEvent.swift */; };
@@ -841,6 +842,7 @@
 		BAAF3EF03B78230E7A7AC548D375854E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		BB690D08D7F8EE27CF7CCC1C96C5D40D /* Pods-CoatySwift_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CoatySwift_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		BBF5F9E9AE6871CF07FBD42EB0D92E6F /* CombineLatest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CombineLatest.swift; path = RxSwift/Observables/CombineLatest.swift; sourceTree = "<group>"; };
+		BC43BEBD222D2293007F26D8 /* ChannelEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEvent.swift; sourceTree = "<group>"; };
 		BC859255222982E400E53BFA /* Codable+JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+JSON.swift"; sourceTree = "<group>"; };
 		BC859256222982E400E53BFA /* CoatySwiftError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoatySwiftError.swift; sourceTree = "<group>"; };
 		BC85925E2229838D00E53BFA /* DeadvertiseEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeadvertiseEvent.swift; sourceTree = "<group>"; };
@@ -1492,6 +1494,7 @@
 				BC8592672229838D00E53BFA /* ResolveEvent.swift */,
 				BC8592682229838D00E53BFA /* AdvertiseEvent.swift */,
 				BC8592692229838D00E53BFA /* Topic.swift */,
+				BC43BEBD222D2293007F26D8 /* ChannelEvent.swift */,
 			);
 			name = Communication;
 			path = CoatySwift/Classes/Communication;
@@ -2381,6 +2384,7 @@
 				BC8592852229839B00E53BFA /* Component.swift in Sources */,
 				BC8592802229839B00E53BFA /* CoatyObject.swift in Sources */,
 				BC8592862229839B00E53BFA /* CoreType.swift in Sources */,
+				BC43BEBE222D2293007F26D8 /* ChannelEvent.swift in Sources */,
 				EEB325E06A4F23ABCC841AD3DCA257EF /* ReplaceMe.swift in Sources */,
 				BC85926F2229838D00E53BFA /* OperatingState.swift in Sources */,
 				BC859289222983AA00E53BFA /* PayloadCoder.swift in Sources */,
