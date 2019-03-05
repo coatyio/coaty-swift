@@ -264,6 +264,10 @@ class Topic {
     
     // MARK: - Parsing helper methods.
     
+    /// Checks whether the eventTypeFilter field has to be set for a specific event type.
+    ///
+    /// - Parameter event: the event type
+    /// - Returns: whether the eventTypeFilter field has to be set or not.
     private static func isEventTypeFilterRequired(forEvent event: CommunicationEventType) -> Bool {
         // Events that require an eventTypeFilter to be set.
         // TODO: Are these all events?
