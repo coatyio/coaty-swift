@@ -1,4 +1,0 @@
-excluded:
-    - Pods
-included:
-    - ../CoatySwift

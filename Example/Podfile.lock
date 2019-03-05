@@ -7,9 +7,11 @@ PODS:
   - CocoaAsyncSocket (7.6.3)
   - CocoaMQTT (1.1.3):
     - CocoaAsyncSocket (~> 7.6.3)
+  - Nimble (7.3.4)
   - ObjcExceptionBridging (1.0.1):
     - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
   - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
+  - Quick (1.3.4)
   - RxAtomic (4.4.1)
   - RxCocoa (4.4.1):
     - RxSwift (~> 4.0)
@@ -22,12 +24,16 @@ PODS:
 
 DEPENDENCIES:
   - CoatySwift (from `../`)
+  - Nimble
+  - Quick
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - CocoaAsyncSocket
     - CocoaMQTT
+    - Nimble
     - ObjcExceptionBridging
+    - Quick
     - RxAtomic
     - RxCocoa
     - RxSwift
@@ -38,15 +44,17 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CoatySwift: ddde01bc0ba4e6b8a016c7caba8925e4025bec76
+  CoatySwift: e5b79c3c7dbe44f8fda080d39b25b3bfb5a84661
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   CocoaMQTT: b506d38ad3bbe1c55a4f8ee8c9fd02c35da1a7d8
+  Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
+  Quick: f4f7f063c524394c73ed93ac70983c609805d481
   RxAtomic: f8d6adc1ccb87a767811269e4875887bc74dbf19
   RxCocoa: 2f35a76bf8887872e28a1914112395b11b8e0e64
   RxSwift: 92fcf68dfef21f3e2ab1965363d9e7b3d787597e
   XCGLogger: 7f7f43f15dfe3a305fa1342b7dc29af656289abd
 
-PODFILE CHECKSUM: 2361b1b029a09f9817ac136ac15bb5bc0a747fbd
+PODFILE CHECKSUM: cfb2ede75ba84811d4b4c0eb00ba7e5674b9f0ce
 
 COCOAPODS: 1.5.3
