@@ -70,7 +70,7 @@ class ViewController: UIViewController {
         try? comManager.publishAdvertise(advertiseEvent: advertiseEvent, eventTarget: identity)
         
         let discoverEvent = DiscoverEvent.withExternalId(eventSource: identity, externalId: "asdf")
-        let observable: Observable<ResolveEvent<DemoObject>> = comManager.publishDiscover(event: discoverEvent)
+        let observable: Observable<ResolveEvent<DemoObject>> = try! comManager.publishDiscover(event: discoverEvent)
             
             _ = observable.subscribe(onNext: { (resolveEvent) in
             print("Received Resolve:")
@@ -97,7 +97,7 @@ class ViewController: UIViewController {
     }
     
     @objc func receiveChannelEvents() {
-        let test: Observable<ChannelEvent<DemoObject>> = comManager.observeChannel(eventTarget: identity, channelId: "123456")
+        let test: Observable<ChannelEvent<DemoObject>> = try! comManager.observeChannel(eventTarget: identity, channelId: "123456")
             test.subscribe({ (channelEvent) in
             print("Received Channel from yellow button:")
             if let channelEvent = channelEvent.element {

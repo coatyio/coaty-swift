@@ -1,28 +1,89 @@
-import XCTest
-import CoatySwift
+//
+//  Tests.swift
+//  CoatySwift
+//
+//
 
-class Tests: XCTestCase {
+import Quick
+import Nimble
+@testable import CoatySwift
+
+
+/// CommunicationTests provides the QuickSpec for all tests for the CommunicationManager, Topic
+/// and related classes.
+class CommunicationTests: QuickSpec {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure() {
-            // Put the code you want to measure the time of here.
+    override func spec() {
+        describe("Communication") {
+            
+            describe("Communication Topic") {
+                
+                // Test variables.
+                let identity = Component(name: "CommunicationManager")
+                let messageToken = "7d6dd7e6-4f3d-4cdf-92f5-3d926a55663d"
+                
+                it("creates correct topic string for subscriptions") {
+                    let subscriptionTopic = "/coaty/+/Advertise:Component/+/+/+/"
+                    
+                    expect {
+                        try Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise,
+                                                                        eventTypeFilter: "Component",
+                                                                        associatedUserId: nil,
+                                                                        sourceObject: nil,
+                                                                        messageToken: nil)
+                    }.to(equal(subscriptionTopic))
+                }
+                
+                it("creates correct topic string for publications") {
+                    let publicationTopic = "/coaty/\(PROTOCOL_VERSION)/Advertise:Component/-/\(identity.objectId)/\(messageToken)/"
+
+                    expect {
+                        try Topic.createTopicStringByLevelsForPublish(eventType: .Advertise,
+                                                                      eventTypeFilter: "Component",
+                                                                      associatedUserId: "-",
+                                                                      sourceObject: identity,
+                                                                      messageToken: messageToken)
+                    }.to(equal(publicationTopic))
+                }
+                
+                it("throws on wrong protocol version") {
+                    expect {
+                        try Topic.init(protocolVersion: 0,
+                                       event: CommunicationEventType.Advertise.rawValue,
+                                       associatedUserId: "-",
+                                       sourceObjectId: identity.objectId.uuidString,
+                                       messageToken: messageToken)
+                    }.to(throwError())
+                }
+                
+                // TODO: Implement me.
+                /*it("throws on missing eventTypeFilter for event that needs it") {
+                    expect {
+                        try Topic.createTopicStringByLevelsForPublish(eventType: .Advertise, eventTypeFilter: nil, associatedUserId: "-", sourceObject: identity, messageToken: messageToken)
+                        }.to(throwError())
+                }*/
+                
+                it("throws on invalid topic structure format") {
+                    expect {
+                        try Topic.init("/coaty/\(PROTOCOL_VERSION)/Advertise:Component/-/\(identity.objectId)/\(messageToken)/additionalLevel/")
+                    }.to(throwError())
+                    
+                    expect {
+                        try Topic.init("/coaty/\(PROTOCOL_VERSION)/Unknown:Component/-/\(identity.objectId)/\(messageToken)/")
+                    }.to(throwError())
+                    
+                    expect {
+                        try Topic.init("/coaty/\(PROTOCOL_VERSION)/Advertise:UnknownCoreType/-/\(identity.objectId)/\(messageToken)/")
+                    }.to(throwError())
+                    
+                    // TODO: Implement me.
+                    /* expect {
+                        try Topic.init("/coaty/\(PROTOCOL_VERSION)/Advertise::Malformatted#ObjectType/-/\(identity.objectId)/\(messageToken)/")
+                    }.to(throwError())
+                    */
+                }
+            }
+           
         }
     }
-    
 }

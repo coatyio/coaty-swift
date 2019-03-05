@@ -156,12 +156,12 @@ extension CommunicationManager {
     public func publishAdvertise<S: CoatyObject,T: AdvertiseEvent<S>>(advertiseEvent: T,
                                                                eventTarget: Component) throws {
         
-        let topicForObjectType = Topic.createTopicStringByLevelsForPublish(eventType: .Advertise,
+        let topicForObjectType = try Topic.createTopicStringByLevelsForPublish(eventType: .Advertise,
                                         eventTypeFilter: advertiseEvent.eventData.object.objectType,
                                         associatedUserId: "-",
                                         sourceObject: advertiseEvent.eventSource,
                                         messageToken: UUID.init().uuidString)
-        let topicForCoreType = Topic.createTopicStringByLevelsForPublish(eventType: .Advertise,
+        let topicForCoreType = try Topic.createTopicStringByLevelsForPublish(eventType: .Advertise,
                                 eventTypeFilter: advertiseEvent.eventData.object.coreType.rawValue,
                                 associatedUserId: "-",
                                 sourceObject: advertiseEvent.eventSource,
@@ -199,9 +199,9 @@ extension CommunicationManager {
     public func publishDiscover<S: Discover,
                                 T: DiscoverEvent<S>,
                                 U: CoatyObject,
-                                V: ResolveEvent<U>>(event: T) -> Observable<ResolveEvent<U>> {
+                                V: ResolveEvent<U>>(event: T) throws -> Observable<ResolveEvent<U>> {
         let discoverMessageToken = UUID.init().uuidString
-        let topic = Topic.createTopicStringByLevelsForPublish(eventType: .Discover,
+        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Discover,
                                                               eventTypeFilter: nil,
                                                               associatedUserId: nil,
                                                               sourceObject: event.eventSource,
@@ -209,7 +209,7 @@ extension CommunicationManager {
         publish(topic: topic, message: event.json)
         
         // FIXME: Subscribe to resolve topic.
-        let resolveTopic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Resolve,
+        let resolveTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Resolve,
                                                                     eventTypeFilter: nil,
                                                                     associatedUserId: nil,
                                                                     sourceObject: nil,
@@ -295,7 +295,7 @@ extension CommunicationManager {
     public func observeAdvertiseWithCoreType<S: CoatyObject,
                                              T: AdvertiseEvent<S>>(eventTarget: Component,
                                                                    coreType: CoreType) throws -> Observable<T> {
-        let topic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise,
+        let topic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise,
                                                                 eventTypeFilter: coreType.rawValue)
         let observable: Observable<T> = try observeAdvertise(topic: topic,
                                                              eventTarget: eventTarget,
@@ -312,7 +312,7 @@ extension CommunicationManager {
     public func observeAdvertiseWithObjectType<S: CoatyObject,
                                                T: AdvertiseEvent<S>>(eventTarget: Component,
                                                                      objectType: String) throws -> Observable<T> {
-        let topic = Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: objectType)
+        let topic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: objectType)
         let observable: Observable<T> = try observeAdvertise(topic: topic,
                                                              eventTarget: eventTarget,
                                                              coreType: nil,
@@ -337,9 +337,9 @@ extension CommunicationManager {
     ///   - channelId: a channel identifier
     /// - Returns: a hot observable emitting incoming Channel events.
     public func observeChannel<S: CoatyObject, T: ChannelEvent<S>>(eventTarget: Component,
-                                                                   channelId: String) -> Observable<T> {
+                                                                   channelId: String) throws -> Observable<T> {
         // TODO: Unsure about associatedUserId parameters. Is it really assigneeUserId?
-        let channelTopic = Topic.createTopicStringByLevelsForChannel(channelId: channelId, associatedUserId: eventTarget.assigneeUserId?.uuidString, sourceObject: nil, messageToken: nil)
+        let channelTopic = try Topic.createTopicStringByLevelsForChannel(channelId: channelId, associatedUserId: eventTarget.assigneeUserId?.uuidString, sourceObject: nil, messageToken: nil)
         
         mqtt?.subscribe(channelTopic)
         

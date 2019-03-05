@@ -3,7 +3,7 @@ This application makes use of the following third party libraries:
 
 ## CoatySwift
 
-Copyright (c) 2019 Sandra Grujovic <sandra.grujovic@siemens.com>
+Copyright (c) 2019 Siemens AG
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -5,6 +5,10 @@ target 'CoatySwift_Example' do
 
   target 'CoatySwift_Tests' do
     inherit! :search_paths
+    
+    # Testing dependencies.
+    pod 'Quick'
+    pod 'Nimble'
 
     
   end

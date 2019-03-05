@@ -1,18 +1,18 @@
 {
   "name": "CoatySwift",
   "version": "0.1.0",
-  "summary": "A short description of CoatySwift.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/Sandra Grujovic/CoatySwift",
+  "summary": "Collaborative IoT framework in Swift for iOS and macOS.",
+  "description": "The Coaty framework enables realization of collaborative IoT applications and scenarios in a distributed, decentralized fashion. A Coaty application consists of Coaty agents that act independently and communicate with each other to achieve common goals. Coaty agents can run on IoT devices, mobile devices, in microservices, cloud or backend services.",
+  "homepage": "https://coaty.io",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
   },
   "authors": {
-    "Sandra Grujovic": "sandra.grujovic@siemens.com"
+    "Siemens AG": "coaty.team@gmail.com"
   },
   "source": {
-    "git": "https://github.com/Sandra Grujovic/CoatySwift.git",
+    "git": "https://code.siemens.com/collaborative-iot/coaty/coaty-swift.git",
     "tag": "0.1.0"
   },
   "platforms": {
