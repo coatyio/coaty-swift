@@ -56,8 +56,20 @@ class Topic {
         // Initialize event fields.
         self.event = event
         self.eventType = try Topic.extractEventType(event)
-        let coreType = Topic.extractCoreType(event)
         let objectType = Topic.extractObjectType(event)
+        let coreType = Topic.extractCoreType(event)
+
+        // Check if coreType or objectType have been set correctly.
+        // TODO: Extract this and implement behavior for topic string convenience methods.
+        if Topic.isEventTypeFilterRequired(forEvent: eventType) {
+            if objectType == nil && coreType == nil {
+                throw CoatySwiftError.InvalidArgument("\(eventType.rawValue) requires a set eventTypeFilter.")
+            }
+            
+            if objectType != nil && coreType != nil {
+                throw CoatySwiftError.InvalidArgument("You have to specify either the objectType or the coreType.")
+            }
+        }
         
         // Extract the channelId if the event is a Channel event. Otherwise just use the coreType.
         if eventType == .Channel {
@@ -153,8 +165,8 @@ class Topic {
                                                   eventTypeFilter: String? = nil,
                                                   associatedUserId: String? = nil,
                                                   sourceObject: CoatyObject? = nil,
-                                                  messageToken: String? = nil) -> String {
-        
+                                                  messageToken: String? = nil) throws -> String {
+    
         // Select the correct separator.
         var event = eventType.rawValue
         
@@ -201,9 +213,9 @@ class Topic {
                                                     eventTypeFilter: String? = nil,
                                                     associatedUserId: String? = nil,
                                                     sourceObject: CoatyObject? = nil,
-                                                    messageToken: String? = nil) -> String {
+                                                    messageToken: String? = nil) throws -> String {
         
-        return createTopicStringByLevels(coatyVersion: PROTOCOL_VERSION,
+        return try createTopicStringByLevels(coatyVersion: PROTOCOL_VERSION,
                                          eventType: eventType,
                                          eventTypeFilter: eventTypeFilter,
                                          associatedUserId: associatedUserId,
@@ -227,9 +239,9 @@ class Topic {
                                                       eventTypeFilter: String? = nil,
                                                       associatedUserId: String? = nil,
                                                       sourceObject: CoatyObject? = nil,
-                                                      messageToken: String? = nil) -> String {
+                                                      messageToken: String? = nil) throws -> String {
         
-        return createTopicStringByLevels(coatyVersion: nil,
+        return try createTopicStringByLevels(coatyVersion: nil,
                                          eventType: eventType,
                                          eventTypeFilter: eventTypeFilter,
                                          associatedUserId: associatedUserId,
@@ -240,9 +252,9 @@ class Topic {
     static func createTopicStringByLevelsForChannel(channelId: String? = nil,
                                                     associatedUserId: String? = nil,
                                                     sourceObject: CoatyObject? = nil,
-                                                    messageToken: String? = nil) -> String {
+                                                    messageToken: String? = nil) throws -> String {
         
-        return createTopicStringByLevels(coatyVersion: nil,
+        return try createTopicStringByLevels(coatyVersion: nil,
                                          eventType: .Channel,
                                          eventTypeFilter: channelId,
                                          associatedUserId: associatedUserId,
@@ -251,6 +263,13 @@ class Topic {
     }
     
     // MARK: - Parsing helper methods.
+    
+    private static func isEventTypeFilterRequired(forEvent event: CommunicationEventType) -> Bool {
+        // Events that require an eventTypeFilter to be set.
+        // TODO: Are these all events?
+        let events: [CommunicationEventType] = [.Advertise, .Channel]
+        return events.contains(event)
+    }
     
     private static func isCoreType(_ eventTypeFilter: String) -> Bool {
         return CoreType(rawValue: eventTypeFilter) != nil
