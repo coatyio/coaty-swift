@@ -7,7 +7,7 @@ import Foundation
 
 /// ResolveEvent provides a generic implementation for all ResolveEvents.
 /// Note that this class should preferably initialized via its withObject() method.
-class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<ResolveEventData<GenericCoatyObject>> {
+public class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<ResolveEventData<GenericCoatyObject>> {
     
     // MARK: - Initializers.
     
@@ -70,7 +70,7 @@ class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<ResolveE
 
 /// ResolveEventData provides a wrapper object that stores the entire message payload data
 /// for a ResolveEvent including the object itself as well as the associated private data.
-class ResolveEventData<S: Resolve>: CommunicationEventData {
+public class ResolveEventData<S: Resolve>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
@@ -121,7 +121,7 @@ class ResolveEventData<S: Resolve>: CommunicationEventData {
         try super.init(from: decoder)
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.object, forKey: .object)
         try container.encodeIfPresent(self.relatedObjects, forKey: .relatedObjects)

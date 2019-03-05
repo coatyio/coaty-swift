@@ -1,0 +1,133 @@
+//
+//  ChannelEvent.swift
+//  CoatySwift
+//
+//
+
+import Foundation
+
+/// ChannelEvent provides a generic implementation for all ChannelEvents.
+/// Note that this class should preferably initialized via its withObject() method.
+public class ChannelEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<ChannelEventData<GenericCoatyObject>> {
+    
+    var channelId: String?
+    
+    // MARK: - Initializers.
+    
+    /// TODO: This method should never be called directly by application programmers.
+    /// Inside the framework, calling is ok.
+    override init(eventSource: Component, eventData: ChannelEventData<GenericCoatyObject>) {
+        super.init(eventSource: eventSource, eventData: eventData)
+    }
+    
+    /// Main initializer. Should not be called directly by application programmers.
+    /// Needed because of extra parameters channelId.
+    init(eventSource: Component, eventData: ChannelEventData<GenericCoatyObject>,
+         channelId: String) {
+        super.init(eventSource: eventSource, eventData: eventData)
+        self.channelId = channelId
+    }
+    
+    // MARK: - Factory methods.
+
+    /// Create a ChannelEvent instance for delivering the given object.
+    ///
+    /// - TODO: Missing documentation.
+    /// - Parameters:
+    ///   - eventSource: the event source component
+    ///   - channelId:
+    ///   - object: the object to be channelized
+    ///   - privateData: application-specific options (optional)
+    /// - Returns: a channel event that emits CoatyObjects.
+    static func withObject(eventSource: Component,
+                           channelId: String,
+                           object: GenericCoatyObject,
+                           privateData: [String: Any]? = nil) -> ChannelEvent<GenericCoatyObject> {
+        let channelEventData = ChannelEventData(object: object, privateData: privateData)
+        return .init(eventSource: eventSource, eventData: channelEventData)
+    }
+    
+    /// Create a ChannelEvent instance for delivering the given objects.
+    ///
+    /// - TODO: Missing documentation.
+    /// - Parameters:
+    ///   - eventSource: the event source component
+    ///   - channelId:
+    ///   - objects: the objects to be channelized
+    ///   - privateData: application-specific options (optional)
+    /// - Returns: a channel event that emits CoatyObjects.
+    static func withObjects(eventSource: Component,
+                            channelId: String,
+                                   objects: [GenericCoatyObject],
+                                   privateData: [String: Any]? = nil) -> ChannelEvent<GenericCoatyObject> {
+        let channelEventData = ChannelEventData(objects: objects, privateData: privateData)
+        return .init(eventSource: eventSource, eventData: channelEventData)
+    }
+    
+    // MARK: - Codable methods.
+    
+    required init(from decoder: Decoder) throws {
+        try super.init(from: decoder)
+    }
+    
+    override public func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+    }
+}
+
+/// ChannelEventData provides a wrapper object that stores the entire message payload data
+/// for a ChannelEvent including the object itself as well as the associated private data.
+public class ChannelEventData<S: CoatyObject>: CommunicationEventData {
+    
+    // MARK: - Public attributes.
+    
+    public var object: S?
+    public var objects: [S]?
+    public var privateData: [String: Any]?
+    
+    // MARK: - Initializers.
+    
+    private init(_ object: S?, _ objects: [S]?, _ privateData: [String: Any]? = nil) {
+        self.object = object
+        self.objects = objects
+        self.privateData = privateData
+        super.init()
+    }
+    
+    convenience init(object: S, privateData: [String: Any]? = nil) {
+        self.init(object, nil, privateData)
+    }
+    
+    convenience init(objects: [S], privateData: [String: Any]? = nil) {
+        self.init(nil, objects, privateData)
+    }
+    
+    // MARK: - Factory methods.
+    
+    static func createFrom(eventData: S) -> ChannelEventData {
+        return .init(object: eventData)
+    }
+    
+    // MARK: - Codable methods.
+    
+    enum CodingKeys: String, CodingKey {
+        case object
+        case objects
+        case privateData
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.object = try container.decodeIfPresent(S.self, forKey: .object)
+        self.objects = try container.decodeIfPresent([S].self, forKey: .objects)
+        try? self.privateData = container.decodeIfPresent([String: Any].self, forKey: .privateData)
+        try super.init(from: decoder)
+    }
+    
+    override public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(self.object, forKey: .object)
+        try container.encodeIfPresent(self.objects, forKey: .objects)
+        try container.encodeIfPresent(self.privateData, forKey: .privateData)
+    }
+}

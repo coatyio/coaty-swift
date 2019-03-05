@@ -11,16 +11,16 @@ public class CommunicationEvent<T: CommunicationEventData>: Codable {
     
     // MARK: - Public attributes.
     
-    var eventType: CommunicationEventType?
+    public var eventType: CommunicationEventType?
     
     /// Event data that conforms for CommunicationEventData, e.g. AdvertiseEventData.
-    var eventData: T
+    public var eventData: T
 
     // MARK: - Private attributes.
     
-    var eventSource: Component?
-    var eventSourceId: UUID?
-    var eventUserId: String? // or UUID?
+    public var eventSource: Component?
+    public var eventSourceId: UUID?
+    public var eventUserId: String? // or UUID?
     
     // MARK: - Initializer.
     
