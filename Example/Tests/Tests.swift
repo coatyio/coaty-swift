@@ -1,7 +1,16 @@
+//
+//  Tests.swift
+//  CoatySwift
+//
+//
+
 import Quick
 import Nimble
 @testable import CoatySwift
 
+
+/// CommunicationTests provides the QuickSpec for all tests for the CommunicationManager, Topic
+/// and related classes.
 class CommunicationTests: QuickSpec {
     
     override func spec() {
@@ -9,10 +18,10 @@ class CommunicationTests: QuickSpec {
             
             describe("Communication Topic") {
                 
+                // Test variables.
                 let identity = Component(name: "CommunicationManager")
                 let messageToken = "7d6dd7e6-4f3d-4cdf-92f5-3d926a55663d"
-                    
-                    // let topicNoUser = Topic.createTopicStringByLevelsForPublish(eventType: .Advertise, eventTypeFilter: "CoatyObject", associatedUserId: nil, sourceObject: identity, messageToken: "7d6dd7e6-4f3d-4cdf-92f5-3d926a55663d")
+                
                 it("creates correct topic string for subscriptions") {
                     let subscriptionTopic = "/coaty/+/Advertise:Component/+/+/+/"
                     
@@ -47,6 +56,7 @@ class CommunicationTests: QuickSpec {
                     }.to(throwError())
                 }
                 
+                // TODO: Implement me.
                 /*it("throws on missing eventTypeFilter for event that needs it") {
                     expect {
                         try Topic.createTopicStringByLevelsForPublish(eventType: .Advertise, eventTypeFilter: nil, associatedUserId: "-", sourceObject: identity, messageToken: messageToken)
@@ -66,10 +76,11 @@ class CommunicationTests: QuickSpec {
                         try Topic.init("/coaty/\(PROTOCOL_VERSION)/Advertise:UnknownCoreType/-/\(identity.objectId)/\(messageToken)/")
                     }.to(throwError())
                     
+                    // TODO: Implement me.
                     /* expect {
                         try Topic.init("/coaty/\(PROTOCOL_VERSION)/Advertise::Malformatted#ObjectType/-/\(identity.objectId)/\(messageToken)/")
                     }.to(throwError())
-                */
+                    */
                 }
             }
            
