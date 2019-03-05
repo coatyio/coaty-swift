@@ -19,8 +19,14 @@ public class CommunicationManager {
     /// Dispose bag for all RxSwift subscriptions.
     private var disposeBag = DisposeBag()
     private let protocolVersion = 1
-    private var identity: Component?
+    private var identity: Component!
     private var mqtt: CocoaMQTT?
+    private var deadvertiseIds = [UUID]() {
+        didSet {
+            // Update the last will message accordingly to new identity.
+            setLastWill()
+        }
+    }
     
     // MARK: - Observables.
     
@@ -54,7 +60,7 @@ public class CommunicationManager {
             .filter { $0 == .online }
             .subscribe { (event) in
                 // FIXME: Remove force unwrap.
-                try? self.publishAdvertiseIdentity(eventTarget: self.identity!)
+                try? self.advertiseIdentityOrDevice(eventTarget: self.identity!)
             }.disposed(by: disposeBag)
     }
     
@@ -70,7 +76,23 @@ public class CommunicationManager {
     
     /// - TODO: Copy will implementation from Coaty.
     func setLastWill() {
-        mqtt?.willMessage = CocoaMQTTWill(topic: "TEST", message: "TEST")
+        
+        print("SetLastWill")
+        
+        guard let lastWillTopic = try? Topic.createTopicStringByLevelsForPublish(eventType: .Deadvertise, eventTypeFilter: nil, associatedUserId: nil, sourceObject: identity, messageToken: UUID.init().uuidString) else {
+            // TODO: Handle error.
+            return
+        }
+        
+        let deadvertise = Deadvertise(objectIds: deadvertiseIds)
+        guard let deadvertiseEvent = try? DeadvertiseEvent.withObject(eventSource: identity, object: deadvertise) else {
+            // TODO: Handle error.
+            return
+        }
+        
+        
+        // FIXME:  willMessage not sent out if no reconnect!
+        mqtt?.willMessage = CocoaMQTTWill(topic: lastWillTopic, message: deadvertiseEvent.json)
     }
     
     /// Generates Coaty client Id.
@@ -167,6 +189,16 @@ extension CommunicationManager {
                                 sourceObject: advertiseEvent.eventSource,
                                 messageToken: UUID.init().uuidString)
         
+        // Save advertises for Components or Devices.
+        if advertiseEvent.eventData.object.coreType == .Component ||
+            advertiseEvent.eventData.object.coreType == .Device {
+            
+            // Add if not existing already in deadvertiseIds.
+            if !deadvertiseIds.contains(advertiseEvent.eventData.object.objectId) {
+                deadvertiseIds.append(advertiseEvent.eventData.object.objectId)
+            }
+        }
+        
         // Publish the advertise for core AND object type.
         publish(topic: topicForCoreType, message: advertiseEvent.json)
         publish(topic: topicForObjectType, message: advertiseEvent.json)
@@ -176,7 +208,7 @@ extension CommunicationManager {
     ///
     /// - TODO: Re-use the implementation of publishAdvertise. Currently not possible because of
     /// missing topic creations.
-    public func publishAdvertiseIdentity(eventTarget: Component) throws {
+    public func advertiseIdentityOrDevice(eventTarget: Component) throws {
         guard let identity = self.identity else {
             // TODO: Handle error.
             return
@@ -354,6 +386,34 @@ extension CommunicationManager {
                 return topic.channelId == channelId
             })
             .map({ (message) -> T in
+                let (_, payload) = message
+                
+                // FIXME: Remove force unwrap.
+                return PayloadCoder.decode(payload)!
+            })
+    }
+    
+    /// Observe Deadvertise events for the given target emitted by the hot
+    /// observable returned.
+    ///
+    /// Deadvertise events that originate from the given event target, i.e.
+    /// that have been published by specifying the given event target as
+    /// event source, will not be emitted by the observable returned.
+    ///
+    /// - Parameters:
+    ///     - eventTarget: target for which Deadvertise events should be emitted
+    /// - Returns:  a hot observable emitting incoming Deadvertise events
+    public func observeDeadvertise(eventTarget: Component) throws -> Observable<DeadvertiseEvent<Deadvertise>> {
+        let channelTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Deadvertise)
+        
+        mqtt?.subscribe(channelTopic)
+        
+        return rawMessages.map(convertToTupleFormat)
+            .filter({ (rawMessageTopic) -> Bool in
+                let (topic, _) = rawMessageTopic
+                return topic.eventType == .Deadvertise
+            })
+            .map({ (message) -> DeadvertiseEvent<Deadvertise> in
                 let (_, payload) = message
                 
                 // FIXME: Remove force unwrap.
