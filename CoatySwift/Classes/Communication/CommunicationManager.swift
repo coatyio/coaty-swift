@@ -66,6 +66,9 @@ public class CommunicationManager {
         identity = Component(coreType: .Component,
                              objectType: objectType,
                              objectId: .init(), name: "CommunicationManager")
+        
+        // Make sure the identity is added to the deadvertiseIds array in order to
+        // send out a correct last will message.
         deadvertiseIds.append(identity.objectId)
     }
     
@@ -139,6 +142,8 @@ public class CommunicationManager {
     
     // MARK: - Client lifecycle methods.
     
+    
+    /// Starts the client gracefully and connects to the broker.
     public func startClient() {
         updateOperatingState(.starting)
         connect()
@@ -400,19 +405,19 @@ extension CommunicationManager {
     ///   - channelId: a channel identifier
     /// - Returns: a hot observable emitting incoming Channel events.
     public func observeChannel<Family: ClassFamily, T: ChannelEvent<Family>>(eventTarget: Component,
-                                                                   channelId: String) throws -> Observable<T> {
+                                                                             channelId: String) throws -> Observable<T> {
+        
         // TODO: Unsure about associatedUserId parameters. Is it really assigneeUserId?
         let channelTopic = try Topic.createTopicStringByLevelsForChannel(channelId: channelId,
-                                                                         associatedUserId: eventTarget.assigneeUserId?.uuidString,
+                                                                         associatedUserId: eventTarget
+                                                                            .assigneeUserId?.uuidString,
                                                                          sourceObject: nil,
                                                                          messageToken: nil)
-        
+        // TODO: Make sure to only subscribe to topic once...
         mqtt?.subscribe(channelTopic)
+        
         return rawMessages.map(convertToTupleFormat)
-            .filter({ (rawMessageTopic) -> Bool in
-                let (topic, _) = rawMessageTopic
-                return topic.eventType == .Channel
-            })
+            .filter(isChannel)
             .filter({ (rawMessageWithTopic) -> Bool in
                 // Filter messages according to channelId.
                 let (topic, _) = rawMessageWithTopic

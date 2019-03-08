@@ -179,7 +179,6 @@ class Topic {
             }
         }
         
-        
         // Build correct version string.
         var versionString = WILDCARD_TOPIC
         if let version = coatyVersion {

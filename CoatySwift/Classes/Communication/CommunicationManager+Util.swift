@@ -21,4 +21,9 @@ extension CommunicationManager {
         let (topic, _) = rawMessage
         return topic.eventType == CommunicationEventType.Resolve
     }
+    
+    func isChannel(rawMessageWithTopic: (Topic, String)) -> Bool {
+        let (topic, _) = rawMessageWithTopic
+        return topic.eventType == .Channel
+    }
 }
