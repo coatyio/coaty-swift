@@ -42,5 +42,33 @@ extension KeyedDecodingContainer {
     func decodeIfPresent<T : Decodable, U : ClassFamily>(family: U.Type, forKey key: K) throws -> [T]? {
         return try? decode(family: family, forKey: key)
     }
+    
+    /// Decode a heterogeneous object for a given family.
+    /// - Parameters:
+    ///     - family: The ClassFamily enum for the type family.
+    ///     - key: The CodingKey to look up the list in the current container.
+    /// - Returns: The resulting list of heterogeneousType elements.
+    func decode<T : Decodable, U : ClassFamily>(objectFamily: U.Type, forKey key: K) throws -> T {
+        let typeContainer = try nestedContainer(keyedBy: Discriminator.self, forKey: key)
+        
+        do {
+            let family: U = try typeContainer.decode(U.self, forKey: .objectType)
+            if let type = family.getType() as? T.Type {
+                return try self.decode(type, forKey: key)
+            }
+        } catch {
+            // Try to parse as standard type.
+            let standardFamily = try typeContainer.decode(CoatyObjectFamily.self, forKey: .objectType)
+            if let type = standardFamily.getType() as? T.Type {
+                return try self.decode(type, forKey: key)
+            }
+        }
+    
+        throw NSError()
+    }
+    
+    func decodeIfPresent<T : Decodable, U : ClassFamily>(objectFamily: U.Type, forKey key: K) throws -> T? {
+        return try? decode(objectFamily: objectFamily, forKey: key)
+    }
 
 }

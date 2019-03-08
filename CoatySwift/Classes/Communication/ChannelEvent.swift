@@ -119,7 +119,7 @@ public class ChannelEventData<Family: ClassFamily>: CommunicationEventData {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         // FIXME: Implement the single value family case.
-        self.object = try container.decodeIfPresent(CoatyObject.self, forKey: .object)
+        self.object = try container.decodeIfPresent(objectFamily: Family.self, forKey: .object)
         self.objects = try container.decodeIfPresent(family: Family.self, forKey: .objects)
         try? self.privateData = container.decodeIfPresent([String: Any].self, forKey: .privateData)
         try super.init(from: decoder)

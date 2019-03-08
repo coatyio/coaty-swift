@@ -16,6 +16,15 @@ extension JSONDecoder {
         return try self.decode([ClassWrapper<T, U>].self, from: data).compactMap { $0.object }
     }
     
+    func decode<T: ClassFamily, U: Decodable>(family: T.Type, from data: Data) throws -> U {
+        guard let object = try self.decode(ClassWrapper<T, U>.self, from: data).object else {
+            // TODO: Handle error.
+            throw NSError()
+        }
+        
+        return object
+    }
+    
     private class ClassWrapper<T: ClassFamily, U: Decodable>: Decodable {
         
         /// The decoded object. Can be any subclass of U.

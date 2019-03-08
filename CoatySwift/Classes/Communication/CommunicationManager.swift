@@ -50,7 +50,6 @@ public class CommunicationManager {
             print("Comm. State: \(String(describing: event.element!))")
             }.disposed(by: disposeBag)
         
-        startClient()
         
         // TODO: opt-out: shouldAdvertiseIdentity from configuration.
         communicationState
@@ -67,6 +66,7 @@ public class CommunicationManager {
         identity = Component(coreType: .Component,
                              objectType: objectType,
                              objectId: .init(), name: "CommunicationManager")
+        deadvertiseIds.append(identity.objectId)
     }
     
     // MARK: - Setup methods.
@@ -139,7 +139,7 @@ public class CommunicationManager {
     
     // MARK: - Client lifecycle methods.
     
-    func startClient() {
+    public func startClient() {
         updateOperatingState(.starting)
         connect()
         updateOperatingState(.started)
@@ -408,11 +408,10 @@ extension CommunicationManager {
                                                                          messageToken: nil)
         
         mqtt?.subscribe(channelTopic)
-        
         return rawMessages.map(convertToTupleFormat)
             .filter({ (rawMessageTopic) -> Bool in
                 let (topic, _) = rawMessageTopic
-                return topic.channelId != nil
+                return topic.eventType == .Channel
             })
             .filter({ (rawMessageWithTopic) -> Bool in
                 // Filter messages according to channelId.
@@ -423,7 +422,6 @@ extension CommunicationManager {
                 let (_, payload) = message
                 
                 // FIXME: Remove force unwrap.
-                
                 return PayloadCoder.decode(payload)!
             })
     }
