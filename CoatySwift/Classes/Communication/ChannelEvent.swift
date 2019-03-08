@@ -7,23 +7,27 @@
 import Foundation
 
 /// ChannelEvent provides a generic implementation for all ChannelEvents.
-/// Note that this class should preferably initialized via its withObject() method.
+///
+/// The class requires the definition of a `ClassFamily`, e.g. `CoatyObjectFamily` or a
+/// custom implementation of a `ClassFamily` to support custom object types.
+/// - NOTE: This class should preferably initialized via its withObject() method.
 public class ChannelEvent<Family: ClassFamily>: CommunicationEvent<ChannelEventData<Family>> {
     
     var channelId: String?
     
     // MARK: - Initializers.
     
-    /// TODO: This method should never be called directly by application programmers.
+    /// - NOTE: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
-    override init(eventSource: Component, eventData: ChannelEventData<Family>) {
+    private override init(eventSource: Component, eventData: ChannelEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
-    /// Main initializer. Should not be called directly by application programmers.
-    /// Needed because of extra parameters channelId.
-    init(eventSource: Component, eventData: ChannelEventData<Family>,
-         channelId: String) {
+    /// Main initializer.
+    ///
+    /// - NOTE: Should not be called directly by application programmers. Needed because of
+    /// extra parameter channelId.
+    init(eventSource: Component, eventData: ChannelEventData<Family>, channelId: String) {
         super.init(eventSource: eventSource, eventData: eventData)
         self.channelId = channelId
     }
@@ -34,11 +38,11 @@ public class ChannelEvent<Family: ClassFamily>: CommunicationEvent<ChannelEventD
     ///
     /// - TODO: Missing documentation.
     /// - Parameters:
-    ///   - eventSource: the event source component
-    ///   - channelId:
-    ///   - object: the object to be channelized
-    ///   - privateData: application-specific options (optional)
-    /// - Returns: a channel event that emits CoatyObjects.
+    ///   - eventSource: the event source component.
+    ///   - channelId: channel identifier string.
+    ///   - object: the object to be channelized.
+    ///   - privateData: application-specific options (optional).
+    /// - Returns: a channel event that emits CoatyObjects that are part of the `ClassFamily`.
     static func withObject(eventSource: Component,
                            channelId: String,
                            object: CoatyObject,
@@ -52,14 +56,14 @@ public class ChannelEvent<Family: ClassFamily>: CommunicationEvent<ChannelEventD
     /// - TODO: Missing documentation.
     /// - Parameters:
     ///   - eventSource: the event source component
-    ///   - channelId:
+    ///   - channelId: channel identifier string.
     ///   - objects: the objects to be channelized
     ///   - privateData: application-specific options (optional)
-    /// - Returns: a channel event that emits CoatyObjects.
+    /// - Returns: a channel event that emits CoatyObjects that are part of the `ClassFamily`.
     static func withObjects(eventSource: Component,
                             channelId: String,
-                                   objects: [CoatyObject],
-                                   privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
+                            objects: [CoatyObject],
+                            privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
         let channelEventData = ChannelEventData<Family>(objects: objects, privateData: privateData)
         return .init(eventSource: eventSource, eventData: channelEventData)
     }
@@ -118,7 +122,6 @@ public class ChannelEventData<Family: ClassFamily>: CommunicationEventData {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        // FIXME: Implement the single value family case.
         self.object = try container.decodeIfPresent(objectFamily: Family.self, forKey: .object)
         self.objects = try container.decodeIfPresent(family: Family.self, forKey: .objects)
         try? self.privateData = container.decodeIfPresent([String: Any].self, forKey: .privateData)

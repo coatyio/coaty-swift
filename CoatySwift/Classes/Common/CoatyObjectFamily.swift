@@ -6,31 +6,31 @@
 
 import Foundation
 
-/// - TODO: Comment me.
-/// - TODO: Make me private.
+/// CoatyObjectFamily defines the objectType to Class mapping for all Coaty default objects.
+/// - TODO: Add remaining cases for the mapping.
+/// - TODO: Make me private? Maybe it is required to stay public.
 public enum CoatyObjectFamily: String, ClassFamily {
-    
-    /*
-    case User
-    case Device
-    case Annotation
-    case Task
-    case IoSource
-    case IoActor
-    case Config
-    case Log
-    case Location
-    case Snapshot*/
-    
-    // TODO: add all cases.
-    case component = "coaty.Component"
     case coatyObject = "coaty.CoatyObject"
+    case user = "coaty.User"
+    case device = "coaty.Device"
+    case annotation = "coaty.Annotation"
+    case task = "coaty.Task"
+    case ioSource = "coaty.IoSource"
+    case ioActor = "coaty.IoActor"
+    case config = "coaty.Config"
+    case log = "coaty.Log"
+    case location = "coaty.Location"
+    case snapshot = "coaty.Snapshot"
+    case component = "coaty.Component"
     
     public func getType() -> AnyObject.Type {
         switch self {
+        case .coatyObject:
+            return CoatyObject.self
         case .component:
             return Component.self
-        case .coatyObject:
+        default:
+            // TODO: Add remaining cases.
             return CoatyObject.self
         }
     }
