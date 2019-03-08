@@ -8,7 +8,7 @@ import Foundation
 
 /// The base type of all objects in the Coaty object model. Application-specific object types
 /// extend either CoatyObject directly or any of its derived core types.
-public class CoatyObject: Codable {
+open class CoatyObject: Codable {
     
     // MARK: - Required attributes.
     
@@ -86,7 +86,7 @@ public class CoatyObject: Codable {
         isDeactivated = try container.decodeIfPresent(Bool.self, forKey: .isDeactivated)
     }
     
-    public func encode(to encoder: Encoder) throws {
+    open func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CoatyObjectKeys.self)
         
         // Encode required attributes.

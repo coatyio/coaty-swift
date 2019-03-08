@@ -18,7 +18,7 @@ public enum CoreType: String, Codable {
     case Task
     case IoSource
     case IoActor
-    case Component
+    case Component = "Component"
     case Config
     case Log
     case Location

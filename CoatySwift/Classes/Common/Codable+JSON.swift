@@ -63,7 +63,6 @@ extension KeyedDecodingContainer {
     
 }
 
-
 extension UnkeyedDecodingContainer {
     mutating func decode(_ type: [Any].Type) throws -> [Any] {
         var array: [Any] = []
@@ -95,7 +94,6 @@ extension UnkeyedDecodingContainer {
         return try nestedContainer.decode(type)
     }
 }
-
 
 extension KeyedEncodingContainerProtocol where Key == JSONCodingKeys {
     mutating func encode(_ value: [String: Any]) throws {

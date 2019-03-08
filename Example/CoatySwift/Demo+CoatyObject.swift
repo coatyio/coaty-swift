@@ -5,6 +5,7 @@
 //
 
 import Foundation
+import CoatySwift
 
 /// DemoObjects shows a custom implementation of a CoatyObject for demonstration purposes.
 /// When implementing a CoatyObject remember to conform to Codable by implementing

@@ -105,9 +105,9 @@ class ViewController: UIViewController {
     }
     
     @objc func receiveChannelEvents() {
-        let test: Observable<ChannelEvent<DemoObject>> = try! comManager.observeChannel(eventTarget: identity, channelId: "123456")
+        let test: Observable<ChannelEvent<CustomCoatyObjectFamily>> = try! comManager.observeChannel(eventTarget: identity, channelId: "123456")
             test.subscribe({ (channelEvent) in
-            print("Received Channel from yellow button:")
+            print("Received Channel from yellow button: \(channelEvent)")
             if let channelEvent = channelEvent.element {
                 print(channelEvent.json)
             }

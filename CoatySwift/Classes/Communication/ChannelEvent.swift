@@ -8,7 +8,7 @@ import Foundation
 
 /// ChannelEvent provides a generic implementation for all ChannelEvents.
 /// Note that this class should preferably initialized via its withObject() method.
-public class ChannelEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<ChannelEventData<GenericCoatyObject>> {
+public class ChannelEvent<Family: ClassFamily>: CommunicationEvent<ChannelEventData<Family>> {
     
     var channelId: String?
     
@@ -16,13 +16,13 @@ public class ChannelEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<C
     
     /// TODO: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
-    override init(eventSource: Component, eventData: ChannelEventData<GenericCoatyObject>) {
+    override init(eventSource: Component, eventData: ChannelEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
     /// Main initializer. Should not be called directly by application programmers.
     /// Needed because of extra parameters channelId.
-    init(eventSource: Component, eventData: ChannelEventData<GenericCoatyObject>,
+    init(eventSource: Component, eventData: ChannelEventData<Family>,
          channelId: String) {
         super.init(eventSource: eventSource, eventData: eventData)
         self.channelId = channelId
@@ -41,9 +41,9 @@ public class ChannelEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<C
     /// - Returns: a channel event that emits CoatyObjects.
     static func withObject(eventSource: Component,
                            channelId: String,
-                           object: GenericCoatyObject,
-                           privateData: [String: Any]? = nil) -> ChannelEvent<GenericCoatyObject> {
-        let channelEventData = ChannelEventData(object: object, privateData: privateData)
+                           object: CoatyObject,
+                           privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
+        let channelEventData = ChannelEventData<Family>(object: object, privateData: privateData)
         return .init(eventSource: eventSource, eventData: channelEventData)
     }
     
@@ -58,9 +58,9 @@ public class ChannelEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<C
     /// - Returns: a channel event that emits CoatyObjects.
     static func withObjects(eventSource: Component,
                             channelId: String,
-                                   objects: [GenericCoatyObject],
-                                   privateData: [String: Any]? = nil) -> ChannelEvent<GenericCoatyObject> {
-        let channelEventData = ChannelEventData(objects: objects, privateData: privateData)
+                                   objects: [CoatyObject],
+                                   privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
+        let channelEventData = ChannelEventData<Family>(objects: objects, privateData: privateData)
         return .init(eventSource: eventSource, eventData: channelEventData)
     }
     
@@ -77,34 +77,34 @@ public class ChannelEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<C
 
 /// ChannelEventData provides a wrapper object that stores the entire message payload data
 /// for a ChannelEvent including the object itself as well as the associated private data.
-public class ChannelEventData<S: CoatyObject>: CommunicationEventData {
+public class ChannelEventData<Family: ClassFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
-    public var object: S?
-    public var objects: [S]?
+    public var object: CoatyObject?
+    public var objects: [CoatyObject]?
     public var privateData: [String: Any]?
     
     // MARK: - Initializers.
     
-    private init(_ object: S?, _ objects: [S]?, _ privateData: [String: Any]? = nil) {
+    private init(_ object: CoatyObject?, _ objects: [CoatyObject]?, _ privateData: [String: Any]? = nil) {
         self.object = object
         self.objects = objects
         self.privateData = privateData
         super.init()
     }
     
-    convenience init(object: S, privateData: [String: Any]? = nil) {
+    convenience init(object: CoatyObject, privateData: [String: Any]? = nil) {
         self.init(object, nil, privateData)
     }
     
-    convenience init(objects: [S], privateData: [String: Any]? = nil) {
+    convenience init(objects: [CoatyObject], privateData: [String: Any]? = nil) {
         self.init(nil, objects, privateData)
     }
     
     // MARK: - Factory methods.
     
-    static func createFrom(eventData: S) -> ChannelEventData {
+    static func createFrom(eventData: CoatyObject) -> ChannelEventData {
         return .init(object: eventData)
     }
     
@@ -118,8 +118,9 @@ public class ChannelEventData<S: CoatyObject>: CommunicationEventData {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.decodeIfPresent(S.self, forKey: .object)
-        self.objects = try container.decodeIfPresent([S].self, forKey: .objects)
+        // FIXME: Implement the single value family case.
+        self.object = try container.decodeIfPresent(CoatyObject.self, forKey: .object)
+        self.objects = try container.decodeIfPresent(family: Family.self, forKey: .objects)
         try? self.privateData = container.decodeIfPresent([String: Any].self, forKey: .privateData)
         try super.init(from: decoder)
     }
