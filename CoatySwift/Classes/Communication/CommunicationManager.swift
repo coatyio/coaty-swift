@@ -21,12 +21,9 @@ public class CommunicationManager {
     private let protocolVersion = 1
     private var identity: Component!
     private var mqtt: CocoaMQTT?
-    private var deadvertiseIds = [UUID]() {
-        didSet {
-            // Update the last will message accordingly to new identity.
-            setLastWill()
-        }
-    }
+    
+    /// Ids of all advertised components that should be deadvertised when the client ends.
+    private var deadvertiseIds = [UUID]()
     
     // MARK: - Observables.
     
@@ -74,22 +71,27 @@ public class CommunicationManager {
     
     // MARK: - Setup methods.
     
-    /// - TODO: Copy will implementation from Coaty.
+    /// Sets last will for the communication manager in broker.
+    /// - NOTE: the willMessage is only sent out at the beginning of the connection and cannot
+    /// be changed afterwards, unless you reconnect.
     func setLastWill() {
         
-        guard let lastWillTopic = try? Topic.createTopicStringByLevelsForPublish(eventType: .Deadvertise, eventTypeFilter: nil, associatedUserId: nil, sourceObject: identity, messageToken: UUID.init().uuidString) else {
+        guard let lastWillTopic = try? Topic.createTopicStringByLevelsForPublish(eventType: .Deadvertise,
+                                                                                 eventTypeFilter: nil,
+                                                                                 associatedUserId: nil,
+                                                                                 sourceObject: identity,
+                                                                                 messageToken: UUID.init().uuidString) else {
             // TODO: Handle error.
             return
         }
         
         let deadvertise = Deadvertise(objectIds: deadvertiseIds)
-        guard let deadvertiseEvent = try? DeadvertiseEvent.withObject(eventSource: identity, object: deadvertise) else {
+        guard let deadvertiseEvent = try? DeadvertiseEvent.withObject(eventSource: identity,
+                                                                      object: deadvertise) else {
             // TODO: Handle error.
             return
         }
         
-        
-        // FIXME:  willMessage not sent out if no reconnect!
         mqtt?.willMessage = CocoaMQTTWill(topic: lastWillTopic, message: deadvertiseEvent.json)
     }
     
@@ -143,6 +145,8 @@ public class CommunicationManager {
         updateOperatingState(.started)
     }
     
+    /// Gracefully ends the client.
+    /// - NOTE: This triggers deadvertisements without using the last will.
     public func endClient() throws {
         updateOperatingState(.stopping)
         
@@ -154,6 +158,8 @@ public class CommunicationManager {
         updateOperatingState(.stopped)
     }
     
+    /// Deadvertises all identities that were registered over the communication manager, including
+    /// its own identity.
     private func deadvertiseIdentityOrDevice() throws {
         let deadvertise = Deadvertise(objectIds: deadvertiseIds)
         let deadvertiseEventData = DeadvertiseEventData.createFrom(eventData: deadvertise)
@@ -274,11 +280,14 @@ extension CommunicationManager {
             })
     }
     
-    
+    /// Notify subscribers that an advertised object has been deadvertised.
+    ///
+    /// - Parameter deadvertiseEvent: the Deadvertise event to be published
     public func publishDeadvertise<S: Deadvertise,T: DeadvertiseEvent<S>>(deadvertiseEvent: T) throws {
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Deadvertise,
                                                                   eventTypeFilter: nil,
-                                                                  associatedUserId: deadvertiseEvent.eventUserId ?? EMPTY_ASSOCIATED_USER_ID,
+                                                                  associatedUserId: deadvertiseEvent.eventUserId
+                                                                    ?? EMPTY_ASSOCIATED_USER_ID,
                                                                   sourceObject: deadvertiseEvent.eventSource,
                                                                   messageToken: UUID().uuidString)
 
@@ -393,7 +402,10 @@ extension CommunicationManager {
     public func observeChannel<S: CoatyObject, T: ChannelEvent<S>>(eventTarget: Component,
                                                                    channelId: String) throws -> Observable<T> {
         // TODO: Unsure about associatedUserId parameters. Is it really assigneeUserId?
-        let channelTopic = try Topic.createTopicStringByLevelsForChannel(channelId: channelId, associatedUserId: eventTarget.assigneeUserId?.uuidString, sourceObject: nil, messageToken: nil)
+        let channelTopic = try Topic.createTopicStringByLevelsForChannel(channelId: channelId,
+                                                                         associatedUserId: eventTarget.assigneeUserId?.uuidString,
+                                                                         sourceObject: nil,
+                                                                         messageToken: nil)
         
         mqtt?.subscribe(channelTopic)
         
