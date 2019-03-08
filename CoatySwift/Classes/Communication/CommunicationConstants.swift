@@ -8,7 +8,7 @@ import Foundation
 
 // MARK: - Constants for topic parsing.
 
-let COATY_PREFIX = "coaty."
+public let COATY_PREFIX = "coaty."
 let COATY = "coaty"
 let PROTOCOL_VERSION = 1
 let TOPIC_SEPARATOR = "/"

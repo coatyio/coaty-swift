@@ -77,8 +77,6 @@ public class CommunicationManager {
     /// - TODO: Copy will implementation from Coaty.
     func setLastWill() {
         
-        print("SetLastWill")
-        
         guard let lastWillTopic = try? Topic.createTopicStringByLevelsForPublish(eventType: .Deadvertise, eventTypeFilter: nil, associatedUserId: nil, sourceObject: identity, messageToken: UUID.init().uuidString) else {
             // TODO: Handle error.
             return
@@ -145,10 +143,23 @@ public class CommunicationManager {
         updateOperatingState(.started)
     }
     
-    func endClient() {
+    public func endClient() throws {
         updateOperatingState(.stopping)
+        
+        // Gracefully send deadvertise messages to others.
+        // NOTE: This does not change or adjust the last will.
+        try deadvertiseIdentityOrDevice()
+        
         disconnect()
         updateOperatingState(.stopped)
+    }
+    
+    private func deadvertiseIdentityOrDevice() throws {
+        let deadvertise = Deadvertise(objectIds: deadvertiseIds)
+        let deadvertiseEventData = DeadvertiseEventData.createFrom(eventData: deadvertise)
+        let deadvertiseEvent = DeadvertiseEvent(eventSource: identity, eventData: deadvertiseEventData)
+        
+        try publishDeadvertise(deadvertiseEvent: deadvertiseEvent)
     }
     
     // MARK: - Communication methods.
@@ -258,9 +269,20 @@ extension CommunicationManager {
             .map({ (message) -> V in
                 let (_, payload) = message
                 // FIXME: Remove force unwrap.
-                print(payload)
+
                 return PayloadCoder.decode(payload)!
             })
+    }
+    
+    
+    public func publishDeadvertise<S: Deadvertise,T: DeadvertiseEvent<S>>(deadvertiseEvent: T) throws {
+        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Deadvertise,
+                                                                  eventTypeFilter: nil,
+                                                                  associatedUserId: deadvertiseEvent.eventUserId ?? EMPTY_ASSOCIATED_USER_ID,
+                                                                  sourceObject: deadvertiseEvent.eventSource,
+                                                                  messageToken: UUID().uuidString)
+
+        self.publish(topic: topic, message: deadvertiseEvent.json)
     }
 }
 
