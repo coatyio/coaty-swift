@@ -28,7 +28,7 @@ public class CommunicationEvent<T: CommunicationEventData>: Codable {
     init(eventSource: Component, eventData: T) {
         self.eventSource = eventSource
         self.eventSourceId = eventSource.objectId
-        self.eventUserId = "default-user-id" // FIXME: Default value.
+        self.eventUserId = EMPTY_ASSOCIATED_USER_ID // FIXME: Default value.
         self.eventData = eventData
     }
     

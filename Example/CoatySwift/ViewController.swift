@@ -12,11 +12,13 @@ import CoatySwift
 class ViewController: UIViewController {
     
     let advertiseEventButton = UIButton(frame: CGRect(x: 0, y: 100, width: 350, height: 50))
-    let receiveEventObjectTypeSame = UIButton(frame: CGRect(x: 0, y: 200, width: 350, height: 50))
+    let sameIdentityButton = UIButton(frame: CGRect(x: 0, y: 200, width: 350, height: 50))
     let channelEventButton = UIButton(frame: CGRect(x: 0, y: 300, width: 350, height: 50))
     let receiveEventCoreTypeSame =  UIButton(frame: CGRect(x: 0, y: 400, width: 350, height: 50))
     let receiveEventCoreTypeDif =  UIButton(frame: CGRect(x: 0, y: 500, width: 350, height: 50))
-    let receiveCustomAdvertise = UIButton(frame: CGRect(x: 0, y: 600, width: 350, height: 50))
+    let endClientButton = UIButton(frame: CGRect(x: 0, y: 600, width: 350, height: 50))
+    
+    let identity = Component(name: "ControllerIdentity")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,10 +38,10 @@ class ViewController: UIViewController {
         self.view.addSubview(advertiseEventButton)
         advertiseEventButton.addTarget(self, action: #selector(advertiseButtonTapped), for: .touchUpInside)
         
-        receiveEventObjectTypeSame.backgroundColor = .blue
-        receiveEventObjectTypeSame.setTitle("Observe Advertises with same objectType", for: .normal)
-        self.view.addSubview(receiveEventObjectTypeSame)
-        receiveEventObjectTypeSame.addTarget(self, action: #selector(receiveAdvertisementsForObjectType), for: .touchUpInside)
+        sameIdentityButton.backgroundColor = .blue
+        sameIdentityButton.setTitle("Publish another component's identity", for: .normal)
+        self.view.addSubview(sameIdentityButton)
+        sameIdentityButton.addTarget(self, action: #selector(advertiseNewComponent), for: .touchUpInside)
         
         channelEventButton.backgroundColor = .yellow
         channelEventButton.setTitle("Channel Events", for: .normal)
@@ -50,17 +52,27 @@ class ViewController: UIViewController {
         receiveEventCoreTypeSame.backgroundColor = .green
         receiveEventCoreTypeSame.setTitle("Observe Advertises with same coreType", for: .normal)
         self.view.addSubview(receiveEventCoreTypeSame)
-        receiveEventObjectTypeSame.addTarget(self, action: #selector(receiveAdvertisementsForCoreType), for: .touchUpInside)
+        sameIdentityButton.addTarget(self, action: #selector(receiveAdvertisementsForCoreType), for: .touchUpInside)
         
         receiveEventCoreTypeDif.backgroundColor = .purple
         receiveEventCoreTypeDif.setTitle("Observe Advertises with dif. coreType", for: .normal)
         self.view.addSubview(receiveEventCoreTypeDif)
         receiveEventCoreTypeDif.addTarget(self, action: #selector(receiveAdvertisementsForDifCoreType), for: .touchUpInside)
         
-        receiveCustomAdvertise.backgroundColor = .gray
-        receiveCustomAdvertise.setTitle("Observe Demo-Advertises", for: .normal)
-        self.view.addSubview(receiveCustomAdvertise)
-        receiveCustomAdvertise.addTarget(self, action: #selector(receiveDemoMessageAdvertise), for: .touchUpInside)
+        endClientButton.backgroundColor = .gray
+        endClientButton.setTitle("End client", for: .normal)
+        self.view.addSubview(endClientButton)
+        endClientButton.addTarget(self, action: #selector(endClient), for: .touchUpInside)
+    }
+    
+    @objc func endClient() {
+        try! comManager.endClient()
+    }
+    
+    @objc func advertiseNewComponent() {
+        let component = Component(name: "SecondControllerIdentity")
+        let advertiseEvent = AdvertiseEvent.withObject(eventSource: component, object: component)
+        try! comManager.publishAdvertise(advertiseEvent: advertiseEvent, eventTarget: component)
     }
     
     @objc func advertiseButtonTapped() {
@@ -78,10 +90,6 @@ class ViewController: UIViewController {
         }, onError: { error in print(error)}, onCompleted: nil, onDisposed: nil)
         
     }
-    
-    // FIXME: Use proper Component Object for identity.
-    // Currently just a garbage object.
-    let identity = Component(coreType: .Component, objectType: "SpecialObjectType", objectId: .init(), name: "ControllerIdentity")
     
     // MARK: - Receive advertisements for object types.
     
