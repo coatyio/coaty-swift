@@ -58,26 +58,24 @@ class Topic {
         self.eventType = try Topic.extractEventType(event)
         let objectType = Topic.extractObjectType(event)
         let coreType = Topic.extractCoreType(event)
+        let channelId = Topic.extractChannelId(event)
 
         // Check if coreType or objectType have been set correctly.
         // TODO: Extract this and implement behavior for topic string convenience methods.
         if Topic.isEventTypeFilterRequired(forEvent: eventType) {
-            if objectType == nil && coreType == nil {
+            if eventType == .Channel && channelId == nil {
+                 throw CoatySwiftError.InvalidArgument("\(eventType.rawValue) requires a set channelId.")
+            } else if eventType != .Channel && objectType == nil && coreType == nil {
                 throw CoatySwiftError.InvalidArgument("\(eventType.rawValue) requires a set eventTypeFilter.")
             }
             
-            if objectType != nil && coreType != nil {
+            if eventType != .Channel && objectType != nil && coreType != nil {
                 throw CoatySwiftError.InvalidArgument("You have to specify either the objectType or the coreType.")
             }
         }
         
-        // Extract the channelId if the event is a Channel event. Otherwise just use the coreType.
-        if eventType == .Channel {
-            self.channelId = Topic.extractChannelId(event)
-        } else {
-            self.coreType = coreType
-        }
-
+        self.channelId = channelId
+        self.coreType = coreType
         self.objectType = objectType
         
         // Try to parse a associatedUserId, if none is set, the topic will contain "-" here and the
@@ -180,7 +178,6 @@ class Topic {
                 event = eventType.rawValue + separator + eventTypeFilter
             }
         }
-        
         
         // Build correct version string.
         var versionString = WILDCARD_TOPIC

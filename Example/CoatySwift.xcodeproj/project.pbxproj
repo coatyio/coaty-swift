@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A427B0D2232816F0056D67A /* CustomCoatyObjectFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A427B0C2232816F0056D67A /* CustomCoatyObjectFamily.swift */; };
+		2A427B112232826D0056D67A /* Demo+CoatyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A427B102232826D0056D67A /* Demo+CoatyObject.swift */; };
 		4E1D24F9E2A0EDBDC06D17D9 /* Pods_CoatySwift_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E7B9E4B075D67F225727267 /* Pods_CoatySwift_Tests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
@@ -29,6 +31,8 @@
 
 /* Begin PBXFileReference section */
 		0E082A6916A9EE8CD84E196D /* CoatySwift.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = CoatySwift.podspec; path = ../CoatySwift.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		2A427B0C2232816F0056D67A /* CustomCoatyObjectFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCoatyObjectFamily.swift; sourceTree = "<group>"; };
+		2A427B102232826D0056D67A /* Demo+CoatyObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Demo+CoatyObject.swift"; sourceTree = "<group>"; };
 		4E7B9E4B075D67F225727267 /* Pods_CoatySwift_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoatySwift_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B9CCE17A7ADBB73A053ACB4 /* Pods_CoatySwift_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoatySwift_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* CoatySwift_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoatySwift_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,9 +106,11 @@
 		607FACD21AFB9204008FA782 /* Example for CoatySwift */ = {
 			isa = PBXGroup;
 			children = (
+				2A427B102232826D0056D67A /* Demo+CoatyObject.swift */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				2A427B0C2232816F0056D67A /* CustomCoatyObjectFamily.swift */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -375,6 +381,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A427B112232826D0056D67A /* Demo+CoatyObject.swift in Sources */,
+				2A427B0D2232816F0056D67A /* CustomCoatyObjectFamily.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);

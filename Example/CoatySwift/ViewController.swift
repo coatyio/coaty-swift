@@ -32,6 +32,9 @@ class ViewController: UIViewController {
         let decoded: ResolveEvent<CoatyObject> = PayloadCoder.decode(encoded)!
         print(PayloadCoder.encode(decoded))*/
         
+        // Establish mqtt connection.
+        comManager.startClient()
+        
         
         advertiseEventButton.backgroundColor = .red
         advertiseEventButton.setTitle("Publish Advertises", for: .normal)
@@ -105,9 +108,8 @@ class ViewController: UIViewController {
     }
     
     @objc func receiveChannelEvents() {
-        let test: Observable<ChannelEvent<DemoObject>> = try! comManager.observeChannel(eventTarget: identity, channelId: "123456")
+        let test: Observable<ChannelEvent<CustomCoatyObjectFamily>> = try! comManager.observeChannel(eventTarget: identity, channelId: "123456")
             test.subscribe({ (channelEvent) in
-            print("Received Channel from yellow button:")
             if let channelEvent = channelEvent.element {
                 print(channelEvent.json)
             }
