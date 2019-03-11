@@ -262,7 +262,6 @@
 		7BC93C050D86A695D13BF148D28574A0 /* PrePostFixLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8B3E2A506151782B24B3235ABEC800 /* PrePostFixLogFormatter.swift */; };
 		7C46B81B1EC01C4A1190709FFEBCE2B2 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BC285193045635E8F5080C7B59B202 /* Optional.swift */; };
 		7C8C12D27B70E091F0783B405DAF447A /* AnonymousObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F14E8620CDD7FE4A911A63F40F6503E /* AnonymousObserver.swift */; };
-		7C8ECAB8312488D6D3A319711C95733D /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC39E6206C43F15CE6DC1875D748580 /* ReplaceMe.swift */; };
 		7CF47E04535951331A04F6BD6D2A48A9 /* DelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB0D7D56B866B2D99E8A19C81BB1BA7 /* DelegateProxy.swift */; };
 		7D010DB0F228C47F183E9019B8E9FEFE /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D22A13F2C8E4A139CEDC6C9D803F78 /* Debounce.swift */; };
 		7D901F90F6DC24946FFAECCE0092F590 /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A028B5CBF550BBE9D14FEB8ECD0C39D5 /* Cancelable.swift */; };
@@ -383,6 +382,10 @@
 		BA940431CAC9B6F842DF47542B7BBB0A /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C425C440B365E167C11893E740D00E /* UIViewController+Rx.swift */; };
 		BB3BEEEB74DFD293EF5165C1964CE43E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0734C9E56F46B84FD103917DCBB9B6CB /* Foundation.framework */; };
 		BC0D36A0BC5EB701AE6EBA99D58957D0 /* RecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0152779ECFEA1A722B4097A3390158E /* RecursiveLock.swift */; };
+		BC5D512D22366315001CFC4B /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D512C22366315001CFC4B /* LogManager.swift */; };
+		BC5D512F22367E03001CFC4B /* CommunicationManager+CocoaMQTTDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D512E22367E03001CFC4B /* CommunicationManager+CocoaMQTTDelegate.swift */; };
+		BC5D513322367F33001CFC4B /* CommunicationManager+Publish.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D513222367F33001CFC4B /* CommunicationManager+Publish.swift */; };
+		BC5D513522367FF6001CFC4B /* CommunicationManager+Observe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D513422367FF6001CFC4B /* CommunicationManager+Observe.swift */; };
 		BC79FACD83A550BE5D3DCE9E2B0CCE7C /* CommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EBE7305DC502D4B2A5862ABD9EBA89 /* CommunicationManager.swift */; };
 		BD634697F6FDCAEA2B1C537383ED5362 /* XcodeColorsLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF53D94ED9D43B83E729CFAD7A58928E /* XcodeColorsLogFormatter.swift */; };
 		BDAF15A3254BB302214EEB9BB29C5DB5 /* NSTextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB44B7F551EA1D8B6D42F7ECAEE0DD4B /* NSTextField+Rx.swift */; };
@@ -1128,9 +1131,12 @@
 		BAFE9F9141584C644FFBF0464FD1FB4A /* AppleSystemLogDestination.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppleSystemLogDestination.swift; path = Sources/XCGLogger/Destinations/AppleSystemLogDestination.swift; sourceTree = "<group>"; };
 		BB690D08D7F8EE27CF7CCC1C96C5D40D /* Pods-CoatySwift_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CoatySwift_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		BB6FE3C4F1CD31FE87F59104279048CE /* RxSearchControllerDelegateProxy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxSearchControllerDelegateProxy.swift; path = RxCocoa/iOS/Proxies/RxSearchControllerDelegateProxy.swift; sourceTree = "<group>"; };
-		BBC39E6206C43F15CE6DC1875D748580 /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReplaceMe.swift; path = CoatySwift/Classes/ReplaceMe.swift; sourceTree = "<group>"; };
 		BC42AF3FB88FC0C36CB94FFE08CE5001 /* ControlEvent+Driver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ControlEvent+Driver.swift"; path = "RxCocoa/Traits/Driver/ControlEvent+Driver.swift"; sourceTree = "<group>"; };
 		BC441E33A77C9ABEF5D73718BAC55896 /* highlight.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = highlight.css; path = docs/swiftdoc/css/highlight.css; sourceTree = "<group>"; };
+		BC5D512C22366315001CFC4B /* LogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
+		BC5D512E22367E03001CFC4B /* CommunicationManager+CocoaMQTTDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunicationManager+CocoaMQTTDelegate.swift"; sourceTree = "<group>"; };
+		BC5D513222367F33001CFC4B /* CommunicationManager+Publish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunicationManager+Publish.swift"; sourceTree = "<group>"; };
+		BC5D513422367FF6001CFC4B /* CommunicationManager+Observe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunicationManager+Observe.swift"; sourceTree = "<group>"; };
 		BD5B61B62787291C13A781A9F55FCC7C /* ScheduledItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScheduledItem.swift; path = RxSwift/Schedulers/Internal/ScheduledItem.swift; sourceTree = "<group>"; };
 		BDDA29326739F605E1CC5EB3A3301591 /* ExpectationMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpectationMessage.swift; path = Sources/Nimble/ExpectationMessage.swift; sourceTree = "<group>"; };
 		BDF51F54A8A61BDA2A9A8BD0D71E9812 /* RxMutableBox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxMutableBox.swift; path = RxSwift/RxMutableBox.swift; sourceTree = "<group>"; };
@@ -1482,7 +1488,7 @@
 		1AB28E1756A57EDAE7BB7902AE80DFA1 /* CoatySwift */ = {
 			isa = PBXGroup;
 			children = (
-				BBC39E6206C43F15CE6DC1875D748580 /* ReplaceMe.swift */,
+				BC5D512B223662EC001CFC4B /* Logging */,
 				9AE493C893181B55B1529C375461ADC4 /* Common */,
 				68A31F36D9D3DEBB8B0C39E0185B0EB7 /* Communication */,
 				A42694CCC20B0A3EF4BCBE7D38EE90A1 /* Model */,
@@ -1713,18 +1719,12 @@
 		68A31F36D9D3DEBB8B0C39E0185B0EB7 /* Communication */ = {
 			isa = PBXGroup;
 			children = (
-				D96ADB7C35BEFE375EC463220559D1EE /* AdvertiseEvent.swift */,
-				BAA31ED4CE3C625501B78AE49E86C381 /* ChannelEvent.swift */,
+				BC5D513122367EC9001CFC4B /* Manager */,
+				BC5D513022367E57001CFC4B /* CommunicationEvents */,
 				3B9B01CD9E472EA3C69BED9D0EA44AD8 /* CommunicationConstants.swift */,
-				5B81120B38F219B188E9682D1F4D196A /* CommunicationEvent.swift */,
 				A527126E5CE261EAF23F48A4FCFAC41B /* CommunicationEventType.swift */,
-				E5EBE7305DC502D4B2A5862ABD9EBA89 /* CommunicationManager.swift */,
-				65A3D576424F6292356BF3D05F2DF2E5 /* CommunicationManager+Util.swift */,
 				8476BF81F4553DEBD2B3C7B7BADA4D7C /* CommunicationState.swift */,
-				609AFEECFFC37B974B9FB13ACD855127 /* DeadvertiseEvent.swift */,
-				DDBF6FA62AA67FDBBD346E4CECFBE423 /* DiscoverEvent.swift */,
 				66805160D1D57A6373E4766AF6C06047 /* OperatingState.swift */,
-				118D089A2E53DBB19F00B709B59B4766 /* ResolveEvent.swift */,
 				9CBE7E2BDD8D6287E22C0166423905EB /* Topic.swift */,
 			);
 			name = Communication;
@@ -1963,6 +1963,39 @@
 			);
 			name = Model;
 			path = CoatySwift/Classes/Model;
+			sourceTree = "<group>";
+		};
+		BC5D512B223662EC001CFC4B /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				BC5D512C22366315001CFC4B /* LogManager.swift */,
+			);
+			path = Logging;
+			sourceTree = "<group>";
+		};
+		BC5D513022367E57001CFC4B /* CommunicationEvents */ = {
+			isa = PBXGroup;
+			children = (
+				5B81120B38F219B188E9682D1F4D196A /* CommunicationEvent.swift */,
+				D96ADB7C35BEFE375EC463220559D1EE /* AdvertiseEvent.swift */,
+				BAA31ED4CE3C625501B78AE49E86C381 /* ChannelEvent.swift */,
+				609AFEECFFC37B974B9FB13ACD855127 /* DeadvertiseEvent.swift */,
+				DDBF6FA62AA67FDBBD346E4CECFBE423 /* DiscoverEvent.swift */,
+				118D089A2E53DBB19F00B709B59B4766 /* ResolveEvent.swift */,
+			);
+			path = CommunicationEvents;
+			sourceTree = "<group>";
+		};
+		BC5D513122367EC9001CFC4B /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				E5EBE7305DC502D4B2A5862ABD9EBA89 /* CommunicationManager.swift */,
+				BC5D512E22367E03001CFC4B /* CommunicationManager+CocoaMQTTDelegate.swift */,
+				65A3D576424F6292356BF3D05F2DF2E5 /* CommunicationManager+Util.swift */,
+				BC5D513222367F33001CFC4B /* CommunicationManager+Publish.swift */,
+				BC5D513422367FF6001CFC4B /* CommunicationManager+Observe.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		C048A998E55617268C2DB105623BC1D4 /* RxSwift */ = {
@@ -3360,14 +3393,18 @@
 				CE718774743A10775B682CD5B746AE87 /* CoatySwift-dummy.m in Sources */,
 				3A5C391420F0F4C82703DA937AF21A8F /* CoatySwiftError.swift in Sources */,
 				93B7341A8634054EAF62FB194FC72E23 /* Codable+JSON.swift in Sources */,
+				BC5D512D22366315001CFC4B /* LogManager.swift in Sources */,
 				8004DD9382524B8EDB0A05565D539245 /* CommunicationConstants.swift in Sources */,
 				7961631318CCF97F55D02E83F71B6DF6 /* CommunicationEvent.swift in Sources */,
+				BC5D513322367F33001CFC4B /* CommunicationManager+Publish.swift in Sources */,
 				416FD801B2F2BD049F25429ACF5F47B2 /* CommunicationEventType.swift in Sources */,
+				BC5D513522367FF6001CFC4B /* CommunicationManager+Observe.swift in Sources */,
 				3155ACC93D0C6BA10410D82D5E852B66 /* CommunicationManager+Util.swift in Sources */,
 				BC79FACD83A550BE5D3DCE9E2B0CCE7C /* CommunicationManager.swift in Sources */,
 				871B0D8A41399F1015525769E75826AC /* CommunicationState.swift in Sources */,
 				62289C20299ABE403AF22D6252FB56FA /* Component.swift in Sources */,
 				CE437E604BD1528D83F4BFAF0805E879 /* CoreType.swift in Sources */,
+				BC5D512F22367E03001CFC4B /* CommunicationManager+CocoaMQTTDelegate.swift in Sources */,
 				8042AC5C82968A73E7A8BFBDA4DE8B30 /* Deadvertise.swift in Sources */,
 				6174B7D15432B18DA939E85CEAE2BC78 /* DeadvertiseEvent.swift in Sources */,
 				2A427B0B223273B70056D67A /* CoatyObjectFamily.swift in Sources */,
@@ -3379,7 +3416,6 @@
 				4FF2513F9CAFF6C03B56CC771AC711EE /* DiscoverEvent.swift in Sources */,
 				C1BDF71855A1937D2E5389D46C933CFD /* OperatingState.swift in Sources */,
 				5A4108D4DA61F567E6091D25AA1DCF43 /* PayloadCoder.swift in Sources */,
-				7C8ECAB8312488D6D3A319711C95733D /* ReplaceMe.swift in Sources */,
 				9455C781330D9A1C6921A18FDB6E29B7 /* Resolve.swift in Sources */,
 				807FB1EDE7C9DF2DA28C082BBD230953 /* ResolveEvent.swift in Sources */,
 				D48339F46C08816E00A92CF0BD0548F7 /* Topic.swift in Sources */,
