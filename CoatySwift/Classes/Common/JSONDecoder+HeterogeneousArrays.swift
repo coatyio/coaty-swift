@@ -34,46 +34,50 @@ extension JSONDecoder {
         return object
     }
     
-    /// ClassWrapper is a private helper class that allows the decoding of an object based
-    /// on a ClassFamily.
-    private class ClassWrapper<T: ClassFamily, U: Decodable>: Decodable {
+    func decodeIfPresent<T: ClassFamily, U: Decodable>(family: T.Type, from data: Data) throws -> U? {
+        return try? self.decode(family: T.self, from: data)
+    }
+}
+
+/// ClassWrapper is a private helper class that allows the decoding of an object based
+/// on a ClassFamily.
+internal class ClassWrapper<T: ClassFamily, U: Decodable>: Decodable {
+    
+    /// The decoded object. Can be any subclass of U.
+    let object: U?
+    
+    required public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Discriminator.self)
         
-        /// The decoded object. Can be any subclass of U.
-        let object: U?
-        
-        required init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: Discriminator.self)
-            
-            // Try to decode the object with the provided custom type.
-            if let customFamily = try? container.decode(T.self, forKey: .objectType) {
-                // Decode the object by initialising the corresponding type.
-                if let type = customFamily.getType() as? U.Type {
-                    object = try type.init(from: decoder)
-                } else {
-                    object = nil
-                }
-                
-                // Succesfully decoded as custom type.
-                return
+        // Try to decode the object with the provided custom type.
+        if let customFamily = try? container.decode(T.self, forKey: .objectType) {
+            // Decode the object by initialising the corresponding type.
+            if let type = customFamily.getType() as? U.Type {
+                object = try type.init(from: decoder)
+            } else {
+                object = nil
             }
             
-            // Try to decode the object with the builtin standard Coaty types.
-            if let defaultFamily = try? container.decode(CoatyObjectFamily.self, forKey: .objectType) {
-                // Decode the object by initialising the corresponding type.
-                if let type = defaultFamily.getType() as? U.Type {
-                    object = try type.init(from: decoder)
-                } else {
-                    object = nil
-                }
-                
-                // Successfully decoded as default type.
-                return
-            }
-            
-            // Could neither decode as custom nor as default type.
-            let errorMessage = "Could not decode class wrapper."
-            LogManager.log.error(errorMessage)
-            throw CoatySwiftError.DecodingFailure(errorMessage)
+            // Succesfully decoded as custom type.
+            return
         }
+        
+        // Try to decode the object with the builtin standard Coaty types.
+        if let defaultFamily = try? container.decode(CoatyObjectFamily.self, forKey: .objectType) {
+            // Decode the object by initialising the corresponding type.
+            if let type = defaultFamily.getType() as? U.Type {
+                object = try type.init(from: decoder)
+            } else {
+                object = nil
+            }
+            
+            // Successfully decoded as default type.
+            return
+        }
+        
+        // Could neither decode as custom nor as default type.
+        let errorMessage = "Could not decode class wrapper."
+        LogManager.log.error(errorMessage)
+        throw CoatySwiftError.DecodingFailure(errorMessage)
     }
 }

@@ -122,7 +122,7 @@ public class ChannelEventData<Family: ClassFamily>: CommunicationEventData {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.decodeIfPresent(objectFamily: Family.self, forKey: .object)
+        self.object = try container.decodeIfPresent(ClassWrapper<Family, CoatyObject>.self, forKey: .object)?.object
         self.objects = try container.decodeIfPresent(family: Family.self, forKey: .objects)
         try? self.privateData = container.decodeIfPresent([String: Any].self, forKey: .privateData)
         try super.init(from: decoder)
