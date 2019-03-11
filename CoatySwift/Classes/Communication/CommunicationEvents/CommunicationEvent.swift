@@ -24,7 +24,6 @@ public class CommunicationEvent<T: CommunicationEventData>: Codable {
     
     // MARK: - Initializer.
     
-    /// TODO: Only accept components as eventSource.
     init(eventSource: Component, eventData: T) {
         self.eventSource = eventSource
         self.eventSourceId = eventSource.objectId

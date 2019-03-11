@@ -26,8 +26,9 @@ extension JSONDecoder {
     /// - Returns: The list of decoded objects.
     func decode<T: ClassFamily, U: Decodable>(family: T.Type, from data: Data) throws -> U {
         guard let object = try self.decode(ClassWrapper<T, U>.self, from: data).object else {
-            // TODO: Handle error.
-            throw NSError()
+            let errorMessage = "Could not decode single object with type ClassFamily."
+            LogManager.log.error(errorMessage)
+            throw CoatySwiftError.DecodingFailure(errorMessage)
         }
         
         return object
@@ -70,9 +71,9 @@ extension JSONDecoder {
             }
             
             // Could neither decode as custom nor as default type.
-            // TODO: Error handling.
-            print("error!")
-            throw NSError()
+            let errorMessage = "Could not decode class wrapper."
+            LogManager.log.error(errorMessage)
+            throw CoatySwiftError.DecodingFailure(errorMessage)
         }
     }
 }

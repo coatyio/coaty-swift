@@ -52,7 +52,6 @@ public class AdvertiseEventData<S: CoatyObject>: CommunicationEventData {
     init(object: S, privateData: [String: Any]? = nil) {
         self.object = object
         self.privateData = privateData
-        // TODO: hasValidParameters() ?
         super.init()
     }
     
