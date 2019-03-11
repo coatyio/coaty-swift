@@ -64,8 +64,8 @@ extension CommunicationManager {
     /// - Returns: a hot observable on which associated Resolve events are emitted.
     public func publishDiscover<S: Discover,
         T: DiscoverEvent<S>,
-        U: CoatyObject,
-        V: ResolveEvent<U>>(event: T) throws -> Observable<ResolveEvent<U>> {
+        U: ClassFamily,
+        V: ResolveEvent<U>>(event: T) throws -> Observable<V> {
         let discoverMessageToken = UUID.init().uuidString
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Discover,
                                                                   eventTypeFilter: nil,

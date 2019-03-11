@@ -19,7 +19,7 @@ enum CustomCoatyObjectFamily: String, ClassFamily {
     
     /// This is an exemplary objectType for your custom CoatyObject.
     case demoMessage = "org.example.coaty.demo-message"
-    
+
     /// Define the mapping between objectType and your custom CoatyObject class type.
     /// For every objectType enum case you need a corresponding Swift class matching.
     func getType() -> AnyObject.Type {
