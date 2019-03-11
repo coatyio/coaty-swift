@@ -85,7 +85,8 @@ class ViewController: UIViewController {
         try? comManager.publishAdvertise(advertiseEvent: advertiseEvent, eventTarget: identity)
         
         let discoverEvent = DiscoverEvent.withExternalId(eventSource: identity, externalId: "asdf")
-        let observable: Observable<ResolveEvent<DemoObject>> = try! comManager.publishDiscover(event: discoverEvent)
+        
+        let observable: Observable<ResolveEvent<CustomCoatyObjectFamily>> = try! comManager.publishDiscover(event: discoverEvent)
             
             _ = observable.subscribe(onNext: { (resolveEvent) in
             print("Received Resolve:")
@@ -111,6 +112,9 @@ class ViewController: UIViewController {
         let test: Observable<ChannelEvent<CustomCoatyObjectFamily>> = try! comManager.observeChannel(eventTarget: identity, channelId: "123456")
             test.subscribe({ (channelEvent) in
             if let channelEvent = channelEvent.element {
+                if let res = channelEvent.eventData.object! as? DemoObject {
+                    print(res)
+                }
                 print(channelEvent.json)
             }
         })

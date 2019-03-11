@@ -7,13 +7,13 @@ import Foundation
 
 /// ResolveEvent provides a generic implementation for all ResolveEvents.
 /// Note that this class should preferably initialized via its withObject() method.
-public class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<ResolveEventData<GenericCoatyObject>> {
+public class ResolveEvent<Family: ClassFamily>: CommunicationEvent<ResolveEventData<Family>> {
     
     // MARK: - Initializers.
     
     /// TODO: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
-    override init(eventSource: Component, eventData: ResolveEventData<GenericCoatyObject>) {
+    override init(eventSource: Component, eventData: ResolveEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
@@ -27,9 +27,9 @@ public class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<R
     ///   - privateData: private data object (optional)
     /// - Returns: a resolve event that emits CoatyObjects.
     static func withObject(eventSource: Component,
-                           object: GenericCoatyObject,
-                           privateData: [String: Any]? = nil) -> ResolveEvent<GenericCoatyObject> {
-        let resolveEventData = ResolveEventData(object: object, privateData: privateData)
+                           object: CoatyObject,
+                           privateData: [String: Any]? = nil) -> ResolveEvent<Family> {
+        let resolveEventData = ResolveEventData<Family>(object: object, privateData: privateData)
         return .init(eventSource: eventSource, eventData: resolveEventData)
     }
     
@@ -41,17 +41,17 @@ public class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<R
     ///   - privateData: private data object (optional)
     /// - Returns: a resolve event that emits CoatyObjects.
     static func withRelatedObjects(eventSource: Component,
-                                   relatedObjects: [GenericCoatyObject],
-                                   privateData: [String: Any]? = nil) -> ResolveEvent<GenericCoatyObject> {
-        let resolveEventData = ResolveEventData(relatedObjects: relatedObjects, privateData: privateData)
+                                   relatedObjects: [CoatyObject],
+                                   privateData: [String: Any]? = nil) -> ResolveEvent<Family> {
+        let resolveEventData = ResolveEventData<Family>(relatedObjects: relatedObjects, privateData: privateData)
         return .init(eventSource: eventSource, eventData: resolveEventData)
     }
     
     static func withObjectAndRelatedObjects(eventSource: Component,
-                                            object: GenericCoatyObject,
-                                            relatedObjects: [GenericCoatyObject],
-                                            privateData: [String: Any]? = nil) -> ResolveEvent<GenericCoatyObject> {
-        let resolveEventData = ResolveEventData(object: object,
+                                            object: CoatyObject,
+                                            relatedObjects: [CoatyObject],
+                                            privateData: [String: Any]? = nil) -> ResolveEvent<Family> {
+        let resolveEventData = ResolveEventData<Family>(object: object,
                                                 relatedObjects: relatedObjects,
                                                 privateData: privateData)
         return .init(eventSource: eventSource, eventData: resolveEventData)
@@ -70,38 +70,38 @@ public class ResolveEvent<GenericCoatyObject: CoatyObject>: CommunicationEvent<R
 
 /// ResolveEventData provides a wrapper object that stores the entire message payload data
 /// for a ResolveEvent including the object itself as well as the associated private data.
-public class ResolveEventData<S: Resolve>: CommunicationEventData {
+public class ResolveEventData<Family: ClassFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
-    var object: S?
-    var relatedObjects: [S]?
+    var object: CoatyObject?
+    var relatedObjects: [CoatyObject]?
     var privateData: [String: Any]?
     
     // MARK: - Initializers.
     
-    private init(_ object: S?, _ relatedObjects: [S]?, _ privateData: [String: Any]? = nil) {
+    private init(_ object: CoatyObject?, _ relatedObjects: [CoatyObject]?, _ privateData: [String: Any]? = nil) {
         self.object = object
         self.relatedObjects = relatedObjects
         self.privateData = privateData
         super.init()
     }
     
-    convenience init(object: S, privateData: [String: Any]? = nil) {
+    convenience init(object: CoatyObject, privateData: [String: Any]? = nil) {
         self.init(object, nil, privateData)
     }
     
-    convenience init(relatedObjects: [S], privateData: [String: Any]? = nil) {
+    convenience init(relatedObjects: [CoatyObject], privateData: [String: Any]? = nil) {
         self.init(nil, relatedObjects, privateData)
     }
     
-    convenience init(object: S, relatedObjects: [S], privateData: [String: Any]? = nil) {
+    convenience init(object: CoatyObject, relatedObjects: [CoatyObject], privateData: [String: Any]? = nil) {
         self.init(object, relatedObjects, privateData)
     }
     
     // MARK: - Factory methods.
     
-    static func createFrom(eventData: S) -> ResolveEventData {
+    static func createFrom(eventData: CoatyObject) -> ResolveEventData {
         return .init(object: eventData)
     }
     
@@ -115,8 +115,8 @@ public class ResolveEventData<S: Resolve>: CommunicationEventData {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.decodeIfPresent(S.self, forKey: .object)
-        self.relatedObjects = try container.decodeIfPresent([S].self, forKey: .relatedObjects)
+        self.object = try container.decodeIfPresent(ClassWrapper<Family, CoatyObject>.self, forKey: .object)?.object
+        self.relatedObjects = try container.decodeIfPresent(family: Family.self, forKey: .relatedObjects)
         try? self.privateData = container.decodeIfPresent([String: Any].self, forKey: .privateData)
         try super.init(from: decoder)
     }
