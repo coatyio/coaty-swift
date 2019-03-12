@@ -8,11 +8,11 @@ import Foundation
 
 /// CompleteEvent provides a generic implementation for all CompleteEvents.
 /// Note that this class should preferably initialized via its withObject() method.
-public class CompleteEvent<T: CoatyObject>: CommunicationEvent<CompleteEventData<T>> {
+public class CompleteEvent<Family: ObjectFamily>: CommunicationEvent<CompleteEventData<Family>> {
     
     /// TODO: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
-    override init(eventSource: Component, eventData: CompleteEventData<T>) {
+    override init(eventSource: Component, eventData: CompleteEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
@@ -25,10 +25,10 @@ public class CompleteEvent<T: CoatyObject>: CommunicationEvent<CompleteEventData
     ///   - object: the updated object
     ///   - privateData: application-specific options (optional)
     public static func withObject(eventSource: Component,
-                           object: T,
+                           object: CoatyObject,
                            privateData: [String: Any]? = nil) -> CompleteEvent {
         
-        let completeEventData = CompleteEventData(object, privateData)
+        let completeEventData = CompleteEventData<Family>(object, privateData)
         return .init(eventSource: eventSource, eventData: completeEventData)
     }
     
@@ -45,16 +45,16 @@ public class CompleteEvent<T: CoatyObject>: CommunicationEvent<CompleteEventData
 
 /// CompleteEventData provides a wrapper object that stores the entire message payload data
 /// for a CompleteEvent including the object itself as well as the associated private data.
-public class CompleteEventData<T: CoatyObject>: CommunicationEventData {
+public class CompleteEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
-    public var object: T?
+    public var object: CoatyObject?
     public var privateData: [String: Any]?
     
     // MARK: - Initializers.
     
-    internal init(_ object: T?, _ privateData: [String: Any]? = nil) {
+    internal init(_ object: CoatyObject?, _ privateData: [String: Any]? = nil) {
         self.object = object
         self.privateData = privateData
         super.init()
@@ -69,7 +69,7 @@ public class CompleteEventData<T: CoatyObject>: CommunicationEventData {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.decodeIfPresent(T.self, forKey: .object)
+        self.object = try container.decodeIfPresent(ClassWrapper<Family, CoatyObject>.self, forKey: .object)?.object
         self.privateData = try container.decodeIfPresent([String: Any].self, forKey: .privateData)
         try super.init(from: decoder)
     }

@@ -80,9 +80,8 @@ extension CommunicationManager {
     /// - Parameters:
     ///     - event: the Update event to be published.
     /// - Returns: a hot observable on which associated Resolve events are emitted.
-    public func publishUpdate<S: CoatyObject,
-        T: UpdateEvent<S>,
-        V: CompleteEvent<S>>(event: T) throws -> Observable<V> {
+    public func publishUpdate<Family: ObjectFamily,
+        V: CompleteEvent<Family>>(event: UpdateEvent<Family>) throws -> Observable<V> {
         let updateMessageToken = UUID.init().uuidString
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Update,
                                                                   eventTypeFilter: nil,
@@ -111,7 +110,6 @@ extension CommunicationManager {
             .map({ (message) -> V in
                 let (_, payload) = message
                 // FIXME: Remove force unwrap.
-                
                 return PayloadCoder.decode(payload)!
             })
         
@@ -177,8 +175,8 @@ extension CommunicationManager {
             })
     }
     
-    internal func publishComplete<S: CoatyObject>(identity: Component,
-                                                  event: CompleteEvent<S>,
+    internal func publishComplete<Family: ObjectFamily>(identity: Component,
+                                                  event: CompleteEvent<Family>,
                                                   messageToken: String) throws {
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Complete,
                                                               eventTypeFilter: nil,

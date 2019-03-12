@@ -163,7 +163,7 @@ extension CommunicationManager {
             })
     }
     
-    public func observeUpdate<S: CoatyObject, T: UpdateEvent<S>>(eventTarget: Component) throws -> Observable<T> {
+    public func observeUpdate<Family: ObjectFamily, T: UpdateEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
         let updateTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Update)
         
         mqtt?.subscribe(updateTopic)

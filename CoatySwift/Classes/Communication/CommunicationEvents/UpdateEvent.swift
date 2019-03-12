@@ -8,12 +8,12 @@ import Foundation
 /// UpdateEvent provides a generic implementation for all Update Events.
 ///
 /// - NOTE: This class should preferably initialized via its withPartial() or withFull() method.
-public class UpdateEvent<T: CoatyObject>: CommunicationEvent<UpdateEventData<T>> {
+public class UpdateEvent<Family: ObjectFamily>: CommunicationEvent<UpdateEventData<Family>> {
     
     // MARK: - Internal attributes.
-    internal var completeHandler: ((CompleteEvent<T>) -> Void)?
+    internal var completeHandler: ((CompleteEvent<Family>) -> Void)?
     
-    public func complete(completeEvent: CompleteEvent<T>) {
+    public func complete(completeEvent: CompleteEvent<Family>) {
         if let completeHandler = completeHandler {
             completeHandler(completeEvent)
         }
@@ -23,7 +23,7 @@ public class UpdateEvent<T: CoatyObject>: CommunicationEvent<UpdateEventData<T>>
     
     /// - NOTE: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
-    private override init(eventSource: Component, eventData: UpdateEventData<T>) {
+    private override init(eventSource: Component, eventData: UpdateEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
 
@@ -37,7 +37,7 @@ public class UpdateEvent<T: CoatyObject>: CommunicationEvent<UpdateEventData<T>>
     public static func withPartial(eventSource: Component,
                             objectId: UUID,
                             changedValues: [String: Any]) -> UpdateEvent {
-        let updateEventData = UpdateEventData<T>(objectId: objectId, changedValues: changedValues)
+        let updateEventData = UpdateEventData<Family>(objectId: objectId, changedValues: changedValues)
         return .init(eventSource: eventSource, eventData: updateEventData)
     }
     
@@ -46,8 +46,8 @@ public class UpdateEvent<T: CoatyObject>: CommunicationEvent<UpdateEventData<T>>
     /// - Parameters:
     ///   - eventSource: the event source component
     ///   - object: the full object to be updated
-    public static func withFull(eventSource: Component, object: T) -> UpdateEvent {
-        let updateEventData = UpdateEventData<T>(object: object)
+    public static func withFull(eventSource: Component, object: CoatyObject) -> UpdateEvent {
+        let updateEventData = UpdateEventData<Family>(object: object)
         return .init(eventSource: eventSource, eventData: updateEventData)
     }
     
@@ -64,11 +64,11 @@ public class UpdateEvent<T: CoatyObject>: CommunicationEvent<UpdateEventData<T>>
 
 /// UpdateEventData provides a wrapper object that stores the entire message payload data
 /// for a UpdateEvent including the object itself as well as the associated private data.
-public class UpdateEventData<T: CoatyObject>: CommunicationEventData {
+public class UpdateEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
-    public var object: T?
+    public var object: CoatyObject?
     public var objectId: UUID?
     public var changedValues: [String: Any]?
     
@@ -82,14 +82,14 @@ public class UpdateEventData<T: CoatyObject>: CommunicationEventData {
     
     // MARK: - Initializers.
     
-    private init(_ object: T?, objectId: UUID?, _ changedValues: [String: Any]? = nil) {
+    private init(_ object: CoatyObject?, objectId: UUID?, _ changedValues: [String: Any]? = nil) {
         self.object = object
         self.objectId = objectId
         self.changedValues = changedValues
         super.init()
     }
     
-    convenience init(object: T) {
+    convenience init(object: CoatyObject) {
         self.init(object, objectId: nil, nil)
     }
     
@@ -99,7 +99,7 @@ public class UpdateEventData<T: CoatyObject>: CommunicationEventData {
     
     // MARK: - Factory methods.
     
-    static func createFrom(eventData: T) -> UpdateEventData {
+    static func createFrom(eventData: CoatyObject) -> UpdateEventData {
         return .init(object: eventData)
     }
     
@@ -113,7 +113,7 @@ public class UpdateEventData<T: CoatyObject>: CommunicationEventData {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.decodeIfPresent(T.self, forKey: .object)
+        self.object = try container.decodeIfPresent(ClassWrapper<Family, CoatyObject>.self, forKey: .object)?.object
         self.objectId = try container.decodeIfPresent(UUID.self, forKey: .objectId)
         self.changedValues = try container.decodeIfPresent([String: Any].self, forKey: .changedValues)
         try super.init(from: decoder)

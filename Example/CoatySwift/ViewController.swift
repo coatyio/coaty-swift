@@ -131,9 +131,9 @@ class ViewController: UIViewController {
         // FULL UPDATE:
         // let updateEvent = UpdateEvent.withFull(eventSource: identity, object: demoObject)
         
-        let updateEvent = UpdateEvent<DemoObject>.withPartial(eventSource: identity, objectId: .init(), changedValues: ["message": "update"])
+        let updateEvent = UpdateEvent<CustomCoatyObjectFamily>.withPartial(eventSource: identity, objectId: .init(), changedValues: ["message": "update"])
         
-        let observable: Observable<CompleteEvent<DemoObject>> = try! comManager.publishUpdate(event: updateEvent)
+        let observable: Observable<CompleteEvent<CustomCoatyObjectFamily>> = try! comManager.publishUpdate(event: updateEvent)
         
         _ = observable.subscribe { (completeEvent) in
             if let completeEvent = completeEvent.element {
@@ -144,19 +144,23 @@ class ViewController: UIViewController {
     }
     
     @objc func receiveUpdateMessage() {
-        let observable: Observable<UpdateEvent<DemoObject>> = try! comManager.observeUpdate(eventTarget: identity)
+        let observable: Observable<UpdateEvent<CustomCoatyObjectFamily>> = try! comManager.observeUpdate(eventTarget: identity)
         
         _ = observable.subscribe({ (updateEvent) in
             if let updateEvent = updateEvent.element {
                 print("Received Update Event:")
                 print(updateEvent.json)
+                if !updateEvent.eventData.isFullUpdate {
+                    print("is not full update.")
+                    return
+                }
                 
-                let payloadObject = updateEvent.eventData
-                // HACK!!! making object id lowercase so coaty-js plays nice.
-                payloadObject.object?.message = "ANSWER"
-                let completeEvent = CompleteEvent.withObject(eventSource: self.identity, object: payloadObject.object!)
-                updateEvent.complete(completeEvent: completeEvent)
-                
+                if let demoObject = updateEvent.eventData.object! as? DemoObject {
+                    demoObject.message = "ANSWER"
+                    let completeEvent = CompleteEvent<CustomCoatyObjectFamily>.withObject(eventSource: self.identity, object: demoObject)
+                    updateEvent.complete(completeEvent: completeEvent)
+                }
+
             }
         })
     }
