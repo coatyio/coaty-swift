@@ -24,9 +24,9 @@ public class CompleteEvent<T: CoatyObject>: CommunicationEvent<CompleteEventData
     ///   - eventSource: the event source component
     ///   - object: the updated object
     ///   - privateData: application-specific options (optional)
-    static func withObject(eventSource: Component,
+    public static func withObject(eventSource: Component,
                            object: T,
-                           privateData: [String: Any]?) -> CompleteEvent {
+                           privateData: [String: Any]? = nil) -> CompleteEvent {
         
         let completeEventData = CompleteEventData(object, privateData)
         return .init(eventSource: eventSource, eventData: completeEventData)

@@ -146,9 +146,9 @@ extension CommunicationManager {
     ///     - eventTarget: target for which Deadvertise events should be emitted
     /// - Returns:  a hot observable emitting incoming Deadvertise events
     public func observeDeadvertise(eventTarget: Component) throws -> Observable<DeadvertiseEvent<Deadvertise>> {
-        let channelTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Deadvertise)
+        let deadvertiseTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Deadvertise)
         
-        mqtt?.subscribe(channelTopic)
+        mqtt?.subscribe(deadvertiseTopic)
         
         return rawMessages.map(convertToTupleFormat)
             .filter({ (rawMessageTopic) -> Bool in
@@ -160,6 +160,25 @@ extension CommunicationManager {
                 
                 // FIXME: Remove force unwrap.
                 return PayloadCoder.decode(payload)!
+            })
+    }
+    
+    public func observeUpdate<S: CoatyObject, T: UpdateEvent<S>>(eventTarget: Component) throws -> Observable<T> {
+        let updateTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Update)
+        
+        mqtt?.subscribe(updateTopic)
+        
+        return rawMessages.map(convertToTupleFormat)
+            .filter(isUpdate)
+            .map({ (message) -> T in
+                let (coatyTopic, payload) = message
+                
+                // FIXME: Remove force unwrap.
+                let updateEvent: T = PayloadCoder.decode(payload)!
+                updateEvent.completeHandler = {(completeEvent: CompleteEvent) in
+                    try? self.publishComplete(identity: eventTarget, event: completeEvent, messageToken: coatyTopic.messageToken)
+                }
+                return updateEvent
             })
     }
     

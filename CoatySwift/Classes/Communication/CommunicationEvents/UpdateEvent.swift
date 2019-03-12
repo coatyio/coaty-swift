@@ -10,6 +10,15 @@ import Foundation
 /// - NOTE: This class should preferably initialized via its withPartial() or withFull() method.
 public class UpdateEvent<T: CoatyObject>: CommunicationEvent<UpdateEventData<T>> {
     
+    // MARK: - Internal attributes.
+    internal var completeHandler: ((CompleteEvent<T>) -> Void)?
+    
+    public func complete(completeEvent: CompleteEvent<T>) {
+        if let completeHandler = completeHandler {
+            completeHandler(completeEvent)
+        }
+    }
+    
     // MARK: - Initializers.
     
     /// - NOTE: This method should never be called directly by application programmers.
@@ -25,7 +34,7 @@ public class UpdateEvent<T: CoatyObject>: CommunicationEvent<UpdateEventData<T>>
     ///   - objectId: the UUID of the object to be updated (partial update)
     ///   - changedValues: Object hash for properties that have changed or should
     ///     be changed (partial update)
-    static func withPartial(eventSource: Component,
+    public static func withPartial(eventSource: Component,
                             objectId: UUID,
                             changedValues: [String: Any]) -> UpdateEvent {
         let updateEventData = UpdateEventData<T>(objectId: objectId, changedValues: changedValues)
@@ -37,7 +46,7 @@ public class UpdateEvent<T: CoatyObject>: CommunicationEvent<UpdateEventData<T>>
     /// - Parameters:
     ///   - eventSource: the event source component
     ///   - object: the full object to be updated
-    static func withFull(eventSource: Component, object: T) -> UpdateEvent {
+    public static func withFull(eventSource: Component, object: T) -> UpdateEvent {
         let updateEventData = UpdateEventData<T>(object: object)
         return .init(eventSource: eventSource, eventData: updateEventData)
     }
@@ -63,6 +72,13 @@ public class UpdateEventData<T: CoatyObject>: CommunicationEventData {
     public var objectId: UUID?
     public var changedValues: [String: Any]?
     
+    public var isPartialUpdate: Bool {
+        return objectId != nil
+    }
+    
+    public var isFullUpdate: Bool {
+        return object != nil
+    }
     
     // MARK: - Initializers.
     
@@ -109,5 +125,6 @@ public class UpdateEventData<T: CoatyObject>: CommunicationEventData {
         try container.encodeIfPresent(self.objectId, forKey: .objectId)
         try container.encodeIfPresent(self.changedValues, forKey: .changedValues)
     }
+
 }
 

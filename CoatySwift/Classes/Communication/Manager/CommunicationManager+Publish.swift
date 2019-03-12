@@ -8,6 +8,8 @@ import RxSwift
 
 extension CommunicationManager {
     
+    // MARK: - One way events.
+    
     /// Publishes a given advertise event.
     ///
     /// - Parameters:
@@ -55,6 +57,66 @@ extension CommunicationManager {
         try publishAdvertise(advertiseEvent: advertiseIdentityEvent, eventTarget: identity)
     }
     
+    /// Notify subscribers that an advertised object has been deadvertised.
+    ///
+    /// - Parameter deadvertiseEvent: the Deadvertise event to be published
+    public func publishDeadvertise<S: Deadvertise,T: DeadvertiseEvent<S>>(deadvertiseEvent: T) throws {
+        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Deadvertise,
+                                                                  eventTypeFilter: nil,
+                                                                  associatedUserId: deadvertiseEvent.eventUserId
+                                                                    ?? EMPTY_ASSOCIATED_USER_ID,
+                                                                  sourceObject: deadvertiseEvent.eventSource,
+                                                                  messageToken: UUID().uuidString)
+        
+        self.publish(topic: topic, message: deadvertiseEvent.json)
+    }
+    
+    // MARK: - Two way events.
+    
+    /// Publish updates and receive Complete events for them emitted by the hot
+    /// observable returned.
+    ///
+    /// - TODO: Implement the lazy behavior.
+    /// - Parameters:
+    ///     - event: the Update event to be published.
+    /// - Returns: a hot observable on which associated Resolve events are emitted.
+    public func publishUpdate<S: CoatyObject,
+        T: UpdateEvent<S>,
+        V: CompleteEvent<S>>(event: T) throws -> Observable<V> {
+        let updateMessageToken = UUID.init().uuidString
+        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Update,
+                                                                  eventTypeFilter: nil,
+                                                                  associatedUserId: EMPTY_ASSOCIATED_USER_ID,
+                                                                  sourceObject: event.eventSource,
+                                                                  messageToken: updateMessageToken)
+        
+        publish(topic: topic, message: event.json)
+        
+        
+        let completeTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Complete,
+                                                                            eventTypeFilter: nil,
+                                                                            associatedUserId: nil,
+                                                                            sourceObject: nil,
+                                                                            messageToken: updateMessageToken)
+        // FIXME: Only subscribe to topic if not already subscribed...
+        subscribe(topic: completeTopic)
+        
+        return rawMessages.map(convertToTupleFormat)
+            .filter(isComplete)
+            .filter({ (rawMessageWithTopic) -> Bool in
+                // Filter messages according to message token.
+                let (topic, _) = rawMessageWithTopic
+                return topic.messageToken == updateMessageToken
+            })
+            .map({ (message) -> V in
+                let (_, payload) = message
+                // FIXME: Remove force unwrap.
+                
+                return PayloadCoder.decode(payload)!
+            })
+        
+    }
+    
     /// Find discoverable objects and receive Resolve events for them emitted by the hot
     /// observable returned.
     ///
@@ -69,7 +131,7 @@ extension CommunicationManager {
         let discoverMessageToken = UUID.init().uuidString
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Discover,
                                                                   eventTypeFilter: nil,
-                                                                  associatedUserId: nil,
+                                                                  associatedUserId: EMPTY_ASSOCIATED_USER_ID,
                                                                   sourceObject: event.eventSource,
                                                                   messageToken: discoverMessageToken)
         publish(topic: topic, message: event.json)
@@ -97,17 +159,16 @@ extension CommunicationManager {
             })
     }
     
-    /// Notify subscribers that an advertised object has been deadvertised.
-    ///
-    /// - Parameter deadvertiseEvent: the Deadvertise event to be published
-    public func publishDeadvertise<S: Deadvertise,T: DeadvertiseEvent<S>>(deadvertiseEvent: T) throws {
-        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Deadvertise,
-                                                                  eventTypeFilter: nil,
-                                                                  associatedUserId: deadvertiseEvent.eventUserId
-                                                                    ?? EMPTY_ASSOCIATED_USER_ID,
-                                                                  sourceObject: deadvertiseEvent.eventSource,
-                                                                  messageToken: UUID().uuidString)
-        
-        self.publish(topic: topic, message: deadvertiseEvent.json)
+    internal func publishComplete<S: CoatyObject>(identity: Component,
+                                                  event: CompleteEvent<S>,
+                                                  messageToken: String) throws {
+        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Complete,
+                                                              eventTypeFilter: nil,
+                                                              associatedUserId: EMPTY_ASSOCIATED_USER_ID,
+                                                              sourceObject: identity,
+                                                              messageToken: messageToken)
+        publish(topic: topic, message: event.json)
     }
+
+    
 }
