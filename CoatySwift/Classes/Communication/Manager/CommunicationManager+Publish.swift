@@ -140,10 +140,9 @@ extension CommunicationManager {
     /// - Parameters:
     ///     - event: the Discover event to be published.
     /// - Returns: a hot observable on which associated Resolve events are emitted.
-    public func publishDiscover<S: Discover,
-        T: DiscoverEvent<S>,
-        U: ObjectFamily,
-        V: ResolveEvent<U>>(event: T) throws -> Observable<V> {
+    public func publishDiscover<
+        Family: ObjectFamily,
+        V: ResolveEvent<Family>>(event: DiscoverEvent<Family>) throws -> Observable<V> {
         let discoverMessageToken = UUID.init().uuidString
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Discover,
                                                                   eventTypeFilter: nil,
@@ -178,6 +177,7 @@ extension CommunicationManager {
     internal func publishComplete<Family: ObjectFamily>(identity: Component,
                                                   event: CompleteEvent<Family>,
                                                   messageToken: String) throws {
+        
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Complete,
                                                               eventTypeFilter: nil,
                                                               associatedUserId: EMPTY_ASSOCIATED_USER_ID,
@@ -185,6 +185,18 @@ extension CommunicationManager {
                                                               messageToken: messageToken)
         publish(topic: topic, message: event.json)
     }
+    
+    internal func publishResolve<Family: ObjectFamily>(identity: Component,
+                                                       event: ResolveEvent<Family>,
+                                                       messageToken: String) throws {
+        
+        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Resolve,
+                                                                  eventTypeFilter: nil,
+                                                                  associatedUserId: EMPTY_ASSOCIATED_USER_ID,
+                                                                  sourceObject: identity,
+                                                                  messageToken: messageToken)
+        publish(topic: topic, message: event.json)
+}
 
     
 }

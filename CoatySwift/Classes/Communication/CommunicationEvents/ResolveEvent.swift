@@ -26,7 +26,7 @@ public class ResolveEvent<Family: ObjectFamily>: CommunicationEvent<ResolveEvent
     ///   - object: the object to be resolved
     ///   - privateData: private data object (optional)
     /// - Returns: a resolve event that emits CoatyObjects.
-    static func withObject(eventSource: Component,
+    public static func withObject(eventSource: Component,
                            object: CoatyObject,
                            privateData: [String: Any]? = nil) -> ResolveEvent<Family> {
         let resolveEventData = ResolveEventData<Family>(object: object, privateData: privateData)
@@ -40,14 +40,14 @@ public class ResolveEvent<Family: ObjectFamily>: CommunicationEvent<ResolveEvent
     ///   - relatedObjects: related objects to be resolved (optional)
     ///   - privateData: private data object (optional)
     /// - Returns: a resolve event that emits CoatyObjects.
-    static func withRelatedObjects(eventSource: Component,
+    public static func withRelatedObjects(eventSource: Component,
                                    relatedObjects: [CoatyObject],
                                    privateData: [String: Any]? = nil) -> ResolveEvent<Family> {
         let resolveEventData = ResolveEventData<Family>(relatedObjects: relatedObjects, privateData: privateData)
         return .init(eventSource: eventSource, eventData: resolveEventData)
     }
     
-    static func withObjectAndRelatedObjects(eventSource: Component,
+    public static func withObjectAndRelatedObjects(eventSource: Component,
                                             object: CoatyObject,
                                             relatedObjects: [CoatyObject],
                                             privateData: [String: Any]? = nil) -> ResolveEvent<Family> {

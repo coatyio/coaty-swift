@@ -69,9 +69,9 @@ class ViewController: UIViewController {
         purpleButton.addTarget(self, action: #selector(receiveUpdateMessage), for: .touchUpInside)
         
         grayButton.backgroundColor = .gray
-        grayButton.setTitle("Publish over channel", for: .normal)
+        grayButton.setTitle("Receive Discover", for: .normal)
         self.view.addSubview(grayButton)
-        grayButton.addTarget(self, action: #selector(publishChannelEvent), for: .touchUpInside)
+        grayButton.addTarget(self, action: #selector(receiveDiscoverMessage), for: .touchUpInside)
     }
     
     @objc func endClient() {
@@ -112,7 +112,7 @@ class ViewController: UIViewController {
     // MARK: Discover Resolve.
     
     func discoverResolveMessage() {
-        let discoverEvent = DiscoverEvent.withExternalId(eventSource: identity,
+        let discoverEvent = DiscoverEvent<CustomCoatyObjectFamily>.withExternalId(eventSource: identity,
                                                          externalId: "test-id")
         
         let observable: Observable<ResolveEvent<CustomCoatyObjectFamily>> = try! comManager.publishDiscover(event: discoverEvent)
@@ -141,6 +141,21 @@ class ViewController: UIViewController {
                 print(completeEvent.json)
             }
         }
+    }
+    
+    @objc func receiveDiscoverMessage() {
+        let observable: Observable<DiscoverEvent<CustomCoatyObjectFamily>> = try! comManager.observeDiscover(eventTarget: identity)
+        
+        _ = observable.subscribe({ (discoverEvent) in
+            if let discoverEvent = discoverEvent.element {
+                print("Received Discover Event:")
+                print(discoverEvent.json)
+                self.demoObject.externalId = discoverEvent.eventData.object.externalId
+                self.demoObject.message = "DISCOVER ANSWER"
+                let resolveEvent = ResolveEvent<CustomCoatyObjectFamily>.withObject(eventSource: self.identity, object: self.demoObject)
+                    discoverEvent.resolve(resolveEvent: resolveEvent)
+                }
+        })
     }
     
     @objc func receiveUpdateMessage() {

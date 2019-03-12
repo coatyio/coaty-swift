@@ -12,10 +12,10 @@ public class Discover: Codable {
     
     // MARK: - Attributes.
     
-    var externalId: String?
-    var objectId: UUID?
-    var objectTypes: [String]?
-    var coreTypes: [CoreType]?
+    public var externalId: String?
+    public var objectId: UUID?
+    public var objectTypes: [String]?
+    public var coreTypes: [CoreType]?
     
     // MARK: - Initializers.
     

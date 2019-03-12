@@ -182,4 +182,24 @@ extension CommunicationManager {
             })
     }
     
+    public func observeDiscover<Family: ObjectFamily, T: DiscoverEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
+        
+        let discoverTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Discover)
+        
+        mqtt?.subscribe(discoverTopic)
+        
+        return rawMessages.map(convertToTupleFormat)
+            .filter(isDiscover)
+            .map({ (message) -> T in
+                let (coatyTopic, payload) = message
+                
+                // FIXME: Remove force unwrap.
+                let discoverEvent: T = PayloadCoder.decode(payload)!
+                discoverEvent.resolveHandler = {(resolveEvent: ResolveEvent) in
+                    try? self.publishResolve(identity: eventTarget, event: resolveEvent, messageToken: coatyTopic.messageToken)
+                }
+                return discoverEvent
+            })
+    }
+    
 }

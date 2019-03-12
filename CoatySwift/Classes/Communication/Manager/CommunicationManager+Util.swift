@@ -36,4 +36,9 @@ extension CommunicationManager {
         let (topic, _) = rawMessageWithTopic
         return topic.eventType == .Channel
     }
+    
+    func isDiscover(rawMessageWithTopic: (Topic, String)) -> Bool {
+        let (topic, _) = rawMessageWithTopic
+        return topic.eventType == .Discover
+    }
 }
