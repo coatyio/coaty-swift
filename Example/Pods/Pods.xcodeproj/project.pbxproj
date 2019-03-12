@@ -386,6 +386,8 @@
 		BC5D513322367F33001CFC4B /* CommunicationManager+Publish.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D513222367F33001CFC4B /* CommunicationManager+Publish.swift */; };
 		BC5D513522367FF6001CFC4B /* CommunicationManager+Observe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D513422367FF6001CFC4B /* CommunicationManager+Observe.swift */; };
 		BC5D51372237C026001CFC4B /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D51362237C026001CFC4B /* LogManager.swift */; };
+		BC5D51392237C07B001CFC4B /* UpdateEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D51382237C07B001CFC4B /* UpdateEvent.swift */; };
+		BC5D513B2237C397001CFC4B /* CompleteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D513A2237C397001CFC4B /* CompleteEvent.swift */; };
 		BC79FACD83A550BE5D3DCE9E2B0CCE7C /* CommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EBE7305DC502D4B2A5862ABD9EBA89 /* CommunicationManager.swift */; };
 		BD634697F6FDCAEA2B1C537383ED5362 /* XcodeColorsLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF53D94ED9D43B83E729CFAD7A58928E /* XcodeColorsLogFormatter.swift */; };
 		BDAF15A3254BB302214EEB9BB29C5DB5 /* NSTextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB44B7F551EA1D8B6D42F7ECAEE0DD4B /* NSTextField+Rx.swift */; };
@@ -1137,6 +1139,8 @@
 		BC5D513222367F33001CFC4B /* CommunicationManager+Publish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunicationManager+Publish.swift"; sourceTree = "<group>"; };
 		BC5D513422367FF6001CFC4B /* CommunicationManager+Observe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunicationManager+Observe.swift"; sourceTree = "<group>"; };
 		BC5D51362237C026001CFC4B /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogManager.swift; path = ../CoatySwift/Classes/Logging/LogManager.swift; sourceTree = "<group>"; };
+		BC5D51382237C07B001CFC4B /* UpdateEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateEvent.swift; sourceTree = "<group>"; };
+		BC5D513A2237C397001CFC4B /* CompleteEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteEvent.swift; sourceTree = "<group>"; };
 		BD5B61B62787291C13A781A9F55FCC7C /* ScheduledItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScheduledItem.swift; path = RxSwift/Schedulers/Internal/ScheduledItem.swift; sourceTree = "<group>"; };
 		BDDA29326739F605E1CC5EB3A3301591 /* ExpectationMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpectationMessage.swift; path = Sources/Nimble/ExpectationMessage.swift; sourceTree = "<group>"; };
 		BDF51F54A8A61BDA2A9A8BD0D71E9812 /* RxMutableBox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxMutableBox.swift; path = RxSwift/RxMutableBox.swift; sourceTree = "<group>"; };
@@ -1982,6 +1986,8 @@
 				609AFEECFFC37B974B9FB13ACD855127 /* DeadvertiseEvent.swift */,
 				DDBF6FA62AA67FDBBD346E4CECFBE423 /* DiscoverEvent.swift */,
 				118D089A2E53DBB19F00B709B59B4766 /* ResolveEvent.swift */,
+				BC5D51382237C07B001CFC4B /* UpdateEvent.swift */,
+				BC5D513A2237C397001CFC4B /* CompleteEvent.swift */,
 			);
 			path = CommunicationEvents;
 			sourceTree = "<group>";
@@ -3397,6 +3403,7 @@
 				7961631318CCF97F55D02E83F71B6DF6 /* CommunicationEvent.swift in Sources */,
 				BC5D513322367F33001CFC4B /* CommunicationManager+Publish.swift in Sources */,
 				416FD801B2F2BD049F25429ACF5F47B2 /* CommunicationEventType.swift in Sources */,
+				BC5D51392237C07B001CFC4B /* UpdateEvent.swift in Sources */,
 				BC5D513522367FF6001CFC4B /* CommunicationManager+Observe.swift in Sources */,
 				BC5D51372237C026001CFC4B /* LogManager.swift in Sources */,
 				3155ACC93D0C6BA10410D82D5E852B66 /* CommunicationManager+Util.swift in Sources */,
@@ -3409,6 +3416,7 @@
 				6174B7D15432B18DA939E85CEAE2BC78 /* DeadvertiseEvent.swift in Sources */,
 				2A427B0B223273B70056D67A /* CoatyObjectFamily.swift in Sources */,
 				2A427B09223273770056D67A /* ObjectFamily.swift in Sources */,
+				BC5D513B2237C397001CFC4B /* CompleteEvent.swift in Sources */,
 				2A427B05223272EB0056D67A /* JSONDecoder+HeterogeneousArrays.swift in Sources */,
 				2A427B072232733E0056D67A /* KeyedDecodingContainer+HetereogeneousArrays.swift in Sources */,
 				626F464E8F409F384725A5893692E86D /* Demo+CoatyObject.swift in Sources */,
