@@ -382,10 +382,10 @@
 		BA940431CAC9B6F842DF47542B7BBB0A /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C425C440B365E167C11893E740D00E /* UIViewController+Rx.swift */; };
 		BB3BEEEB74DFD293EF5165C1964CE43E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0734C9E56F46B84FD103917DCBB9B6CB /* Foundation.framework */; };
 		BC0D36A0BC5EB701AE6EBA99D58957D0 /* RecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0152779ECFEA1A722B4097A3390158E /* RecursiveLock.swift */; };
-		BC5D512D22366315001CFC4B /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D512C22366315001CFC4B /* LogManager.swift */; };
 		BC5D512F22367E03001CFC4B /* CommunicationManager+CocoaMQTTDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D512E22367E03001CFC4B /* CommunicationManager+CocoaMQTTDelegate.swift */; };
 		BC5D513322367F33001CFC4B /* CommunicationManager+Publish.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D513222367F33001CFC4B /* CommunicationManager+Publish.swift */; };
 		BC5D513522367FF6001CFC4B /* CommunicationManager+Observe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D513422367FF6001CFC4B /* CommunicationManager+Observe.swift */; };
+		BC5D51372237C026001CFC4B /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D51362237C026001CFC4B /* LogManager.swift */; };
 		BC79FACD83A550BE5D3DCE9E2B0CCE7C /* CommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EBE7305DC502D4B2A5862ABD9EBA89 /* CommunicationManager.swift */; };
 		BD634697F6FDCAEA2B1C537383ED5362 /* XcodeColorsLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF53D94ED9D43B83E729CFAD7A58928E /* XcodeColorsLogFormatter.swift */; };
 		BDAF15A3254BB302214EEB9BB29C5DB5 /* NSTextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB44B7F551EA1D8B6D42F7ECAEE0DD4B /* NSTextField+Rx.swift */; };
@@ -1133,10 +1133,10 @@
 		BB6FE3C4F1CD31FE87F59104279048CE /* RxSearchControllerDelegateProxy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxSearchControllerDelegateProxy.swift; path = RxCocoa/iOS/Proxies/RxSearchControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		BC42AF3FB88FC0C36CB94FFE08CE5001 /* ControlEvent+Driver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ControlEvent+Driver.swift"; path = "RxCocoa/Traits/Driver/ControlEvent+Driver.swift"; sourceTree = "<group>"; };
 		BC441E33A77C9ABEF5D73718BAC55896 /* highlight.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = highlight.css; path = docs/swiftdoc/css/highlight.css; sourceTree = "<group>"; };
-		BC5D512C22366315001CFC4B /* LogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
 		BC5D512E22367E03001CFC4B /* CommunicationManager+CocoaMQTTDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunicationManager+CocoaMQTTDelegate.swift"; sourceTree = "<group>"; };
 		BC5D513222367F33001CFC4B /* CommunicationManager+Publish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunicationManager+Publish.swift"; sourceTree = "<group>"; };
 		BC5D513422367FF6001CFC4B /* CommunicationManager+Observe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunicationManager+Observe.swift"; sourceTree = "<group>"; };
+		BC5D51362237C026001CFC4B /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogManager.swift; path = ../CoatySwift/Classes/Logging/LogManager.swift; sourceTree = "<group>"; };
 		BD5B61B62787291C13A781A9F55FCC7C /* ScheduledItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScheduledItem.swift; path = RxSwift/Schedulers/Internal/ScheduledItem.swift; sourceTree = "<group>"; };
 		BDDA29326739F605E1CC5EB3A3301591 /* ExpectationMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpectationMessage.swift; path = Sources/Nimble/ExpectationMessage.swift; sourceTree = "<group>"; };
 		BDF51F54A8A61BDA2A9A8BD0D71E9812 /* RxMutableBox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxMutableBox.swift; path = RxSwift/RxMutableBox.swift; sourceTree = "<group>"; };
@@ -1968,7 +1968,7 @@
 		BC5D512B223662EC001CFC4B /* Logging */ = {
 			isa = PBXGroup;
 			children = (
-				BC5D512C22366315001CFC4B /* LogManager.swift */,
+				BC5D51362237C026001CFC4B /* LogManager.swift */,
 			);
 			path = Logging;
 			sourceTree = "<group>";
@@ -3393,12 +3393,12 @@
 				CE718774743A10775B682CD5B746AE87 /* CoatySwift-dummy.m in Sources */,
 				3A5C391420F0F4C82703DA937AF21A8F /* CoatySwiftError.swift in Sources */,
 				93B7341A8634054EAF62FB194FC72E23 /* Codable+JSON.swift in Sources */,
-				BC5D512D22366315001CFC4B /* LogManager.swift in Sources */,
 				8004DD9382524B8EDB0A05565D539245 /* CommunicationConstants.swift in Sources */,
 				7961631318CCF97F55D02E83F71B6DF6 /* CommunicationEvent.swift in Sources */,
 				BC5D513322367F33001CFC4B /* CommunicationManager+Publish.swift in Sources */,
 				416FD801B2F2BD049F25429ACF5F47B2 /* CommunicationEventType.swift in Sources */,
 				BC5D513522367FF6001CFC4B /* CommunicationManager+Observe.swift in Sources */,
+				BC5D51372237C026001CFC4B /* LogManager.swift in Sources */,
 				3155ACC93D0C6BA10410D82D5E852B66 /* CommunicationManager+Util.swift in Sources */,
 				BC79FACD83A550BE5D3DCE9E2B0CCE7C /* CommunicationManager.swift in Sources */,
 				871B0D8A41399F1015525769E75826AC /* CommunicationState.swift in Sources */,
