@@ -15,7 +15,7 @@ extension KeyedDecodingContainer {
     ///     - family: The ClassFamily enum for the type family.
     ///     - key: The CodingKey to look up the list in the current container.
     /// - Returns: The resulting list of heterogeneousType elements.
-    func decode<T : Decodable, U : ClassFamily>(family: U.Type, forKey key: K) throws -> [T] {
+    func decode<T : Decodable, U : ObjectFamily>(family: U.Type, forKey key: K) throws -> [T] {
         var container = try self.nestedUnkeyedContainer(forKey: key)
         var list = [T]()
         var tmpContainer = container
@@ -49,7 +49,7 @@ extension KeyedDecodingContainer {
     ///   - family: The ClassFamily enum for the type family.
     ///   - key: The CodingKey to look up the list in the current container.
     /// - Returns: An optional list of heterogeneousType elements.
-    func decodeIfPresent<T : Decodable, U : ClassFamily>(family: U.Type,
+    func decodeIfPresent<T : Decodable, U : ObjectFamily>(family: U.Type,
                                                          forKey key: K) throws -> [T]? {
         return try? decode(family: family, forKey: key)
     }

@@ -11,7 +11,7 @@ import Foundation
 /// The class requires the definition of a `ClassFamily`, e.g. `CoatyObjectFamily` or a
 /// custom implementation of a `ClassFamily` to support custom object types.
 /// - NOTE: This class should preferably initialized via its withObject() method.
-public class ChannelEvent<Family: ClassFamily>: CommunicationEvent<ChannelEventData<Family>> {
+public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEventData<Family>> {
     
     var channelId: String?
     
@@ -81,7 +81,7 @@ public class ChannelEvent<Family: ClassFamily>: CommunicationEvent<ChannelEventD
 
 /// ChannelEventData provides a wrapper object that stores the entire message payload data
 /// for a ChannelEvent including the object itself as well as the associated private data.
-public class ChannelEventData<Family: ClassFamily>: CommunicationEventData {
+public class ChannelEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     

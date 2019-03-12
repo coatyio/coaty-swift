@@ -15,16 +15,16 @@ import CoatySwift
 /// decoding messages received over a channel.
 /// - NOTE: If you wish to see another example for a ClassFamily, please see `CoatyObjectFamily`
 /// in the CoatySwift framework.
-enum CustomCoatyObjectFamily: String, ClassFamily {
+enum CustomCoatyObjectFamily: String, ObjectFamily {
     
     /// This is an exemplary objectType for your custom CoatyObject.
-    case demoMessage = "org.example.coaty.demo-message"
+    case demoObject = "org.example.coaty.demo-object"
 
     /// Define the mapping between objectType and your custom CoatyObject class type.
     /// For every objectType enum case you need a corresponding Swift class matching.
     func getType() -> AnyObject.Type {
         switch self {
-        case .demoMessage:
+        case .demoObject:
             return DemoObject.self
         }
     }

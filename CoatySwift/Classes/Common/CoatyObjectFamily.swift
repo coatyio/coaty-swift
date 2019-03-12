@@ -9,7 +9,7 @@ import Foundation
 /// CoatyObjectFamily defines the objectType to Class mapping for all Coaty default objects.
 /// - TODO: Add remaining cases for the mapping.
 /// - TODO: Make me private? Maybe it is required to stay public.
-public enum CoatyObjectFamily: String, ClassFamily {
+public enum CoatyObjectFamily: String, ObjectFamily {
     case coatyObject = "coaty.CoatyObject"
     case user = "coaty.User"
     case device = "coaty.Device"

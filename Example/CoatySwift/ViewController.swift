@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         
         
         advertiseEventButton.backgroundColor = .red
-        advertiseEventButton.setTitle("Publish Advertises", for: .normal)
+        advertiseEventButton.setTitle("Publish Advertise and Discover/Resolve", for: .normal)
         self.view.addSubview(advertiseEventButton)
         advertiseEventButton.addTarget(self, action: #selector(advertiseButtonTapped), for: .touchUpInside)
         
@@ -79,20 +79,59 @@ class ViewController: UIViewController {
     }
     
     @objc func advertiseButtonTapped() {
+        advertiseMessage()
+        discoverResolveMessage()
+    }
+    
+    
+    @objc func receiveChannelEvents() {
+        channelMessage()
+    }
+    
+    // MARK: Advertise
+    
+    func advertiseMessage() {
+        let demoObject = DemoObject(coreType: .CoatyObject,
+                                     objectType: "com.demo.obj",
+                                     objectId: .init(),
+                                     name: "AdvertiseName",
+                                     message: "Coaty loves you")
         
-        let demoMessage = DemoObject(coreType: .CoatyObject, objectType: "com.demo.obj", objectId: .init(), name: "NAME", message: "hiii")
-        let advertiseEvent = AdvertiseEvent.withObject(eventSource: identity, object: demoMessage)
-        try? comManager.publishAdvertise(advertiseEvent: advertiseEvent, eventTarget: identity)
+        let advertiseEvent = AdvertiseEvent.withObject(eventSource: identity,
+                                                       object: demoObject)
         
-        let discoverEvent = DiscoverEvent.withExternalId(eventSource: identity, externalId: "asdf")
+        try? comManager.publishAdvertise(advertiseEvent: advertiseEvent,
+                                         eventTarget: identity)
+    }
+    
+    // MARK: Discover Resolve.
+    
+    func discoverResolveMessage() {
+        let discoverEvent = DiscoverEvent.withExternalId(eventSource: identity,
+                                                         externalId: "test-id")
         
         let observable: Observable<ResolveEvent<CustomCoatyObjectFamily>> = try! comManager.publishDiscover(event: discoverEvent)
-            
-            _ = observable.subscribe(onNext: { (resolveEvent) in
-            print("Received Resolve:")
-                print(resolveEvent.json)
-        }, onError: { error in print(error)}, onCompleted: nil, onDisposed: nil)
         
+        _ = observable.subscribe { (resolveEvent) in
+            if let resolveEvent = resolveEvent.element {
+                print("Received Resolve Event:")
+                print(resolveEvent.json)
+            }
+        }
+    }
+
+    
+    // MARK: - Channel
+    
+    func channelMessage() {
+        let test: Observable<ChannelEvent<CustomCoatyObjectFamily>> = try! comManager.observeChannel(eventTarget: identity, channelId: "123456")
+        
+        _ = test.subscribe({ (channelEvent) in
+            if let channelEvent = channelEvent.element {
+                print("Received Channel Event:")
+                print(channelEvent.json)
+            }
+        })
     }
     
     // MARK: - Receive advertisements for object types.
@@ -104,18 +143,6 @@ class ViewController: UIViewController {
             print("Received Advertise from blue button:")
             if let advertiseEvent = advertiseEvent.element {
                 print(advertiseEvent.json)
-            }
-        })
-    }
-    
-    @objc func receiveChannelEvents() {
-        let test: Observable<ChannelEvent<CustomCoatyObjectFamily>> = try! comManager.observeChannel(eventTarget: identity, channelId: "123456")
-            test.subscribe({ (channelEvent) in
-            if let channelEvent = channelEvent.element {
-                if let res = channelEvent.eventData.object! as? DemoObject {
-                    print(res)
-                }
-                print(channelEvent.json)
             }
         })
     }

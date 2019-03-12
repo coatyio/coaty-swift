@@ -14,7 +14,7 @@ extension JSONDecoder {
     ///     - family: The ClassFamily enum type to decode with.
     ///     - data: The data to decode.
     /// - Returns: The list of decoded objects.
-    func decode<T: ClassFamily, U: Decodable>(family: T.Type, from data: Data) throws -> [U] {
+    func decode<T: ObjectFamily, U: Decodable>(family: T.Type, from data: Data) throws -> [U] {
         return try self.decode([ClassWrapper<T, U>].self, from: data).compactMap { $0.object }
     }
     
@@ -24,7 +24,7 @@ extension JSONDecoder {
     ///     - family: The ClassFamily enum type to decode with.
     ///     - data: The data to decode.
     /// - Returns: The list of decoded objects.
-    func decode<T: ClassFamily, U: Decodable>(family: T.Type, from data: Data) throws -> U {
+    func decode<T: ObjectFamily, U: Decodable>(family: T.Type, from data: Data) throws -> U {
         guard let object = try self.decode(ClassWrapper<T, U>.self, from: data).object else {
             let errorMessage = "Could not decode single object with type ClassFamily."
             LogManager.log.error(errorMessage)
@@ -34,14 +34,14 @@ extension JSONDecoder {
         return object
     }
     
-    func decodeIfPresent<T: ClassFamily, U: Decodable>(family: T.Type, from data: Data) throws -> U? {
+    func decodeIfPresent<T: ObjectFamily, U: Decodable>(family: T.Type, from data: Data) throws -> U? {
         return try? self.decode(family: T.self, from: data)
     }
 }
 
 /// ClassWrapper is a private helper class that allows the decoding of an object based
 /// on a ClassFamily.
-internal class ClassWrapper<T: ClassFamily, U: Decodable>: Decodable {
+internal class ClassWrapper<T: ObjectFamily, U: Decodable>: Decodable {
     
     /// The decoded object. Can be any subclass of U.
     let object: U?

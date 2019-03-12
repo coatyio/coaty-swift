@@ -1,14 +1,14 @@
 //
-//  ClassFamily.swift
+//  ObjectFamily.swift
 //  CoatySwift
 //
 //
 
 import Foundation
 
-/// A ClassFamily defines a protocol for custom object types.
+/// An ObjectFamily defines a protocol for custom object types.
 /// See `CoatyObjectFamily` for a concrete implementation.
-public protocol ClassFamily: Decodable {
+public protocol ObjectFamily: Decodable {
     
     /// Returns the class type of the object coresponding to the value.
     func getType() -> AnyObject.Type

@@ -108,7 +108,7 @@ extension CommunicationManager {
     ///   - eventTarget: target for which Channel events should be emitted
     ///   - channelId: a channel identifier
     /// - Returns: a hot observable emitting incoming Channel events.
-    public func observeChannel<Family: ClassFamily, T: ChannelEvent<Family>>(eventTarget: Component,
+    public func observeChannel<Family: ObjectFamily, T: ChannelEvent<Family>>(eventTarget: Component,
                                                                              channelId: String) throws -> Observable<T> {
         
         // TODO: Unsure about associatedUserId parameters. Is it really assigneeUserId?

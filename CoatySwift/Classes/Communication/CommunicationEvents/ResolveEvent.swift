@@ -7,7 +7,7 @@ import Foundation
 
 /// ResolveEvent provides a generic implementation for all ResolveEvents.
 /// Note that this class should preferably initialized via its withObject() method.
-public class ResolveEvent<Family: ClassFamily>: CommunicationEvent<ResolveEventData<Family>> {
+public class ResolveEvent<Family: ObjectFamily>: CommunicationEvent<ResolveEventData<Family>> {
     
     // MARK: - Initializers.
     
@@ -70,7 +70,7 @@ public class ResolveEvent<Family: ClassFamily>: CommunicationEvent<ResolveEventD
 
 /// ResolveEventData provides a wrapper object that stores the entire message payload data
 /// for a ResolveEvent including the object itself as well as the associated private data.
-public class ResolveEventData<Family: ClassFamily>: CommunicationEventData {
+public class ResolveEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
