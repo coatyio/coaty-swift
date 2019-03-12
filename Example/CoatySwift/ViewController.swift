@@ -69,9 +69,9 @@ class ViewController: UIViewController {
         purpleButton.addTarget(self, action: #selector(receiveUpdateMessage), for: .touchUpInside)
         
         grayButton.backgroundColor = .gray
-        grayButton.setTitle("End client", for: .normal)
+        grayButton.setTitle("Publish over channel", for: .normal)
         self.view.addSubview(grayButton)
-        grayButton.addTarget(self, action: #selector(endClient), for: .touchUpInside)
+        grayButton.addTarget(self, action: #selector(publishChannelEvent), for: .touchUpInside)
     }
     
     @objc func endClient() {
@@ -92,6 +92,11 @@ class ViewController: UIViewController {
     
     @objc func receiveChannelEvents() {
         channelMessage()
+    }
+    
+    @objc func publishChannelEvent() {
+        let channelEvent = ChannelEvent<CustomCoatyObjectFamily>.withObject(eventSource: identity, channelId: "123456", object: demoObject)
+        try! comManager.publishChannel(event: channelEvent)
     }
     
     // MARK: Advertise
@@ -221,6 +226,7 @@ class ViewController: UIViewController {
             }
         })
     }
+    
     
 }
 

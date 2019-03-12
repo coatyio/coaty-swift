@@ -27,7 +27,7 @@ public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEvent
     ///
     /// - NOTE: Should not be called directly by application programmers. Needed because of
     /// extra parameter channelId.
-    init(eventSource: Component, eventData: ChannelEventData<Family>, channelId: String) {
+    internal init(eventSource: Component, eventData: ChannelEventData<Family>, channelId: String) {
         super.init(eventSource: eventSource, eventData: eventData)
         self.channelId = channelId
     }
@@ -43,12 +43,12 @@ public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEvent
     ///   - object: the object to be channelized.
     ///   - privateData: application-specific options (optional).
     /// - Returns: a channel event that emits CoatyObjects that are part of the `ClassFamily`.
-    static func withObject(eventSource: Component,
+    public static func withObject(eventSource: Component,
                            channelId: String,
                            object: CoatyObject,
                            privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
         let channelEventData = ChannelEventData<Family>(object: object, privateData: privateData)
-        return .init(eventSource: eventSource, eventData: channelEventData)
+        return .init(eventSource: eventSource, eventData: channelEventData, channelId: channelId)
     }
     
     /// Create a ChannelEvent instance for delivering the given objects.
@@ -60,12 +60,12 @@ public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEvent
     ///   - objects: the objects to be channelized
     ///   - privateData: application-specific options (optional)
     /// - Returns: a channel event that emits CoatyObjects that are part of the `ClassFamily`.
-    static func withObjects(eventSource: Component,
+    public static func withObjects(eventSource: Component,
                             channelId: String,
                             objects: [CoatyObject],
                             privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
         let channelEventData = ChannelEventData<Family>(objects: objects, privateData: privateData)
-        return .init(eventSource: eventSource, eventData: channelEventData)
+        return .init(eventSource: eventSource, eventData: channelEventData, channelId: channelId)
     }
     
     // MARK: - Codable methods.

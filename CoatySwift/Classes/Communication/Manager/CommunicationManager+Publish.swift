@@ -116,6 +116,24 @@ extension CommunicationManager {
             })
         
     }
+
+    /// Publish a channel event.
+    ///
+    /// - Parameter event: the Channel event to be published
+    public func publishChannel<Family: ObjectFamily>(event: ChannelEvent<Family>) throws {
+        guard let channelId = event.channelId else {
+            throw CoatySwiftError.InvalidArgument("Could not publish because ChannelID missing.")
+        }
+        
+        let publishTopic = try Topic.createTopicStringByLevelsForPublish(eventType: .Channel,
+                                                                         eventTypeFilter: channelId,
+                                                                         associatedUserId: EMPTY_ASSOCIATED_USER_ID,
+                                                                         sourceObject: event.eventSource,
+                                                                         messageToken: UUID.init().uuidString)
+        
+        publish(topic: publishTopic, message: event.json)
+        
+    }
     
     /// Find discoverable objects and receive Resolve events for them emitted by the hot
     /// observable returned.
