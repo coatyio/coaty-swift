@@ -7,6 +7,9 @@ import Foundation
 
 /// ResolveEvent provides a generic implementation for all ResolveEvents.
 /// Note that this class should preferably initialized via its withObject() method.
+/// - NOTE: ResolveEvents also need an object family. This is because Discover-Resolve
+/// includes both sending a discover and receiving a family of resolves, as well as
+/// reacting to a family of discovers and sending out particular resolves.
 public class ResolveEvent<Family: ObjectFamily>: CommunicationEvent<ResolveEventData<Family>> {
     
     // MARK: - Initializers.

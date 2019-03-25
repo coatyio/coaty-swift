@@ -140,9 +140,7 @@ extension CommunicationManager {
     /// - Parameters:
     ///     - event: the Discover event to be published.
     /// - Returns: a hot observable on which associated Resolve events are emitted.
-    public func publishDiscover<
-        Family: ObjectFamily,
-        V: ResolveEvent<Family>>(event: DiscoverEvent<Family>) throws -> Observable<V> {
+    public func publishDiscover<Family: ObjectFamily,V: ResolveEvent<Family>>(event: DiscoverEvent<Family>) throws -> Observable<V> {
         let discoverMessageToken = UUID.init().uuidString
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Discover,
                                                                   eventTypeFilter: nil,
@@ -151,7 +149,6 @@ extension CommunicationManager {
                                                                   messageToken: discoverMessageToken)
         publish(topic: topic, message: event.json)
         
-        // FIXME: Subscribe to resolve topic.
         let resolveTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Resolve,
                                                                            eventTypeFilter: nil,
                                                                            associatedUserId: nil,
@@ -174,6 +171,14 @@ extension CommunicationManager {
             })
     }
     
+    
+    /// Publishes a complete after an update event. Not accessible by the
+    /// application programmer, it is just a convenience method for reacting upon a update.
+    ///
+    /// - Parameters:
+    ///   - identity: the identity of the controller.
+    ///   - event: the complete event that should be sent out.
+    ///   - messageToken: the message token associated with the update-complete request.
     internal func publishComplete<Family: ObjectFamily>(identity: Component,
                                                   event: CompleteEvent<Family>,
                                                   messageToken: String) throws {
@@ -186,6 +191,13 @@ extension CommunicationManager {
         publish(topic: topic, message: event.json)
     }
     
+    /// Publishes a resolve after a discover event. Not accessible by the
+    /// application programmer, it is just a convenience method for reacting upon a discover.
+    ///
+    /// - Parameters:
+    ///   - identity: the identity of the controller.
+    ///   - event: the resolve event that should be sent out.
+    ///   - messageToken: the message token associated with the discover-resolve request.
     internal func publishResolve<Family: ObjectFamily>(identity: Component,
                                                        event: ResolveEvent<Family>,
                                                        messageToken: String) throws {
@@ -196,7 +208,6 @@ extension CommunicationManager {
                                                                   sourceObject: identity,
                                                                   messageToken: messageToken)
         publish(topic: topic, message: event.json)
-}
+    }
 
-    
 }

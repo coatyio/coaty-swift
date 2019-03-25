@@ -11,8 +11,14 @@ import Foundation
 public class UpdateEvent<Family: ObjectFamily>: CommunicationEvent<UpdateEventData<Family>> {
     
     // MARK: - Internal attributes.
+    
+    /// Provides a complete handler for reacting to complete events.
     internal var completeHandler: ((CompleteEvent<Family>) -> Void)?
     
+    
+    /// Respond to an observed Update event by sending the given Complete event.
+    ///
+    /// - Parameter completeEvent: a Complete event.
     public func complete(completeEvent: CompleteEvent<Family>) {
         if let completeHandler = completeHandler {
             completeHandler(completeEvent)

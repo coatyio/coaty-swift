@@ -8,11 +8,20 @@ import Foundation
 
 /// DiscoverEvent provides a generic implementation for all DiscoverEvents.
 /// Note that this class should preferably initialized via its withObject() method.
+/// - NOTE: DiscoverEvents also need an object family. This is because Discover-Resolve
+/// includes both sending a discover and receiving a family of resolves, as well as
+/// reacting to a family of discovers and sending out particular resolves.
 public class DiscoverEvent<Family: ObjectFamily>: CommunicationEvent<DiscoverEventData> {
     
     // MARK: - Internal attributes.
+    
+    /// Provides a resolve handler for reacting to discover events.
     internal var resolveHandler: ((ResolveEvent<Family>) -> Void)?
     
+    
+    /// Respond to an observed Discover event by returning the given event.
+    ///
+    /// - Parameter resolveEvent: a Resolve event.
     public func resolve(resolveEvent: ResolveEvent<Family>) {
         if let resolveHandler = resolveHandler {
             resolveHandler(resolveEvent)
