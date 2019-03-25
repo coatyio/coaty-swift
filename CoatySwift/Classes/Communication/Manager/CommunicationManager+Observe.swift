@@ -163,9 +163,20 @@ extension CommunicationManager {
             })
     }
     
+    /// Observe Update events for the given target emitted by the hot
+    /// observable returned.
+    ///
+    /// Update events that originate from the given event target, i.e.
+    /// that have been published by specifying the given event target as
+    /// event source, will not be emitted by the observable returned.
+    ///
+    /// - Parameters:
+    ///    - eventTarget: target for which Update events should be emitted.
+    /// - Returns: a hot observable emitting incoming Update events.
     public func observeUpdate<Family: ObjectFamily, T: UpdateEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
-        let updateTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Update)
         
+        // FIXME: Prevent duplicated subscriptions.
+        let updateTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Update)
         mqtt?.subscribe(updateTopic)
         
         return rawMessages.map(convertToTupleFormat)
@@ -176,16 +187,29 @@ extension CommunicationManager {
                 // FIXME: Remove force unwrap.
                 let updateEvent: T = PayloadCoder.decode(payload)!
                 updateEvent.completeHandler = {(completeEvent: CompleteEvent) in
-                    try? self.publishComplete(identity: eventTarget, event: completeEvent, messageToken: coatyTopic.messageToken)
+                    try? self.publishComplete(identity: eventTarget,
+                                              event: completeEvent,
+                                              messageToken: coatyTopic.messageToken)
                 }
+                
                 return updateEvent
             })
     }
     
+    /// Observe Discover events for the given target emitted by the hot
+    /// observable returned.
+    ///
+    /// Discover events that originate from the given event target, i.e.
+    /// that have been published by specifying the given event target as
+    /// event source, will not be emitted by the observable returned.
+    ///
+    /// - Parameters:
+    ///     - eventTarget: target for which Discover events should be emitted.
+    /// - Returns: a hot observable emitting incoming Discover events.
     public func observeDiscover<Family: ObjectFamily, T: DiscoverEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
         
+        // FIXME: Prevent duplicated subscriptions.
         let discoverTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Discover)
-        
         mqtt?.subscribe(discoverTopic)
         
         return rawMessages.map(convertToTupleFormat)
@@ -198,6 +222,7 @@ extension CommunicationManager {
                 discoverEvent.resolveHandler = {(resolveEvent: ResolveEvent) in
                     try? self.publishResolve(identity: eventTarget, event: resolveEvent, messageToken: coatyTopic.messageToken)
                 }
+                
                 return discoverEvent
             })
     }
