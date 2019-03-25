@@ -11,14 +11,20 @@ import CoatySwift
 
 class ViewController: UIViewController {
     
-    let advertiseEventButton = UIButton(frame: CGRect(x: 0, y: 100, width: 350, height: 50))
-    let sameIdentityButton = UIButton(frame: CGRect(x: 0, y: 200, width: 350, height: 50))
-    let channelEventButton = UIButton(frame: CGRect(x: 0, y: 300, width: 350, height: 50))
-    let receiveEventCoreTypeSame =  UIButton(frame: CGRect(x: 0, y: 400, width: 350, height: 50))
-    let receiveEventCoreTypeDif =  UIButton(frame: CGRect(x: 0, y: 500, width: 350, height: 50))
-    let endClientButton = UIButton(frame: CGRect(x: 0, y: 600, width: 350, height: 50))
+    let redButton = UIButton(frame: CGRect(x: 0, y: 100, width: 350, height: 50))
+    let blueButton = UIButton(frame: CGRect(x: 0, y: 200, width: 350, height: 50))
+    let yellowButton = UIButton(frame: CGRect(x: 0, y: 300, width: 350, height: 50))
+    let greenButton =  UIButton(frame: CGRect(x: 0, y: 400, width: 350, height: 50))
+    let purpleButton =  UIButton(frame: CGRect(x: 0, y: 500, width: 350, height: 50))
+    let grayButton = UIButton(frame: CGRect(x: 0, y: 600, width: 350, height: 50))
     
     let identity = Component(name: "ControllerIdentity")
+    
+    let demoObject = DemoObject(coreType: .CoatyObject,
+                                objectType: "org.example.coaty.demo-object",
+                                objectId: .init(),
+                                name: "Demo object message name",
+                                message: "Coaty loves you")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,36 +42,36 @@ class ViewController: UIViewController {
         comManager.startClient()
         
         
-        advertiseEventButton.backgroundColor = .red
-        advertiseEventButton.setTitle("Publish Advertise and Discover/Resolve", for: .normal)
-        self.view.addSubview(advertiseEventButton)
-        advertiseEventButton.addTarget(self, action: #selector(advertiseButtonTapped), for: .touchUpInside)
+        redButton.backgroundColor = .red
+        redButton.setTitle("Publish Advertise and Discover/Resolve", for: .normal)
+        self.view.addSubview(redButton)
+        redButton.addTarget(self, action: #selector(advertiseButtonTapped), for: .touchUpInside)
         
-        sameIdentityButton.backgroundColor = .blue
-        sameIdentityButton.setTitle("Publish another component's identity", for: .normal)
-        self.view.addSubview(sameIdentityButton)
-        sameIdentityButton.addTarget(self, action: #selector(advertiseNewComponent), for: .touchUpInside)
+        blueButton.backgroundColor = .blue
+        blueButton.setTitle("Publish another component's identity", for: .normal)
+        self.view.addSubview(blueButton)
+        blueButton.addTarget(self, action: #selector(advertiseNewComponent), for: .touchUpInside)
         
-        channelEventButton.backgroundColor = .yellow
-        channelEventButton.setTitle("Channel Events", for: .normal)
-        self.view.addSubview(channelEventButton)
-        channelEventButton.setTitleColor(.black, for: .normal)
-        channelEventButton.addTarget(self, action: #selector(receiveChannelEvents), for: .touchUpInside)
+        yellowButton.backgroundColor = .yellow
+        yellowButton.setTitle("Channel Events", for: .normal)
+        self.view.addSubview(yellowButton)
+        yellowButton.setTitleColor(.black, for: .normal)
+        yellowButton.addTarget(self, action: #selector(receiveChannelEvents), for: .touchUpInside)
         
-        receiveEventCoreTypeSame.backgroundColor = .green
-        receiveEventCoreTypeSame.setTitle("Observe Advertises with same coreType", for: .normal)
-        self.view.addSubview(receiveEventCoreTypeSame)
-        sameIdentityButton.addTarget(self, action: #selector(receiveAdvertisementsForCoreType), for: .touchUpInside)
+        greenButton.backgroundColor = .green
+        greenButton.setTitle("Publish Update/Complete", for: .normal)
+        self.view.addSubview(greenButton)
+        greenButton.addTarget(self, action: #selector(updateCompleteMessage), for: .touchUpInside)
         
-        receiveEventCoreTypeDif.backgroundColor = .purple
-        receiveEventCoreTypeDif.setTitle("Observe Advertises with dif. coreType", for: .normal)
-        self.view.addSubview(receiveEventCoreTypeDif)
-        receiveEventCoreTypeDif.addTarget(self, action: #selector(receiveAdvertisementsForDifCoreType), for: .touchUpInside)
+        purpleButton.backgroundColor = .purple
+        purpleButton.setTitle("Receive Update", for: .normal)
+        self.view.addSubview(purpleButton)
+        purpleButton.addTarget(self, action: #selector(receiveUpdateMessage), for: .touchUpInside)
         
-        endClientButton.backgroundColor = .gray
-        endClientButton.setTitle("End client", for: .normal)
-        self.view.addSubview(endClientButton)
-        endClientButton.addTarget(self, action: #selector(endClient), for: .touchUpInside)
+        grayButton.backgroundColor = .gray
+        grayButton.setTitle("Receive Discover", for: .normal)
+        self.view.addSubview(grayButton)
+        grayButton.addTarget(self, action: #selector(receiveDiscoverMessage), for: .touchUpInside)
     }
     
     @objc func endClient() {
@@ -88,15 +94,14 @@ class ViewController: UIViewController {
         channelMessage()
     }
     
+    @objc func publishChannelEvent() {
+        let channelEvent = ChannelEvent<CustomCoatyObjectFamily>.withObject(eventSource: identity, channelId: "123456", object: demoObject)
+        try! comManager.publishChannel(event: channelEvent)
+    }
+    
     // MARK: Advertise
     
     func advertiseMessage() {
-        let demoObject = DemoObject(coreType: .CoatyObject,
-                                     objectType: "com.demo.obj",
-                                     objectId: .init(),
-                                     name: "AdvertiseName",
-                                     message: "Coaty loves you")
-        
         let advertiseEvent = AdvertiseEvent.withObject(eventSource: identity,
                                                        object: demoObject)
         
@@ -107,7 +112,7 @@ class ViewController: UIViewController {
     // MARK: Discover Resolve.
     
     func discoverResolveMessage() {
-        let discoverEvent = DiscoverEvent.withExternalId(eventSource: identity,
+        let discoverEvent = DiscoverEvent<CustomCoatyObjectFamily>.withExternalId(eventSource: identity,
                                                          externalId: "test-id")
         
         let observable: Observable<ResolveEvent<CustomCoatyObjectFamily>> = try! comManager.publishDiscover(event: discoverEvent)
@@ -118,6 +123,61 @@ class ViewController: UIViewController {
                 print(resolveEvent.json)
             }
         }
+    }
+    
+    // MARK: Update Complete.
+    
+    @objc func updateCompleteMessage() {
+        // FULL UPDATE:
+        // let updateEvent = UpdateEvent.withFull(eventSource: identity, object: demoObject)
+        
+        let updateEvent = UpdateEvent<CustomCoatyObjectFamily>.withPartial(eventSource: identity, objectId: .init(), changedValues: ["message": "update"])
+        
+        let observable: Observable<CompleteEvent<CustomCoatyObjectFamily>> = try! comManager.publishUpdate(event: updateEvent)
+        
+        _ = observable.subscribe { (completeEvent) in
+            if let completeEvent = completeEvent.element {
+                print("Received Complete Event:")
+                print(completeEvent.json)
+            }
+        }
+    }
+    
+    @objc func receiveDiscoverMessage() {
+        let observable: Observable<DiscoverEvent<CustomCoatyObjectFamily>> = try! comManager.observeDiscover(eventTarget: identity)
+        
+        _ = observable.subscribe({ (discoverEvent) in
+            if let discoverEvent = discoverEvent.element {
+                print("Received Discover Event:")
+                print(discoverEvent.json)
+                self.demoObject.externalId = discoverEvent.eventData.object.externalId
+                self.demoObject.message = "DISCOVER ANSWER"
+                let resolveEvent = ResolveEvent<CustomCoatyObjectFamily>.withObject(eventSource: self.identity, object: self.demoObject)
+                    discoverEvent.resolve(resolveEvent: resolveEvent)
+                }
+        })
+    }
+    
+    @objc func receiveUpdateMessage() {
+        let observable: Observable<UpdateEvent<CustomCoatyObjectFamily>> = try! comManager.observeUpdate(eventTarget: identity)
+        
+        _ = observable.subscribe({ (updateEvent) in
+            if let updateEvent = updateEvent.element {
+                print("Received Update Event:")
+                print(updateEvent.json)
+                if !updateEvent.eventData.isFullUpdate {
+                    print("is not full update.")
+                    return
+                }
+                
+                if let demoObject = updateEvent.eventData.object! as? DemoObject {
+                    demoObject.message = "ANSWER"
+                    let completeEvent = CompleteEvent<CustomCoatyObjectFamily>.withObject(eventSource: self.identity, object: demoObject)
+                    updateEvent.complete(completeEvent: completeEvent)
+                }
+
+            }
+        })
     }
 
     
@@ -185,6 +245,7 @@ class ViewController: UIViewController {
             }
         })
     }
+    
     
 }
 

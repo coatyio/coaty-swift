@@ -14,37 +14,37 @@ open class CoatyObject: Codable {
     
     /// The framework core type of the object, i.e. the name of the interface that defines
     /// the object's shape.
-    var coreType: CoreType
+    public var coreType: CoreType
     
     /// The concrete type name of the object. The name should be in a canonical form following
     /// the naming convention for Java packages to avoid name collisions. All framework core
     ///  types use the form coaty.<InterfaceName>, e.g. coaty.CoatyObject.
-    var objectType: String
+    public var objectType: String
     
     /// Unique ID of the object.
-    var objectId: UUID
+    public var objectId: UUID
     
     /// The name/description of the object.
-    var name: String
+    public var name: String
     
     // MARK: - Optional attributes.
     
     /// External ID associated with this object (optional).
-    var externalId: String?
+    public var externalId: String?
     
     /// Unique ID of parent/superordinate object (optional).
-    var parentObjectId: UUID?
+    public var parentObjectId: UUID?
     
     /// Unique ID of user/worker whom this object has been assigned to (optional).
-    var assigneeUserId: UUID?
+    public var assigneeUserId: UUID?
     
     /// Unique ID of Location object that this object has been associated with (optional).
-    var locationId: UUID?
+    public var locationId: UUID?
     
     /// Marks an object that is no longer in use. The concrete definition meaning of this
     /// property is defined by the application. The property value is optional and should
     /// default to false.
-    var isDeactivated: Bool?
+    public var isDeactivated: Bool?
     
     // MARK: - Initializers.
     
@@ -90,7 +90,8 @@ open class CoatyObject: Codable {
         var container = encoder.container(keyedBy: CoatyObjectKeys.self)
         
         // Encode required attributes.
-        try container.encode(objectId, forKey: .objectId)
+        // HACK: Coaty-js currently does not accept uppercase UUIDs.
+        try container.encode(objectId.uuidString.lowercased(), forKey: .objectId)
         try container.encode(coreType, forKey: .coreType)
         try container.encode(objectType, forKey: .objectType)
         try container.encode(name, forKey: .name)

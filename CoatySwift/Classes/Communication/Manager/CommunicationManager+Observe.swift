@@ -146,9 +146,9 @@ extension CommunicationManager {
     ///     - eventTarget: target for which Deadvertise events should be emitted
     /// - Returns:  a hot observable emitting incoming Deadvertise events
     public func observeDeadvertise(eventTarget: Component) throws -> Observable<DeadvertiseEvent<Deadvertise>> {
-        let channelTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Deadvertise)
+        let deadvertiseTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Deadvertise)
         
-        mqtt?.subscribe(channelTopic)
+        mqtt?.subscribe(deadvertiseTopic)
         
         return rawMessages.map(convertToTupleFormat)
             .filter({ (rawMessageTopic) -> Bool in
@@ -160,6 +160,70 @@ extension CommunicationManager {
                 
                 // FIXME: Remove force unwrap.
                 return PayloadCoder.decode(payload)!
+            })
+    }
+    
+    /// Observe Update events for the given target emitted by the hot
+    /// observable returned.
+    ///
+    /// Update events that originate from the given event target, i.e.
+    /// that have been published by specifying the given event target as
+    /// event source, will not be emitted by the observable returned.
+    ///
+    /// - Parameters:
+    ///    - eventTarget: target for which Update events should be emitted.
+    /// - Returns: a hot observable emitting incoming Update events.
+    public func observeUpdate<Family: ObjectFamily, T: UpdateEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
+        
+        // FIXME: Prevent duplicated subscriptions.
+        let updateTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Update)
+        mqtt?.subscribe(updateTopic)
+        
+        return rawMessages.map(convertToTupleFormat)
+            .filter(isUpdate)
+            .map({ (message) -> T in
+                let (coatyTopic, payload) = message
+                
+                // FIXME: Remove force unwrap.
+                let updateEvent: T = PayloadCoder.decode(payload)!
+                updateEvent.completeHandler = {(completeEvent: CompleteEvent) in
+                    try? self.publishComplete(identity: eventTarget,
+                                              event: completeEvent,
+                                              messageToken: coatyTopic.messageToken)
+                }
+                
+                return updateEvent
+            })
+    }
+    
+    /// Observe Discover events for the given target emitted by the hot
+    /// observable returned.
+    ///
+    /// Discover events that originate from the given event target, i.e.
+    /// that have been published by specifying the given event target as
+    /// event source, will not be emitted by the observable returned.
+    ///
+    /// - Parameters:
+    ///     - eventTarget: target for which Discover events should be emitted.
+    /// - Returns: a hot observable emitting incoming Discover events.
+    public func observeDiscover<Family: ObjectFamily, T: DiscoverEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
+        
+        // FIXME: Prevent duplicated subscriptions.
+        let discoverTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Discover)
+        mqtt?.subscribe(discoverTopic)
+        
+        return rawMessages.map(convertToTupleFormat)
+            .filter(isDiscover)
+            .map({ (message) -> T in
+                let (coatyTopic, payload) = message
+                
+                // FIXME: Remove force unwrap.
+                let discoverEvent: T = PayloadCoder.decode(payload)!
+                discoverEvent.resolveHandler = {(resolveEvent: ResolveEvent) in
+                    try? self.publishResolve(identity: eventTarget, event: resolveEvent, messageToken: coatyTopic.messageToken)
+                }
+                
+                return discoverEvent
             })
     }
     
