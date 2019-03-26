@@ -44,6 +44,8 @@ class ViewController: UIViewController {
         let objectFilterExpression = ObjectFilterExpression(filterOperator: .Equals, firstOperand: "10")
         let secondObjectFilterExpression = ObjectFilterExpression(filterOperator: .NotBetween, firstOperand: "7", secondOperand: "9")
         
+        let objectFilterProperties2 = ObjectFilterProperties.init(objectFilterProperties: ["big", "oof"])
+        
         let objectFilterCondition1 = ObjectFilterCondition(first: objectFilterProperties,
                                                           second: objectFilterExpression)
         let objectFilterCondition2 = ObjectFilterCondition(first: objectFilterProperties,
@@ -52,7 +54,12 @@ class ViewController: UIViewController {
         
         let objectFilterConditions = ObjectFilterConditions(and: [objectFilterCondition1, objectFilterCondition2])
         
-        let dbObjectFilter = DBObjectFilter(condition: objectFilterCondition2, orderByProperties: nil, take: 1, skip: 10)
+        let orderByProperties = [OrderByProperty(objectFilterProperties: objectFilterProperties2,
+                                                sortingOrder: .Asc),
+                               OrderByProperty(objectFilterProperties: objectFilterProperties,
+                                               sortingOrder: .Desc)]
+        
+        let dbObjectFilter = ObjectFilter(condition: objectFilterCondition2, orderByProperties: orderByProperties, take: 1, skip: 10)
         
         let jsonData = try! JSONEncoder().encode(dbObjectFilter)
         let jsonString = String(data: jsonData, encoding: .utf8)!
