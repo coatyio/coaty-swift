@@ -40,6 +40,17 @@ class ViewController: UIViewController {
         
         // Establish mqtt connection.
         comManager.startClient()
+        let objectFilterProperties = ObjectFilterProperties.init(objectFilterProperty: "filterproperty")
+        let objectFilterExpression = ObjectFilterExpression(filterOperator: .Equals, firstOperand: "10")
+        
+        let objectFilterCondition = ObjectFilterCondition(first: objectFilterProperties,
+                                                          second: objectFilterExpression)
+        
+        let dbObjectFilter = DBObjectFilter(condition: objectFilterCondition, orderByProperties: nil, take: 1, skip: 10)
+        
+        print(PayloadCoder.encode(dbObjectFilter))
+        
+        
         
         
         redButton.backgroundColor = .red
@@ -113,7 +124,7 @@ class ViewController: UIViewController {
     
     func discoverResolveMessage() {
         let discoverEvent = DiscoverEvent<CustomCoatyObjectFamily>.withExternalId(eventSource: identity,
-                                                         externalId: "test-id")
+                                                                                  externalId: "test-id")
         
         let observable: Observable<ResolveEvent<CustomCoatyObjectFamily>> = try! comManager.publishDiscover(event: discoverEvent)
         
@@ -143,6 +154,8 @@ class ViewController: UIViewController {
         }
     }
     
+    
+    // MARK: - Receive Discover
     @objc func receiveDiscoverMessage() {
         let observable: Observable<DiscoverEvent<CustomCoatyObjectFamily>> = try! comManager.observeDiscover(eventTarget: identity)
         
@@ -152,12 +165,15 @@ class ViewController: UIViewController {
                 print(discoverEvent.json)
                 self.demoObject.externalId = discoverEvent.eventData.object.externalId
                 self.demoObject.message = "DISCOVER ANSWER"
-                let resolveEvent = ResolveEvent<CustomCoatyObjectFamily>.withObject(eventSource: self.identity, object: self.demoObject)
+                let resolveEvent = ResolveEvent<CustomCoatyObjectFamily>.withObject(eventSource: self.identity,
+                                                                                    object: self.demoObject)
                     discoverEvent.resolve(resolveEvent: resolveEvent)
                 }
         })
+        
     }
     
+    // MARK: - Receive Update
     @objc func receiveUpdateMessage() {
         let observable: Observable<UpdateEvent<CustomCoatyObjectFamily>> = try! comManager.observeUpdate(eventTarget: identity)
         
@@ -165,24 +181,22 @@ class ViewController: UIViewController {
             if let updateEvent = updateEvent.element {
                 print("Received Update Event:")
                 print(updateEvent.json)
-                if !updateEvent.eventData.isFullUpdate {
-                    print("is not full update.")
-                    return
-                }
                 
-                if let demoObject = updateEvent.eventData.object! as? DemoObject {
-                    demoObject.message = "ANSWER"
-                    let completeEvent = CompleteEvent<CustomCoatyObjectFamily>.withObject(eventSource: self.identity, object: demoObject)
-                    updateEvent.complete(completeEvent: completeEvent)
+                if updateEvent.eventData.isPartialUpdate {
+                    
+                    if let demoObject = updateEvent.eventData.object! as? DemoObject {
+                        demoObject.message = "UPDATE ANSWER"
+                        let completeEvent = CompleteEvent<CustomCoatyObjectFamily>.withObject(eventSource: self.identity,
+                                                                                              object: demoObject)
+                        updateEvent.complete(completeEvent: completeEvent)
+                    }
                 }
-
             }
         })
     }
 
     
     // MARK: - Channel
-    
     func channelMessage() {
         let test: Observable<ChannelEvent<CustomCoatyObjectFamily>> = try! comManager.observeChannel(eventTarget: identity, channelId: "123456")
         

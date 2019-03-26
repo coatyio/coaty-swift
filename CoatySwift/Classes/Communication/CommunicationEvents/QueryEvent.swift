@@ -7,7 +7,6 @@ import Foundation
 
 /// QueryEvent provides a generic implementation for all Update Events.
 ///
-/// - NOTE: This class should preferably initialized via its withPartial() or withFull() method.
 public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData<Family>> {
     
     // MARK: - Internal attributes.
@@ -85,6 +84,7 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
     public var coreTypes: [CoreType]?
     public var objectFilter: DBObjectFilter?
     public var objectJoinConditions: [ObjectJoinCondition]?
+    public var objectJoinCondition: ObjectJoinCondition?
     
     // MARK: - Initializers.
     
@@ -102,11 +102,13 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
     private init(objectTypes: [String]? = nil,
                  coreTypes: [CoreType]? = nil,
                  objectFilter: DBObjectFilter? = nil,
-                 objectJoinConditions: [ObjectJoinCondition]? = nil) {
+                 objectJoinConditions: [ObjectJoinCondition]? = nil,
+                 objectJoinCondition: ObjectJoinCondition? = nil) {
         self.objectTypes = objectTypes
         self.coreTypes = coreTypes
         self.objectFilter = objectFilter
         self.objectJoinConditions = objectJoinConditions
+        self.objectJoinCondition = objectJoinCondition
         super.init()
     }
     
@@ -115,12 +117,14 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
     static func createFrom(objectTypes: [String]? = nil,
                            coreTypes: [CoreType]? = nil,
                            objectFilter: DBObjectFilter? = nil,
-                           objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEventData {
+                           objectJoinConditions: [ObjectJoinCondition]? = nil,
+                           objectJoinCondition: ObjectJoinCondition? = nil) -> QueryEventData {
         
         return .init(objectTypes: objectTypes,
                      coreTypes: coreTypes,
                      objectFilter: objectFilter,
-                     objectJoinConditions: objectJoinConditions)
+                     objectJoinConditions: objectJoinConditions,
+                     objectJoinCondition: objectJoinCondition)
     }
     
     // MARK: - Codable methods.
@@ -139,9 +143,11 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
         self.objectFilter = try container.decodeIfPresent(DBObjectFilter.self, forKey: .objectFilter)
         
         // TODO: The objectJoinConditions can be either a single object OR an array.
-        // WARNING: This will crash!
         self.objectJoinConditions = try container.decodeIfPresent([ObjectJoinCondition].self,
                                                                   forKey: .objectJoinConditions)
+        self.objectJoinCondition = try container.decodeIfPresent(ObjectJoinCondition.self,
+                                                                 forKey: .objectJoinConditions)
+        
         try super.init(from: decoder)
     }
     
@@ -158,21 +164,97 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
 
 public class DBObjectFilter: Codable {
     var conditions: [ObjectFilterCondition]?
+    var condition: ObjectFilterCondition?
     
-    // Array<[ObjectFilterProperties, "Asc" | "Desc"]>
-    var orderByProperties: [String]?
+    /// FIXME: Heterogenous array here brings us problems. Try with Any
+    /// object at first.
+    /// Array<[ObjectFilterProperties, "Asc" | "Desc"]>
+    var orderByProperties: [Any]?
     var take: Int?
     var skip: Int?
     
-}
-
-
-public class ObjectFilterPropertiesArray {
+    private init(_ conditions: [ObjectFilterCondition]? = nil,
+                 _ condition: ObjectFilterCondition? = nil,
+                 _ orderByProperties: [Any]? = nil,
+                 _ take: Int? = nil,
+                 _ skip: Int? = nil) {
+        self.conditions = conditions
+        self.condition = condition
+        self.orderByProperties = orderByProperties
+        self.take = take
+        self.skip = skip
+    }
+    
+    public convenience init(condition: ObjectFilterCondition,
+                            orderByProperties: [Any]? = nil,
+                            take: Int? = nil,
+                            skip: Int? = nil) {
+        self.init(nil, condition, orderByProperties, take, skip)
+    }
+    
+    public convenience init(conditions: [ObjectFilterCondition],
+                            orderByProperties: [Any]? = nil,
+                            take: Int? = nil,
+                            skip: Int? = nil) {
+        self.init(conditions, nil, orderByProperties, take, skip)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case conditions
+        case orderByProperties
+        case take
+        case skip
+    }
+    
+    // TODO: Implement me.
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        if let condition = condition {
+            try container.encodeIfPresent(condition, forKey: .conditions)
+        } else if let conditions = conditions {
+            try container.encodeIfPresent(conditions, forKey: .conditions)
+        }
+        
+        // TODO try container.encodeIfPresent(orderByProperties, forKey: .orderByProperties)
+        try container.encodeIfPresent(take, forKey: .take)
+        try container.encodeIfPresent(skip, forKey: .skip)
+    }
+    
+    // TODO: Implement me.
+    public required init(from decoder: Decoder) throws {
+    }
+    
     
 }
 
-public class ObjectFilterPropertyString {
+
+public class ObjectFilterProperties: Encodable {
+    var objectFilterProperty: String?
+    var objectFilterProperties: [String]?
     
+    private init(_ objectFilterProperty: String? = nil,
+                 _ objectFilterProperties: [String]? = nil) {
+        self.objectFilterProperty = objectFilterProperty
+        self.objectFilterProperties = objectFilterProperties
+    }
+    
+    public convenience init(objectFilterProperty: String) {
+        self.init(objectFilterProperty)
+    }
+    
+    public convenience init(objectFilterProperties: [String]) {
+        self.init(nil, objectFilterProperties)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.unkeyedContainer()
+        if let objectFilterProperty = objectFilterProperty {
+            try container.encode(objectFilterProperty)
+        } else if let objectFilterProperties = objectFilterProperties {
+            try container.encode(objectFilterProperties)
+        }
+    }
 }
 
 public enum SortingOrder: String {
@@ -180,16 +262,153 @@ public enum SortingOrder: String {
     case Desc
 }
 
-public class ObjectFilterCondition {
+public class ObjectFilterConditions {
     var and: [ObjectFilterCondition]?
     var or: [ObjectFilterCondition]?
 }
+
+public class ObjectFilterCondition: Encodable {
+    var first: ObjectFilterProperties
+    var second: ObjectFilterExpression
+    
+    public init(first: ObjectFilterProperties, second: ObjectFilterExpression) {
+        self.first = first
+        self.second = second
+    }
+    
+    // MARK: - Codable methods.
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.unkeyedContainer()
+        try container.encode(first)
+        try container.encode(second)
+    }
+}
+
+public class ObjectFilterExpression: Encodable {
+    var filterOperator: ObjectFilterOperator
+    
+    // TODO: Operands are arbitrary JSONs.
+    var firstOperand: String?
+    var secondOperand: String?
+    
+    public init(filterOperator: ObjectFilterOperator,
+         firstOperand: String? = nil,
+         secondOperand: String? = nil) {
+        self.filterOperator = filterOperator
+        self.firstOperand = firstOperand
+        self.secondOperand = secondOperand
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.unkeyedContainer()
+        try container.encode(filterOperator.rawValue)
+        
+        if let firstOperand = firstOperand {
+            try container.encode(firstOperand)
+        }
+        
+        if let secondOperand = secondOperand {
+            try container.encode(secondOperand)
+        }
+    }
+}
+
+public class FilterOperations<N1: Numeric, N2: Numeric> {
+    
+    static func lessThan(value: N1) -> (ObjectFilterOperator, N1) {
+        return (ObjectFilterOperator.LessThan, value)
+    }
+    
+    static func lessThan(value: String) -> (ObjectFilterOperator, String) {
+        return (ObjectFilterOperator.LessThan, value)
+    }
+    
+    static func lessThanOrEqual(value: N1) -> (ObjectFilterOperator, N1) {
+        return (ObjectFilterOperator.LessThanOrEqual, value)
+    }
+    
+    static func lessThanOrEqual(value: String) -> (ObjectFilterOperator, String) {
+        return (ObjectFilterOperator.LessThanOrEqual, value)
+    }
+    
+    static func greaterThan(value: N1) -> (ObjectFilterOperator, N1) {
+        return (ObjectFilterOperator.GreaterThan, value)
+    }
+    
+    static func greaterThan(value: String) -> (ObjectFilterOperator, String) {
+        return (ObjectFilterOperator.GreaterThan, value)
+    }
+    
+    static func greaterThanOrEqual(value: N1) -> (ObjectFilterOperator, N1) {
+        return (ObjectFilterOperator.LessThanOrEqual, value)
+    }
+    
+    static func greaterThanOrEqual(value: String) -> (ObjectFilterOperator, String) {
+        return (ObjectFilterOperator.LessThanOrEqual, value)
+    }
+    
+    // TODO: Currently only doing betweens that expect the same type from both operands.
+    static func between(value1: N1, value2: N2) ->  (ObjectFilterOperator, N1, N2) {
+       return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
+    }
+    
+    static func between(value1: String, value2: String) ->  (ObjectFilterOperator, String, String) {
+        return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
+    }
+    
+    static func notBetween(value1: N1, value2: N2) ->  (ObjectFilterOperator, N1, N2) {
+        return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
+    }
+    
+    static func notBetween(value1: String, value2: String) ->  (ObjectFilterOperator, String, String) {
+        return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
+    }
+    
+    static func like(pattern: String) -> (ObjectFilterOperator, String) {
+        return (ObjectFilterOperator.Like, pattern)
+    }
+    
+    static func exists() -> (ObjectFilterOperator) {
+        return ObjectFilterOperator.Exists
+    }
+    
+    static func notExists() -> (ObjectFilterOperator) {
+        return ObjectFilterOperator.NotExists
+    }
+    
+    /// TODO: Missing methods:
+    /*
+     equals: (value: any): [ObjectFilterOperator, any] =>
+     [ObjectFilterOperator.Equals, value],
+     
+     notEquals: (value: any): [ObjectFilterOperator, any] =>
+     [ObjectFilterOperator.NotEquals, value],
+     
+     contains: (values: any): [ObjectFilterOperator, any] =>
+     [ObjectFilterOperator.Contains, values],
+     
+     notContains: (values: any): [ObjectFilterOperator, any] =>
+     [ObjectFilterOperator.NotContains, values],
+     
+     in: (values: any[]): [ObjectFilterOperator, any[]] =>
+     [ObjectFilterOperator.In, values],
+     
+     notIn: (values: any[]): [ObjectFilterOperator, any[]] =>
+     [ObjectFilterOperator.NotIn, values],
+     
+    */
+
+    
+
+}
+
 
 public class ObjectJoinCondition: Codable {
     
 }
 
-public enum ObjectFilterOperator {
+public enum ObjectFilterOperator: Int {
     case LessThan
     case LessThanOrEqual
     case GreaterThan

@@ -1717,16 +1717,16 @@
 		631C5640A8E337267CD78C96AF3D47AA /* CommunicationEvents */ = {
 			isa = PBXGroup;
 			children = (
-				2A0137E32249004100AB38BD /* RetrieveEvent.swift */,
-				864974299A09BDE735D1D29FB6E31C09 /* AdvertiseEvent.swift */,
-				CA524EE2FEA392C7DA4D5F80D03C4A80 /* ChannelEvent.swift */,
 				CB2EF3EDE4ADC7F2A6520F78D7144A84 /* CommunicationEvent.swift */,
-				73454B7C708D1C580234204A7087E058 /* CompleteEvent.swift */,
+				864974299A09BDE735D1D29FB6E31C09 /* AdvertiseEvent.swift */,
 				61FEDED04E826BFDFFADC2A7C16BAACB /* DeadvertiseEvent.swift */,
+				CA524EE2FEA392C7DA4D5F80D03C4A80 /* ChannelEvent.swift */,
 				063D42BADBE965DD954E1C4D80B0F25C /* DiscoverEvent.swift */,
 				1E11689CF25027087A4529AB64A965F8 /* ResolveEvent.swift */,
 				2B28BAE0271055EE377DC7FE331DF642 /* UpdateEvent.swift */,
+				73454B7C708D1C580234204A7087E058 /* CompleteEvent.swift */,
 				2A0137E52249057B00AB38BD /* QueryEvent.swift */,
+				2A0137E32249004100AB38BD /* RetrieveEvent.swift */,
 			);
 			path = CommunicationEvents;
 			sourceTree = "<group>";
