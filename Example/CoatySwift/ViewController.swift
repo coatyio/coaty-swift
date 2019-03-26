@@ -50,7 +50,7 @@ class ViewController: UIViewController {
                                                           second: objectFilterExpression)
         let objectFilterCondition2 = ObjectFilterCondition(first: objectFilterProperties,
                                                           second: secondObjectFilterExpression)
-        let objectJoinConditions = ObjectJoinCondition(localProperty: "localprop", asProperty: "asprop")
+        let objectJoinConditions = [ObjectJoinCondition(localProperty: "localprop", asProperty: "asprop")]
         
         let objectFilterConditions = ObjectFilterConditions(and: [objectFilterCondition1, objectFilterCondition2])
         
@@ -60,8 +60,13 @@ class ViewController: UIViewController {
                                                sortingOrder: .Desc)]
         
         let dbObjectFilter = ObjectFilter(condition: objectFilterCondition2, orderByProperties: orderByProperties, take: 1, skip: 10)
+        let coreTypes: [CoreType] = [.CoatyObject, .Annotation]
         
-        let jsonData = try! JSONEncoder().encode(dbObjectFilter)
+        let queryEventData = QueryEventData<CustomCoatyObjectFamily>.createFrom(coreTypes: coreTypes,
+                                                       objectFilter: dbObjectFilter,
+                                                       objectJoinConditions: objectJoinConditions)
+        
+        let jsonData = try! JSONEncoder().encode(queryEventData)
         let jsonString = String(data: jsonData, encoding: .utf8)!
         print(jsonString)
         

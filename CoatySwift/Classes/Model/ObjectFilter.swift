@@ -5,11 +5,32 @@
 
 import Foundation
 
+
+/// Defines criteria for filtering and ordering a result
+/// set of Coaty objects. Used in combination with Query events
+/// and database operations, as well as the `ObjectMatcher` functionality.
 public class ObjectFilter: Encodable {
+    
+    /// A single condition for filtering objects (optional).
     var conditions: ObjectFilterConditions?
+    
+    /// A set of conditions for filtering objects (optional).
     var condition: ObjectFilterCondition?
+    
+    /// Determines the ordering of result objects by an array of
+    /// OrderByProperty objects.
     var orderByProperties: [OrderByProperty]?
+    
+    /// If a take count is given, no more than that many objects will be returned
+    /// (but possibly less, if the request itself yields less objects).
+    /// Typically, this option is only useful if the `orderByProperties` option
+    /// is also specified to ensure consistent ordering of paginated results.
     var take: Int?
+    
+    /// If skip count is given that many objects are skipped before beginning to
+    /// return result objects.
+    /// Typically, this option is only useful if the `orderByProperties` option
+    /// is also specified to ensure consistent ordering of paginated results.
     var skip: Int?
     
     private init(_ conditions: ObjectFilterConditions? = nil,
@@ -45,7 +66,6 @@ public class ObjectFilter: Encodable {
         case skip
     }
     
-    // TODO: Implement me.
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
@@ -58,16 +78,9 @@ public class ObjectFilter: Encodable {
         try container.encodeIfPresent(orderByProperties, forKey: .orderByProperties)
         try container.encodeIfPresent(take, forKey: .take)
         try container.encodeIfPresent(skip, forKey: .skip)
-        
     }
     
-    // TODO: Implement me.
-    /*public required init(from decoder: Decoder) throws {
-     
-     let container = try decoder.container(keyedBy: CodingKeys.self)
-     self.condition = try container.decodeIfPresent(ObjectFilterCondition.self, forKey: .conditions)
-     }*/
-    
+    // TODO: Implement Decoding.
     
 }
 
