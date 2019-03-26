@@ -5,19 +5,17 @@
 
 import Foundation
 
-/// QueryEvent provides a generic implementation for all Update Events.
-///
+/// QueryEvent provides a generic implementation for all Query Events.
 public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData<Family>> {
     
     // MARK: - Internal attributes.
     
-    /// Provides a complete handler for reacting to complete events.
+    /// Provides a complete handler for reacting to query events.
     internal var retrieveHandler: ((RetrieveEvent<Family>) -> Void)?
     
-    
-    /// Respond to an observed Update event by sending the given Complete event.
+    /// Respond to an observed Query event by sending the given Retrieve event.
     ///
-    /// - Parameter completeEvent: a Complete event.
+    /// - Parameter retrieveEvent: a Retrieve event.
     public func retrieve(retrieveEvent: RetrieveEvent<Family>) {
         if let retrieveHandler = retrieveHandler {
             retrieveHandler(retrieveEvent)
@@ -34,7 +32,14 @@ public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData
 
     // MARK: - Factory methods.
     
-    // TODO: Add documentation.
+    /// Create a QueryEvent instance for querying the given object types, filter, and join conditions.
+    /// The object filter and join conditions are optional.
+    ///
+    /// - Parameters:
+    ///     - eventSource: the event source component
+    ///     - objectTypes: restrict results by object types (logical OR).
+    ///     - objectFilter: restrict results by object filter (optional).
+    ///     - objectJoinConditions: join related objects into results (optional).
     public static func withObjectTypes(eventSource: Component,
                                        objectTypes: [String],
                                        objectFilter: ObjectFilter? = nil,
@@ -47,7 +52,14 @@ public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData
         return .init(eventSource: eventSource, eventData: queryEventData)
     }
     
-    // TODO: Add documentation.
+    /// Create a QueryEvent instance for querying the given core types, filter, and join conditions.
+    /// The object filter and join conditions are optional.
+    ///
+    /// - Parameters:
+    ///     - eventSource: the event source component
+    ///     - coreTypes: restrict results by core types (logical OR).
+    ///     - objectFilter: restrict results by object filter (optional).
+    ///     - objectJoinConditions: join related objects into results (optional).
     public static func withCoreTypes(eventSource: Component,
                                        coreTypes: [CoreType],
                                        objectFilter: ObjectFilter? = nil,
@@ -72,36 +84,48 @@ public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData
 }
 
 
-/// - TODO: update documentation
-/// UpdateEventData provides a wrapper object that stores the entire message payload data
-/// for a UpdateEvent including the object itself as well as the associated private data.
+/// QueryEventData provides a wrapper object that stores the entire message payload data
+/// for a QueryEvent.
 public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
+    
+    /// Restrict objects by object types (logical OR).
+    /// Should not be used in combination with coreTypes.
     public var objectTypes: [String]?
+    
+    /// Restrict objects by core types (logical OR).
+    /// Should not be used in combination with objectTypes.
     public var coreTypes: [CoreType]?
+    
+    /// Restrict objects by an object filter.
     public var objectFilter: ObjectFilter?
+    
+    /// Join related objects by join conditions.
+    /// - TODO: Only one of the two methods should be public.
     public var objectJoinConditions: [ObjectJoinCondition]?
+    
+    /// Join related objects by join conditions.
+    /// - TODO: Only one of the two methods should be public.
     public var objectJoinCondition: ObjectJoinCondition?
     
     // MARK: - Initializers.
     
-    /**
-     - TODO: UPdate
-     * Create a QueryEventData instance for the given type, filter, and join conditions.
-     * Exactly one of objectTypes or coreTypes parameters must be specified (use undefined
-     * for the other parameter). The object filter and join conditions are optional.
-     *
-     * @param objectTypes Restrict results by object types (logical OR).
-     * @param coreTypes Restrict results by core types (logical OR).
-     * @param objectFilter Restrict results by object filter (optional).
-     * @param objectJoinConditions Join related objects into results (optional).
-     */
+    /// Create a QueryEventData instance for the given type, filter, and join conditions.
+    /// Exactly one of objectTypes or coreTypes parameters must be specified (use undefined
+    /// for the other parameter). The object filter and join conditions are optional.
+    ///
+    /// - Parameters:
+    ///     - objectTypes: Restrict results by object types (logical OR).
+    ///     - coreTypes: Restrict results by core types (logical OR).
+    ///     - objectFilter: Restrict results by object filter (optional).
+    ///     - objectJoinConditions: Join related objects into results (optional).
     private init(objectTypes: [String]? = nil,
                  coreTypes: [CoreType]? = nil,
                  objectFilter: ObjectFilter? = nil,
                  objectJoinConditions: [ObjectJoinCondition]? = nil,
                  objectJoinCondition: ObjectJoinCondition? = nil) {
+        
         self.objectTypes = objectTypes
         self.coreTypes = coreTypes
         self.objectFilter = objectFilter
@@ -112,10 +136,11 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Factory methods.
     
+    /// TODO: Comment.
     public static func createFrom(objectTypes: [String],
                            objectFilter: ObjectFilter? = nil,
                            objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEventData {
-        
+        // TODO: Double check this.
         if objectJoinConditions?.count == 1 {
             return .init(objectTypes: objectTypes,
                          coreTypes: nil,
@@ -131,10 +156,11 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
             }
     }
     
+    /// TODO: Comment.
     public static func createFrom(coreTypes: [CoreType],
                                   objectFilter: ObjectFilter? = nil,
                                   objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEventData {
-        
+        // TODO: Double check this.
         if objectJoinConditions?.count == 1 {
             return .init(objectTypes: nil,
                          coreTypes: coreTypes,
@@ -166,12 +192,16 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
         self.coreTypes = try container.decodeIfPresent([CoreType].self, forKey: .coreTypes)
         self.objectFilter = try container.decodeIfPresent(ObjectFilter.self, forKey: .objectFilter)
         
-        // TODO: The objectJoinConditions can be either a single object OR an array.
-        /*self.objectJoinConditions = try container.decodeIfPresent([ObjectJoinCondition].self,
+        do {
+            self.objectJoinConditions = try container.decodeIfPresent([ObjectJoinCondition].self,
                                                                   forKey: .objectJoinConditions)
-        self.objectJoinCondition = try container.decodeIfPresent(ObjectJoinCondition.self,
+        } catch { /* Surpress error. */ }
+        
+        do {
+            self.objectJoinCondition = try container.decodeIfPresent(ObjectJoinCondition.self,
                                                                  forKey: .objectJoinConditions)
-         */
+        } catch { /* Surpress error. */ }
+
         
         try super.init(from: decoder)
     }
@@ -181,7 +211,10 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
         try container.encodeIfPresent(self.objectTypes, forKey: .objectTypes)
         try container.encodeIfPresent(self.coreTypes, forKey: .coreTypes)
         try container.encodeIfPresent(self.objectFilter, forKey: .objectFilter)
+        
+        // There is only one of them set.
         try container.encodeIfPresent(self.objectJoinConditions, forKey: .objectJoinConditions)
+        try container.encodeIfPresent(self.objectJoinCondition, forKey: .objectJoinConditions)
     }
     
 }

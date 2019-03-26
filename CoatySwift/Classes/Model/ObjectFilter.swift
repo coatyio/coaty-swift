@@ -9,7 +9,7 @@ import Foundation
 /// Defines criteria for filtering and ordering a result
 /// set of Coaty objects. Used in combination with Query events
 /// and database operations, as well as the `ObjectMatcher` functionality.
-public class ObjectFilter: Encodable, Decodable {
+public class ObjectFilter: Codable {
     
     /// A single condition for filtering objects (optional).
     var conditions: ObjectFilterConditions?
@@ -59,6 +59,8 @@ public class ObjectFilter: Encodable, Decodable {
         self.init(conditions, nil, orderByProperties, take, skip)
     }
     
+    // MARK: - Codable methods.
+    
     enum CodingKeys: String, CodingKey {
         case conditions
         case orderByProperties
@@ -85,26 +87,19 @@ public class ObjectFilter: Encodable, Decodable {
         
         do {
             condition = try container.decodeIfPresent(ObjectFilterCondition.self, forKey: .conditions)
-        } catch {
-            print("Not a single condition")
-        }
+        } catch { /* Surpress error. */ }
         
         do {
             conditions = try container.decodeIfPresent(ObjectFilterConditions.self, forKey: .conditions)
-        } catch {
-            print("Not multiple AND or OR conditions.")
-        }
+         } catch { /* Surpress error. */ }
+        
         take = try container.decodeIfPresent(Int.self, forKey: .take)
         skip = try container.decodeIfPresent(Int.self, forKey: .skip)
         orderByProperties = try container.decodeIfPresent([OrderByProperty].self, forKey: .orderByProperties)
-
     }
-    
-    // TODO: Implement Decoding.
-    
 }
 
-public class OrderByProperty: Encodable, Decodable {
+public class OrderByProperty: Codable {
     var objectFilterProperties: ObjectFilterProperties
     var sortingOrder: SortingOrder
     
@@ -131,7 +126,7 @@ public class OrderByProperty: Encodable, Decodable {
     
 }
 
-public class ObjectFilterProperties: Encodable, Decodable {
+public class ObjectFilterProperties: Codable {
     var objectFilterProperty: String?
     var objectFilterProperties: [String]?
     
@@ -173,9 +168,14 @@ public enum SortingOrder: String {
     case Desc
 }
 
-public class ObjectFilterConditions: Encodable, Decodable {
+public class ObjectFilterConditions: Codable {
+    
+    // MARK: - Attributes.
+    
     var and: [ObjectFilterCondition]?
     var or: [ObjectFilterCondition]?
+    
+    // MARK: - Initializers.
     
     private init(_ and: [ObjectFilterCondition]? = nil, _ or: [ObjectFilterCondition]? = nil) {
         self.and = and
@@ -190,6 +190,7 @@ public class ObjectFilterConditions: Encodable, Decodable {
         self.init(nil, or)
     }
     
+    // MARK: - Codable methods.
     
     enum CodingKeys: String, CodingKey {
         case and
@@ -211,22 +212,23 @@ public class ObjectFilterConditions: Encodable, Decodable {
         
         do {
             and = try container.decodeIfPresent([ObjectFilterCondition].self, forKey: .and)
-        } catch {
-            print("Not an _and_")
-        }
+         } catch { /* Surpress error. */ }
         
         do {
             or = try container.decodeIfPresent([ObjectFilterCondition].self, forKey: .or)
-        } catch {
-            print("Not an _or_")
-        }
+         } catch { /* Surpress error. */ }
     }
     
 }
 
-public class ObjectFilterCondition: Encodable, Decodable {
+public class ObjectFilterCondition: Codable {
+    
+    // MARK: - Attributes.
+    
     var first: ObjectFilterProperties
     var second: ObjectFilterExpression
+    
+    // MARK: - Initializers.
     
     public init(first: ObjectFilterProperties, second: ObjectFilterExpression) {
         self.first = first
@@ -241,8 +243,6 @@ public class ObjectFilterCondition: Encodable, Decodable {
         try container.encode(second)
     }
     
-    
-    
     public required init(from decoder: Decoder) throws {
         var container = try decoder.unkeyedContainer()
 
@@ -251,13 +251,15 @@ public class ObjectFilterCondition: Encodable, Decodable {
      }
 }
 
-public class ObjectFilterExpression: Encodable, Decodable {
+public class ObjectFilterExpression: Codable {
+    
+    // MARK: - Attributes.
+    
     var filterOperator: ObjectFilterOperator
-    
-    // TODO: Operands are arbitrary JSONs.
-    
     var firstOperand: AnyCodable?
     var secondOperand: AnyCodable?
+    
+    // MARK: - Initializers.
     
     public init(filterOperator: ObjectFilterOperator,
                 firstOperand: AnyCodable? = nil,
@@ -266,6 +268,8 @@ public class ObjectFilterExpression: Encodable, Decodable {
         self.firstOperand = firstOperand
         self.secondOperand = secondOperand
     }
+    
+    // MARK: - Codable methods.
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.unkeyedContainer()
