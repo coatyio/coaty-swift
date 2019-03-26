@@ -41,7 +41,6 @@ public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData
                                        objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEvent<Family> {
         
         let queryEventData = QueryEventData<Family>.createFrom(objectTypes: objectTypes,
-                                                               coreTypes: nil,
                                                                objectFilter: objectFilter,
                                                                objectJoinConditions: objectJoinConditions)
         
@@ -54,8 +53,7 @@ public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData
                                        objectFilter: DBObjectFilter? = nil,
                                        objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEvent<Family> {
         
-        let queryEventData = QueryEventData<Family>.createFrom(objectTypes: nil,
-                                                               coreTypes: coreTypes,
+        let queryEventData = QueryEventData<Family>.createFrom(coreTypes: coreTypes,
                                                                objectFilter: objectFilter,
                                                                objectJoinConditions: objectJoinConditions)
         
@@ -114,18 +112,44 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Factory methods.
     
-    static func createFrom(objectTypes: [String]? = nil,
-                           coreTypes: [CoreType]? = nil,
+    public static func createFrom(objectTypes: [String],
                            objectFilter: DBObjectFilter? = nil,
-                           objectJoinConditions: [ObjectJoinCondition]? = nil,
-                           objectJoinCondition: ObjectJoinCondition? = nil) -> QueryEventData {
+                           objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEventData {
         
-        return .init(objectTypes: objectTypes,
-                     coreTypes: coreTypes,
-                     objectFilter: objectFilter,
-                     objectJoinConditions: objectJoinConditions,
-                     objectJoinCondition: objectJoinCondition)
+        if objectJoinConditions?.count == 1 {
+            return .init(objectTypes: objectTypes,
+                         coreTypes: nil,
+                         objectFilter: objectFilter,
+                         objectJoinConditions: nil,
+                         objectJoinCondition: objectJoinConditions![0])
+        } else {
+            return .init(objectTypes: objectTypes,
+                         coreTypes: nil,
+                         objectFilter: objectFilter,
+                         objectJoinConditions: objectJoinConditions,
+                         objectJoinCondition: nil)
+            }
     }
+    
+    public static func createFrom(coreTypes: [CoreType],
+                                  objectFilter: DBObjectFilter? = nil,
+                                  objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEventData {
+        
+        if objectJoinConditions?.count == 1 {
+            return .init(objectTypes: nil,
+                         coreTypes: coreTypes,
+                         objectFilter: objectFilter,
+                         objectJoinConditions: nil,
+                         objectJoinCondition: objectJoinConditions![0])
+        } else {
+            return .init(objectTypes: nil,
+                         coreTypes: coreTypes,
+                         objectFilter: objectFilter,
+                         objectJoinConditions: objectJoinConditions,
+                         objectJoinCondition: nil)
+        }
+    }
+    
     
     // MARK: - Codable methods.
     
@@ -137,7 +161,7 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
     }
     
     required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+        /*let container = try decoder.container(keyedBy: CodingKeys.self)
         self.objectTypes = try container.decodeIfPresent([String].self, forKey: .objectTypes)
         self.coreTypes = try container.decodeIfPresent([CoreType].self, forKey: .coreTypes)
         self.objectFilter = try container.decodeIfPresent(DBObjectFilter.self, forKey: .objectFilter)
@@ -147,7 +171,7 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
                                                                   forKey: .objectJoinConditions)
         self.objectJoinCondition = try container.decodeIfPresent(ObjectJoinCondition.self,
                                                                  forKey: .objectJoinConditions)
-        
+        */
         try super.init(from: decoder)
     }
     
@@ -162,8 +186,8 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
 }
 
 
-public class DBObjectFilter: Codable {
-    var conditions: [ObjectFilterCondition]?
+public class DBObjectFilter: Encodable {
+    var conditions: ObjectFilterConditions?
     var condition: ObjectFilterCondition?
     
     /// FIXME: Heterogenous array here brings us problems. Try with Any
@@ -173,7 +197,7 @@ public class DBObjectFilter: Codable {
     var take: Int?
     var skip: Int?
     
-    private init(_ conditions: [ObjectFilterCondition]? = nil,
+    private init(_ conditions: ObjectFilterConditions? = nil,
                  _ condition: ObjectFilterCondition? = nil,
                  _ orderByProperties: [Any]? = nil,
                  _ take: Int? = nil,
@@ -192,7 +216,7 @@ public class DBObjectFilter: Codable {
         self.init(nil, condition, orderByProperties, take, skip)
     }
     
-    public convenience init(conditions: [ObjectFilterCondition],
+    public convenience init(conditions: ObjectFilterConditions,
                             orderByProperties: [Any]? = nil,
                             take: Int? = nil,
                             skip: Int? = nil) {
@@ -222,8 +246,11 @@ public class DBObjectFilter: Codable {
     }
     
     // TODO: Implement me.
-    public required init(from decoder: Decoder) throws {
-    }
+    /*public required init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.condition = try container.decodeIfPresent(ObjectFilterCondition.self, forKey: .conditions)
+    }*/
     
     
 }
@@ -248,7 +275,7 @@ public class ObjectFilterProperties: Encodable {
     }
     
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.unkeyedContainer()
+        var container = encoder.singleValueContainer()
         if let objectFilterProperty = objectFilterProperty {
             try container.encode(objectFilterProperty)
         } else if let objectFilterProperties = objectFilterProperties {
@@ -262,12 +289,42 @@ public enum SortingOrder: String {
     case Desc
 }
 
-public class ObjectFilterConditions {
+public class ObjectFilterConditions: Encodable {
     var and: [ObjectFilterCondition]?
     var or: [ObjectFilterCondition]?
+    
+    private init(_ and: [ObjectFilterCondition]? = nil, _ or: [ObjectFilterCondition]? = nil) {
+        self.and = and
+        self.or = or
+    }
+    
+    public convenience init(and: [ObjectFilterCondition]) {
+        self.init(and, nil)
+    }
+    
+    public convenience init(or: [ObjectFilterCondition]) {
+        self.init(nil, or)
+    }
+    
+    
+    enum CodingKeys: String, CodingKey {
+        case and
+        case or
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        if let andObjectFilterConditions = and {
+            try container.encode(andObjectFilterConditions, forKey: .and)
+        } else if let orObjectFilterConditions = or {
+            try container.encode(orObjectFilterConditions, forKey: .or)
+        }
+    }
+    
 }
 
-public class ObjectFilterCondition: Encodable {
+public class ObjectFilterCondition: Encodable/*, Decodable*/ {
     var first: ObjectFilterProperties
     var second: ObjectFilterExpression
     
@@ -283,6 +340,14 @@ public class ObjectFilterCondition: Encodable {
         try container.encode(first)
         try container.encode(second)
     }
+    
+    /*public required init(from decoder: Decoder) throws {
+        /*let container = decoder.
+        
+        self.first = ObjectFilterProperties.init(objectFilterProperty: "asdf")
+        let objectFilterOperator = ObjectFilterOperator.Exists
+        self.second = ObjectFilterExpression.init(filterOperator: objectFilterOperator)*/
+    }*/
 }
 
 public class ObjectFilterExpression: Encodable {
@@ -314,9 +379,9 @@ public class ObjectFilterExpression: Encodable {
     }
 }
 
-public class FilterOperations<N1: Numeric, N2: Numeric> {
+public class FilterOperations {
     
-    static func lessThan(value: N1) -> (ObjectFilterOperator, N1) {
+    static func lessThan(value: Double) -> (ObjectFilterOperator, Double) {
         return (ObjectFilterOperator.LessThan, value)
     }
     
@@ -324,7 +389,7 @@ public class FilterOperations<N1: Numeric, N2: Numeric> {
         return (ObjectFilterOperator.LessThan, value)
     }
     
-    static func lessThanOrEqual(value: N1) -> (ObjectFilterOperator, N1) {
+    static func lessThanOrEqual(value: Double) -> (ObjectFilterOperator, Double) {
         return (ObjectFilterOperator.LessThanOrEqual, value)
     }
     
@@ -332,7 +397,7 @@ public class FilterOperations<N1: Numeric, N2: Numeric> {
         return (ObjectFilterOperator.LessThanOrEqual, value)
     }
     
-    static func greaterThan(value: N1) -> (ObjectFilterOperator, N1) {
+    static func greaterThan(value: Double) -> (ObjectFilterOperator, Double) {
         return (ObjectFilterOperator.GreaterThan, value)
     }
     
@@ -340,7 +405,7 @@ public class FilterOperations<N1: Numeric, N2: Numeric> {
         return (ObjectFilterOperator.GreaterThan, value)
     }
     
-    static func greaterThanOrEqual(value: N1) -> (ObjectFilterOperator, N1) {
+    static func greaterThanOrEqual(value: Double) -> (ObjectFilterOperator, Double) {
         return (ObjectFilterOperator.LessThanOrEqual, value)
     }
     
@@ -349,7 +414,7 @@ public class FilterOperations<N1: Numeric, N2: Numeric> {
     }
     
     // TODO: Currently only doing betweens that expect the same type from both operands.
-    static func between(value1: N1, value2: N2) ->  (ObjectFilterOperator, N1, N2) {
+    static func between(value1: Double, value2: Double) ->  (ObjectFilterOperator, Double, Double) {
        return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
     }
     
@@ -357,7 +422,7 @@ public class FilterOperations<N1: Numeric, N2: Numeric> {
         return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
     }
     
-    static func notBetween(value1: N1, value2: N2) ->  (ObjectFilterOperator, N1, N2) {
+    static func notBetween(value1: Double, value2: Double) ->  (ObjectFilterOperator, Double, Double) {
         return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
     }
     
@@ -405,7 +470,18 @@ public class FilterOperations<N1: Numeric, N2: Numeric> {
 
 
 public class ObjectJoinCondition: Codable {
+    var localProperty: String
+    var isLocalPropertyArray: Bool?
+    var asProperty: String
+    var isOneToOneRelation: Bool?
     
+    public init(localProperty: String, asProperty: String,
+         isLocalPropertyArray: Bool? = nil, isOneToOneRelation: Bool? = nil) {
+        self.localProperty = localProperty
+        self.asProperty = asProperty
+        self.isLocalPropertyArray = isLocalPropertyArray
+        self.isOneToOneRelation = isOneToOneRelation
+    }
 }
 
 public enum ObjectFilterOperator: Int {

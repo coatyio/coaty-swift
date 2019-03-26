@@ -42,13 +42,21 @@ class ViewController: UIViewController {
         comManager.startClient()
         let objectFilterProperties = ObjectFilterProperties.init(objectFilterProperty: "filterproperty")
         let objectFilterExpression = ObjectFilterExpression(filterOperator: .Equals, firstOperand: "10")
+        let secondObjectFilterExpression = ObjectFilterExpression(filterOperator: .NotBetween, firstOperand: "7", secondOperand: "9")
         
-        let objectFilterCondition = ObjectFilterCondition(first: objectFilterProperties,
+        let objectFilterCondition1 = ObjectFilterCondition(first: objectFilterProperties,
                                                           second: objectFilterExpression)
+        let objectFilterCondition2 = ObjectFilterCondition(first: objectFilterProperties,
+                                                          second: secondObjectFilterExpression)
+        let objectJoinConditions = ObjectJoinCondition(localProperty: "localprop", asProperty: "asprop")
         
-        let dbObjectFilter = DBObjectFilter(condition: objectFilterCondition, orderByProperties: nil, take: 1, skip: 10)
+        let objectFilterConditions = ObjectFilterConditions(and: [objectFilterCondition1, objectFilterCondition2])
         
-        print(PayloadCoder.encode(dbObjectFilter))
+        let dbObjectFilter = DBObjectFilter(condition: objectFilterCondition2, orderByProperties: nil, take: 1, skip: 10)
+        
+        let jsonData = try! JSONEncoder().encode(dbObjectFilter)
+        let jsonString = String(data: jsonData, encoding: .utf8)!
+        print(jsonString)
         
         
         
@@ -175,7 +183,8 @@ class ViewController: UIViewController {
     
     // MARK: - Receive Update
     @objc func receiveUpdateMessage() {
-        let observable: Observable<UpdateEvent<CustomCoatyObjectFamily>> = try! comManager.observeUpdate(eventTarget: identity)
+        let observable: Observable<UpdateEvent<CustomCoatyObjectFamily>> =
+            try! comManager.observeUpdate(eventTarget: identity)
         
         _ = observable.subscribe({ (updateEvent) in
             if let updateEvent = updateEvent.element {
@@ -186,8 +195,8 @@ class ViewController: UIViewController {
                     
                     if let demoObject = updateEvent.eventData.object! as? DemoObject {
                         demoObject.message = "UPDATE ANSWER"
-                        let completeEvent = CompleteEvent<CustomCoatyObjectFamily>.withObject(eventSource: self.identity,
-                                                                                              object: demoObject)
+                        let completeEvent = CompleteEvent<CustomCoatyObjectFamily>
+                            .withObject(eventSource: self.identity, object: demoObject)
                         updateEvent.complete(completeEvent: completeEvent)
                     }
                 }
@@ -198,7 +207,8 @@ class ViewController: UIViewController {
     
     // MARK: - Channel
     func channelMessage() {
-        let test: Observable<ChannelEvent<CustomCoatyObjectFamily>> = try! comManager.observeChannel(eventTarget: identity, channelId: "123456")
+        let test: Observable<ChannelEvent<CustomCoatyObjectFamily>> =
+            try! comManager.observeChannel(eventTarget: identity, channelId: "123456")
         
         _ = test.subscribe({ (channelEvent) in
             if let channelEvent = channelEvent.element {
