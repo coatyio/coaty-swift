@@ -35,3 +35,4 @@ CoatySwift is available under the MIT license. See the LICENSE file for more inf
 - XCGLogger [MIT License](https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt)
 - Quick [Apache License 2.0](https://github.com/Quick/Quick/blob/master/LICENSE)
 - Nimble [Apache License 2.0](https://github.com/Quick/Nimble/blob/master/LICENSE)
+- AnyCodable [MIT License](https://github.com/Flight-School/AnyCodable/blob/master/LICENSE.md)
