@@ -52,14 +52,14 @@ class ViewController: UIViewController {
                                                           second: secondObjectFilterExpression)
         let objectJoinConditions = [ObjectJoinCondition(localProperty: "localprop", asProperty: "asprop")]
         
-        let objectFilterConditions = ObjectFilterConditions(and: [objectFilterCondition1, objectFilterCondition2])
+        let objectFilterConditions = ObjectFilterConditions(or: [objectFilterCondition1, objectFilterCondition2])
         
         let orderByProperties = [OrderByProperty(objectFilterProperties: objectFilterProperties2,
                                                 sortingOrder: .Asc),
                                OrderByProperty(objectFilterProperties: objectFilterProperties,
                                                sortingOrder: .Desc)]
         
-        let dbObjectFilter = ObjectFilter(condition: objectFilterCondition2, orderByProperties: orderByProperties, take: 1, skip: 10)
+        let dbObjectFilter = ObjectFilter(conditions: objectFilterConditions, orderByProperties: orderByProperties, take: 1, skip: 10)
         let coreTypes: [CoreType] = [.CoatyObject, .Annotation]
         
         let queryEventData = QueryEventData<CustomCoatyObjectFamily>.createFrom(coreTypes: coreTypes,
@@ -69,6 +69,8 @@ class ViewController: UIViewController {
         let jsonData = try! JSONEncoder().encode(queryEventData)
         let jsonString = String(data: jsonData, encoding: .utf8)!
         print(jsonString)
+        let parsedQE: QueryEvent<CustomCoatyObjectFamily>? = PayloadCoder.decode(jsonString)
+        print("PARSED:\n", parsedQE!.json)
         
         
         

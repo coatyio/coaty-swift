@@ -161,17 +161,18 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
     }
     
     required init(from decoder: Decoder) throws {
-        /*let container = try decoder.container(keyedBy: CodingKeys.self)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
         self.objectTypes = try container.decodeIfPresent([String].self, forKey: .objectTypes)
         self.coreTypes = try container.decodeIfPresent([CoreType].self, forKey: .coreTypes)
-        self.objectFilter = try container.decodeIfPresent(DBObjectFilter.self, forKey: .objectFilter)
+        self.objectFilter = try container.decodeIfPresent(ObjectFilter.self, forKey: .objectFilter)
         
         // TODO: The objectJoinConditions can be either a single object OR an array.
-        self.objectJoinConditions = try container.decodeIfPresent([ObjectJoinCondition].self,
+        /*self.objectJoinConditions = try container.decodeIfPresent([ObjectJoinCondition].self,
                                                                   forKey: .objectJoinConditions)
         self.objectJoinCondition = try container.decodeIfPresent(ObjectJoinCondition.self,
                                                                  forKey: .objectJoinConditions)
-        */
+         */
+        
         try super.init(from: decoder)
     }
     

@@ -9,7 +9,7 @@ import Foundation
 /// Defines criteria for filtering and ordering a result
 /// set of Coaty objects. Used in combination with Query events
 /// and database operations, as well as the `ObjectMatcher` functionality.
-public class ObjectFilter: Encodable {
+public class ObjectFilter: Encodable, Decodable {
     
     /// A single condition for filtering objects (optional).
     var conditions: ObjectFilterConditions?
@@ -80,11 +80,31 @@ public class ObjectFilter: Encodable {
         try container.encodeIfPresent(skip, forKey: .skip)
     }
     
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        do {
+            condition = try container.decodeIfPresent(ObjectFilterCondition.self, forKey: .conditions)
+        } catch {
+            print("Not a single condition")
+        }
+        
+        do {
+            conditions = try container.decodeIfPresent(ObjectFilterConditions.self, forKey: .conditions)
+        } catch {
+            print("Not multiple AND or OR conditions.")
+        }
+        take = try container.decodeIfPresent(Int.self, forKey: .take)
+        skip = try container.decodeIfPresent(Int.self, forKey: .skip)
+        orderByProperties = try container.decodeIfPresent([OrderByProperty].self, forKey: .orderByProperties)
+
+    }
+    
     // TODO: Implement Decoding.
     
 }
 
-public class OrderByProperty: Encodable {
+public class OrderByProperty: Encodable, Decodable {
     var objectFilterProperties: ObjectFilterProperties
     var sortingOrder: SortingOrder
     
@@ -100,9 +120,18 @@ public class OrderByProperty: Encodable {
         try container.encode(sortingOrder.rawValue)
     }
     
+    public required init(from decoder: Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+        objectFilterProperties = try container.decode(ObjectFilterProperties.self)
+        
+        // FIXME: Check enum decoding.
+        let sortingOrderString = try container.decode(String.self)
+        sortingOrder = SortingOrder(rawValue: sortingOrderString)!
+    }
+    
 }
 
-public class ObjectFilterProperties: Encodable {
+public class ObjectFilterProperties: Encodable, Decodable {
     var objectFilterProperty: String?
     var objectFilterProperties: [String]?
     
@@ -128,6 +157,15 @@ public class ObjectFilterProperties: Encodable {
             try container.encode(objectFilterProperties)
         }
     }
+    
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let objectFilterProperty = try? container.decode(String.self) {
+            self.objectFilterProperty = objectFilterProperty
+        } else if let objectFilterProperties = try? container.decode([String].self) {
+            self.objectFilterProperties = objectFilterProperties
+        }
+    }
 }
 
 public enum SortingOrder: String {
@@ -135,7 +173,7 @@ public enum SortingOrder: String {
     case Desc
 }
 
-public class ObjectFilterConditions: Encodable {
+public class ObjectFilterConditions: Encodable, Decodable {
     var and: [ObjectFilterCondition]?
     var or: [ObjectFilterCondition]?
     
@@ -168,9 +206,25 @@ public class ObjectFilterConditions: Encodable {
         }
     }
     
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        do {
+            and = try container.decodeIfPresent([ObjectFilterCondition].self, forKey: .and)
+        } catch {
+            print("Not an _and_")
+        }
+        
+        do {
+            or = try container.decodeIfPresent([ObjectFilterCondition].self, forKey: .or)
+        } catch {
+            print("Not an _or_")
+        }
+    }
+    
 }
 
-public class ObjectFilterCondition: Encodable {
+public class ObjectFilterCondition: Encodable, Decodable {
     var first: ObjectFilterProperties
     var second: ObjectFilterExpression
     
@@ -188,28 +242,26 @@ public class ObjectFilterCondition: Encodable {
     }
     
     
-    /*
+    
     public required init(from decoder: Decoder) throws {
-        let container = try decoder.unkeyedContainer()
-        container.isAtEnd
-        
-     
-     self.first = ObjectFilterProperties.init(objectFilterProperty: "asdf")
-     let objectFilterOperator = ObjectFilterOperator.Exists
-     self.second = ObjectFilterExpression.init(filterOperator: objectFilterOperator)
-     }*/
+        var container = try decoder.unkeyedContainer()
+
+        self.first = try container.decode(ObjectFilterProperties.self)
+        self.second = try container.decode(ObjectFilterExpression.self)
+     }
 }
 
-public class ObjectFilterExpression: Encodable {
+public class ObjectFilterExpression: Encodable, Decodable {
     var filterOperator: ObjectFilterOperator
     
     // TODO: Operands are arbitrary JSONs.
-    var firstOperand: String?
-    var secondOperand: String?
+    
+    var firstOperand: AnyCodable?
+    var secondOperand: AnyCodable?
     
     public init(filterOperator: ObjectFilterOperator,
-                firstOperand: String? = nil,
-                secondOperand: String? = nil) {
+                firstOperand: AnyCodable? = nil,
+                secondOperand: AnyCodable? = nil) {
         self.filterOperator = filterOperator
         self.firstOperand = firstOperand
         self.secondOperand = secondOperand
@@ -226,6 +278,17 @@ public class ObjectFilterExpression: Encodable {
         if let secondOperand = secondOperand {
             try container.encode(secondOperand)
         }
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+        
+        // FIXME: enum decoding.
+        let filterOperatorInt = try container.decode(Int.self)
+        filterOperator = ObjectFilterOperator(rawValue: filterOperatorInt)!
+        
+        firstOperand = try container.decodeIfPresent(AnyCodable.self)
+        secondOperand = try container.decodeIfPresent(AnyCodable.self)
     }
 }
 

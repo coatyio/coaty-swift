@@ -87,9 +87,17 @@ extension UnkeyedDecodingContainer {
         return array
     }
     
+    mutating func decodeIfPresent(_ type: [Any].Type) throws -> [Any]? {
+        return try? decode(type)
+    }
+
     mutating func decode(_ type: [String: Any].Type) throws -> [String: Any] {
         let nestedContainer = try self.nestedContainer(keyedBy: JSONCodingKeys.self)
         return try nestedContainer.decode(type)
+    }
+    
+    mutating func decodeIfPresent(_ type: [String: Any].Type) -> [String: Any]? {
+        return try? self.decode(type)
     }
 }
 
