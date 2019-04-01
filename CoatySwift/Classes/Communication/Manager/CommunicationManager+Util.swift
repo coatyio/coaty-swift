@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import RxSwift
 
 extension CommunicationManager {
     
@@ -40,5 +41,28 @@ extension CommunicationManager {
     func isDiscover(rawMessageWithTopic: (Topic, String)) -> Bool {
         let (topic, _) = rawMessageWithTopic
         return topic.eventType == .Discover
+    }
+    
+    func isRetrieve(rawMessageWithTopic: (Topic, String)) -> Bool {
+        let (topic, _) = rawMessageWithTopic
+        return topic.eventType == .Retrieve
+    }
+    
+    func isCall(rawMessageWithTopic: (Topic, String)) -> Bool {
+        let (topic, _) = rawMessageWithTopic
+        return topic.eventType == .Call
+    }
+    
+    func isReturn(rawMessageWithTopic: (Topic, String)) -> Bool {
+        let (topic, _) = rawMessageWithTopic
+        return topic.eventType == .Return
+    }
+    
+    public func getCommunicationState() -> Observable<CommunicationState> {
+        return communicationState.asObserver()
+    }
+    
+    public func getOperatingState() -> Observable<OperatingState> {
+        return operatingState.asObserver()
     }
 }

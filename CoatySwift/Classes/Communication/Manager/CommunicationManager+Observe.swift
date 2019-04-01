@@ -227,4 +227,29 @@ extension CommunicationManager {
             })
     }
     
+    /// - TODO: Missing documentation!
+    public func observeCall<Family: ObjectFamily, T: CallEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
+        
+        // FIXME: Prevent duplicated subscriptions.
+        let callTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Call)
+        
+        mqtt?.subscribe(callTopic)
+        
+        return rawMessages.map(convertToTupleFormat)
+            .filter(isCall)
+            .map({ (message) -> T in
+                let (coatyTopic, payload) = message
+                
+                // FIXME: Remove force unwrap.
+                let callEvent: T = PayloadCoder.decode(payload)!
+                callEvent.returnHandler = {(returnEvent: ReturnEvent) in
+                    try? self.publishReturn(identity: eventTarget,
+                                             event: returnEvent,
+                                             messageToken: coatyTopic.messageToken)
+                }
+                
+                return callEvent
+            })
+    }
+    
 }
