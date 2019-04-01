@@ -45,36 +45,37 @@ class HelloWorldExampleViewController: UIViewController {
     }
     
     /// Query list of snapshot objects from a task with a given id.
-    ///
-    /// - Parameters:
-    ///    - taskId: identifier for a task object.
     @objc private func query() {
         
         let taskId = "7ee64499-f03b-4277-9582-0e1347752251"
         
-        // Setup the query object.
+        // Setup the query.
+        let filterCondition = ObjectFilterCondition(property: .init("parentObjectId"),
+                                                    expression: .init(filterOperator: .Equals,
+                                                                      op1: .init(taskId)))
         
-        let filterCondition = ObjectFilterCondition(first: .init(objectFilterProperty: "parentObjectId"),
-                                                    second: .init(filterOperator: .Equals, firstOperand: .init(taskId)))
-        
-        let resultOrder = OrderByProperty(objectFilterProperties: .init(objectFilterProperty: "creationTimestamp"),
+        let resultOrder = OrderByProperty(properties: .init("creationTimestamp"),
                                           sortingOrder: .Desc)
         
-        let objectFilter = ObjectFilter(condition: filterCondition, orderByProperties: [resultOrder])
-        let queryEvent = QueryEvent<CustomCoatyObjectFamily>.withCoreTypes(eventSource: identity, coreTypes: [.Snapshot],
-                                                      objectFilter: objectFilter)
+        let objectFilter = ObjectFilter(condition: filterCondition,
+                                        orderByProperties: [resultOrder])
+        
+        // Create query event.
+        let queryEvent = QueryEvent<CustomCoatyObjectFamily>.withCoreTypes(eventSource: identity,
+                                                                           coreTypes: [.Snapshot],
+                                                                           objectFilter: objectFilter)
         
         // Publish the query and subscribe to the corresponding retrieve event.
         
-        try? comManager.publishQuery(event: queryEvent).subscribe {
-            event in
+        try? comManager.publishQuery(event: queryEvent).subscribe { event in
+            
             guard let retrieveEvent = event.element else {
-                // An error occured.
                 print("Something went wrong.")
                 return
             }
             
             print(retrieveEvent.json)
+            
         }.disposed(by: disposeBag)
     }
 }

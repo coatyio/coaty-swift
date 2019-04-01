@@ -100,12 +100,12 @@ public class ObjectFilter: Codable {
 }
 
 public class OrderByProperty: Codable {
-    var objectFilterProperties: ObjectFilterProperties
+    var objectFilterProperties: ObjectFilterProperty
     var sortingOrder: SortingOrder
     
-    public init(objectFilterProperties: ObjectFilterProperties,
+    public init(properties: ObjectFilterProperty,
                  sortingOrder: SortingOrder) {
-        self.objectFilterProperties = objectFilterProperties
+        self.objectFilterProperties = properties
         self.sortingOrder = sortingOrder
     }
     
@@ -117,7 +117,7 @@ public class OrderByProperty: Codable {
     
     public required init(from decoder: Decoder) throws {
         var container = try decoder.unkeyedContainer()
-        objectFilterProperties = try container.decode(ObjectFilterProperties.self)
+        objectFilterProperties = try container.decode(ObjectFilterProperty.self)
         
         // FIXME: Check enum decoding.
         let sortingOrderString = try container.decode(String.self)
@@ -126,22 +126,22 @@ public class OrderByProperty: Codable {
     
 }
 
-public class ObjectFilterProperties: Codable {
+public class ObjectFilterProperty: Codable {
     var objectFilterProperty: String?
     var objectFilterProperties: [String]?
     
-    private init(_ objectFilterProperty: String? = nil,
-                 _ objectFilterProperties: [String]? = nil) {
+    private init(objectFilterProperty: String? = nil,
+                 objectFilterProperties: [String]? = nil) {
         self.objectFilterProperty = objectFilterProperty
         self.objectFilterProperties = objectFilterProperties
     }
     
-    public convenience init(objectFilterProperty: String) {
-        self.init(objectFilterProperty)
+    public convenience init(_ objectFilterProperty: String) {
+        self.init(objectFilterProperty: objectFilterProperty, objectFilterProperties: nil)
     }
     
-    public convenience init(objectFilterProperties: [String]) {
-        self.init(nil, objectFilterProperties)
+    public convenience init(_ objectFilterProperties: [String]) {
+        self.init(objectFilterProperty: nil, objectFilterProperties: objectFilterProperties)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -225,29 +225,29 @@ public class ObjectFilterCondition: Codable {
     
     // MARK: - Attributes.
     
-    var first: ObjectFilterProperties
-    var second: ObjectFilterExpression
+    var property: ObjectFilterProperty
+    var expression: ObjectFilterExpression
     
     // MARK: - Initializers.
     
-    public init(first: ObjectFilterProperties, second: ObjectFilterExpression) {
-        self.first = first
-        self.second = second
+    public init(property: ObjectFilterProperty, expression: ObjectFilterExpression) {
+        self.property = property
+        self.expression = expression
     }
     
     // MARK: - Codable methods.
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.unkeyedContainer()
-        try container.encode(first)
-        try container.encode(second)
+        try container.encode(property)
+        try container.encode(expression)
     }
     
     public required init(from decoder: Decoder) throws {
         var container = try decoder.unkeyedContainer()
 
-        self.first = try container.decode(ObjectFilterProperties.self)
-        self.second = try container.decode(ObjectFilterExpression.self)
+        self.property = try container.decode(ObjectFilterProperty.self)
+        self.expression = try container.decode(ObjectFilterExpression.self)
      }
 }
 
@@ -262,11 +262,11 @@ public class ObjectFilterExpression: Codable {
     // MARK: - Initializers.
     
     public init(filterOperator: ObjectFilterOperator,
-                firstOperand: AnyCodable? = nil,
-                secondOperand: AnyCodable? = nil) {
+                op1: AnyCodable? = nil,
+                op2: AnyCodable? = nil) {
         self.filterOperator = filterOperator
-        self.firstOperand = firstOperand
-        self.secondOperand = secondOperand
+        self.firstOperand = op1
+        self.secondOperand = op2
     }
     
     // MARK: - Codable methods.
