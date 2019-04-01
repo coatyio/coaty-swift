@@ -48,6 +48,16 @@ extension CommunicationManager {
         return topic.eventType == .Retrieve
     }
     
+    func isCall(rawMessageWithTopic: (Topic, String)) -> Bool {
+        let (topic, _) = rawMessageWithTopic
+        return topic.eventType == .Call
+    }
+    
+    func isReturn(rawMessageWithTopic: (Topic, String)) -> Bool {
+        let (topic, _) = rawMessageWithTopic
+        return topic.eventType == .Return
+    }
+    
     public func getCommunicationState() -> Observable<CommunicationState> {
         return communicationState.asObserver()
     }

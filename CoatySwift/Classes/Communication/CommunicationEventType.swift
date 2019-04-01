@@ -19,4 +19,6 @@ public enum CommunicationEventType: String {
     case Complete = "Complete"
     case Associate = "Associate"
     case IoValue = "IoValue"
+    case Call = "Call"
+    case Return = "Return"
 }

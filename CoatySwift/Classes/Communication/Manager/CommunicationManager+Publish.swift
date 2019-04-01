@@ -256,5 +256,74 @@ extension CommunicationManager {
                                                                   messageToken: messageToken)
         publish(topic: topic, message: event.json)
     }
+    
+    /// Publish a Call event to perform a remote operation and receive results
+    /// emitted by the hot observable returned.
+    ///
+    /// Note that the Call event is lazily published when the
+    /// first observer subscribes to the observable.
+    ///
+    /// Since the observable never emits a completed or error event,
+    /// a subscriber should unsubscribe when the observable is no longer needed
+    /// to release system resources and to avoid memory leaks. After all initial
+    /// subscribers have unsubscribed no more response events will be emitted
+    /// on the observable and an error will be thrown on resubscription.
+    ///
+    /// - Parameter event: the Call event to be published.
+    /// - Returns: a hot observable of associated Return events.
+    public func publishCall<Family: ObjectFamily,
+        V: ReturnEvent<Family>>(event: CallEvent<Family>) throws -> Observable<V> {
+        
+        let publishMessageToken = UUID.init().uuidString
+        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Call,
+                                                                  eventTypeFilter: event.operation,
+                                                                  associatedUserId: EMPTY_ASSOCIATED_USER_ID,
+                                                                  sourceObject: event.eventSource,
+                                                                  messageToken: publishMessageToken)
+        
+        publish(topic: topic, message: event.json)
+        
+        
+        let returnTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Return,
+                                                                            eventTypeFilter: nil,
+                                                                            associatedUserId: nil,
+                                                                            sourceObject: nil,
+                                                                            messageToken: publishMessageToken)
+        // FIXME: Only subscribe to topic if not already subscribed...
+        subscribe(topic: returnTopic)
+        
+        return rawMessages.map(convertToTupleFormat)
+            .filter(isReturn)
+            .filter({ (rawMessageWithTopic) -> Bool in
+                // Filter messages according to message token.
+                let (topic, _) = rawMessageWithTopic
+                return topic.messageToken == publishMessageToken
+            })
+            .map({ (message) -> V in
+                let (_, payload) = message
+                // FIXME: Remove force unwrap.
+                return PayloadCoder.decode(payload)!
+            })
+        
+    }
+    
+    /// Publishes a return after a call event. Not accessible by the
+    /// application programmer, it is just a convenience method for reacting upon a call.
+    ///
+    /// - Parameters:
+    ///   - identity: the identity of the controller.
+    ///   - event: the return event that should be sent out.
+    ///   - messageToken: the message token associated with the call-return request.
+    internal func publishReturn<Family: ObjectFamily>(identity: Component,
+                                                       event: ReturnEvent<Family>,
+                                                       messageToken: String) throws {
+        
+        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Return,
+                                                                  eventTypeFilter: nil,
+                                                                  associatedUserId: EMPTY_ASSOCIATED_USER_ID,
+                                                                  sourceObject: identity,
+                                                                  messageToken: messageToken)
+        publish(topic: topic, message: event.json)
+    }
 
 }
