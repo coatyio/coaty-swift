@@ -40,6 +40,39 @@ class ViewController: UIViewController {
         
         // Establish mqtt connection.
         comManager.startClient()
+        let objectFilterProperties = ObjectFilterProperties.init(objectFilterProperty: "filterproperty")
+        let objectFilterExpression = ObjectFilterExpression(filterOperator: .Equals, firstOperand: "10")
+        let secondObjectFilterExpression = ObjectFilterExpression(filterOperator: .NotBetween, firstOperand: "7", secondOperand: "9")
+        
+        let objectFilterProperties2 = ObjectFilterProperties.init(objectFilterProperties: ["big", "oof"])
+        
+        let objectFilterCondition1 = ObjectFilterCondition(first: objectFilterProperties,
+                                                          second: objectFilterExpression)
+        let objectFilterCondition2 = ObjectFilterCondition(first: objectFilterProperties,
+                                                          second: secondObjectFilterExpression)
+        let objectJoinConditions = [ObjectJoinCondition(localProperty: "localprop", asProperty: "asprop")]
+        
+        let objectFilterConditions = ObjectFilterConditions(or: [objectFilterCondition1, objectFilterCondition2])
+        
+        let orderByProperties = [OrderByProperty(objectFilterProperties: objectFilterProperties2,
+                                                sortingOrder: .Asc),
+                               OrderByProperty(objectFilterProperties: objectFilterProperties,
+                                               sortingOrder: .Desc)]
+        
+        let dbObjectFilter = ObjectFilter(conditions: objectFilterConditions, orderByProperties: orderByProperties, take: 1, skip: 10)
+        let coreTypes: [CoreType] = [.CoatyObject, .Annotation]
+        
+        let queryEventData = QueryEventData<CustomCoatyObjectFamily>.createFrom(coreTypes: coreTypes,
+                                                       objectFilter: dbObjectFilter,
+                                                       objectJoinConditions: objectJoinConditions)
+        
+        let jsonData = try! JSONEncoder().encode(queryEventData)
+        let jsonString = String(data: jsonData, encoding: .utf8)!
+        print(jsonString)
+        let parsedQE: QueryEvent<CustomCoatyObjectFamily>? = PayloadCoder.decode(jsonString)
+        print("PARSED:\n", parsedQE!.json)
+        
+        
         
         
         redButton.backgroundColor = .red
@@ -113,7 +146,7 @@ class ViewController: UIViewController {
     
     func discoverResolveMessage() {
         let discoverEvent = DiscoverEvent<CustomCoatyObjectFamily>.withExternalId(eventSource: identity,
-                                                         externalId: "test-id")
+                                                                                  externalId: "test-id")
         
         let observable: Observable<ResolveEvent<CustomCoatyObjectFamily>> = try! comManager.publishDiscover(event: discoverEvent)
         
@@ -143,6 +176,8 @@ class ViewController: UIViewController {
         }
     }
     
+    
+    // MARK: - Receive Discover
     @objc func receiveDiscoverMessage() {
         let observable: Observable<DiscoverEvent<CustomCoatyObjectFamily>> = try! comManager.observeDiscover(eventTarget: identity)
         
@@ -152,39 +187,42 @@ class ViewController: UIViewController {
                 print(discoverEvent.json)
                 self.demoObject.externalId = discoverEvent.eventData.object.externalId
                 self.demoObject.message = "DISCOVER ANSWER"
-                let resolveEvent = ResolveEvent<CustomCoatyObjectFamily>.withObject(eventSource: self.identity, object: self.demoObject)
+                let resolveEvent = ResolveEvent<CustomCoatyObjectFamily>.withObject(eventSource: self.identity,
+                                                                                    object: self.demoObject)
                     discoverEvent.resolve(resolveEvent: resolveEvent)
                 }
         })
+        
     }
     
+    // MARK: - Receive Update
     @objc func receiveUpdateMessage() {
-        let observable: Observable<UpdateEvent<CustomCoatyObjectFamily>> = try! comManager.observeUpdate(eventTarget: identity)
+        let observable: Observable<UpdateEvent<CustomCoatyObjectFamily>> =
+            try! comManager.observeUpdate(eventTarget: identity)
         
         _ = observable.subscribe({ (updateEvent) in
             if let updateEvent = updateEvent.element {
                 print("Received Update Event:")
                 print(updateEvent.json)
-                if !updateEvent.eventData.isFullUpdate {
-                    print("is not full update.")
-                    return
-                }
                 
-                if let demoObject = updateEvent.eventData.object! as? DemoObject {
-                    demoObject.message = "ANSWER"
-                    let completeEvent = CompleteEvent<CustomCoatyObjectFamily>.withObject(eventSource: self.identity, object: demoObject)
-                    updateEvent.complete(completeEvent: completeEvent)
+                if updateEvent.eventData.isPartialUpdate {
+                    
+                    if let demoObject = updateEvent.eventData.object! as? DemoObject {
+                        demoObject.message = "UPDATE ANSWER"
+                        let completeEvent = CompleteEvent<CustomCoatyObjectFamily>
+                            .withObject(eventSource: self.identity, object: demoObject)
+                        updateEvent.complete(completeEvent: completeEvent)
+                    }
                 }
-
             }
         })
     }
 
     
     // MARK: - Channel
-    
     func channelMessage() {
-        let test: Observable<ChannelEvent<CustomCoatyObjectFamily>> = try! comManager.observeChannel(eventTarget: identity, channelId: "123456")
+        let test: Observable<ChannelEvent<CustomCoatyObjectFamily>> =
+            try! comManager.observeChannel(eventTarget: identity, channelId: "123456")
         
         _ = test.subscribe({ (channelEvent) in
             if let channelEvent = channelEvent.element {
