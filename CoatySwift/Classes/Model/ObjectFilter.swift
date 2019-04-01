@@ -5,7 +5,7 @@
 
 import Foundation
 
-
+/// - TODO: Comments.
 public class ObjectFilterBuilder {
     public var conditions: ObjectFilterConditions?
     public var condition: ObjectFilterCondition?
@@ -19,6 +19,7 @@ public class ObjectFilterBuilder {
 /// and database operations, as well as the `ObjectMatcher` functionality.
 public class ObjectFilter: Codable {
     
+    /// - TODO: comments.
     public static func buildWithCondition(_ closure: (ObjectFilterBuilder) throws -> ()) throws -> ObjectFilter {
         let builder = ObjectFilterBuilder()
         try closure(builder)
@@ -34,6 +35,7 @@ public class ObjectFilter: Codable {
                             skip: builder.skip)
     }
     
+    /// - TODO: comments.
     public static func buildWithConditions(_ closure: (ObjectFilterBuilder) throws -> ()) throws -> ObjectFilter {
         let builder = ObjectFilterBuilder()
         try closure(builder)
@@ -136,24 +138,7 @@ public class ObjectFilter: Codable {
     }
 }
 
-public class OrderByPropertyBuilder {
-    public var objectFilterProperties: ObjectFilterProperty?
-    public var sortingOrder: SortingOrder?
-}
-
 public class OrderByProperty: Codable {
-    
-    public static func build(_ closure: (OrderByPropertyBuilder) throws -> ()) throws -> OrderByProperty {
-        let builder = OrderByPropertyBuilder()
-        try closure(builder)
-        
-        guard let objectFilterProperties = builder.objectFilterProperties,
-            let sortingOrder = builder.sortingOrder else {
-            throw CoatySwiftError.InvalidArgument("TODO ABSC")
-        }
-        
-        return OrderByProperty(properties: objectFilterProperties, sortingOrder: sortingOrder)
-    }
     
     var objectFilterProperties: ObjectFilterProperty
     var sortingOrder: SortingOrder
@@ -181,36 +166,8 @@ public class OrderByProperty: Codable {
     
 }
 
-public class ObjectFilterPropertyBuilder {
-    public var objectFilterProperty: String?
-    public var objectFilterProperties: [String]?
-}
-
 public class ObjectFilterProperty: Codable {
-    
-    public static func buildWithFilterProperty(_ closure: (ObjectFilterPropertyBuilder) throws -> ()) throws -> ObjectFilterProperty {
-        let builder = ObjectFilterPropertyBuilder()
-        try closure(builder)
-        
-        guard let objectFilterProperty = builder.objectFilterProperty else {
-                throw CoatySwiftError.InvalidArgument("TODO ABSC")
-        }
-        
-        return ObjectFilterProperty(objectFilterProperty)
-    }
-    
-    public static func buildWithFilterProperties(_ closure: (ObjectFilterPropertyBuilder) throws -> ()) throws -> ObjectFilterProperty {
-        let builder = ObjectFilterPropertyBuilder()
-        try closure(builder)
-        
-        guard let objectFilterProperties = builder.objectFilterProperties else {
-            throw CoatySwiftError.InvalidArgument("TODO ABSC")
-        }
-        
-        return ObjectFilterProperty(objectFilterProperties)
-    }
-    
-    
+
     var objectFilterProperty: String?
     var objectFilterProperties: [String]?
     
@@ -252,6 +209,7 @@ public enum SortingOrder: String {
     case Desc
 }
 
+/// - TODO: comments.
 public class ObjectFilterConditionsBuilder {
     public var and: [ObjectFilterCondition]?
     public var or: [ObjectFilterCondition]?
@@ -259,6 +217,7 @@ public class ObjectFilterConditionsBuilder {
 
 public class ObjectFilterConditions: Codable {
     
+    /// - TODO: comments.
     public static func buildAnd(_ closure: (ObjectFilterConditionsBuilder) throws -> ()) throws -> ObjectFilterConditions {
         let builder = ObjectFilterConditionsBuilder()
         try closure(builder)
@@ -270,7 +229,8 @@ public class ObjectFilterConditions: Codable {
         return ObjectFilterConditions(and)
     }
     
-    public static func buildOr(_ closure: (ObjectFilterConditionsBuilder)->()) throws -> ObjectFilterConditions {
+    /// - TODO: comments.
+    public static func buildOr(_ closure: (ObjectFilterConditionsBuilder) throws -> ()) throws -> ObjectFilterConditions {
         let builder = ObjectFilterConditionsBuilder()
         try closure(builder)
         
@@ -332,6 +292,7 @@ public class ObjectFilterConditions: Codable {
     
 }
 
+/// - TODO: comments.
 public class ObjectFilterConditionBuilder {
     public var property: ObjectFilterProperty?
     public var expression: ObjectFilterExpression?
@@ -339,6 +300,7 @@ public class ObjectFilterConditionBuilder {
 
 public class ObjectFilterCondition: Codable {
     
+    /// - TODO: comments.
     public static func build(_ closure: (ObjectFilterConditionBuilder) throws -> ()) throws -> ObjectFilterCondition {
         let builder = ObjectFilterConditionBuilder()
         try closure(builder)
@@ -378,25 +340,7 @@ public class ObjectFilterCondition: Codable {
      }
 }
 
-public class ObjectFilterExpressionBuilder {
-    public var filterOperator: ObjectFilterOperator?
-    public var firstOperand: AnyCodable?
-    public var secondOperand: AnyCodable?
-}
-
 public class ObjectFilterExpression: Codable {
-    
-    public static func build(_ closure: (ObjectFilterExpressionBuilder) throws -> ()) throws -> ObjectFilterExpression {
-        let builder = ObjectFilterExpressionBuilder()
-        try closure(builder)
-        
-        guard let filterOperator = builder.filterOperator else {
-            throw CoatySwiftError.InvalidArgument("TODO ABSC")
-        }
-        
-        return ObjectFilterExpression(filterOperator: filterOperator, op1: builder.firstOperand,
-                                      op2: builder.secondOperand)
-    }
     
     // MARK: - Attributes.
     
