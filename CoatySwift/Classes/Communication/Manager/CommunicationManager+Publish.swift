@@ -171,6 +171,53 @@ extension CommunicationManager {
             })
     }
     
+    /// Find queryable objects and receive Retrieve events for them
+    /// emitted by the hot observable returned.
+    ///
+    /// - TODO: Note that the Query event is lazily published when the
+    /// first observer subscribes to the observable.
+    ///
+    /// Since the observable never emits a completed or error event,
+    /// a subscriber should unsubscribe when the observable is no longer needed
+    /// to release system resources and to avoid memory leaks. After all initial
+    /// subscribers have unsubscribed no more response events will be emitted
+    /// on the observable and an error will be thrown on resubscription.
+    ///
+    /// - Parameters:
+    ///     - event: the Query event to be published
+    /// - Returns: a hot observable on which associated Retrieve events are emitted.
+    public func publishQuery<Family: ObjectFamily,V: RetrieveEvent<Family>>(event: QueryEvent<Family>) throws -> Observable<V> {
+        let queryMessageToken = UUID.init().uuidString
+        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Query,
+                                                                  eventTypeFilter: nil,
+                                                                  associatedUserId: EMPTY_ASSOCIATED_USER_ID,
+                                                                  sourceObject: event.eventSource,
+                                                                  messageToken: queryMessageToken)
+        
+        let retrieveTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Retrieve,
+                                                                           eventTypeFilter: nil,
+                                                                           associatedUserId: nil,
+                                                                           sourceObject: nil,
+                                                                           messageToken: queryMessageToken)
+        
+        // First, subscribe for potential answers, then publish the query.
+        subscribe(topic: retrieveTopic)
+        publish(topic: topic, message: event.json)
+        
+        return rawMessages.map(convertToTupleFormat)
+            .filter(isRetrieve)
+            .filter({ (rawMessageWithTopic) -> Bool in
+                // Filter messages according to message token.
+                let (topic, _) = rawMessageWithTopic
+                return topic.messageToken == queryMessageToken
+            })
+            .map({ (message) -> V in
+                let (_, payload) = message
+                // FIXME: Remove force unwrap.
+                
+                return PayloadCoder.decode(payload)!
+            })
+    }
     
     /// Publishes a complete after an update event. Not accessible by the
     /// application programmer, it is just a convenience method for reacting upon a update.

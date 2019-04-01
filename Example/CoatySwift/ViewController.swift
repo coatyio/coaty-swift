@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     let greenButton =  UIButton(frame: CGRect(x: 0, y: 400, width: 350, height: 50))
     let purpleButton =  UIButton(frame: CGRect(x: 0, y: 500, width: 350, height: 50))
     let grayButton = UIButton(frame: CGRect(x: 0, y: 600, width: 350, height: 50))
+    let helloWorldButton = UIButton(frame: CGRect(x: 0, y: 700, width: 350, height: 50))
     
     let identity = Component(name: "ControllerIdentity")
     
@@ -105,6 +106,11 @@ class ViewController: UIViewController {
         grayButton.setTitle("Receive Discover", for: .normal)
         self.view.addSubview(grayButton)
         grayButton.addTarget(self, action: #selector(receiveDiscoverMessage), for: .touchUpInside)
+        
+        helloWorldButton.backgroundColor = .gray
+        helloWorldButton.setTitle("Hello World Example", for: .normal)
+        self.view.addSubview(helloWorldButton)
+        helloWorldButton.addTarget(self, action: #selector(helloWorldExample), for: .touchUpInside)
     }
     
     @objc func endClient() {
@@ -115,6 +121,10 @@ class ViewController: UIViewController {
         let component = Component(name: "SecondControllerIdentity")
         let advertiseEvent = AdvertiseEvent.withObject(eventSource: component, object: component)
         try! comManager.publishAdvertise(advertiseEvent: advertiseEvent, eventTarget: component)
+    }
+    
+    @objc func helloWorldExample() {
+        self.present(HelloWorldExampleViewController(), animated: true)
     }
     
     @objc func advertiseButtonTapped() {
