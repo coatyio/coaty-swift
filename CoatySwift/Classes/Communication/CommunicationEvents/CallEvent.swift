@@ -12,6 +12,8 @@ public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<F
     
     // MARK: - Internal attributes.
     
+    internal var operation: String?
+    
     /// Provides a Return handler for reacting to Call events.
     internal var returnHandler: ((ReturnEvent<Family>) -> Void)?
     
@@ -32,26 +34,60 @@ public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<F
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
-    // MARK: - Factory methods.
-    
-    /// - TODO: Comment me.
-    public static func withParameters(eventSource: Component,
-                                      parameters: [String: AnyCodable],
-                                      filter: ContextFilter? = nil) -> CallEvent<Family> {
-        let callEventdata = CallEventData<Family>.createFrom(parameters: parameters,
-                                                             filter: filter)
-        
-        return .init(eventSource: eventSource, eventData: callEventdata)
+    /// - NOTE: This method should never be called directly by application programmers.
+    /// Inside the framework, calling is ok.
+    private init(eventSource: Component, eventData: CallEventData<Family>, operation: String) {
+        super.init(eventSource: eventSource, eventData: eventData)
+        self.operation = operation
     }
     
-    /// - TODO: Comment me.
-    public static func withParameters(eventSource: Component,
-                                      parameters: [AnyCodable],
-                                      filter: ContextFilter? = nil) -> CallEvent<Family> {
+    // MARK: - Factory methods.
+    
+    /// Create a CallEvent instance for invoking a remote operation call with the given
+    /// operation name, parameters (optional), and a context filter (optional).
+    ///
+    /// Parameters must be by-name through a JSON object.
+    /// If a context filter is specified, the given remote call is only executed if
+    /// the filter conditions match a context object provided by the remote end.
+    ///
+    /// - Parameters:
+    ///     - eventSource: the event source component
+    ///     - operation: a non-empty string containing the name of the operation to be invoked
+    ///     - parameters: holds the parameter values to be used during the invocation of
+    ///       the operation (optional)
+    ///     - filter: a context filter that must match a given context object at the remote
+    ///       end (optional)
+    public static func with(eventSource: Component,
+                            operation: String,
+                            parameters: [String: AnyCodable],
+                            filter: ContextFilter? = nil) -> CallEvent<Family> {
+        let callEventdata = CallEventData<Family>.createFrom(parameters: parameters,
+                                                             filter: filter)
+        return .init(eventSource: eventSource, eventData: callEventdata, operation: operation)
+    }
+    
+    /// Create a CallEvent instance for invoking a remote operation call with the given
+    /// operation name, parameters (optional), and a context filter (optional).
+    ///
+    /// Parameters must be by-position through a JSON array.
+    /// If a context filter is specified, the given remote call is only executed if
+    /// the filter conditions match a context object provided by the remote end.
+    ///
+    /// - Parameters:
+    ///     - eventSource: the event source component
+    ///     - operation: a non-empty string containing the name of the operation to be invoked
+    ///     - parameters: holds the parameter values to be used during the invocation of
+    ///       the operation (optional)
+    ///     - filter: a context filter that must match a given context object at the remote
+    ///       end (optional)
+    public static func with(eventSource: Component,
+                            operation: String,
+                            parameters: [AnyCodable],
+                            filter: ContextFilter? = nil) -> CallEvent<Family> {
         let callEventdata = CallEventData<Family>.createFrom(parameters: parameters,
                                                              filter: filter)
         
-        return .init(eventSource: eventSource, eventData: callEventdata)
+        return .init(eventSource: eventSource, eventData: callEventdata, operation: operation)
     }
 
     // MARK: - Codable methods.
