@@ -42,7 +42,6 @@ public class User: CoatyObject {
         fatalError("Codable is not implemented for User.")
     }
     
-    
     public override func encode(to encoder: Encoder) throws {
         // TODO: add Encodable conformance.
         fatalError("Codable is not implemented for User.")
