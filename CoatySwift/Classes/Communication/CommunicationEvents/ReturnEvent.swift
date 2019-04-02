@@ -23,7 +23,7 @@ public class ReturnEvent<Family: ObjectFamily>: CommunicationEvent<ReturnEventDa
     ///   - eventSource: the event source component
     ///   - result: the result value to be returned (any JSON data type)
     ///   - executionTime: the time interval needed for execution of the operation (optional)
-    public static func fromResult(eventSource: Component,
+    public static func withResult(eventSource: Component,
                            result: AnyCodable,
                            executionTime: ReturnExecutionTime?) -> ReturnEvent<Family> {
         let returnEventData = ReturnEventData<Family>.createFrom(result: result,
@@ -50,7 +50,7 @@ public class ReturnEvent<Family: ObjectFamily>: CommunicationEvent<ReturnEventDa
     ///            providing a short description of the error.
     ///   - executionTime: the time interval needed for execution of the operation until
     ///                    the error occurred (optional).
-    public static func fromError(eventSource: Component,
+    public static func withError(eventSource: Component,
                           error: ReturnError,
                           executionTime: ReturnExecutionTime?) -> ReturnEvent<Family> {
         let returnEventData = ReturnEventData<Family>.createFrom(result: nil,
