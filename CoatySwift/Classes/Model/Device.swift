@@ -5,19 +5,19 @@
 
 import Foundation
 
-// MARK: - Device.
-
 /// Represents an interaction device associated with a Coaty user.
 public class Device: CoatyObject {
     
-    // TODO: Missing device capabilities.
-    /**
-     * The IO source and actors associated with this system component.
-     */
-    // ioCapabilities?: Array<IoSource | IoActor>;
+    // MARK: - Attributes.
+    
+    /// The IO source and actors associated with this system component.
+    /// - TODO: Missing device capabilities.
+    /// ioCapabilities?: Array<IoSource | IoActor>;
     
     /// Display type of the interaction device.
     public var displayType: DisplayType
+    
+    // MARK: - Initializers.
     
     public init(objectType: String, objectId: UUID, name: String, displayType: DisplayType) {
         self.displayType = displayType
@@ -28,10 +28,17 @@ public class Device: CoatyObject {
         fatalError("init(coreType:objectType:objectId:name:) has not been implemented")
     }
     
+    // MARK: - Codable methods.
+
     public required init(from decoder: Decoder) throws {
-        fatalError("init(from:) has not been implemented")
+        // TODO: add Decodable conformance.
+        fatalError("Codable is not implemented for Device.")
     }
     
+    public override func encode(to encoder: Encoder) throws {
+        // TODO: add Encodable conformance.
+        fatalError("Codable is not implemented for Device.")
+    }
 }
 
 // MARK: - DisplayType.
@@ -45,7 +52,6 @@ public enum DisplayType {
     
     /// A smart watch.
     case watch
-    
     
     /// An arm wearable.
     case arm
