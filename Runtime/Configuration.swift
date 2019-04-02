@@ -111,7 +111,7 @@ public class CommunicationOptions {
     /// Determines whether the communication manager should start initially
     /// when the container has been resolved. Its value defaults
     /// to false.
-    public var shouldAutoStart: Bool?
+    public var shouldAutoStart: Bool = false
     
     /// Determines whether the communication manager should advertise its identity
     /// automatically when started and deadvertise
@@ -159,7 +159,9 @@ public class CommunicationOptions {
                 useProtocolCompliantClientId: Bool? = nil) {
         self.brokerOptions = brokerOptions
         self.identity = identity
-        self.shouldAutoStart = shouldAutoStart
+        if let shouldAutoStart = shouldAutoStart {
+            self.shouldAutoStart = shouldAutoStart
+        }
         self.shouldAdvertiseIdentity = shouldAdvertiseIdentity
         self.shouldAdvertiseDevice = shouldAdvertiseDevice
         if let useReadableTopics = useReadableTopics {

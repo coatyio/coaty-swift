@@ -24,6 +24,10 @@ public class CommunicationManager {
     private let protocolVersion = 1
     internal var identity: Component!
     internal var mqtt: CocoaMQTT?
+    private var associatedUser: User?
+    private var associatedDevice: Device?
+    private var isDisposed = false
+
     
     /// Ids of all advertised components that should be deadvertised when the client ends.
     internal var deadvertiseIds = [UUID]()
@@ -147,11 +151,43 @@ public class CommunicationManager {
     
     // MARK: - Client lifecycle methods.
     
+    private func initOptions(options: CommunicationOptions) {
+        
+        // Capture state of associated user and device in case it might change
+        // while the communication manager is being online.
+        
+        // TODO: Missing implementation!
+        
+        /*
+        this._associatedUser = CoreTypes.clone<User>(this.runtime.options.associatedUser);
+        this._associatedDevice = CoreTypes.clone<Device>(this.runtime.options.associatedDevice);
+        this._useReadableTopics = !!this.options.useReadableTopics;
+        */
+    }
+    
+    public func start() {
+        // TODO: Missing dependency with initOptions.
+        // initOptions(options: )
+        startClient()
+    }
+    
     /// Starts the client gracefully and connects to the broker.
     public func startClient() {
         updateOperatingState(.starting)
         connect()
         updateOperatingState(.started)
+    }
+    
+    /**
+     * Unsubscribe and disconnect from the messaging broker.
+     */
+    public func onDispose() {
+        if (self.isDisposed) {
+            return;
+        }
+    
+        self.isDisposed = true;
+        try! endClient(); // TODO: Check force unwrwap.
     }
     
     /// Gracefully ends the client.
