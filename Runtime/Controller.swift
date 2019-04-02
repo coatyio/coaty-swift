@@ -5,6 +5,10 @@
 
 import Foundation
 
+/// An IoC container that uses constructor dependency injection to
+/// create container components and to resolve dependencies.
+/// This container defines the entry and exit points for any Coaty application
+/// providing lifecycle management for its components.
 public class Controller {
     
     private(set) public var runtime: Runtime
@@ -14,9 +18,9 @@ public class Controller {
     private(set) public var communicationManager: CommunicationManager
     
     required init(runtime: Runtime,
-         options: ControllerOptions?,
-         communicationManager: CommunicationManager,
-         controllerType: String) {
+                  options: ControllerOptions?,
+                  communicationManager: CommunicationManager,
+                  controllerType: String) {
         self.runtime = runtime
         self.options = options
         self.communicationManager = communicationManager
@@ -32,82 +36,70 @@ public class Controller {
         
     }
     
-    /**
-     * Called when the controller instance has been instantiated.
-     * This method is called immediately after the base controller
-     * constructor. The base implementation does nothing.
-     *
-     * Use this method to perform initializations in your custom
-     * controller class instead of defining a constructor.
-     * The method is called immediately after the controller instance
-     * has been created. Although the base implementation does nothing it is good
-     * practice to call super.onInit() in your override method; especially if your
-     * custom controller class extends from another custom controller class
-     * and not from the base `Controller` class directly.
-     */
-    func onInit() {
-    }
+    /// Called when the controller instance has been instantiated.
+    /// This method is called immediately after the base controller
+    /// constructor. The base implementation does nothing.
+    ///
+    /// Use this method to perform initializations in your custom
+    /// controller class instead of defining a constructor.
+    /// The method is called immediately after the controller instance
+    /// has been created. Although the base implementation does nothing it is good
+    /// practice to call super.onInit() in your override method; especially if your
+    /// custom controller class extends from another custom controller class
+    /// and not from the base `Controller` class directly.
+    func onInit() {}
     
-    /**
-     * Called by the Coaty container after it has resolved and created all
-     * controller instances within the container. Implement initialization side
-     * effects here. The base implementation does nothing.
-     * @param container the Coaty container of this controller
-     */
-    func onContainerResolved(container: Container) {
-    }
+    /// Called by the Coaty container after it has resolved and created all
+    /// controller instances within the container. Implement initialization side
+    /// effects here. The base implementation does nothing.
+    ///
+    /// - Parameters: the Coaty container of this controller.
+    func onContainerResolved(container: Container) {}
     
-    /**
-     * Called when the communication manager is about to start or restart.
-     * Implement side effects here. Ensure that super.onCommunicationManagerStarting
-     * is called in your override. The base implementation advertises
-     * its identity if requested by the controller option property `shouldAdvertiseIdentity`
-     * (if this property is not specified, the identity is advertised by default).
-     */
+    /// Called when the communication manager is about to start or restart.
+    /// Implement side effects here. Ensure that super.onCommunicationManagerStarting
+    /// is called in your override. The base implementation advertises
+    /// its identity if requested by the controller option property `shouldAdvertiseIdentity`
+    /// (if this property is not specified, the identity is advertised by default).
     func onCommunicationManagerStarting() {
         if let options = self.options, options.shouldAdvertiseIdentity {
             self.advertiseIdentity()
         }
     }
     
-    /**
-     * Called when the communication manager is about to stop.
-     * Implement side effects here. Ensure that
-     * super.onCommunicationManagerStopping is called in your override.
-     * The base implementation does nothing.
-     */
-    func onCommunicationManagerStopping() {
-    }
+    /// Called when the communication manager is about to stop.
+    /// Implement side effects here. Ensure that
+    /// super.onCommunicationManagerStopping is called in your override.
+    /// The base implementation does nothing.
+    func onCommunicationManagerStopping() {}
     
-    /**
-     * Called by the Coaty container when this instance should be disposed.
-     * Implement cleanup side effects here. The base implementation does nothing.
-     */
+    /// Called by the Coaty container when this instance should be disposed.
+    /// Implement cleanup side effects here. The base implementation does nothing.
     func onDispose() {
     }
     
-    /**
-     * Initialize identity object properties for a concrete controller subclass
-     * based on the specified default identity object.
-     *
-     * Do not call this method in your application code, it is called by the
-     * framework. To retrieve the identity of a controller use
-     * its `identity` getter.
-     *
-     * You can overwrite this method to initalize the identity with a custom name
-     * or additional application-specific properties. Alternatively, you can
-     * set or add custom property-value pairs by specifying them in the `identity`
-     * property of the controller configuration options `ControllerOptions`.
-     * If you specify identity properties in both ways, the ones specified
-     * in the configuration options take precedence.
-     *
-     * @param identity the default identity object for a controller instance
-     */
-    func initializeIdentity(identity: Component) {
-    }
+    /// Initialize identity object properties for a concrete controller subclass
+    /// based on the specified default identity object.
+    ///
+    /// Do not call this method in your application code, it is called by the
+    /// framework. To retrieve the identity of a controller use
+    /// its `identity` getter.
+    ///
+    /// You can overwrite this method to initalize the identity with a custom name
+    /// or additional application-specific properties. Alternatively, you can
+    /// set or add custom property-value pairs by specifying them in the `identity`
+    /// property of the controller configuration options `ControllerOptions`.
+    /// If you specify identity properties in both ways, the ones specified
+    /// in the configuration options take precedence.
+    ///
+    /// @param identity the default identity object for a controller instance
+    func initializeIdentity(identity: Component) {}
     
     private func advertiseIdentity() {
-        let event = AdvertiseEvent.withObject(eventSource: self.identity, object: self.identity)
-        try? self.communicationManager.publishAdvertise(advertiseEvent: event, eventTarget: self.identity)
+        let event = AdvertiseEvent.withObject(eventSource: self.identity,
+                                              object: self.identity)
+        
+        try? self.communicationManager.publishAdvertise(advertiseEvent: event,
+                                                        eventTarget: self.identity)
     }
 }
