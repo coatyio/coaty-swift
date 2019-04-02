@@ -92,7 +92,7 @@ public class ReturnEventData<Family: ObjectFamily>: CommunicationEventData {
     /// The error object to be returned in case the operation call yielded an error (optional).
     /// The value is `nil` if the operation executed successfully.
     ///
-    /// The error object consists of two properties: `errorCode`, `errorMessage`.
+    /// The error object consists of two properties: `code`, `message`.
     ///
     /// The error code given is an integer that indicates the error type
     /// that occurred, either a predefined error or an application defined one. Predefined error
@@ -255,20 +255,20 @@ public class ReturnError: Codable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case errorCode
-        case errorMessage
+        case code
+        case message
     }
     
     required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.errorCode = try container.decode(Int.self, forKey: .errorCode)
-        self.errorMessage = try container.decode( String.self, forKey: .errorMessage )
+        self.errorCode = try container.decode(Int.self, forKey: .code)
+        self.errorMessage = try container.decode( String.self, forKey: .message )
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(self.errorCode, forKey: .errorCode)
-        try container.encodeIfPresent(self.errorMessage, forKey: .errorMessage)
+        try container.encodeIfPresent(self.errorCode, forKey: .code)
+        try container.encodeIfPresent(self.errorMessage, forKey: .message)
     }
     
 }
