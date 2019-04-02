@@ -100,16 +100,8 @@ public class CommonOptions {
 /// Options used for communication
 public class CommunicationOptions {
     
-    /// Connection Url to MQTT broker (schema 'protocol://host:port')
-    /// (optional).
-    /// If the `servers` option in property `brokerOptions` is specified this
-    /// property is ignored.
-    public var brokerUrl: String?
-    
-    /// Options to connect to MQTT broker (see MQTT.js connect options).
-    ///
-    /// FIXME: Should NOT be an any.
-    public var brokerOptions: Any?
+    /// Options to connect with CocoaMQTT client to broker.
+    public var brokerOptions: BrokerOptions?
     
     /// Property-value pairs to be initialized on the identity object of the
     /// communication manager (optional). For example, the `name` of the
@@ -158,15 +150,13 @@ public class CommunicationOptions {
     public var useProtocolCompliantClientId: Bool = false
     
     
-    public init(brokerUrl: String? = nil,
-         brokerOptions: Any? = nil,
-         identity: [String: Any]? = nil,
-         shouldAutoStart: Bool? = nil,
-         shouldAdvertiseIdentity: Bool? = nil,
-         shouldAdvertiseDevice: Bool? = nil,
-         useReadableTopics: Bool? = nil,
-         useProtocolCompliantClientId: Bool? = nil) {
-        self .brokerUrl = brokerUrl
+    public init(brokerOptions: BrokerOptions? = nil,
+                identity: [String: Any]? = nil,
+                shouldAutoStart: Bool? = nil,
+                shouldAdvertiseIdentity: Bool? = nil,
+                shouldAdvertiseDevice: Bool? = nil,
+                useReadableTopics: Bool? = nil,
+                useProtocolCompliantClientId: Bool? = nil) {
         self.brokerOptions = brokerOptions
         self.identity = identity
         self.shouldAutoStart = shouldAutoStart
@@ -233,6 +223,33 @@ public class DatabaseOptions {
     
     public init(databaseConnections: [String: DbConnectionInfo]) {
         self.databaseConnections = databaseConnections
+    }
+}
+
+/// Broker Options based on the CocoaMQTT client.
+public class BrokerOptions {
+    public var host: String
+    public var port: UInt16
+    public var clientId: String
+    public var username: String?
+    public var password: String?
+    public var cleanSession: Bool
+    public var keepAlive: UInt16
+    
+    init(host: String,
+         port: UInt16,
+         clientId: String,
+         username: String? = nil,
+         password: String? = nil,
+         cleanSession: Bool,
+         keepAlive: UInt16) {
+        self.host = host
+        self.port = port
+        self.clientId = clientId
+        self.username = username
+        self.password = password
+        self.cleanSession = cleanSession
+        self.keepAlive = keepAlive
     }
 }
 
