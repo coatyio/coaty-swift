@@ -41,23 +41,23 @@ class ViewController: UIViewController {
         
         // Establish mqtt connection.
         comManager.startClient()
-        let objectFilterProperties = ObjectFilterProperties.init(objectFilterProperty: "filterproperty")
-        let objectFilterExpression = ObjectFilterExpression(filterOperator: .Equals, firstOperand: "10")
-        let secondObjectFilterExpression = ObjectFilterExpression(filterOperator: .NotBetween, firstOperand: "7", secondOperand: "9")
+        let objectFilterProperties = ObjectFilterProperty("filterproperty")
+        let objectFilterExpression = ObjectFilterExpression(filterOperator: .Equals, op1: "10")
+        let secondObjectFilterExpression = ObjectFilterExpression(filterOperator: .NotBetween, op1: "7", op2: "9")
         
-        let objectFilterProperties2 = ObjectFilterProperties.init(objectFilterProperties: ["big", "oof"])
+        let objectFilterProperties2 = ObjectFilterProperty(["big", "oof"])
         
-        let objectFilterCondition1 = ObjectFilterCondition(first: objectFilterProperties,
-                                                          second: objectFilterExpression)
-        let objectFilterCondition2 = ObjectFilterCondition(first: objectFilterProperties,
-                                                          second: secondObjectFilterExpression)
+        let objectFilterCondition1 = ObjectFilterCondition(property: objectFilterProperties,
+                                                           expression: objectFilterExpression)
+        let objectFilterCondition2 = ObjectFilterCondition(property: objectFilterProperties,
+                                                           expression: secondObjectFilterExpression)
         let objectJoinConditions = [ObjectJoinCondition(localProperty: "localprop", asProperty: "asprop")]
         
         let objectFilterConditions = ObjectFilterConditions(or: [objectFilterCondition1, objectFilterCondition2])
         
-        let orderByProperties = [OrderByProperty(objectFilterProperties: objectFilterProperties2,
+        let orderByProperties = [OrderByProperty(properties: objectFilterProperties2,
                                                 sortingOrder: .Asc),
-                               OrderByProperty(objectFilterProperties: objectFilterProperties,
+                               OrderByProperty(properties: objectFilterProperties,
                                                sortingOrder: .Desc)]
         
         let dbObjectFilter = ObjectFilter(conditions: objectFilterConditions, orderByProperties: orderByProperties, take: 1, skip: 10)
