@@ -5,50 +5,10 @@
 
 import Foundation
 
-/// - TODO: Comments.
-public class ObjectFilterBuilder {
-    public var conditions: ObjectFilterConditions?
-    public var condition: ObjectFilterCondition?
-    public var orderByProperties: [OrderByProperty]?
-    public var take: Int?
-    public var skip: Int?
-}
-
 /// Defines criteria for filtering and ordering a result
 /// set of Coaty objects. Used in combination with Query events
 /// and database operations, as well as the `ObjectMatcher` functionality.
 public class ObjectFilter: Codable {
-    
-    /// - TODO: comments.
-    public static func buildWithCondition(_ closure: (ObjectFilterBuilder) throws -> ()) throws -> ObjectFilter {
-        let builder = ObjectFilterBuilder()
-        try closure(builder)
-        
-        guard let condition = builder.condition else {
-            // TODO: Throw when multiple conditions are set.
-            throw CoatySwiftError.InvalidArgument("Condition is not set.")
-        }
-        
-        return ObjectFilter(condition: condition,
-                            orderByProperties: builder.orderByProperties,
-                            take: builder.take,
-                            skip: builder.skip)
-    }
-    
-    /// - TODO: comments.
-    public static func buildWithConditions(_ closure: (ObjectFilterBuilder) throws -> ()) throws -> ObjectFilter {
-        let builder = ObjectFilterBuilder()
-        try closure(builder)
-        
-        guard let conditions = builder.conditions else {
-            throw CoatySwiftError.InvalidArgument("Conditions are not set.")
-        }
-        
-        return ObjectFilter(conditions: conditions,
-                            orderByProperties: builder.orderByProperties,
-                            take: builder.take,
-                            skip: builder.skip)
-    }
     
     /// A single condition for filtering objects (optional).
     var conditions: ObjectFilterConditions?
@@ -136,6 +96,47 @@ public class ObjectFilter: Codable {
         skip = try container.decodeIfPresent(Int.self, forKey: .skip)
         orderByProperties = try container.decodeIfPresent([OrderByProperty].self, forKey: .orderByProperties)
     }
+    
+    // MARK: - Builder methods.
+    
+    /// Builds a new `ObjectFilter` using the convenience closure syntax. This method can only be
+    /// used to build objects that have exactly _one_ condition.
+    ///
+    /// - Parameter closure: the builder closure, preferably used as trailing closure.
+    /// - Returns: ObjectFilter configured using the builder.
+    public static func buildWithCondition(_ closure: (ObjectFilterBuilder) throws -> ()) throws -> ObjectFilter {
+        let builder = ObjectFilterBuilder()
+        try closure(builder)
+        
+        guard let condition = builder.condition else {
+            // TODO: Throw when multiple conditions are set.
+            throw CoatySwiftError.InvalidArgument("Condition is not set.")
+        }
+        
+        return ObjectFilter(condition: condition,
+                            orderByProperties: builder.orderByProperties,
+                            take: builder.take,
+                            skip: builder.skip)
+    }
+    
+    /// Builds a new `ObjectFilter` using the convenience closure syntax. This method can only be
+    /// used to build objects that have _multiple_ conditions.
+    ///
+    /// - Parameter closure: the builder closure, preferably used as trailing closure.
+    /// - Returns: ObjectFilter configured using the builder.
+    public static func buildWithConditions(_ closure: (ObjectFilterBuilder) throws -> ()) throws -> ObjectFilter {
+        let builder = ObjectFilterBuilder()
+        try closure(builder)
+        
+        guard let conditions = builder.conditions else {
+            throw CoatySwiftError.InvalidArgument("Conditions are not set.")
+        }
+        
+        return ObjectFilter(conditions: conditions,
+                            orderByProperties: builder.orderByProperties,
+                            take: builder.take,
+                            skip: builder.skip)
+    }
 }
 
 public class OrderByProperty: Codable {
@@ -159,7 +160,7 @@ public class OrderByProperty: Codable {
         var container = try decoder.unkeyedContainer()
         objectFilterProperties = try container.decode(ObjectFilterProperty.self)
         
-        // FIXME: Check enum decoding.
+        // TODO: Check enum decoding.
         let sortingOrderString = try container.decode(String.self)
         sortingOrder = SortingOrder(rawValue: sortingOrderString)!
     }
@@ -209,37 +210,7 @@ public enum SortingOrder: String {
     case Desc
 }
 
-/// - TODO: comments.
-public class ObjectFilterConditionsBuilder {
-    public var and: [ObjectFilterCondition]?
-    public var or: [ObjectFilterCondition]?
-}
-
 public class ObjectFilterConditions: Codable {
-    
-    /// - TODO: comments.
-    public static func buildAnd(_ closure: (ObjectFilterConditionsBuilder) throws -> ()) throws -> ObjectFilterConditions {
-        let builder = ObjectFilterConditionsBuilder()
-        try closure(builder)
-        
-        guard let and = builder.and else {
-            throw CoatySwiftError.InvalidArgument("TODO ABSC")
-        }
-        
-        return ObjectFilterConditions(and)
-    }
-    
-    /// - TODO: comments.
-    public static func buildOr(_ closure: (ObjectFilterConditionsBuilder) throws -> ()) throws -> ObjectFilterConditions {
-        let builder = ObjectFilterConditionsBuilder()
-        try closure(builder)
-        
-        guard let or = builder.or else {
-            throw CoatySwiftError.InvalidArgument("TODO ABSC")
-        }
-        
-        return ObjectFilterConditions(or)
-    }
     
     // MARK: - Attributes.
     
@@ -290,28 +261,47 @@ public class ObjectFilterConditions: Codable {
          } catch { /* Surpress error. */ }
     }
     
-}
-
-/// - TODO: comments.
-public class ObjectFilterConditionBuilder {
-    public var property: ObjectFilterProperty?
-    public var expression: ObjectFilterExpression?
+    // MARK: - Builder methods.
+    
+    /// Builds a new `ObjectFilterConditions` object using the convenience closure syntax.
+    /// Using this builder method the conditions will automatically be linked using logical AND.
+    ///
+    /// - NOTE: You may want to consider to use the usual initializer instead and construct
+    ///   the array of `ObjectFilterCondition` objects using the dedicated single instance builder.
+    /// - Parameter closure: the builder closure, preferably used as trailing closure.
+    /// - Returns: `ObjectFilterConditions` configured using the builder.
+    public static func buildAnd(_ closure: (ObjectFilterConditionsBuilder) throws -> ()) throws -> ObjectFilterConditions {
+        let builder = ObjectFilterConditionsBuilder()
+        try closure(builder)
+        
+        guard let and = builder.and else {
+            throw CoatySwiftError.InvalidArgument("ObjectFilterBuilder.and is nil.")
+        }
+        
+        return ObjectFilterConditions(and)
+    }
+    
+    /// Builds a new `ObjectFilterConditions` object using the convenience closure syntax.
+    /// Using this builder method the conditions will automatically be linked using logical OR.
+    ///
+    /// - NOTE: You may want to consider to use the usual initializer instead and construct
+    ///   the array of `ObjectFilterCondition` objects using the dedicated single instance builder.
+    /// - Parameter closure: the builder closure, preferably used as trailing closure.
+    /// - Returns: `ObjectFilterConditions` configured using the builder.
+    public static func buildOr(_ closure: (ObjectFilterConditionsBuilder) throws -> ()) throws -> ObjectFilterConditions {
+        let builder = ObjectFilterConditionsBuilder()
+        try closure(builder)
+        
+        guard let or = builder.or else {
+            throw CoatySwiftError.InvalidArgument("ObjectFilterBuilder.or is nil.")
+        }
+        
+        return ObjectFilterConditions(or)
+    }
 }
 
 public class ObjectFilterCondition: Codable {
-    
-    /// - TODO: comments.
-    public static func build(_ closure: (ObjectFilterConditionBuilder) throws -> ()) throws -> ObjectFilterCondition {
-        let builder = ObjectFilterConditionBuilder()
-        try closure(builder)
-        
-        guard let expression = builder.expression, let property = builder.property else {
-            throw CoatySwiftError.InvalidArgument("TODO ABSC")
-        }
-        
-        return ObjectFilterCondition(property: property, expression: expression)
-    }
-    
+
     // MARK: - Attributes.
     
     var property: ObjectFilterProperty
@@ -338,6 +328,23 @@ public class ObjectFilterCondition: Codable {
         self.property = try container.decode(ObjectFilterProperty.self)
         self.expression = try container.decode(ObjectFilterExpression.self)
      }
+    
+    // MARK: - Builder methods.
+    
+    /// Builds a new `ObjectFilterCondition` using the convenience closure syntax.
+    ///
+    /// - Parameter closure: the builder closure, preferably used as trailing closure.
+    /// - Returns: ObjectFilterCondition configured using the builder.
+    public static func build(_ closure: (ObjectFilterConditionBuilder) throws -> ()) throws -> ObjectFilterCondition {
+        let builder = ObjectFilterConditionBuilder()
+        try closure(builder)
+        
+        guard let expression = builder.expression, let property = builder.property else {
+            throw CoatySwiftError.InvalidArgument("TODO ABSC")
+        }
+        
+        return ObjectFilterCondition(property: property, expression: expression)
+    }
 }
 
 public class ObjectFilterExpression: Codable {
@@ -490,4 +497,30 @@ public enum ObjectFilterOperator: Int {
     case NotContains
     case In
     case NotIn
+}
+
+// MARK: - Builder objects.
+
+/// Convenience builder class for `ObjectFilter` objects.
+public class ObjectFilterBuilder {
+    public var conditions: ObjectFilterConditions?
+    public var condition: ObjectFilterCondition?
+    public var orderByProperties: [OrderByProperty]?
+    public var take: Int?
+    public var skip: Int?
+}
+
+/// Convenience builder class for `ObjectFilterCondition` objects.
+public class ObjectFilterConditionBuilder {
+    public var property: ObjectFilterProperty?
+    public var expression: ObjectFilterExpression?
+}
+
+/// Convenience builder class for `ObjectFilterConditions` objects.
+///
+/// - NOTE: You may want to consider to use the usual initializer instead and construct
+///   the array of `ObjectFilterCondition` objects using the dedicated single instance builder.
+public class ObjectFilterConditionsBuilder {
+    public var and: [ObjectFilterCondition]?
+    public var or: [ObjectFilterCondition]?
 }

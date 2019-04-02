@@ -23,8 +23,7 @@ class HelloWorldExampleViewController: UIViewController {
         // Observe operating state.
         operatingState = comManager.getOperatingState()
         _ = operatingState?.subscribe {
-            event in
-            guard let state = event.element else {
+            guard let state = $0.element else {
                 // We did not get a state update.
                 return
             }
@@ -32,16 +31,6 @@ class HelloWorldExampleViewController: UIViewController {
             print("Communication Manager changed state to: \(state)")
         }
         
-    }
-    
-    private func setupView() {
-        self.view.backgroundColor = .white
-        
-        let queryButton = UIButton(frame: CGRect(x: 0, y: 150, width: 350, height: 50))
-        queryButton.backgroundColor = .lightGray
-        queryButton.setTitle("Query", for: .normal)
-        queryButton.addTarget(self, action: #selector(query), for: .touchUpInside)
-        self.view.addSubview(queryButton)
     }
     
     /// Query list of snapshot objects from a task with a given id.
@@ -77,5 +66,17 @@ class HelloWorldExampleViewController: UIViewController {
             }
             
         }.disposed(by: disposeBag)
+    }
+    
+    // MARK: - Setup methods.
+    
+    private func setupView() {
+        self.view.backgroundColor = .white
+        
+        let queryButton = UIButton(frame: CGRect(x: 0, y: 150, width: 350, height: 50))
+        queryButton.backgroundColor = .lightGray
+        queryButton.setTitle("Query", for: .normal)
+        queryButton.addTarget(self, action: #selector(query), for: .touchUpInside)
+        self.view.addSubview(queryButton)
     }
 }
