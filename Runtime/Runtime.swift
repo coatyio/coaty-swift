@@ -17,12 +17,12 @@ public class Runtime {
     private (set) public static var FRAMEWORK_BUILD_DATE = 1554114439732
     
     /// Common options specified in container configuration.
-    private (set) public var commonOptions: CommonOptions
+    private (set) public var commonOptions: CommonOptions?
     
     /// Database options specified in container configuration.
-    private (set) public var databaseOptions: DatabaseOptions
+    private (set) public var databaseOptions: DatabaseOptions?
     
-    init(commonOptions: CommonOptions, databaseOptions: DatabaseOptions) {
+    init(commonOptions: CommonOptions? = nil, databaseOptions: DatabaseOptions? = nil) {
         self.commonOptions = commonOptions
         self.databaseOptions = databaseOptions
     }

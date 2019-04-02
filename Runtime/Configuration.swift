@@ -238,13 +238,13 @@ public class BrokerOptions {
     public var cleanSession: Bool
     public var keepAlive: UInt16
     
-    init(host: String,
+    public init(host: String,
          port: UInt16,
          clientId: String,
          username: String? = nil,
          password: String? = nil,
-         cleanSession: Bool,
-         keepAlive: UInt16) {
+         cleanSession: Bool = true,
+         keepAlive: UInt16 = 3000) {
         self.host = host
         self.port = port
         self.clientId = clientId

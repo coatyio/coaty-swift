@@ -9,7 +9,7 @@ import Foundation
 /// create container components and to resolve dependencies.
 /// This container defines the entry and exit points for any Coaty application
 /// providing lifecycle management for its components.
-public class Controller {
+open class Controller {
     
     private(set) public var runtime: Runtime
     private(set) public var options: ControllerOptions?
@@ -17,7 +17,7 @@ public class Controller {
     private(set) public var identity: Component
     private(set) public var communicationManager: CommunicationManager
     
-    required init(runtime: Runtime,
+    required public init(runtime: Runtime,
                   options: ControllerOptions?,
                   communicationManager: CommunicationManager,
                   controllerType: String) {
@@ -47,21 +47,21 @@ public class Controller {
     /// practice to call super.onInit() in your override method; especially if your
     /// custom controller class extends from another custom controller class
     /// and not from the base `Controller` class directly.
-    func onInit() {}
+    open func onInit() {}
     
     /// Called by the Coaty container after it has resolved and created all
     /// controller instances within the container. Implement initialization side
     /// effects here. The base implementation does nothing.
     ///
     /// - Parameters: the Coaty container of this controller.
-    func onContainerResolved(container: Container) {}
+    open func onContainerResolved(container: Container) {}
     
     /// Called when the communication manager is about to start or restart.
     /// Implement side effects here. Ensure that super.onCommunicationManagerStarting
     /// is called in your override. The base implementation advertises
     /// its identity if requested by the controller option property `shouldAdvertiseIdentity`
     /// (if this property is not specified, the identity is advertised by default).
-    func onCommunicationManagerStarting() {
+    open func onCommunicationManagerStarting() {
         if let options = self.options, options.shouldAdvertiseIdentity {
             self.advertiseIdentity()
         }
@@ -71,11 +71,11 @@ public class Controller {
     /// Implement side effects here. Ensure that
     /// super.onCommunicationManagerStopping is called in your override.
     /// The base implementation does nothing.
-    func onCommunicationManagerStopping() {}
+    open func onCommunicationManagerStopping() {}
     
     /// Called by the Coaty container when this instance should be disposed.
     /// Implement cleanup side effects here. The base implementation does nothing.
-    func onDispose() {
+    open func onDispose() {
     }
     
     /// Initialize identity object properties for a concrete controller subclass
@@ -93,7 +93,7 @@ public class Controller {
     /// in the configuration options take precedence.
     ///
     /// @param identity the default identity object for a controller instance
-    func initializeIdentity(identity: Component) {}
+    open func initializeIdentity(identity: Component) {}
     
     private func advertiseIdentity() {
         let event = AdvertiseEvent.withObject(eventSource: self.identity,
