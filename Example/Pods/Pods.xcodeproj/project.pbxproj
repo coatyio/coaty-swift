@@ -398,6 +398,10 @@
 		BC836837224A6455001B3541 /* ObjectJoinCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC836836224A6455001B3541 /* ObjectJoinCondition.swift */; };
 		BC83683922520918001B3541 /* CallEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC83683822520918001B3541 /* CallEvent.swift */; };
 		BC83683B22520A48001B3541 /* ReturnEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC83683A22520A48001B3541 /* ReturnEvent.swift */; };
+		BC83684622537FBD001B3541 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC83684522537FBD001B3541 /* Device.swift */; };
+		BC83684822537FF3001B3541 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC83684722537FF3001B3541 /* Configuration.swift */; };
+		BC83684A225380B7001B3541 /* AgentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC836849225380B7001B3541 /* AgentInfo.swift */; };
+		BC83684D22538104001B3541 /* DbConnectionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC83684C22538104001B3541 /* DbConnectionInfo.swift */; };
 		BC99D915F5B33FCCA8253B0DF47E91FF /* CommunicationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2EF3EDE4ADC7F2A6520F78D7144A84 /* CommunicationEvent.swift */; };
 		BCED069A6E9AC660D2C3773C744D8FF4 /* BooleanDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D4C28BFDD5BCDA0DA7CFACC78471A0 /* BooleanDisposable.swift */; };
 		BCED30BE5B7F4192103BE0D9899A8178 /* RxTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BC6F84CBEBED5E664A47CABD89D0FB /* RxTarget.swift */; };
@@ -1160,6 +1164,10 @@
 		BC836836224A6455001B3541 /* ObjectJoinCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectJoinCondition.swift; sourceTree = "<group>"; };
 		BC83683822520918001B3541 /* CallEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallEvent.swift; sourceTree = "<group>"; };
 		BC83683A22520A48001B3541 /* ReturnEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnEvent.swift; sourceTree = "<group>"; };
+		BC83684522537FBD001B3541 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		BC83684722537FF3001B3541 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		BC836849225380B7001B3541 /* AgentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentInfo.swift; sourceTree = "<group>"; };
+		BC83684C22538104001B3541 /* DbConnectionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbConnectionInfo.swift; sourceTree = "<group>"; };
 		BD5B61B62787291C13A781A9F55FCC7C /* ScheduledItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScheduledItem.swift; path = RxSwift/Schedulers/Internal/ScheduledItem.swift; sourceTree = "<group>"; };
 		BDDA29326739F605E1CC5EB3A3301591 /* ExpectationMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpectationMessage.swift; path = Sources/Nimble/ExpectationMessage.swift; sourceTree = "<group>"; };
 		BDF51F54A8A61BDA2A9A8BD0D71E9812 /* RxMutableBox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxMutableBox.swift; path = RxSwift/RxMutableBox.swift; sourceTree = "<group>"; };
@@ -1552,6 +1560,8 @@
 		354E827BD331E584003D70674854ED7F /* CoatySwift */ = {
 			isa = PBXGroup;
 			children = (
+				BC83684B225380F9001B3541 /* DB */,
+				BC83684422537F9D001B3541 /* Runtime */,
 				DF4B7CFD5182E57A22D23D87F56F167C /* Common */,
 				7B9BB1A890FFC79609208C8EB708C9D5 /* Communication */,
 				2C7B96781B323627D27F2376E0E5A3F5 /* Logging */,
@@ -2008,6 +2018,23 @@
 			name = Pod;
 			sourceTree = "<group>";
 		};
+		BC83684422537F9D001B3541 /* Runtime */ = {
+			isa = PBXGroup;
+			children = (
+				BC83684722537FF3001B3541 /* Configuration.swift */,
+				BC836849225380B7001B3541 /* AgentInfo.swift */,
+			);
+			path = Runtime;
+			sourceTree = "<group>";
+		};
+		BC83684B225380F9001B3541 /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				BC83684C22538104001B3541 /* DbConnectionInfo.swift */,
+			);
+			path = DB;
+			sourceTree = "<group>";
+		};
 		C048A998E55617268C2DB105623BC1D4 /* RxSwift */ = {
 			isa = PBXGroup;
 			children = (
@@ -2191,6 +2218,7 @@
 				85E1F6653D69036A5DD07AD79C691640 /* Two Way */,
 				BC836834224A640F001B3541 /* ObjectFilter.swift */,
 				BC836836224A6455001B3541 /* ObjectJoinCondition.swift */,
+				BC83684522537FBD001B3541 /* Device.swift */,
 			);
 			name = Model;
 			path = CoatySwift/Classes/Model;
@@ -3068,8 +3096,10 @@
 				BC83683B22520A48001B3541 /* ReturnEvent.swift in Sources */,
 				91FBD955F3C2B18163B533F6625CFA44 /* Codable+JSON.swift in Sources */,
 				6AAD2E1C16B48F068E1C501534F715FB /* CommunicationConstants.swift in Sources */,
+				BC83684A225380B7001B3541 /* AgentInfo.swift in Sources */,
 				BC99D915F5B33FCCA8253B0DF47E91FF /* CommunicationEvent.swift in Sources */,
 				F46A939664C04D733817637795CD2CDD /* CommunicationEventType.swift in Sources */,
+				BC83684622537FBD001B3541 /* Device.swift in Sources */,
 				BC83683922520918001B3541 /* CallEvent.swift in Sources */,
 				E7ED9823135B36D470D8BAA6EF53E433 /* CommunicationManager+CocoaMQTTDelegate.swift in Sources */,
 				1813EB3740E832D6A4225B3626970262 /* CommunicationManager+Observe.swift in Sources */,
@@ -3079,9 +3109,11 @@
 				51E98837817D616349DB07ECA3013AC8 /* CommunicationManager.swift in Sources */,
 				01C9C7AA77A1C2E5257D20E2FAF06B0F /* CommunicationState.swift in Sources */,
 				C178C9F2041EC0C5B4C0CEC534674059 /* CompleteEvent.swift in Sources */,
+				BC83684822537FF3001B3541 /* Configuration.swift in Sources */,
 				BC836835224A640F001B3541 /* ObjectFilter.swift in Sources */,
 				802CDD00EC9FF5E82A8CEFA8398AD3FF /* Component.swift in Sources */,
 				800EEA500014E919F622389A1E69EDD8 /* CoreType.swift in Sources */,
+				BC83684D22538104001B3541 /* DbConnectionInfo.swift in Sources */,
 				EB7872BA357435554ED3B400D08C821F /* Deadvertise.swift in Sources */,
 				CCE234CA7ACD9F283849B136C1653C88 /* DeadvertiseEvent.swift in Sources */,
 				3FAD778D4FEFD157A48D7CF183720C12 /* Discover.swift in Sources */,

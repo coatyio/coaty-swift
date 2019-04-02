@@ -29,6 +29,18 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        /*
+        let configuration: Configuration = try! .build { config in
+            config.common = CommonOptions()
+            config.communication = CommunicationOptions(brokerUrl: "192.168.1.120")
+            config.controllers = ControllerConfig(
+        }
+        */
+    
+        
+        
+        
         
         /*let privateData: [String: Any] = ["so": "private"]
         let dummy = DemoObject(coreType: .Device, objectType: "com.objtype.x", objectId: .init(), name: "some name", message: "henlo world")
@@ -41,7 +53,7 @@ class ViewController: UIViewController {
         
         // Establish mqtt connection.
         comManager.startClient()
-        let objectFilterProperties = ObjectFilterProperty("filterproperty")
+        /*let objectFilterProperties = ObjectFilterProperty("filterproperty")
         let objectFilterExpression = ObjectFilterExpression(filterOperator: .Equals, op1: "10")
         let secondObjectFilterExpression = ObjectFilterExpression(filterOperator: .NotBetween, op1: "7", op2: "9")
         
@@ -71,7 +83,7 @@ class ViewController: UIViewController {
         let jsonString = String(data: jsonData, encoding: .utf8)!
         print(jsonString)
         let parsedQE: QueryEvent<CustomCoatyObjectFamily>? = PayloadCoder.decode(jsonString)
-        print("PARSED:\n", parsedQE!.json)
+        print("PARSED:\n", parsedQE!.json)*/
         
         
         
