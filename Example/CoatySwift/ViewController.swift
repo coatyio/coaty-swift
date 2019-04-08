@@ -9,6 +9,29 @@ import XCGLogger
 import RxSwift
 import CoatySwift
 
+class ControllerA: Controller {
+    
+    override func onInit() {
+        print("\(self.identity.name) \(self.identity.objectId)")
+    }
+    
+    override func onContainerResolved(container: Container) {
+        print("onContainerResolved")
+    }
+    
+    override func onDispose() {
+        print("onDispose")
+    }
+    
+    override func onCommunicationManagerStarting() {
+        print("CM Starting")
+    }
+    
+    override func onCommunicationManagerStopping() {
+        print("CM Stopping")
+    }
+}
+
 class ViewController: UIViewController {
     
     let redButton = UIButton(frame: CGRect(x: 0, y: 100, width: 350, height: 50))
@@ -30,101 +53,21 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        /*
+        
         let configuration: Configuration = try! .build { config in
             config.common = CommonOptions()
-            config.communication = CommunicationOptions(brokerUrl: "192.168.1.120")
-            config.controllers = ControllerConfig(
+            let brokerOptions = BrokerOptions(host: "192.168.1.120", port: 1883, clientId: "\(UUID.init())")
+            config.communication = CommunicationOptions(brokerOptions: brokerOptions, shouldAutoStart: true)
+            //config.controllers = ControllerConfig(
         }
-        */
+    
     
         
-        
-        
-        
-        /*let privateData: [String: Any] = ["so": "private"]
-        let dummy = DemoObject(coreType: .Device, objectType: "com.objtype.x", objectId: .init(), name: "some name", message: "henlo world")
-        let resolveEvent = ResolveEvent.withObjectAndRelatedObjects(eventSource: identity, object: dummy, relatedObjects: [dummy, dummy], privateData: privateData)
-
-        let encoded = PayloadCoder.encode(resolveEvent)
-        print(encoded)
-        let decoded: ResolveEvent<CoatyObject> = PayloadCoder.decode(encoded)!
-        print(PayloadCoder.encode(decoded))*/
-        
-        // Establish mqtt connection.
-        comManager.startClient()
-        /*let objectFilterProperties = ObjectFilterProperty("filterproperty")
-        let objectFilterExpression = ObjectFilterExpression(filterOperator: .Equals, op1: "10")
-        let secondObjectFilterExpression = ObjectFilterExpression(filterOperator: .NotBetween, op1: "7", op2: "9")
-        
-        let objectFilterProperties2 = ObjectFilterProperty(["big", "oof"])
-        
-        let objectFilterCondition1 = ObjectFilterCondition(property: objectFilterProperties,
-                                                           expression: objectFilterExpression)
-        let objectFilterCondition2 = ObjectFilterCondition(property: objectFilterProperties,
-                                                           expression: secondObjectFilterExpression)
-        let objectJoinConditions = [ObjectJoinCondition(localProperty: "localprop", asProperty: "asprop")]
-        
-        let objectFilterConditions = ObjectFilterConditions(or: [objectFilterCondition1, objectFilterCondition2])
-        
-        let orderByProperties = [OrderByProperty(properties: objectFilterProperties2,
-                                                sortingOrder: .Asc),
-                               OrderByProperty(properties: objectFilterProperties,
-                                               sortingOrder: .Desc)]
-        
-        let dbObjectFilter = ObjectFilter(conditions: objectFilterConditions, orderByProperties: orderByProperties, take: 1, skip: 10)
-        let coreTypes: [CoreType] = [.CoatyObject, .Annotation]
-        
-        let queryEventData = QueryEventData<CustomCoatyObjectFamily>.createFrom(coreTypes: coreTypes,
-                                                       objectFilter: dbObjectFilter,
-                                                       objectJoinConditions: objectJoinConditions)
-        
-        let jsonData = try! JSONEncoder().encode(queryEventData)
-        let jsonString = String(data: jsonData, encoding: .utf8)!
-        print(jsonString)
-        let parsedQE: QueryEvent<CustomCoatyObjectFamily>? = PayloadCoder.decode(jsonString)
-        print("PARSED:\n", parsedQE!.json)*/
-        
-        
-        
-        
-        redButton.backgroundColor = .red
-        redButton.setTitle("Publish Advertise and Discover/Resolve", for: .normal)
-        self.view.addSubview(redButton)
-        redButton.addTarget(self, action: #selector(advertiseButtonTapped), for: .touchUpInside)
-        
-        blueButton.backgroundColor = .blue
-        blueButton.setTitle("Publish another component's identity", for: .normal)
-        self.view.addSubview(blueButton)
-        blueButton.addTarget(self, action: #selector(advertiseNewComponent), for: .touchUpInside)
-        
-        yellowButton.backgroundColor = .yellow
-        yellowButton.setTitle("Channel Events", for: .normal)
-        self.view.addSubview(yellowButton)
-        yellowButton.setTitleColor(.black, for: .normal)
-        yellowButton.addTarget(self, action: #selector(receiveChannelEvents), for: .touchUpInside)
-        
-        greenButton.backgroundColor = .green
-        greenButton.setTitle("Publish Update/Complete", for: .normal)
-        self.view.addSubview(greenButton)
-        greenButton.addTarget(self, action: #selector(updateCompleteMessage), for: .touchUpInside)
-        
-        purpleButton.backgroundColor = .purple
-        purpleButton.setTitle("Receive Update", for: .normal)
-        self.view.addSubview(purpleButton)
-        purpleButton.addTarget(self, action: #selector(receiveUpdateMessage), for: .touchUpInside)
-        
-        grayButton.backgroundColor = .gray
-        grayButton.setTitle("Receive Discover", for: .normal)
-        self.view.addSubview(grayButton)
-        grayButton.addTarget(self, action: #selector(receiveDiscoverMessage), for: .touchUpInside)
-        
-        helloWorldButton.backgroundColor = .gray
-        helloWorldButton.setTitle("Hello World Example", for: .normal)
-        self.view.addSubview(helloWorldButton)
-        helloWorldButton.addTarget(self, action: #selector(helloWorldExample), for: .touchUpInside)
+        let components = Components(controllers: ["CONA": ControllerA.self, "CONB": ControllerA.self])
+        let container = Container.resolve(components: components, configuration: configuration)
+        container.registerController(name: "CONC", controllerType: ControllerA.self, config: ControllerConfig(controllerOptions: [:]))
     }
-    
+    /*
     @objc func endClient() {
         try! comManager.endClient()
     }
@@ -306,6 +249,6 @@ class ViewController: UIViewController {
         })
     }
     
-    
+    */
 }
 
