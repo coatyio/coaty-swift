@@ -79,17 +79,9 @@ public class Container {
         controller.onContainerResolved(container: self)
 
         // Trigger onCommunicationManagerStarting() method.
-       /* _ = comManager.getOperatingState().subscribe {
+        _ = comManager.getOperatingState().subscribe {
             if let state = $0.element, (state == .starting || state == .started) {
                 self.dispatchOperatingState(state: .starting, ctrl: controller)
-            }
-        }*/
-        
-        // FIXME: Should not be the communication state but the operating state changes
-        // that we observe.
-        _ = comManager.getCommunicationState().subscribe {
-            if let commState = $0.element, (commState == .online) {
-                self.dispatchCommState(state: .online, ctrl: controller)
             }
         }
     }
@@ -171,22 +163,11 @@ public class Container {
             controller.onContainerResolved(container: self)
         }
         
-        /*// Observe operating state and dispatch to registered controllers.
+        // Observe operating state and dispatch to registered controllers.
         _ = operatingState?.subscribe { (operatingStateEvent) in
             self.controllers.forEach { (name, controller) in
                 if let state = operatingStateEvent.element {
                     self.dispatchOperatingState(state: state, ctrl: controller)
-                }
-            }
-        }*/
-        
-        // FIXME: This should not be operatingState based, but communicationState based!
-        // Observe comm. state and dispatch to registered controllers.
-        _ = communicationState?.subscribe { (commStateEvent) in
-            print("Received commState update: \(commStateEvent.element)")
-            self.controllers.forEach { (name, controller) in
-                if let state = commStateEvent.element {
-                    self.dispatchCommState(state: state, ctrl: controller)
                 }
             }
         }
@@ -210,7 +191,7 @@ public class Container {
         self.runtime = nil
     }
     
-    /*private func dispatchOperatingState(state: OperatingState, ctrl: Controller) {
+    private func dispatchOperatingState(state: OperatingState, ctrl: Controller) {
         switch state {
         case OperatingState.starting:
             ctrl.onCommunicationManagerStarting()
@@ -219,19 +200,7 @@ public class Container {
         default:
             ()
         }
-    }*/
-    
-    private func dispatchCommState(state: CommunicationState, ctrl: Controller) {
-        switch state {
-        case .online:
-            ctrl.onCommunicationManagerStarting()
-        case .offline:
-            ctrl.onCommunicationManagerStopping()
-        default:
-            ()
-        }
     }
-    
 }
 
 /// Defines the application-specific container components to be registered

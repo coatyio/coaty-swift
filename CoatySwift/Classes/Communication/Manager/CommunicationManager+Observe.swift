@@ -32,7 +32,7 @@ extension CommunicationManager {
         }
         
         // TODO: Subscribe only if not already subscribed.
-        mqtt!.subscribe(topic)
+        self.subscribe(topic: topic)
         
         return rawMessages.map(convertToTupleFormat)
             .filter(isAdvertise)
@@ -118,8 +118,8 @@ extension CommunicationManager {
                                                                          sourceObject: nil,
                                                                          messageToken: nil)
         // TODO: Make sure to only subscribe to topic once...
-        mqtt?.subscribe(channelTopic)
-        
+        self.subscribe(topic: channelTopic)
+
         return rawMessages.map(convertToTupleFormat)
             .filter(isChannel)
             .filter({ (rawMessageWithTopic) -> Bool in
@@ -148,7 +148,7 @@ extension CommunicationManager {
     public func observeDeadvertise(eventTarget: Component) throws -> Observable<DeadvertiseEvent<Deadvertise>> {
         let deadvertiseTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Deadvertise)
         
-        mqtt?.subscribe(deadvertiseTopic)
+        self.subscribe(topic: deadvertiseTopic)
         
         return rawMessages.map(convertToTupleFormat)
             .filter({ (rawMessageTopic) -> Bool in
@@ -177,8 +177,8 @@ extension CommunicationManager {
         
         // FIXME: Prevent duplicated subscriptions.
         let updateTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Update)
-        mqtt?.subscribe(updateTopic)
-        
+        self.subscribe(topic: updateTopic)
+
         return rawMessages.map(convertToTupleFormat)
             .filter(isUpdate)
             .map({ (message) -> T in
@@ -210,8 +210,8 @@ extension CommunicationManager {
         
         // FIXME: Prevent duplicated subscriptions.
         let discoverTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Discover)
-        mqtt?.subscribe(discoverTopic)
-        
+        self.subscribe(topic: discoverTopic)
+
         return rawMessages.map(convertToTupleFormat)
             .filter(isDiscover)
             .map({ (message) -> T in
@@ -233,8 +233,8 @@ extension CommunicationManager {
         // FIXME: Prevent duplicated subscriptions.
         let callTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Call)
         
-        mqtt?.subscribe(callTopic)
-        
+        self.subscribe(topic: callTopic)
+
         return rawMessages.map(convertToTupleFormat)
             .filter(isCall)
             .map({ (message) -> T in

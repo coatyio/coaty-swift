@@ -58,6 +58,12 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
     private var associatedUser: User?
     private var associatedDevice: Device?
     private var isDisposed = false
+    
+    /// Holds deferred subscriptions while the communication manager is offline.
+    private var deferredSubscriptions = [String]()
+    
+    /// Holds deferred publications (topic, payload) while the communication manager is offline.
+    private var deferredPublications = [(String, String)]()
 
     
     /// Ids of all advertised components that should be deadvertised when the client ends.
@@ -240,16 +246,59 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
     
     // MARK: - Communication methods.
     
+    /// Subscribe defers subscriptions until the communication manager comes online.
+    ///
+    /// - Parameter topic: topic name.
     func subscribe(topic: String) {
-        mqtt?.subscribe(topic)
+        _ = getCommunicationState().subscribe {
+            guard let state = $0.element else {
+                return
+            }
+
+            self.deferredSubscriptions.append(topic)
+            
+            // Subscribe if the client is online.
+            
+            if state == .online {
+                self.deferredSubscriptions.forEach({ (topic) in
+                    self.mqtt?.subscribe(topic)
+                })
+                
+                self.deferredSubscriptions = []
+            }
+        }
     }
     
     func unsubscribe(topic: String) {
+        // TODO: Implement properly.
         mqtt?.unsubscribe(topic)
     }
     
+    /// Publish defers publications until the communication manager comes online.
+    ///
+    /// - Parameters:
+    ///   - topic: the publication topic.
+    ///   - message: the payload message.
     func publish(topic: String, message: String) {
-        mqtt?.publish(topic, withString: message)
+        _ = getCommunicationState().subscribe {
+            guard let state = $0.element else {
+                return
+            }
+            
+            self.deferredPublications.append((topic, message))
+            
+            // Publish if the client is online.
+            
+            if state == .online {
+                self.deferredPublications.forEach({ (publication) in
+                    let topic = publication.0
+                    let payload = publication.1
+                    self.mqtt?.publish(topic, withString: payload)
+                })
+                
+                self.deferredPublications = []
+            }
+        }
     }
     
     // MARK: - CocoaMQTTDelegate methods.

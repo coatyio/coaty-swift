@@ -153,7 +153,7 @@ public class CommunicationOptions {
     public init(brokerOptions: BrokerOptions? = nil,
                 identity: [String: Any]? = nil,
                 shouldAutoStart: Bool? = nil,
-                shouldAdvertiseIdentity: Bool? = nil,
+                shouldAdvertiseIdentity: Bool? = true,
                 shouldAdvertiseDevice: Bool? = nil,
                 useReadableTopics: Bool? = nil,
                 useProtocolCompliantClientId: Bool? = nil) {
