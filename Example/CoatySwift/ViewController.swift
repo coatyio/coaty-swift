@@ -9,7 +9,10 @@ import XCGLogger
 import RxSwift
 import CoatySwift
 
+
 class ControllerA: Controller {
+    
+    private var communicationManager: CommunicationManager<CustomCoatyObjectFamily>?
     
     override func onInit() {
         print("\(self.identity.name) \(self.identity.objectId)")
@@ -24,7 +27,24 @@ class ControllerA: Controller {
     }
     
     override func onCommunicationManagerStarting() {
-        print("CM Starting")
+       print("CM Starting")
+        communicationManager = self.getCommunicationManager()
+        if let comManager = communicationManager {
+            
+            /*let obj = CoatyObject(coreType: .CoatyObject, objectType: "asdf", objectId: .init(), name: "TESTOBJ")
+            let channelEvent = ChannelEvent<CustomCoatyObjectFamily>.withObject(eventSource: identity, channelId: "123456", object: obj)
+            try! comManager.publishChannel(event: channelEvent)*/
+            
+            let derp = try! comManager.observeChannel(eventTarget: self.identity,
+                                                      channelId: "123456").subscribe {
+                                                        if let test = $0.element {
+                                                            print("\(self.identity.objectId) -> \(test.json)")
+                                                        }
+            }
+            print("success")
+        } else {
+            print("unsuccessfull")
+        }
     }
     
     override func onCommunicationManagerStopping() {
@@ -52,23 +72,29 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         
+        
+        let components = Components(controllers: ["CONA": ControllerA.self, "CONB": ControllerA.self])
         let configuration: Configuration = try! .build { config in
             config.common = CommonOptions()
             let brokerOptions = BrokerOptions(host: "192.168.1.120", port: 1883, clientId: "\(UUID.init())")
             config.communication = CommunicationOptions(brokerOptions: brokerOptions, shouldAutoStart: true)
-            //config.controllers = ControllerConfig(
+            
         }
-    
-    
         
-        let components = Components(controllers: ["CONA": ControllerA.self, "CONB": ControllerA.self])
-        let container = Container.resolve(components: components, configuration: configuration)
-        container.registerController(name: "CONC", controllerType: ControllerA.self, config: ControllerConfig(controllerOptions: [:]))
+        let container = Container.resolve(components: components,
+                                           configuration: configuration,
+                                           objectFamily: CustomCoatyObjectFamily.self)
+        
+        
+    
+
+    
+    
+        ///container.registerController(name: "CONC", controllerType: ControllerA.self, config: ControllerConfig(controllerOptions: [:]))
     }
-    /*
-    @objc func endClient() {
+    
+    /*@objc func endClient() {
         try! comManager.endClient()
     }
     
@@ -247,8 +273,7 @@ class ViewController: UIViewController {
                 print(advertiseEvent.json)
             }
         })
-    }
-    
-    */
+    }*/
+ 
 }
 

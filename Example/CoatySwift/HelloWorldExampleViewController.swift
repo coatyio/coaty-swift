@@ -66,6 +66,15 @@ class HelloWorldExampleViewController: UIViewController {
             }
             
         }.disposed(by: disposeBag)
+        
+        let observable = try? comManager.observeChannel(eventTarget: self.identity, channelId: "abcdef")
+        
+        observable?.subscribe({ (channelEvent) in
+            if let channelEvent = channelEvent.element {
+                print(channelEvent.eventData)
+            }
+            
+        })
     }
     
     // MARK: - Setup methods.

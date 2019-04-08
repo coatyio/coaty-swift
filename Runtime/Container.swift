@@ -15,10 +15,15 @@ public class Container {
     // MARK: Attributes.
     
     private (set) public var runtime: Runtime?
-    private (set) public var comManager: CommunicationManager?
+    private (set) public var comManager: AnyCommunicationManager?
     private var controllers = [String: Controller]()
     private var isShutdown = false
     private var operatingState: Observable<OperatingState>?
+    
+    // FIXME: Currently we're using our communication state observable to find out whether
+    // we can subscribe / publish or not.
+    // HOWEVER: IT SHOULD BE OPERATING STATE BASED.
+    private var communicationState: Observable<CommunicationState>?
     
     /// Creates and bootstraps a Coaty container by registering and resolving
     /// the given components and configuration options.
@@ -34,12 +39,13 @@ public class Container {
     }*/
     
     // TODO: Missing config transformer dependency.
-    public static func resolve(components: Components,
-                               configuration: Configuration
+    public static func resolve<Family: ObjectFamily>(components: Components,
+                               configuration: Configuration,
+                               objectFamily: Family.Type
                                /* configTransformer: */)  -> Container {
       
         let container = Container()
-        container.resolveComponents(components, configuration)
+        container.resolveComponents(components, configuration, objectFamily)
         return container
     }
     
@@ -50,7 +56,8 @@ public class Container {
     /// been shut down.
     ///
     /// - Parameters:
-    ///     - name: the name of the controller class (must match the controller name specified in controller config options)
+    ///     - name: the name of the controller class (must match the controller name
+    ///             specified in controller config options)
     ///     - controllerType: the class type of the controller
     ///     - config: the controller's configuration options
     public func registerController(name: String, controllerType: Controller.Type, config: ControllerConfig) {
@@ -72,9 +79,17 @@ public class Container {
         controller.onContainerResolved(container: self)
 
         // Trigger onCommunicationManagerStarting() method.
-        _ = comManager.getOperatingState().subscribe {
+       /* _ = comManager.getOperatingState().subscribe {
             if let state = $0.element, (state == .starting || state == .started) {
                 self.dispatchOperatingState(state: .starting, ctrl: controller)
+            }
+        }*/
+        
+        // FIXME: Should not be the communication state but the operating state changes
+        // that we observe.
+        _ = comManager.getCommunicationState().subscribe {
+            if let commState = $0.element, (commState == .online) {
+                self.dispatchCommState(state: .online, ctrl: controller)
             }
         }
     }
@@ -117,7 +132,7 @@ public class Container {
     private func resolveController(name: String,
                                    controllerType: Controller.Type,
                                    runtime: Runtime,
-                                   comManager: CommunicationManager,
+                                   comManager: AnyCommunicationManager,
                                    controllerOptions: ControllerOptions?) -> Controller {
         let controller = controllerType.init(runtime: runtime,
                                              options: controllerOptions,
@@ -127,16 +142,19 @@ public class Container {
         return controller
     }
     
-    private func resolveComponents(_ components: Components, _ configuration: Configuration) {
+    private func resolveComponents<Family: ObjectFamily>(_ components: Components,
+                                                         _ configuration: Configuration,
+                                                         _ family: Family.Type) {
         let runtime = Runtime(commonOptions: configuration.common, databaseOptions: configuration.databases)
         self.runtime = runtime
         
         // TODO: Fix force unwrap.
         let host = configuration.communication.brokerOptions!.host
         let port = configuration.communication.brokerOptions!.port
-        let comManager = CommunicationManager(host: host, port: Int(port))
+        let comManager = CommunicationManager<Family>(host: host, port: Int(port))
         self.comManager = comManager
         self.operatingState = comManager.operatingState.asObservable()
+        self.communicationState = comManager.communicationState.asObservable()
 
         components.controllers?.forEach { (name, controllerType) in
             let options = configuration.controllers?.controllerOptions[name]
@@ -153,11 +171,22 @@ public class Container {
             controller.onContainerResolved(container: self)
         }
         
-        // Observe operating state and dispatch to registered controllers.
+        /*// Observe operating state and dispatch to registered controllers.
         _ = operatingState?.subscribe { (operatingStateEvent) in
             self.controllers.forEach { (name, controller) in
                 if let state = operatingStateEvent.element {
                     self.dispatchOperatingState(state: state, ctrl: controller)
+                }
+            }
+        }*/
+        
+        // FIXME: This should not be operatingState based, but communicationState based!
+        // Observe comm. state and dispatch to registered controllers.
+        _ = communicationState?.subscribe { (commStateEvent) in
+            print("Received commState update: \(commStateEvent.element)")
+            self.controllers.forEach { (name, controller) in
+                if let state = commStateEvent.element {
+                    self.dispatchCommState(state: state, ctrl: controller)
                 }
             }
         }
@@ -181,7 +210,7 @@ public class Container {
         self.runtime = nil
     }
     
-    private func dispatchOperatingState(state: OperatingState, ctrl: Controller) {
+    /*private func dispatchOperatingState(state: OperatingState, ctrl: Controller) {
         switch state {
         case OperatingState.starting:
             ctrl.onCommunicationManagerStarting()
@@ -190,7 +219,19 @@ public class Container {
         default:
             ()
         }
+    }*/
+    
+    private func dispatchCommState(state: CommunicationState, ctrl: Controller) {
+        switch state {
+        case .online:
+            ctrl.onCommunicationManagerStarting()
+        case .offline:
+            ctrl.onCommunicationManagerStopping()
+        default:
+            ()
+        }
     }
+    
 }
 
 /// Defines the application-specific container components to be registered

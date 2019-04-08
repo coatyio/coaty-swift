@@ -7,41 +7,8 @@ import Foundation
 import RxSwift
 
 extension CommunicationManager {
-    
+
     // MARK: - One way events.
-    
-    /// Publishes a given advertise event.
-    ///
-    /// - Parameters:
-    ///     - advertiseEvent: The event that should be advertised.
-    public func publishAdvertise<S: CoatyObject,T: AdvertiseEvent<S>>(advertiseEvent: T,
-                                                                      eventTarget: Component) throws {
-        
-        let topicForObjectType = try Topic.createTopicStringByLevelsForPublish(eventType: .Advertise,
-                                                                               eventTypeFilter: advertiseEvent.eventData.object.objectType,
-                                                                               associatedUserId: "-",
-                                                                               sourceObject: advertiseEvent.eventSource,
-                                                                               messageToken: UUID.init().uuidString)
-        let topicForCoreType = try Topic.createTopicStringByLevelsForPublish(eventType: .Advertise,
-                                                                             eventTypeFilter: advertiseEvent.eventData.object.coreType.rawValue,
-                                                                             associatedUserId: "-",
-                                                                             sourceObject: advertiseEvent.eventSource,
-                                                                             messageToken: UUID.init().uuidString)
-        
-        // Save advertises for Components or Devices.
-        if advertiseEvent.eventData.object.coreType == .Component ||
-            advertiseEvent.eventData.object.coreType == .Device {
-            
-            // Add if not existing already in deadvertiseIds.
-            if !deadvertiseIds.contains(advertiseEvent.eventData.object.objectId) {
-                deadvertiseIds.append(advertiseEvent.eventData.object.objectId)
-            }
-        }
-        
-        // Publish the advertise for core AND object type.
-        publish(topic: topicForCoreType, message: advertiseEvent.json)
-        publish(topic: topicForObjectType, message: advertiseEvent.json)
-    }
     
     /// Advertises the identity of a CommunicationManager.
     public func advertiseIdentityOrDevice(eventTarget: Component) throws {
@@ -80,8 +47,7 @@ extension CommunicationManager {
     /// - Parameters:
     ///     - event: the Update event to be published.
     /// - Returns: a hot observable on which associated Resolve events are emitted.
-    public func publishUpdate<Family: ObjectFamily,
-        V: CompleteEvent<Family>>(event: UpdateEvent<Family>) throws -> Observable<V> {
+    public func publishUpdate<V: CompleteEvent<Family>>(event: UpdateEvent<Family>) throws -> Observable<V> {
         let updateMessageToken = UUID.init().uuidString
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Update,
                                                                   eventTypeFilter: nil,
@@ -118,7 +84,7 @@ extension CommunicationManager {
     /// Publish a channel event.
     ///
     /// - Parameter event: the Channel event to be published
-    public func publishChannel<Family: ObjectFamily>(event: ChannelEvent<Family>) throws {
+    public func publishChannel(event: ChannelEvent<Family>) throws {
         guard let channelId = event.channelId else {
             throw CoatySwiftError.InvalidArgument("Could not publish because ChannelID missing.")
         }
@@ -140,7 +106,7 @@ extension CommunicationManager {
     /// - Parameters:
     ///     - event: the Discover event to be published.
     /// - Returns: a hot observable on which associated Resolve events are emitted.
-    public func publishDiscover<Family: ObjectFamily,V: ResolveEvent<Family>>(event: DiscoverEvent<Family>) throws -> Observable<V> {
+    public func publishDiscover<V: ResolveEvent<Family>>(event: DiscoverEvent<Family>) throws -> Observable<V> {
         let discoverMessageToken = UUID.init().uuidString
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Discover,
                                                                   eventTypeFilter: nil,
@@ -186,7 +152,7 @@ extension CommunicationManager {
     /// - Parameters:
     ///     - event: the Query event to be published
     /// - Returns: a hot observable on which associated Retrieve events are emitted.
-    public func publishQuery<Family: ObjectFamily,V: RetrieveEvent<Family>>(event: QueryEvent<Family>) throws -> Observable<V> {
+    public func publishQuery<V: RetrieveEvent<Family>>(event: QueryEvent<Family>) throws -> Observable<V> {
         let queryMessageToken = UUID.init().uuidString
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Query,
                                                                   eventTypeFilter: nil,
@@ -226,7 +192,7 @@ extension CommunicationManager {
     ///   - identity: the identity of the controller.
     ///   - event: the complete event that should be sent out.
     ///   - messageToken: the message token associated with the update-complete request.
-    internal func publishComplete<Family: ObjectFamily>(identity: Component,
+    internal func publishComplete(identity: Component,
                                                   event: CompleteEvent<Family>,
                                                   messageToken: String) throws {
         
@@ -245,7 +211,7 @@ extension CommunicationManager {
     ///   - identity: the identity of the controller.
     ///   - event: the resolve event that should be sent out.
     ///   - messageToken: the message token associated with the discover-resolve request.
-    internal func publishResolve<Family: ObjectFamily>(identity: Component,
+    internal func publishResolve(identity: Component,
                                                        event: ResolveEvent<Family>,
                                                        messageToken: String) throws {
         
@@ -271,8 +237,7 @@ extension CommunicationManager {
     ///
     /// - Parameter event: the Call event to be published.
     /// - Returns: a hot observable of associated Return events.
-    public func publishCall<Family: ObjectFamily,
-        V: ReturnEvent<Family>>(event: CallEvent<Family>) throws -> Observable<V> {
+    public func publishCall<V: ReturnEvent<Family>>(event: CallEvent<Family>) throws -> Observable<V> {
         
         let publishMessageToken = UUID.init().uuidString
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Call,
@@ -314,7 +279,7 @@ extension CommunicationManager {
     ///   - identity: the identity of the controller.
     ///   - event: the return event that should be sent out.
     ///   - messageToken: the message token associated with the call-return request.
-    internal func publishReturn<Family: ObjectFamily>(identity: Component,
+    internal func publishReturn(identity: Component,
                                                        event: ReturnEvent<Family>,
                                                        messageToken: String) throws {
         

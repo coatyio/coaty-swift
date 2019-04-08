@@ -475,7 +475,6 @@
 		E5ABABE064D64FD4C30078A7154D6D91 /* RxAtomic-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BED4CC5DD8D1C5E3AB870EC731E7D64 /* RxAtomic-dummy.m */; };
 		E60D0B7CB5C66E0BF5000B7864516F0E /* InfiniteSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A803F9987BEC9725BB045E06E2E7863E /* InfiniteSequence.swift */; };
 		E7E773DFCE0CE32D542578952627A957 /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640CF2C58CBA5A4AD30B964ACE0555E8 /* Disposable.swift */; };
-		E7ED9823135B36D470D8BAA6EF53E433 /* CommunicationManager+CocoaMQTTDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8517C16AC8060AB9E01F8056A38CE75 /* CommunicationManager+CocoaMQTTDelegate.swift */; };
 		E7F3F56E70FC486482DCDC4F93210336 /* World+DSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6577D20DCC0D428486B7496ABD3AE22 /* World+DSL.swift */; };
 		E85EAC40F42C10F327BE0BCF39C2DF3B /* ThrowError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF5AACFBC068AE681022DAF1D7971B74 /* ThrowError.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		E8E456EF1D3D67C91ED9485B14CE5D9E /* QuickSpecBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 61660151C8C00D2259441EF628D4E7B9 /* QuickSpecBase.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -1277,7 +1276,6 @@
 		E4D3167159667761FE1C6C1F29AF45C0 /* RxPickerViewDataSourceType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxPickerViewDataSourceType.swift; path = RxCocoa/iOS/Protocols/RxPickerViewDataSourceType.swift; sourceTree = "<group>"; };
 		E6E2ECB6A66152E185316601B17868AE /* CodingKeys.html */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.html.documentation; name = CodingKeys.html; path = docs/swiftdoc/docsets/CoatySwift.docset/Contents/Resources/Documents/Classes/ResolveEventData/CodingKeys.html; sourceTree = "<group>"; };
 		E760098DB7F9FF9488B998B66D718493 /* RxAtomic.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RxAtomic.h; path = RxAtomic/include/RxAtomic.h; sourceTree = "<group>"; };
-		E8517C16AC8060AB9E01F8056A38CE75 /* CommunicationManager+CocoaMQTTDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CommunicationManager+CocoaMQTTDelegate.swift"; sourceTree = "<group>"; };
 		E85A3C47FF94E4C4E3B1A77289185A4A /* search.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = search.json; path = docs/swiftdoc/search.json; sourceTree = "<group>"; };
 		E88949EAB0151052BC2840B41C1CF07D /* NSString+C99ExtendedIdentifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSString+C99ExtendedIdentifier.swift"; path = "Sources/Quick/NSString+C99ExtendedIdentifier.swift"; sourceTree = "<group>"; };
 		E8EFD25B58202F4F0D1337E6AB72D45D /* DispatchQueue+XCGAdditions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+XCGAdditions.swift"; path = "Sources/XCGLogger/Extensions/DispatchQueue+XCGAdditions.swift"; sourceTree = "<group>"; };
@@ -1583,7 +1581,6 @@
 			isa = PBXGroup;
 			children = (
 				0AC41C57B66A184C7EC5B36CB3CC62C1 /* CommunicationManager.swift */,
-				E8517C16AC8060AB9E01F8056A38CE75 /* CommunicationManager+CocoaMQTTDelegate.swift */,
 				103BD841F130D45854CDA3A2F54B26C4 /* CommunicationManager+Observe.swift */,
 				A02075DBB4D52862F85F8AC4729A6086 /* CommunicationManager+Publish.swift */,
 				E06A1B09585C2092CE3C779F114BA482 /* CommunicationManager+Util.swift */,
@@ -3111,7 +3108,6 @@
 				BC83684622537FBD001B3541 /* Device.swift in Sources */,
 				2AF1EF952253951D0099E170 /* Container.swift in Sources */,
 				BC83683922520918001B3541 /* CallEvent.swift in Sources */,
-				E7ED9823135B36D470D8BAA6EF53E433 /* CommunicationManager+CocoaMQTTDelegate.swift in Sources */,
 				1813EB3740E832D6A4225B3626970262 /* CommunicationManager+Observe.swift in Sources */,
 				D2B439680517BCCB2CC06A4C76232E69 /* CommunicationManager+Publish.swift in Sources */,
 				2A0137E62249057B00AB38BD /* QueryEvent.swift in Sources */,

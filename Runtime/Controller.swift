@@ -15,15 +15,19 @@ open class Controller {
     private(set) public var options: ControllerOptions?
     private(set) public var controllerType: String
     private(set) public var identity: Component
-    private(set) public var communicationManager: CommunicationManager
+    private var anyComManager: AnyCommunicationManager
+    
+    public func getCommunicationManager<Family: ObjectFamily>() -> CommunicationManager<Family>? {
+        return anyComManager as? CommunicationManager<Family>
+    }
     
     required public init(runtime: Runtime,
                   options: ControllerOptions?,
-                  communicationManager: CommunicationManager,
+                  communicationManager: AnyCommunicationManager,
                   controllerType: String) {
         self.runtime = runtime
         self.options = options
-        self.communicationManager = communicationManager
+        self.anyComManager = communicationManager
         self.controllerType = controllerType
         
         // Create default identity.
@@ -31,7 +35,7 @@ open class Controller {
                                   objectType: "\(COATY_PREFIX)\(CoreType.Component.rawValue)",
                                   objectId: .init())
         
-        identity.parentObjectId = self.communicationManager.identity.objectId
+        identity.parentObjectId = self.anyComManager.identity!.objectId
         self.initializeIdentity(identity: identity)
         
     }
@@ -99,7 +103,7 @@ open class Controller {
         let event = AdvertiseEvent.withObject(eventSource: self.identity,
                                               object: self.identity)
         
-        try? self.communicationManager.publishAdvertise(advertiseEvent: event,
+        try? self.anyComManager.publishAdvertise(advertiseEvent: event,
                                                         eventTarget: self.identity)
     }
 }
