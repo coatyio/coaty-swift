@@ -9,7 +9,7 @@ import RxSwift
 import CoatySwift
 
 class HelloWorldExampleViewController: UIViewController {
-    
+  /*
     var identity =  Component(name: "HelloWorldCoatySwiftClient")
     var disposeBag = DisposeBag()
     var operatingState: Observable<OperatingState>?
@@ -66,6 +66,15 @@ class HelloWorldExampleViewController: UIViewController {
             }
             
         }.disposed(by: disposeBag)
+        
+        let observable = try? comManager.observeChannel(eventTarget: self.identity, channelId: "abcdef")
+        
+        observable?.subscribe({ (channelEvent) in
+            if let channelEvent = channelEvent.element {
+                print(channelEvent.eventData)
+            }
+            
+        })
     }
     
     // MARK: - Setup methods.
@@ -78,5 +87,5 @@ class HelloWorldExampleViewController: UIViewController {
         queryButton.setTitle("Query", for: .normal)
         queryButton.addTarget(self, action: #selector(query), for: .touchUpInside)
         self.view.addSubview(queryButton)
-    }
+    }*/
 }

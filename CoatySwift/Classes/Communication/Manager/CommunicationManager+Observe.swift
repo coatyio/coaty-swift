@@ -108,8 +108,8 @@ extension CommunicationManager {
     ///   - eventTarget: target for which Channel events should be emitted
     ///   - channelId: a channel identifier
     /// - Returns: a hot observable emitting incoming Channel events.
-    public func observeChannel<Family: ObjectFamily, T: ChannelEvent<Family>>(eventTarget: Component,
-                                                                             channelId: String) throws -> Observable<T> {
+    public func observeChannel<T: ChannelEvent<Family>>(eventTarget: Component,
+                                                        channelId: String) throws -> Observable<T> {
         
         // TODO: Unsure about associatedUserId parameters. Is it really assigneeUserId?
         let channelTopic = try Topic.createTopicStringByLevelsForChannel(channelId: channelId,
@@ -173,7 +173,7 @@ extension CommunicationManager {
     /// - Parameters:
     ///    - eventTarget: target for which Update events should be emitted.
     /// - Returns: a hot observable emitting incoming Update events.
-    public func observeUpdate<Family: ObjectFamily, T: UpdateEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
+    public func observeUpdate<T: UpdateEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
         
         // FIXME: Prevent duplicated subscriptions.
         let updateTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Update)
@@ -206,7 +206,7 @@ extension CommunicationManager {
     /// - Parameters:
     ///     - eventTarget: target for which Discover events should be emitted.
     /// - Returns: a hot observable emitting incoming Discover events.
-    public func observeDiscover<Family: ObjectFamily, T: DiscoverEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
+    public func observeDiscover<T: DiscoverEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
         
         // FIXME: Prevent duplicated subscriptions.
         let discoverTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Discover)
@@ -228,7 +228,7 @@ extension CommunicationManager {
     }
     
     /// - TODO: Missing documentation!
-    public func observeCall<Family: ObjectFamily, T: CallEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
+    public func observeCall<T: CallEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
         
         // FIXME: Prevent duplicated subscriptions.
         let callTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Call)

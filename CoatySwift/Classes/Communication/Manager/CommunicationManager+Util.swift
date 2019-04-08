@@ -58,11 +58,4 @@ extension CommunicationManager {
         return topic.eventType == .Return
     }
     
-    public func getCommunicationState() -> Observable<CommunicationState> {
-        return communicationState.asObserver()
-    }
-    
-    public func getOperatingState() -> Observable<OperatingState> {
-        return operatingState.asObserver()
-    }
 }
