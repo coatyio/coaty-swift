@@ -68,8 +68,15 @@ public class Container {
                                            comManager: comManager,
                                            controllerOptions: config.controllerOptions[name])
         self.controllers[name] = controller
-        // TODO: Trigger operatingStateChange
+        
         controller.onContainerResolved(container: self)
+
+        // Trigger onCommunicationManagerStarting() method.
+        _ = comManager.getOperatingState().subscribe {
+            if let state = $0.element, (state == .starting || state == .started) {
+                self.dispatchOperatingState(state: .starting, ctrl: controller)
+            }
+        }
     }
     
     /// Gets the registered controller of the given name.
@@ -128,6 +135,7 @@ public class Container {
         let host = configuration.communication.brokerOptions!.host
         let port = configuration.communication.brokerOptions!.port
         let comManager = CommunicationManager(host: host, port: Int(port))
+        self.comManager = comManager
         self.operatingState = comManager.operatingState.asObservable()
 
         components.controllers?.forEach { (name, controllerType) in
