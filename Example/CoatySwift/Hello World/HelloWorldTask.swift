@@ -6,17 +6,13 @@
 import Foundation
 import CoatySwift
 
-/**
- * Defines urgency levels for HelloWorld tasks
- */
-enum HelloWorldTaskUrgency: Int, Codable {
-    case low = 0
-    case medium
-    case high
-    case critical
-}
+
+/// Represents a Hello World task or task request.
 class HelloWorldTask: Task {
+    
     // MARK: - Attributes
+    
+    /// Level of urgency of the HelloWorldTask.
     public var urgency: HelloWorldTaskUrgency
     
     
@@ -34,7 +30,11 @@ class HelloWorldTask: Task {
                 description: [String]? = nil,
                 workflowId: UUID? = nil) {
         self.urgency = urgency
-        super.init(objectType: objectType, objectId: objectId, name: name, creatorId: creatorId, creationTimestamp: creationTimestamp, status: status, lastModificationTimestamp: lastModificationTimestamp, dueTimestamp: dueTimestamp, doneTimestamp: doneTimestamp, requirements: requirements, description:description, workflowId:workflowId)
+        super.init(objectType: objectType, objectId: objectId, name: name,
+                   creatorId: creatorId, creationTimestamp: creationTimestamp,
+                   status: status, lastModificationTimestamp: lastModificationTimestamp,
+                   dueTimestamp: dueTimestamp, doneTimestamp: doneTimestamp,
+                   requirements: requirements, description:description, workflowId:workflowId)
     }
     
     required init(coreType: CoreType, objectType: String, objectId: UUID, name: String) {
@@ -58,4 +58,12 @@ class HelloWorldTask: Task {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(urgency, forKey: .urgency)
     }
+}
+
+/// Defines urgency levels for HelloWorld tasks.
+enum HelloWorldTaskUrgency: Int, Codable {
+    case low = 0
+    case medium
+    case high
+    case critical
 }

@@ -5,80 +5,75 @@
 
 import Foundation
 
-// TODO: Comment me.
+/// Predefined status values of Task objects.
 public enum TaskStatus: Int, Codable {
+    
+    /// Initial state of a new task.
     case pending = 0
+    
+    /// Task is in progress.
     case inProgress
+    
+    /// Task is completed.
     case done
+    
+    /// Task is blocked, e.g. because of a problem.
     case blocked
+    
+    /// Task is cancelled.
     case cancelled
+    
+    /// Task Request.
     case request
+    
+    /// Task Request Cancelled.
     case requestCancelled
 }
 
+/// Represents a task or task request.
 open class Task: CoatyObject {
     
     // MARK: - Attributes.
     
-    /**
-     * Object ID of user who created the task
-     */
+    /// Object ID of user who created the task
     open var creatorId: UUID
     
-    /**
-     * Timestamp when task was issued/created.
-     * Value represents the number of milliseconds since the epoc in UTC.
-     * (see Date.getTime(), Date.now())
-     */
+    /// Timestamp when task was issued/created.
+    /// Value represents the number of milliseconds since the epoc in UTC.
+    /// (see Date.getTime(), Date.now())
     open var creationTimestamp: Double
     
-    /**
-     * Timestamp when task has been changed (optional).
-     * Value represents the number of milliseconds since the epoc in UTC.
-     * (see Date.getTime(), Date.now())
-     */
+    /// Timestamp when task has been changed (optional).
+    /// Value represents the number of milliseconds since the epoc in UTC.
+    /// (see Date.getTime(), Date.now())
     open var lastModificationTimestamp: Double?
     
-    /**
-     * Timestamp when task should be due (optional).
-     * Value represents the number of milliseconds since the epoc in UTC.
-     * (see Date.getTime(), Date.now())
-     */
+    /// Timestamp when task should be due (optional).
+    /// Value represents the number of milliseconds since the epoc in UTC.
+    /// (see Date.getTime(), Date.now())
     open var dueTimestamp: Double?
     
-    /**
-     * Timestamp when task has been done (optional).
-     * Value represents the number of milliseconds since the epoc in UTC.
-     * (see Date.getTime(), Date.now())
-     */
+    /// Timestamp when task has been done (optional).
+    /// Value represents the number of milliseconds since the epoc in UTC.
+    /// (see Date.getTime(), Date.now())
     open var doneTimestamp: Double?
     
-    /**
-     * The amount of time (in milliseconds) the task will
-     * take or should took to complete (optional).
-     */
+    /// The amount of time (in milliseconds) the task will
+    /// take or should took to complete (optional).
     open var duration: Double?
     
-    /**
-     * Status of task
-     */
+    /// Status of task.
     open var status: TaskStatus
     
-    /**
-     * Required competencies / roles needed for this task (optional).
-     * The requirements specified are combined by logical AND, i.e. all
-     * requirements must be fullfilled.
-     */
+    /// Required competencies / roles needed for this task (optional).
+    /// The requirements specified are combined by logical AND, i.e. all
+    /// requirements must be fullfilled.
     open var requirements: [String]?
     
-    /**
-     * Description of the task (optional)
-     */
+    /// Description of the task (optional)
     open var description: [String]?
     
-    /**
-     * Associated workflow Id (optional)
-     */
+    /// Associated workflow Id (optional)
     open var workflowId: UUID?
 
     // MARK: - Initializers.
