@@ -20,6 +20,9 @@ public class Container {
     private var isShutdown = false
     private var operatingState: Observable<OperatingState>?
     
+    /// A dispatch queue handling controller synchronisation issues.
+    private var queue = DispatchQueue(label: "siemens.coatyswift.containerQueue")
+
     // FIXME: Currently we're using our communication state observable to find out whether
     // we can subscribe / publish or not.
     // HOWEVER: IT SHOULD BE OPERATING STATE BASED.
@@ -61,27 +64,29 @@ public class Container {
     ///     - controllerType: the class type of the controller
     ///     - config: the controller's configuration options
     public func registerController(name: String, controllerType: Controller.Type, config: ControllerConfig) {
-        if isShutdown {
-            return
-        }
-        
-        guard let runtime = self.runtime, let comManager = self.comManager else {
-            LogManager.log.error("Runtime or CommunicationManager was not initialized.")
-            return
-        }
-        let controller = resolveController(name: name,
-                                           controllerType: controllerType,
-                                           runtime: runtime,
-                                           comManager: comManager,
-                                           controllerOptions: config.controllerOptions[name])
-        self.controllers[name] = controller
-        
-        controller.onContainerResolved(container: self)
-
-        // Trigger onCommunicationManagerStarting() method.
-        _ = comManager.getOperatingState().subscribe {
-            if let state = $0.element, (state == .starting || state == .started) {
-                self.dispatchOperatingState(state: .starting, ctrl: controller)
+        queue.sync {
+            if isShutdown {
+                return
+            }
+            
+            guard let runtime = self.runtime, let comManager = self.comManager else {
+                LogManager.log.error("Runtime or CommunicationManager was not initialized.")
+                return
+            }
+            let controller = resolveController(name: name,
+                                               controllerType: controllerType,
+                                               runtime: runtime,
+                                               comManager: comManager,
+                                               controllerOptions: config.controllerOptions[name])
+            self.controllers[name] = controller
+            
+            controller.onContainerResolved(container: self)
+            
+            // Trigger onCommunicationManagerStarting() method.
+            _ = comManager.getOperatingState().subscribe {
+                if let state = $0.element, (state == .starting || state == .started) {
+                    self.dispatchOperatingState(state: .starting, ctrl: controller)
+                }
             }
         }
     }
