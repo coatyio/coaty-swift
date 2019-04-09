@@ -76,11 +76,14 @@ class ViewController: UIViewController {
         
         
         let components = Components(controllers: ["CONA": ControllerA.self, "CONB": ControllerA.self])
+        
         let configuration: Configuration = try! .build { config in
             config.common = CommonOptions()
-            config.controllers = ControllerConfig(controllerOptions: ["CONA": ControllerOptions(shouldAdvertiseIdentity: true)])
+            config.controllers = ControllerConfig(controllerOptions: [
+                "CONA": ControllerOptions(shouldAdvertiseIdentity: true),
+                "CONB": ControllerOptions(shouldAdvertiseIdentity: true)
+                ])
             let brokerOptions = BrokerOptions(host: "192.168.1.120", port: 1883, clientId: "\(UUID.init())")
-            
             config.communication = CommunicationOptions(brokerOptions: brokerOptions, shouldAutoStart: true)
             config.communication?.shouldAdvertiseIdentity = true
             
@@ -90,12 +93,10 @@ class ViewController: UIViewController {
                                            configuration: configuration,
                                            objectFamily: CustomCoatyObjectFamily.self)
         
-        
-    
-
-    
-    
-        ///container.registerController(name: "CONC", controllerType: ControllerA.self, config: ControllerConfig(controllerOptions: [:]))
+        // Adding a controller at runtime.
+        container.registerController(name: "CONC", controllerType: ControllerA.self,
+                                     config: ControllerConfig(controllerOptions: [
+                                        "CONC": ControllerOptions(shouldAdvertiseIdentity: true)]))
     }
     
     /*@objc func endClient() {
