@@ -63,16 +63,22 @@ public class Container {
     ///             specified in controller config options)
     ///     - controllerType: the class type of the controller
     ///     - config: the controller's configuration options
-    public func registerController(name: String, controllerType: Controller.Type, config: ControllerConfig) {
-        queue.sync {
+    public func registerController(name: String, controllerType: Controller.Type, config: ControllerConfig) throws {
+        try queue.sync {
             if isShutdown {
                 return
             }
             
             guard let runtime = self.runtime, let comManager = self.comManager else {
                 LogManager.log.error("Runtime or CommunicationManager was not initialized.")
-                return
+                throw CoatySwiftError.InvalidConfiguration("Runtime or CommunicationManager was not initialized.")
             }
+            
+            if self.controllers[name] != nil {
+                LogManager.log.error("Controller with given name already exists.")
+                throw CoatySwiftError.InvalidConfiguration("Controller with given name already exists.")
+            }
+            
             let controller = resolveController(name: name,
                                                controllerType: controllerType,
                                                runtime: runtime,

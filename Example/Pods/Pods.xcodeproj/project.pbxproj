@@ -393,12 +393,12 @@
 		BABCA58184B829CB2883BBB199270283 /* InfiniteSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816BBE939B9099BD73F5C26359CFD1D8 /* InfiniteSequence.swift */; };
 		BB34226B33EA1ABCDD89A40D9E918E6A /* RxAtomic.h in Headers */ = {isa = PBXBuildFile; fileRef = E760098DB7F9FF9488B998B66D718493 /* RxAtomic.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BB90278657BED5B5685651ABA077B86F /* Multicast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333A0B933F5872E874AD966F19FF82F1 /* Multicast.swift */; };
-		BC4A6A9F225C93E300C5EA32 /* DbConnectionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4A6A9E225C93E300C5EA32 /* DbConnectionInfo.swift */; };
-		BC4A6AA5225C93F800C5EA32 /* Runtime.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4A6AA0225C93F800C5EA32 /* Runtime.swift */; };
-		BC4A6AA6225C93F800C5EA32 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4A6AA1225C93F800C5EA32 /* Container.swift */; };
-		BC4A6AA7225C93F800C5EA32 /* AgentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4A6AA2225C93F800C5EA32 /* AgentInfo.swift */; };
-		BC4A6AA8225C93F800C5EA32 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4A6AA3225C93F800C5EA32 /* Configuration.swift */; };
-		BC4A6AA9225C93F800C5EA32 /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4A6AA4225C93F800C5EA32 /* Controller.swift */; };
+		BC4A6AB8225CD49700C5EA32 /* Runtime.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4A6AB3225CD49700C5EA32 /* Runtime.swift */; };
+		BC4A6AB9225CD49700C5EA32 /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4A6AB4225CD49700C5EA32 /* Controller.swift */; };
+		BC4A6ABA225CD49700C5EA32 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4A6AB5225CD49700C5EA32 /* Container.swift */; };
+		BC4A6ABB225CD49700C5EA32 /* AgentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4A6AB6225CD49700C5EA32 /* AgentInfo.swift */; };
+		BC4A6ABC225CD49700C5EA32 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4A6AB7225CD49700C5EA32 /* Configuration.swift */; };
+		BC4A6ABF225CD4A200C5EA32 /* DbConnectionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4A6ABE225CD4A200C5EA32 /* DbConnectionInfo.swift */; };
 		BC65F0F33F138205AAAECB70962F2695 /* Catch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C873DF417476808F024E324746B6BAA /* Catch.swift */; };
 		BC836835224A640F001B3541 /* ObjectFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC836834224A640F001B3541 /* ObjectFilter.swift */; };
 		BC836837224A6455001B3541 /* ObjectJoinCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC836836224A6455001B3541 /* ObjectJoinCondition.swift */; };
@@ -1161,12 +1161,12 @@
 		BB690D08D7F8EE27CF7CCC1C96C5D40D /* Pods-CoatySwift_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CoatySwift_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		BB6FE3C4F1CD31FE87F59104279048CE /* RxSearchControllerDelegateProxy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxSearchControllerDelegateProxy.swift; path = RxCocoa/iOS/Proxies/RxSearchControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		BC42AF3FB88FC0C36CB94FFE08CE5001 /* ControlEvent+Driver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ControlEvent+Driver.swift"; path = "RxCocoa/Traits/Driver/ControlEvent+Driver.swift"; sourceTree = "<group>"; };
-		BC4A6A9E225C93E300C5EA32 /* DbConnectionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DbConnectionInfo.swift; path = ../CoatySwift/Classes/DB/DbConnectionInfo.swift; sourceTree = "<group>"; };
-		BC4A6AA0225C93F800C5EA32 /* Runtime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Runtime.swift; path = ../CoatySwift/Classes/Runtime/Runtime.swift; sourceTree = "<group>"; };
-		BC4A6AA1225C93F800C5EA32 /* Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Container.swift; path = ../CoatySwift/Classes/Runtime/Container.swift; sourceTree = "<group>"; };
-		BC4A6AA2225C93F800C5EA32 /* AgentInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AgentInfo.swift; path = ../CoatySwift/Classes/Runtime/AgentInfo.swift; sourceTree = "<group>"; };
-		BC4A6AA3225C93F800C5EA32 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Configuration.swift; path = ../CoatySwift/Classes/Runtime/Configuration.swift; sourceTree = "<group>"; };
-		BC4A6AA4225C93F800C5EA32 /* Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Controller.swift; path = ../CoatySwift/Classes/Runtime/Controller.swift; sourceTree = "<group>"; };
+		BC4A6AB3225CD49700C5EA32 /* Runtime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runtime.swift; sourceTree = "<group>"; };
+		BC4A6AB4225CD49700C5EA32 /* Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
+		BC4A6AB5225CD49700C5EA32 /* Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		BC4A6AB6225CD49700C5EA32 /* AgentInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgentInfo.swift; sourceTree = "<group>"; };
+		BC4A6AB7225CD49700C5EA32 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		BC4A6ABE225CD4A200C5EA32 /* DbConnectionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DbConnectionInfo.swift; sourceTree = "<group>"; };
 		BC68B74A44020FC9C3585B3823C61DB1 /* OperatingState.html */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.html; name = OperatingState.html; path = docs/swiftdoc/Enums/OperatingState.html; sourceTree = "<group>"; };
 		BC836834224A640F001B3541 /* ObjectFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectFilter.swift; sourceTree = "<group>"; };
 		BC836836224A6455001B3541 /* ObjectJoinCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectJoinCondition.swift; sourceTree = "<group>"; };
@@ -1564,8 +1564,8 @@
 		354E827BD331E584003D70674854ED7F /* CoatySwift */ = {
 			isa = PBXGroup;
 			children = (
-				BC83684B225380F9001B3541 /* DB */,
-				BC83684422537F9D001B3541 /* Runtime */,
+				BC4A6ABD225CD4A200C5EA32 /* DB */,
+				BC4A6AB2225CD49700C5EA32 /* Runtime */,
 				DF4B7CFD5182E57A22D23D87F56F167C /* Common */,
 				7B9BB1A890FFC79609208C8EB708C9D5 /* Communication */,
 				2C7B96781B323627D27F2376E0E5A3F5 /* Logging */,
@@ -2021,24 +2021,26 @@
 			name = Pod;
 			sourceTree = "<group>";
 		};
-		BC83684422537F9D001B3541 /* Runtime */ = {
+		BC4A6AB2225CD49700C5EA32 /* Runtime */ = {
 			isa = PBXGroup;
 			children = (
-				BC4A6AA2225C93F800C5EA32 /* AgentInfo.swift */,
-				BC4A6AA3225C93F800C5EA32 /* Configuration.swift */,
-				BC4A6AA1225C93F800C5EA32 /* Container.swift */,
-				BC4A6AA4225C93F800C5EA32 /* Controller.swift */,
-				BC4A6AA0225C93F800C5EA32 /* Runtime.swift */,
+				BC4A6AB3225CD49700C5EA32 /* Runtime.swift */,
+				BC4A6AB4225CD49700C5EA32 /* Controller.swift */,
+				BC4A6AB5225CD49700C5EA32 /* Container.swift */,
+				BC4A6AB6225CD49700C5EA32 /* AgentInfo.swift */,
+				BC4A6AB7225CD49700C5EA32 /* Configuration.swift */,
 			);
-			path = Runtime;
+			name = Runtime;
+			path = CoatySwift/Classes/Runtime;
 			sourceTree = "<group>";
 		};
-		BC83684B225380F9001B3541 /* DB */ = {
+		BC4A6ABD225CD4A200C5EA32 /* DB */ = {
 			isa = PBXGroup;
 			children = (
-				BC4A6A9E225C93E300C5EA32 /* DbConnectionInfo.swift */,
+				BC4A6ABE225CD4A200C5EA32 /* DbConnectionInfo.swift */,
 			);
-			path = DB;
+			name = DB;
+			path = CoatySwift/Classes/DB;
 			sourceTree = "<group>";
 		};
 		C048A998E55617268C2DB105623BC1D4 /* RxSwift */ = {
@@ -3096,28 +3098,28 @@
 				209F1F8BA02ED45192D449932EEF06B3 /* AdvertiseEvent.swift in Sources */,
 				9D691850A482395DED0C6555ABFF450A /* ChannelEvent.swift in Sources */,
 				53A0FD5571DC264C8D584B1889F3DB26 /* CoatyObject.swift in Sources */,
+				BC4A6ABF225CD4A200C5EA32 /* DbConnectionInfo.swift in Sources */,
+				BC4A6ABC225CD49700C5EA32 /* Configuration.swift in Sources */,
 				7F3FEA838440D325411DF96244A0F029 /* CoatyObjectFamily.swift in Sources */,
 				45E77D2D026D73FCCFA9C362F7CD3A66 /* CoatySwift-dummy.m in Sources */,
 				204297322C1305CFAC30029E4A7C64CF /* CoatySwiftError.swift in Sources */,
 				BC83683B22520A48001B3541 /* ReturnEvent.swift in Sources */,
 				91FBD955F3C2B18163B533F6625CFA44 /* Codable+JSON.swift in Sources */,
+				BC4A6AB9225CD49700C5EA32 /* Controller.swift in Sources */,
 				6AAD2E1C16B48F068E1C501534F715FB /* CommunicationConstants.swift in Sources */,
-				BC4A6AA9225C93F800C5EA32 /* Controller.swift in Sources */,
 				BC99D915F5B33FCCA8253B0DF47E91FF /* CommunicationEvent.swift in Sources */,
 				F46A939664C04D733817637795CD2CDD /* CommunicationEventType.swift in Sources */,
 				BC83684622537FBD001B3541 /* Device.swift in Sources */,
 				BC83683922520918001B3541 /* CallEvent.swift in Sources */,
 				1813EB3740E832D6A4225B3626970262 /* CommunicationManager+Observe.swift in Sources */,
-				BC4A6AA6225C93F800C5EA32 /* Container.swift in Sources */,
 				D2B439680517BCCB2CC06A4C76232E69 /* CommunicationManager+Publish.swift in Sources */,
 				2A0137E62249057B00AB38BD /* QueryEvent.swift in Sources */,
-				BC4A6AA8225C93F800C5EA32 /* Configuration.swift in Sources */,
 				EC62A75CEF5F46ED43F3B0C92A4FBC38 /* CommunicationManager+Util.swift in Sources */,
 				51E98837817D616349DB07ECA3013AC8 /* CommunicationManager.swift in Sources */,
 				01C9C7AA77A1C2E5257D20E2FAF06B0F /* CommunicationState.swift in Sources */,
 				C178C9F2041EC0C5B4C0CEC534674059 /* CompleteEvent.swift in Sources */,
-				BC4A6A9F225C93E300C5EA32 /* DbConnectionInfo.swift in Sources */,
 				BC836835224A640F001B3541 /* ObjectFilter.swift in Sources */,
+				BC4A6AB8225CD49700C5EA32 /* Runtime.swift in Sources */,
 				802CDD00EC9FF5E82A8CEFA8398AD3FF /* Component.swift in Sources */,
 				800EEA500014E919F622389A1E69EDD8 /* CoreType.swift in Sources */,
 				EB7872BA357435554ED3B400D08C821F /* Deadvertise.swift in Sources */,
@@ -3130,16 +3132,16 @@
 				2A0137E9224A812300AB38BD /* AnyCodable.swift in Sources */,
 				F9D6FA15994140869F011E12339EA131 /* LogManager.swift in Sources */,
 				2A0137E42249004100AB38BD /* RetrieveEvent.swift in Sources */,
+				BC4A6ABA225CD49700C5EA32 /* Container.swift in Sources */,
 				D411EFD1E941A42E700511A9D3A0340D /* ObjectFamily.swift in Sources */,
 				33A3B3E2FBA090C47A37F896D09C2FC1 /* OperatingState.swift in Sources */,
 				BC836837224A6455001B3541 /* ObjectJoinCondition.swift in Sources */,
 				2A0137EB224A814D00AB38BD /* AnyDecodable.swift in Sources */,
 				0C67C27ED975B0AF611AEC85AAE395AC /* PayloadCoder.swift in Sources */,
-				BC4A6AA5225C93F800C5EA32 /* Runtime.swift in Sources */,
 				DBFAAC1DB7A9E23BAB686BED6CB6A471 /* Resolve.swift in Sources */,
 				EA96B8D36C30877074B0C818543B4DEB /* ResolveEvent.swift in Sources */,
 				AF5CD4AAC428F1A0E53A26BBC8541CB3 /* Topic.swift in Sources */,
-				BC4A6AA7225C93F800C5EA32 /* AgentInfo.swift in Sources */,
+				BC4A6ABB225CD49700C5EA32 /* AgentInfo.swift in Sources */,
 				8B3EF9A72503A782EDF41E82211264E9 /* UpdateEvent.swift in Sources */,
 				2AF1EF9322537E4F0099E170 /* User.swift in Sources */,
 			);

@@ -16,6 +16,7 @@ class ControllerA: Controller {
     
     private var communicationManager: CommunicationManager<CustomCoatyObjectFamily>?
     private var disposeBag = DisposeBag()
+    private var observable: Observable<ChannelEvent<CustomCoatyObjectFamily>>? = nil
     
     // MARK: - Controller lifecycle methods.
     
@@ -47,6 +48,23 @@ class ControllerA: Controller {
     
     private func publishUpdate() {
         
+        /*
+        let observable = Observable<Int>.create { (observer) -> Disposable in
+            observer.onNext(1)
+            let cancel = Disposables.create {
+         
+                print("Cleaned up")
+            }
+            return cancel
+        }
+        
+        let sub = observable.subscribe {
+            print($0.element)
+        
+        }
+        
+        sub.dispose()*/
+        
         guard let comManager = communicationManager else {
             // CommunicationManager could not be fetched.
             return
@@ -56,9 +74,12 @@ class ControllerA: Controller {
         let updateEvent = UpdateEvent<CustomCoatyObjectFamily>.withPartial(eventSource: self.identity,
                                                                           objectId: .init(),
                                                                           changedValues: ["Value1": 123, "Value2": "a String"])
+
         
         // Publish update and subscribe to the complete event.
-        _ = try? comManager.publishUpdate(event: updateEvent).subscribe {
+        observable = try? comManager.observeChannel(eventTarget: self.identity, channelId: "123456")
+        
+        /*observable!.subscribe {
             
             guard let completeEvent = $0.element else {
                 // Got an error instead of the expected element.
@@ -67,7 +88,36 @@ class ControllerA: Controller {
             
             // ... do something with the complete event.
             print(completeEvent.json)
+        }*/
+        
+        
+        /*// Insert timer for unsubscribing after certain time
+        if #available(iOS 10.0, *) {
+            Timer.scheduledTimer(withTimeInterval: .init(5), repeats: true, block: {_ in
+                // subscription?.dispose()
+                self.observable?.subscribe({ (event) in
+                    print(event.element?.json)
+                })
+            })
+        } else {
+            // Fallback on earlier versions
+        }*/
+        let firstObs = self.observable?.subscribe({ (event) in
+            print("first subscriber ")
+        })
+        
+        let secondObs = self.observable?.subscribe({ (event) in
+            print("second subscriber ")
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            firstObs?.dispose()
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            secondObs?.dispose()
+        }
+        
     }
     
     /*
@@ -94,8 +144,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let components = Components(controllers: ["CONA": ControllerA.self,
-                                                  "CONB": ControllerA.self])
+        let components = Components(controllers: ["CONA": ControllerA.self/*,
+                                                  "CONB": ControllerA.self*/])
         
         
         let configuration: Configuration = try! .build { config in
@@ -113,10 +163,10 @@ class ViewController: UIViewController {
                                           objectFamily: CustomCoatyObjectFamily.self)
         
         // Adding a controller at runtime.
-        container.registerController(name: "CONC", controllerType: ControllerA.self,
+        /*try? container.registerController(name: "CONC", controllerType: ControllerA.self,
                                      config: ControllerConfig(controllerOptions: [
                                         "CONC": ControllerOptions(shouldAdvertiseIdentity: true)
-                                        ]))
+                                        ]))*/
     }
     
     

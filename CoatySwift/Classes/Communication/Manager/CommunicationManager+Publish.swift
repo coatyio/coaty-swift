@@ -66,7 +66,7 @@ extension CommunicationManager {
         // FIXME: Only subscribe to topic if not already subscribed...
         subscribe(topic: completeTopic)
         
-        return rawMessages.map(convertToTupleFormat)
+        let observable = rawMessages.map(convertToTupleFormat)
             .filter(isComplete)
             .filter({ (rawMessageWithTopic) -> Bool in
                 // Filter messages according to message token.
@@ -79,6 +79,7 @@ extension CommunicationManager {
                 return PayloadCoder.decode(payload)!
             })
         
+        return createSelfCleaningObservable(observable: observable, topic: completeTopic)
     }
 
     /// Publish a channel event.
@@ -122,7 +123,7 @@ extension CommunicationManager {
                                                                            messageToken: discoverMessageToken)
         subscribe(topic: resolveTopic)
         
-        return rawMessages.map(convertToTupleFormat)
+        let observable = rawMessages.map(convertToTupleFormat)
             .filter(isResolve)
             .filter({ (rawMessageWithTopic) -> Bool in
                 // Filter messages according to message token.
@@ -135,6 +136,8 @@ extension CommunicationManager {
                 
                 return PayloadCoder.decode(payload)!
             })
+        
+        return createSelfCleaningObservable(observable: observable, topic: resolveTopic)
     }
     
     /// Find queryable objects and receive Retrieve events for them
@@ -170,7 +173,7 @@ extension CommunicationManager {
         subscribe(topic: retrieveTopic)
         publish(topic: topic, message: event.json)
         
-        return rawMessages.map(convertToTupleFormat)
+        let observable = rawMessages.map(convertToTupleFormat)
             .filter(isRetrieve)
             .filter({ (rawMessageWithTopic) -> Bool in
                 // Filter messages according to message token.
@@ -183,6 +186,8 @@ extension CommunicationManager {
                 
                 return PayloadCoder.decode(payload)!
             })
+        
+        return createSelfCleaningObservable(observable: observable, topic: retrieveTopic)
     }
     
     /// Publishes a complete after an update event. Not accessible by the
@@ -257,7 +262,7 @@ extension CommunicationManager {
         // FIXME: Only subscribe to topic if not already subscribed...
         subscribe(topic: returnTopic)
         
-        return rawMessages.map(convertToTupleFormat)
+        let observable = rawMessages.map(convertToTupleFormat)
             .filter(isReturn)
             .filter({ (rawMessageWithTopic) -> Bool in
                 // Filter messages according to message token.
@@ -270,6 +275,7 @@ extension CommunicationManager {
                 return PayloadCoder.decode(payload)!
             })
         
+        return createSelfCleaningObservable(observable: observable, topic: returnTopic)
     }
     
     /// Publishes a return after a call event. Not accessible by the
