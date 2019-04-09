@@ -65,12 +65,15 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
     /// Holds deferred publications (topic, payload) while the communication manager is offline.
     private var deferredPublications = [(String, String)]()
 
-    
     /// Ids of all advertised components that should be deadvertised when the client ends.
     internal var deadvertiseIds = [UUID]()
     
     /// Observable emitting raw (topic, payload) values.
     let rawMessages: PublishSubject<(String, String)> = PublishSubject<(String, String)>()
+    
+    /// A dispatchqueue that handles synchronisation issues when accessing
+    /// deferred publications and subscriptions.
+    private var queue = DispatchQueue(label: "com.siemens.coatyswift.comQueue")
     
     // MARK: - Initializers.
     
@@ -250,28 +253,34 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
     ///
     /// - Parameter topic: topic name.
     func subscribe(topic: String) {
-        _ = getCommunicationState().subscribe {
-            guard let state = $0.element else {
-                return
-            }
-
-            self.deferredSubscriptions.append(topic)
-            
-            // Subscribe if the client is online.
-            
-            if state == .online {
-                self.deferredSubscriptions.forEach({ (topic) in
-                    self.mqtt?.subscribe(topic)
-                })
+        queue.sync {
+        
+            _ = getCommunicationState().subscribe {
+                guard let state = $0.element else {
+                    return
+                }
                 
-                self.deferredSubscriptions = []
+                self.deferredSubscriptions.append(topic)
+                
+                // Subscribe if the client is online.
+                
+                if state == .online {
+                    self.deferredSubscriptions.forEach({ (topic) in
+                        self.mqtt?.subscribe(topic)
+                    })
+                    
+                    self.deferredSubscriptions = []
+                }
             }
         }
     }
     
     func unsubscribe(topic: String) {
         // TODO: Implement properly.
-        mqtt?.unsubscribe(topic)
+        _ = queue.sync {
+            mqtt?.unsubscribe(topic)
+        }
+
     }
     
     /// Publish defers publications until the communication manager comes online.
@@ -280,23 +289,25 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
     ///   - topic: the publication topic.
     ///   - message: the payload message.
     func publish(topic: String, message: String) {
-        _ = getCommunicationState().subscribe {
-            guard let state = $0.element else {
-                return
-            }
-            
-            self.deferredPublications.append((topic, message))
-            
-            // Publish if the client is online.
-            
-            if state == .online {
-                self.deferredPublications.forEach({ (publication) in
-                    let topic = publication.0
-                    let payload = publication.1
-                    self.mqtt?.publish(topic, withString: payload)
-                })
+        queue.sync {
+            _ = getCommunicationState().subscribe {
+                guard let state = $0.element else {
+                    return
+                }
                 
-                self.deferredPublications = []
+                self.deferredPublications.append((topic, message))
+                
+                // Publish if the client is online.
+                
+                if state == .online {
+                    self.deferredPublications.forEach({ (publication) in
+                        let topic = publication.0
+                        let payload = publication.1
+                        self.mqtt?.publish(topic, withString: payload)
+                    })
+                    
+                    self.deferredPublications = []
+                }
             }
         }
     }
