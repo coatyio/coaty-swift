@@ -6,6 +6,7 @@
 import Foundation
 import RxSwift
 
+
 extension CommunicationManager {
     
     /// This method should not be called directly, use observeAdvertiseWithCoreType method
@@ -34,7 +35,7 @@ extension CommunicationManager {
         // TODO: Subscribe only if not already subscribed.
         self.subscribe(topic: topic)
         
-        return rawMessages.map(convertToTupleFormat)
+        let observable = rawMessages.map(convertToTupleFormat)
             .filter(isAdvertise)
             .filter({ (rawMessageWithTopic) -> Bool in
                 
@@ -56,6 +57,7 @@ extension CommunicationManager {
                 return PayloadCoder.decode(payload)!
             })
         
+        return createSelfCleaningObservable(observable: observable, topic: topic)
     }
     
     /// Observes advertises with a particular coreType.
@@ -73,7 +75,8 @@ extension CommunicationManager {
                                                              eventTarget: eventTarget,
                                                              coreType: coreType,
                                                              objectType: nil)
-        return observable
+        
+        return createSelfCleaningObservable(observable: observable, topic: topic)
     }
     
     /// Observes advertises with a particular objectType.
@@ -89,7 +92,8 @@ extension CommunicationManager {
                                                              eventTarget: eventTarget,
                                                              coreType: nil,
                                                              objectType: objectType)
-        return observable
+        
+        return createSelfCleaningObservable(observable: observable, topic: topic)
     }
     
     
@@ -120,7 +124,7 @@ extension CommunicationManager {
         // TODO: Make sure to only subscribe to topic once...
         self.subscribe(topic: channelTopic)
 
-        return rawMessages.map(convertToTupleFormat)
+        let observable =  rawMessages.map(convertToTupleFormat)
             .filter(isChannel)
             .filter({ (rawMessageWithTopic) -> Bool in
                 // Filter messages according to channelId.
@@ -133,6 +137,8 @@ extension CommunicationManager {
                 // FIXME: Remove force unwrap.
                 return PayloadCoder.decode(payload)!
             })
+        
+        return createSelfCleaningObservable(observable: observable, topic: channelTopic)
     }
     
     /// Observe Deadvertise events for the given target emitted by the hot
@@ -150,7 +156,7 @@ extension CommunicationManager {
         
         self.subscribe(topic: deadvertiseTopic)
         
-        return rawMessages.map(convertToTupleFormat)
+        let observable =  rawMessages.map(convertToTupleFormat)
             .filter({ (rawMessageTopic) -> Bool in
                 let (topic, _) = rawMessageTopic
                 return topic.eventType == .Deadvertise
@@ -161,6 +167,8 @@ extension CommunicationManager {
                 // FIXME: Remove force unwrap.
                 return PayloadCoder.decode(payload)!
             })
+        
+        return createSelfCleaningObservable(observable: observable, topic: deadvertiseTopic)
     }
     
     /// Observe Update events for the given target emitted by the hot
@@ -179,7 +187,7 @@ extension CommunicationManager {
         let updateTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Update)
         self.subscribe(topic: updateTopic)
 
-        return rawMessages.map(convertToTupleFormat)
+        let observable = rawMessages.map(convertToTupleFormat)
             .filter(isUpdate)
             .map({ (message) -> T in
                 let (coatyTopic, payload) = message
@@ -194,6 +202,8 @@ extension CommunicationManager {
                 
                 return updateEvent
             })
+        
+        return createSelfCleaningObservable(observable: observable, topic: updateTopic)
     }
     
     /// Observe Discover events for the given target emitted by the hot
@@ -212,7 +222,7 @@ extension CommunicationManager {
         let discoverTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Discover)
         self.subscribe(topic: discoverTopic)
 
-        return rawMessages.map(convertToTupleFormat)
+        let observable = rawMessages.map(convertToTupleFormat)
             .filter(isDiscover)
             .map({ (message) -> T in
                 let (coatyTopic, payload) = message
@@ -225,6 +235,8 @@ extension CommunicationManager {
                 
                 return discoverEvent
             })
+        
+        return createSelfCleaningObservable(observable: observable, topic: discoverTopic)
     }
     
     /// - TODO: Missing documentation!
@@ -235,7 +247,7 @@ extension CommunicationManager {
         
         self.subscribe(topic: callTopic)
 
-        return rawMessages.map(convertToTupleFormat)
+        let observable = rawMessages.map(convertToTupleFormat)
             .filter(isCall)
             .map({ (message) -> T in
                 let (coatyTopic, payload) = message
@@ -250,6 +262,8 @@ extension CommunicationManager {
                 
                 return callEvent
             })
+        
+        return createSelfCleaningObservable(observable: observable, topic: callTopic)
     }
     
 }

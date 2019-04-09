@@ -339,7 +339,7 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
     }
     
     public func mqtt(_ mqtt: CocoaMQTT, didUnsubscribeTopic topic: String) {
-        /// FIXME: Not implemented yet.
+        log.info("Unsubscribed from topic \(topic).")
     }
     
     public func mqttDidPing(_ mqtt: CocoaMQTT) {

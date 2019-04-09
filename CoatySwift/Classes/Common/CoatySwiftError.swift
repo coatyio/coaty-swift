@@ -10,4 +10,5 @@ import Foundation
 public enum CoatySwiftError: Error {
     case InvalidArgument(String)
     case DecodingFailure(String)
+    case InvalidConfiguration(String)
 }
