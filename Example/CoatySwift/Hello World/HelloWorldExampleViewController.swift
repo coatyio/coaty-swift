@@ -9,7 +9,6 @@ import RxSwift
 import CoatySwift
 
 class HelloWorldExampleViewController: UIViewController {
-  /*
     var identity =  Component(name: "HelloWorldCoatySwiftClient")
     var disposeBag = DisposeBag()
     var operatingState: Observable<OperatingState>?
@@ -17,8 +16,24 @@ class HelloWorldExampleViewController: UIViewController {
     override func viewDidLoad() {
         setupView()
         
+        let components = Components(controllers: ["TaskController": TaskController.self])
+        
+        let configuration: Configuration = try! .build { config in
+            config.common = CommonOptions()
+            config.controllers = ControllerConfig(controllerOptions: ["TaskController": ControllerOptions(shouldAdvertiseIdentity: true)])
+            
+            let brokerOptions = BrokerOptions(host: "192.168.1.120", port: 1883, clientId: "\(UUID.init())")
+            config.communication = CommunicationOptions(brokerOptions: brokerOptions, shouldAutoStart: true)
+            config.communication?.shouldAdvertiseIdentity = true
+        }
+        
+        let container = Container.resolve(components: components,
+                                          configuration: configuration,
+                                          objectFamily: CustomCoatyObjectFamily.self)
+ 
+        
         // Establish mqtt connection.
-        comManager.startClient()
+        /*comManager.startClient()
         
         // Observe operating state.
         operatingState = comManager.getOperatingState()
@@ -29,10 +44,10 @@ class HelloWorldExampleViewController: UIViewController {
             }
             
             print("Communication Manager changed state to: \(state)")
-        }
+        }*/
         
     }
-    
+    /*
     /// Query list of snapshot objects from a task with a given id.
     @objc private func query() {
         
@@ -75,7 +90,7 @@ class HelloWorldExampleViewController: UIViewController {
             }
             
         })
-    }
+    }*/
     
     // MARK: - Setup methods.
     
@@ -85,7 +100,7 @@ class HelloWorldExampleViewController: UIViewController {
         let queryButton = UIButton(frame: CGRect(x: 0, y: 150, width: 350, height: 50))
         queryButton.backgroundColor = .lightGray
         queryButton.setTitle("Query", for: .normal)
-        queryButton.addTarget(self, action: #selector(query), for: .touchUpInside)
+        //queryButton.addTarget(self, action: #selector(query), for: .touchUpInside)
         self.view.addSubview(queryButton)
-    }*/
+    }
 }
