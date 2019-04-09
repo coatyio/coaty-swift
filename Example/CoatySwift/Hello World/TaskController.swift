@@ -7,23 +7,31 @@ import Foundation
 import CoatySwift
 import RxSwift
 
-/// TODO: Add documentation.
+/// Listens for task requests advertised by the service and carries out assigned tasks.
 class TaskController: Controller {
+    
+    // MARK: - Attributes.
     
     private var assignedTask: HelloWorldTask?
     private var advertiseDisposable: Disposable?
     private var communicationManager: CommunicationManager<HelloWorldObjectFamily>?
     
+    // MARK: - Controller lifecycle methods.
+    
     override func onCommunicationManagerStarting() {
         super.onCommunicationManagerStarting()
         communicationManager = self.getCommunicationManager()
         
+        // Setup subscriptions.
         observeAdvertiseRequests()
+        
         print("# Client User ID: \(self.runtime.commonOptions?.associatedUser?.objectId.uuidString ?? "-")")
     }
     
     override func onCommunicationManagerStopping() {
         super.onCommunicationManagerStopping()
+        
+        // Tear-down subscriptions.
         advertiseDisposable?.dispose()
     }
     
@@ -48,7 +56,7 @@ class TaskController: Controller {
     
     // MARK: Util methods.
     
-    enum Direction {
+    private enum Direction {
         case In
         case Out
     }
