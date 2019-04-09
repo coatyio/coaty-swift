@@ -26,7 +26,7 @@ open class Controller {
                   communicationManager: AnyCommunicationManager,
                   controllerType: String) {
         self.runtime = runtime
-        self.options = options
+        self.options = options ?? ControllerOptions()
         self.anyComManager = communicationManager
         self.controllerType = controllerType
         
