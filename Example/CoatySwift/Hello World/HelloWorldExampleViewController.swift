@@ -97,10 +97,10 @@ class HelloWorldExampleViewController: UIViewController {
     private func setupView() {
         self.view.backgroundColor = .white
         
-        let queryButton = UIButton(frame: CGRect(x: 0, y: 150, width: 350, height: 50))
+        /*let queryButton = UIButton(frame: CGRect(x: 0, y: 150, width: 350, height: 50))
         queryButton.backgroundColor = .lightGray
         queryButton.setTitle("Query", for: .normal)
         //queryButton.addTarget(self, action: #selector(query), for: .touchUpInside)
-        self.view.addSubview(queryButton)
+        self.view.addSubview(queryButton)*/
     }
 }

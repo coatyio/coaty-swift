@@ -7,7 +7,7 @@ import Foundation
 
 /// Represents a snapshot in time of the state of any Coaty object.
 
-class Snapshot<Family: ObjectFamily>: CoatyObject {
+open class Snapshot<Family: ObjectFamily>: CoatyObject {
     
     /// Timestamp when snapshot was issued/created.
     /// Value represents the number of milliseconds since the epoc in UTC
@@ -25,7 +25,7 @@ class Snapshot<Family: ObjectFamily>: CoatyObject {
     public var tags: [String]?
     
     
-    init(creationTimestamp: Double,
+    public init(creationTimestamp: Double,
          creatorId: UUID,
          tags: [String]? = nil,
          object: CoatyObject,
@@ -71,7 +71,7 @@ class Snapshot<Family: ObjectFamily>: CoatyObject {
         try super.init(from: decoder)
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override open func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(creatorId, forKey: .creatorId)

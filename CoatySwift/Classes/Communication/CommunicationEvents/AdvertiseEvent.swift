@@ -44,8 +44,8 @@ public class AdvertiseEventData<S: CoatyObject>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
-    var object: S
-    var privateData: [String: Any]?
+    public var object: S
+    public var privateData: [String: Any]?
     
     // MARK: - Initializers.
     
