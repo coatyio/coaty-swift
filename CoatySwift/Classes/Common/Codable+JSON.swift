@@ -76,6 +76,8 @@ extension UnkeyedDecodingContainer {
                 array.append(value)
             } else if let value = try? decode(Double.self) {
                 array.append(value)
+            } else if let value = try? decode(UUID.self) {
+                array.append(value)
             } else if let value = try? decode(String.self) {
                 array.append(value)
             } else if let nestedDictionary = try? decode([String: Any].self) {
@@ -106,6 +108,8 @@ extension KeyedEncodingContainerProtocol where Key == JSONCodingKeys {
         try value.forEach({ (key, value) in
             let key = JSONCodingKeys(stringValue: key)
             switch value {
+            case let value as UUID:
+                try encode(value, forKey: key)
             case let value as Bool:
                 try encode(value, forKey: key)
             case let value as Int:

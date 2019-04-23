@@ -137,7 +137,7 @@ open class Task: CoatyObject {
     open override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(creatorId, forKey: .creatorId)
+        try container.encode(creatorId.uuidString.lowercased(), forKey: .creatorId)
         try container.encode(creationTimestamp, forKey: .creationTimestamp)
         try container.encode(status, forKey: .status)
         try container.encodeIfPresent(lastModificationTimestamp, forKey: .lastModificationTimestamp)
@@ -145,6 +145,6 @@ open class Task: CoatyObject {
         try container.encodeIfPresent(doneTimestamp, forKey: .doneTimestamp)
         try container.encodeIfPresent(requirements, forKey: .requirements)
         try container.encodeIfPresent(description, forKey: .description)
-        try container.encodeIfPresent(workflowId, forKey: .workflowId)
+        try container.encodeIfPresent(workflowId?.uuidString.lowercased(), forKey: .workflowId)
     }
 }

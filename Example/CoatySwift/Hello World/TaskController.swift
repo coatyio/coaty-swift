@@ -28,11 +28,15 @@ class TaskController: Controller {
     private var disposeBag = DisposeBag()
     private var advertiseRequestSubscription: Disposable?
     
+    /// - TODO: Clean this up. We need a way to store the subscriptions to prevent them from being
+    ///   immediately disposed. Maybe it is already enough to add them to the dispose bag?
+    private var observeSubscriptions = [Disposable]()
+    
     /// - TODO: Convert into mutex.
     private var isBusy: Bool = false
     
     // MARK: - Controller lifecycle methods.
-    
+
     override func onInit() {
         isBusy = false
     }
@@ -55,14 +59,13 @@ class TaskController: Controller {
     }
     
     override func initializeIdentity(identity: Component) {
-        super.initializeIdentity(identity: identity)
-        // TODO: Implement me.
+        // super.initializeIdentity(identity: identity)
+        identity.assigneeUserId = self.runtime.commonOptions?.associatedUser?.objectId
     }
     
     // MARK: Application logic.
     
     private func observeAdvertiseRequests() throws {
-        print("observeAdvertiseRequests")
         advertiseRequestSubscription = try communicationManager?
             .observeAdvertiseWithObjectType(eventTarget: identity, objectType: ModelTypes.OBJECT_TYPE_HELLO_WORLD_TASK.rawValue)
             .map({ (advertiseEvent) -> HelloWorldTask? in
@@ -84,7 +87,7 @@ class TaskController: Controller {
     private func handleRequests(request: HelloWorldTask) {
         if isBusy {
             logConsole(message: "Request ignored while busy: \(request.name)",
-                       eventName: "Advertise",
+                       eventName: "ADVERTISE",
                        eventDirection: .In)
         }
         
@@ -92,19 +95,21 @@ class TaskController: Controller {
         logConsole(message: "Request received: \(request.name)", eventName: "ADVERTISE", eventDirection: .In)
         
         // TODO: make random. include option "minTaskOfferDelay"
-        let delay: DispatchTime = .now() + .seconds(10)
+        let delay: DispatchTime = .now() + .seconds(1)
         taskControllerQueue.asyncAfter(deadline: delay) {
             
             // TODO: Check if associated user id exists.
-            let changedValues: [String: Any] = ["dueTimestamp": Date(),
-                                                "assigneeUserId": self.runtime.commonOptions?.associatedUser?.objectId]
+            let dueTimeStamp = Int(Date().timeIntervalSince1970 * 1000)
+            let assigneeUserId = self.identity.assigneeUserId?.uuidString.lowercased()
+            let changedValues: [String: Any] = ["dueTimestamp": dueTimeStamp,
+                                                "assigneeUserId": assigneeUserId]
             let event = UpdateEvent<HelloWorldObjectFamily>.withPartial(eventSource: self.identity,
                                                 objectId: request.objectId,
                                                 changedValues: changedValues)
-            _ = try? self.communicationManager?.publishUpdate(event: event)
-                .take(1)
-                .map({ (advertiseEvent) -> HelloWorldTask? in
-                    return advertiseEvent.eventData.object as? HelloWorldTask
+            
+            let subscription = try? self.communicationManager?.publishUpdate(event: event)
+                .map({ (completeEvent) -> HelloWorldTask? in
+                    return completeEvent.eventData.object as? HelloWorldTask
                 })
                 .flatMap{Observable.from(optional: $0)}
                 .subscribe({ (event) in
@@ -112,7 +117,7 @@ class TaskController: Controller {
                         return
                     }
                     
-                    if task.assigneeUserId == self.runtime.commonOptions?.associatedUser?.objectId {
+                    if task.assigneeUserId?.uuidString.lowercased() == self.identity.assigneeUserId?.uuidString.lowercased() {
                         self.logConsole(message: "Offer accepted for request: \(task.name)", eventName: "COMPLETE", eventDirection: .In)
                         self.accomplishTask(task: task)
                     } else {
@@ -121,7 +126,9 @@ class TaskController: Controller {
                     }
                 })
             
-        }
+            self.observeSubscriptions.append(subscription!!)
+
+            }
     }
     
     private func accomplishTask(task: HelloWorldTask) {
@@ -131,27 +138,27 @@ class TaskController: Controller {
         print("Carrying out task: \(task.name)")
         
         // Notify other components that task is now in progress.
-        let event = AdvertiseEvent.withObject(eventSource: self.identity, object: task)
+        let event = AdvertiseEvent<HelloWorldObjectFamily>.withObject(eventSource: self.identity, object: task)
         _ = try? communicationManager?.publishAdvertise(advertiseEvent: event, eventTarget: self.identity)
         
         
         // TODO: make random. include option "minTaskDuration"
         let queryTimeoutMillis = 5000.0 // is this really MS????
-        let delay: DispatchTime = .now() + .seconds(3)
+        let delay: DispatchTime = .now() + .seconds(1)
         taskControllerQueue.asyncAfter(deadline: delay) {
             task.status = .done
-            task.doneTimestamp = Date().timeIntervalSince1970
-            task.lastModificationTimestamp = Date().timeIntervalSince1970
+            task.doneTimestamp = Double(Date().timeIntervalSince1970 * 1000)
+            task.lastModificationTimestamp = Double(Date().timeIntervalSince1970 * 1000)
             
             self.logConsole(message: "Completed task: \(task.name)", eventName: "ADVERTISE", eventDirection: .Out)
             
             // Notify other components that task has been completed.
-            let advertiseEvent = AdvertiseEvent.withObject(eventSource: self.identity, object: task)
+            let advertiseEvent = AdvertiseEvent<HelloWorldObjectFamily>.withObject(eventSource: self.identity, object: task)
             _ = try? self.communicationManager?.publishAdvertise(advertiseEvent: advertiseEvent, eventTarget: self.identity)
             
             // TODO: Double check string to any codable cast.
             let objectFilter = try? ObjectFilter.buildWithCondition {
-                let objectId = AnyCodable(task.objectId.uuidString)
+                let objectId = AnyCodable(task.objectId.uuidString.lowercased())
                 $0.condition = ObjectFilterCondition(property: .init("parentObjectId"),
                                                      expression: .init(filterOperator: .Equals, op1: objectId))
                 $0.orderByProperties = [OrderByProperty(properties: .init("creationTimestamp"), sortingOrder: .Desc)]
@@ -162,25 +169,32 @@ class TaskController: Controller {
             let queryEvent = QueryEvent<HelloWorldObjectFamily>.withCoreTypes(eventSource: self.identity,
                                                  coreTypes: [.Snapshot],
                                                  objectFilter: objectFilter)
-            _ = try? self.communicationManager?.publishQuery(event: queryEvent)
-                .take(1)
-                .timeout(queryTimeoutMillis, scheduler: MainScheduler.instance)
+            
+            let subscription = try? self.communicationManager?.publishQuery(event: queryEvent)
+                // .timeout(queryTimeoutMillis, scheduler: MainScheduler.instance)
                 .subscribe({ (event) in
                     
                     if event.error != nil {
                         print("Failed to create snapshot objects.")
                         return
                     }
-                    
-                    if let snapshots = event.element?.eventData.objects as? [Snapshot<HelloWorldObjectFamily>] {
+                
+                    if let snapshots = event.element?.eventData.objects
+                        .map({ (coatyObject) -> Snapshot<HelloWorldObjectFamily> in
+                        return coatyObject as! Snapshot<HelloWorldObjectFamily>
+                        }){
+                        
                         self.logHistorian(snapshots)
-                        return
+
                     }
+
                 })
             
             self.isBusy = false
             
+            self.observeSubscriptions.append(subscription!!)
         }
+        
         
     }
     

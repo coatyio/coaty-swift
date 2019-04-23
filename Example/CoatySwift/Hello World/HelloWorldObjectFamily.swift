@@ -18,6 +18,7 @@ enum HelloWorldObjectFamily: String, ObjectFamily {
     
     /// This is the objectType for a custom CoatyObject.
     case helloWorldTask = "com.helloworld.Task"
+    case snapshot = "coaty.Snapshot"
     
     /// Define the mapping between objectType and your custom CoatyObject class type.
     /// For every objectType enum case you need a corresponding Swift class matching.
@@ -25,6 +26,10 @@ enum HelloWorldObjectFamily: String, ObjectFamily {
         switch self {
         case .helloWorldTask:
             return HelloWorldTask.self
+        case .snapshot:
+            return Snapshot<HelloWorldObjectFamily>.self
         }
     }
+    
+    
 }

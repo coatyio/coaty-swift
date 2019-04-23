@@ -6,11 +6,11 @@
 
 /// AdvertiseEvent provides a generic implementation for all AdvertiseEvents.
 /// Note that this class should preferably initialized via its withObject() method.
-public class AdvertiseEvent<GenericAdvertise: CoatyObject>: CommunicationEvent<AdvertiseEventData<GenericAdvertise>> {
+public class AdvertiseEvent<Family: ObjectFamily>: CommunicationEvent<AdvertiseEventData<Family>> {
     
     /// TODO: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
-    override init(eventSource: Component, eventData: AdvertiseEventData<GenericAdvertise>) {
+    override init(eventSource: Component, eventData: AdvertiseEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
@@ -19,10 +19,10 @@ public class AdvertiseEvent<GenericAdvertise: CoatyObject>: CommunicationEvent<A
     /// creates the AdvertiseEvent.
     /// FIXME: Replace CoatyObject with Component object.
     public static func withObject(eventSource: Component,
-                           object: GenericAdvertise,
+                           object: CoatyObject,
                            privateData: [String: Any]? = nil) -> AdvertiseEvent {
         
-        let advertiseEventData = AdvertiseEventData(object: object, privateData: privateData)
+        let advertiseEventData = AdvertiseEventData<Family>(object: object, privateData: privateData)
         return .init(eventSource: eventSource, eventData: advertiseEventData)
     }
     
@@ -40,22 +40,22 @@ public class AdvertiseEvent<GenericAdvertise: CoatyObject>: CommunicationEvent<A
 
 /// AdvertiseEventData provides a wrapper object that stores the entire message payload data
 /// for an AdvertiseEvent including the object itself as well as the associated private data.
-public class AdvertiseEventData<S: CoatyObject>: CommunicationEventData {
+public class AdvertiseEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
-    public var object: S
+    public var object: CoatyObject
     public var privateData: [String: Any]?
     
     // MARK: - Initializers.
     
-    init(object: S, privateData: [String: Any]? = nil) {
+    init(object: CoatyObject, privateData: [String: Any]? = nil) {
         self.object = object
         self.privateData = privateData
         super.init()
     }
     
-    static func createFrom(eventData: S) -> AdvertiseEventData {
+    static func createFrom(eventData: CoatyObject) -> AdvertiseEventData {
         return .init(object: eventData)
     }
     
@@ -68,7 +68,10 @@ public class AdvertiseEventData<S: CoatyObject>: CommunicationEventData {
     
     required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.decode(S.self, forKey: .object)
+        guard let object = try container.decode(ClassWrapper<Family, CoatyObject>.self, forKey: .object).object else {
+            throw CoatySwiftError.DecodingFailure("No object found while decoding an Advertise Event.")
+        }
+        self.object = object
         try? self.privateData = container.decodeIfPresent([String: Any].self, forKey: .privateData)
         try super.init(from: decoder)
     }

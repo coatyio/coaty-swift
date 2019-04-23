@@ -286,6 +286,20 @@ public class ScimUserNames {
     /// "Ms. Barbara Jane Jensen, III").
     public var honorificSuffix: String?
     
+    public init(formatted: String? = nil,
+                familyName: String? = nil,
+                givenName: String? = nil,
+                middleName: String? = nil,
+                honorificPrefix: String? = nil,
+                honorificSuffix: String? = nil) {
+        self.formatted = formatted
+        self.familyName = familyName
+        self.givenName = givenName
+        self.middleName = middleName
+        self.honorificPrefix = honorificPrefix
+        self.honorificSuffix = honorificSuffix
+    }
+    
 }
 
 /// - TODO: Implement Codable.

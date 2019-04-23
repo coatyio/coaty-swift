@@ -17,7 +17,7 @@ extension CommunicationManager {
             return
         }
         
-        let advertiseIdentityEvent = AdvertiseEvent.withObject(eventSource: identity,
+        let advertiseIdentityEvent = AdvertiseEvent<CoatyObjectFamily>.withObject(eventSource: identity,
                                                                object: identity,
                                                                privateData: nil)
         

@@ -17,7 +17,7 @@ extension CommunicationManager {
     ///     - eventTarget: Usually, your identity.
     ///     - coreType: observed coreType.
     ///     - objectType: observed objectType.
-    private func observeAdvertise<S: CoatyObject, T: AdvertiseEvent<S>>(topic: String,
+    private func observeAdvertise<Family: ObjectFamily, T: AdvertiseEvent<Family>>(topic: String,
                                                                         eventTarget: Component,
                                                                         coreType: CoreType?,
                                                                         objectType: String?) throws -> Observable<T> {
@@ -66,8 +66,7 @@ extension CommunicationManager {
     ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
     ///     - coreType: coreType core type of objects to be observed.
     /// - Returns: An observable emitting the advertise events, that have the wanted coreType.
-    public func observeAdvertiseWithCoreType<S: CoatyObject,
-        T: AdvertiseEvent<S>>(eventTarget: Component,
+    public func observeAdvertiseWithCoreType<T: AdvertiseEvent<Family>>(eventTarget: Component,
                               coreType: CoreType) throws -> Observable<T> {
         let topic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise,
                                                                     eventTypeFilter: coreType.rawValue)
@@ -84,14 +83,13 @@ extension CommunicationManager {
     ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
     ///     - objectType: objectType object type of objects to be observed.
     /// - Returns: An observable emitting the advertise events, that have the wanted objectType.
-    public func observeAdvertiseWithObjectType<S: CoatyObject,
-        T: AdvertiseEvent<S>>(eventTarget: Component,
+    public func observeAdvertiseWithObjectType<T: AdvertiseEvent<Family>>(eventTarget: Component,
                               objectType: String) throws -> Observable<T> {
         let topic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: objectType)
         let observable: Observable<T> = try observeAdvertise(topic: topic,
-                                                             eventTarget: eventTarget,
-                                                             coreType: nil,
-                                                             objectType: objectType)
+                                              eventTarget: eventTarget,
+                                              coreType: nil,
+                                              objectType: objectType)
         
         return createSelfCleaningObservable(observable: observable, topic: topic)
     }

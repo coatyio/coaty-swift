@@ -19,7 +19,15 @@ class HelloWorldExampleViewController: UIViewController {
         let components = Components(controllers: ["TaskController": TaskController.self])
         
         let configuration: Configuration = try! .build { config in
+            
+            // let userNames = ScimUserNames(familyName: "ClientUser", givenName: "")
+            
             config.common = CommonOptions()
+            config.common?.associatedUser = User(name: "ClientUser",
+                                                 names: ScimUserNames(familyName: "ClientUser", givenName: ""),
+                                                 objectType: CoatyObjectFamily.user.rawValue,
+                                                 objectId: UUID())
+
             config.controllers = ControllerConfig(controllerOptions: ["TaskController": ControllerOptions(shouldAdvertiseIdentity: true)])
             
             let brokerOptions = BrokerOptions(host: "192.168.1.120", port: 1883, clientId: "\(UUID.init())")
@@ -29,7 +37,7 @@ class HelloWorldExampleViewController: UIViewController {
         
         let container = Container.resolve(components: components,
                                           configuration: configuration,
-                                          objectFamily: CustomCoatyObjectFamily.self)
+                                          objectFamily: HelloWorldObjectFamily.self)
  
         
         // Establish mqtt connection.
