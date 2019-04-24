@@ -17,11 +17,12 @@ class TaskController: Controller {
     /// somewhere in `onCommunicationManagerStarting()` in order to store this reference.
     private var communicationManager: CommunicationManager<HelloWorldObjectFamily>?
     
-    /// This disposebag holds references to all of your subscriptions. It's standard in RxSwift
+    /// This disposebag holds references to all of your subscriptions. It is standard in RxSwift
     /// to call `.disposed(by: self.disposeBag)` at the end of every subscription.
     private var disposeBag = DisposeBag()
     
     /// This is a DispatchQueue for this particular controller that handles
+    /// asynchronous workloads, such as when we wait for a reply on our task offer.
     private var taskControllerQueue = DispatchQueue(label: "com.siemens.helloWorld.taskControllerQueue")
     
     // MARK: - Thread safety measures for working on tasks.
