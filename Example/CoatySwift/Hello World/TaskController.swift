@@ -7,7 +7,6 @@ import Foundation
 import CoatySwift
 import RxSwift
 
-
 enum ModelTypes: String {
     case OBJECT_TYPE_HELLO_WORLD_TASK = "com.helloworld.Task"
     case OBJECT_TYPE_DATABASE_CHANGE = "com.helloworld.DatabaseChange"
@@ -16,23 +15,30 @@ enum ModelTypes: String {
 /// Listens for task requests advertised by the service and carries out assigned tasks.
 class TaskController: Controller {
     
+    private var communicationManager: CommunicationManager<HelloWorldObjectFamily>?
+    
     // MARK: - Attributes.
     
-    private var assignedTask: HelloWorldTask?
-    private var advertiseDisposable: Disposable?
-    private var communicationManager: CommunicationManager<HelloWorldObjectFamily>?
-    private var taskControllerQueue = DispatchQueue(label: "com.siemens.helloWorld.taskControllerQueue")
-   
-    // Subscriptions.
-    
     private var disposeBag = DisposeBag()
-    private var advertiseRequestSubscription: Disposable?
+    private var assignedTask: HelloWorldTask?
+    private var taskControllerQueue = DispatchQueue(label: "com.siemens.helloWorld.taskControllerQueue")
     
-    /// - TODO: Clean this up. We need a way to store the subscriptions to prevent them from being
-    ///   immediately disposed. Maybe it is already enough to add them to the dispose bag?
-    private var observeSubscriptions = [Disposable]()
+    // Option
+    // TODO: make random. include option "minTaskOfferDelay"
+    let minTaskOfferDelay = 2000 // ms
+    let minTaskDuration = 5000 // ms
+    let queryTimeout = 5000 // ms
+
+    func setBusy(_ to: Bool) {
+        semaphore.wait()
+        isBusy = to
+        semaphore.signal()
+    }
+
     
     /// - TODO: Convert into mutex.
+    let semaphore = DispatchSemaphore(value: 1)
+    
     private var isBusy: Bool = false
     
     // MARK: - Controller lifecycle methods.
@@ -53,9 +59,6 @@ class TaskController: Controller {
     
     override func onCommunicationManagerStopping() {
         super.onCommunicationManagerStopping()
-        
-        // Tear-down subscriptions.
-        advertiseDisposable?.dispose()
     }
     
     override func initializeIdentity(identity: Component) {
@@ -66,7 +69,7 @@ class TaskController: Controller {
     // MARK: Application logic.
     
     private func observeAdvertiseRequests() throws {
-        advertiseRequestSubscription = try communicationManager?
+        try communicationManager?
             .observeAdvertiseWithObjectType(eventTarget: identity, objectType: ModelTypes.OBJECT_TYPE_HELLO_WORLD_TASK.rawValue)
             .map({ (advertiseEvent) -> HelloWorldTask? in
                 return advertiseEvent.eventData.object as? HelloWorldTask
@@ -79,9 +82,7 @@ class TaskController: Controller {
                 if let helloWorldTask = event.element {
                     self.handleRequests(request: helloWorldTask)
                 }
-            })
-        
-        advertiseRequestSubscription?.disposed(by: self.disposeBag)
+            }).disposed(by: self.disposeBag)
     }
     
     private func handleRequests(request: HelloWorldTask) {
@@ -91,23 +92,22 @@ class TaskController: Controller {
                        eventDirection: .In)
         }
         
-        isBusy = true
+        setBusy(true)
         logConsole(message: "Request received: \(request.name)", eventName: "ADVERTISE", eventDirection: .In)
         
-        // TODO: make random. include option "minTaskOfferDelay"
-        let delay: DispatchTime = .now() + .seconds(1)
-        taskControllerQueue.asyncAfter(deadline: delay) {
+        let offerDelay = Int.random(in: minTaskOfferDelay..<2*minTaskOfferDelay)
+        taskControllerQueue.asyncAfter(deadline: .now() + .milliseconds(offerDelay)) {
             
             // TODO: Check if associated user id exists.
             let dueTimeStamp = Int(Date().timeIntervalSince1970 * 1000)
             let assigneeUserId = self.identity.assigneeUserId?.uuidString.lowercased()
             let changedValues: [String: Any] = ["dueTimestamp": dueTimeStamp,
-                                                "assigneeUserId": assigneeUserId]
+                                                "assigneeUserId": assigneeUserId!]
             let event = UpdateEvent<HelloWorldObjectFamily>.withPartial(eventSource: self.identity,
                                                 objectId: request.objectId,
                                                 changedValues: changedValues)
             
-            let subscription = try? self.communicationManager?.publishUpdate(event: event)
+            _ = try? self.communicationManager?.publishUpdate(event: event)
                 .map({ (completeEvent) -> HelloWorldTask? in
                     return completeEvent.eventData.object as? HelloWorldTask
                 })
@@ -121,12 +121,10 @@ class TaskController: Controller {
                         self.logConsole(message: "Offer accepted for request: \(task.name)", eventName: "COMPLETE", eventDirection: .In)
                         self.accomplishTask(task: task)
                     } else {
-                        self.isBusy = false
+                        self.setBusy(false)
                         self.logConsole(message: "Offer rejected for request: \(task.name)", eventName: "COMPLETE", eventDirection: .In)
                     }
-                })
-            
-            self.observeSubscriptions.append(subscription!!)
+                }).disposed(by: self.disposeBag)
 
             }
     }
@@ -141,11 +139,9 @@ class TaskController: Controller {
         let event = AdvertiseEvent<HelloWorldObjectFamily>.withObject(eventSource: self.identity, object: task)
         _ = try? communicationManager?.publishAdvertise(advertiseEvent: event, eventTarget: self.identity)
         
+        let taskDelay = Int.random(in: minTaskDuration..<2*minTaskDuration)
         
-        // TODO: make random. include option "minTaskDuration"
-        let queryTimeoutMillis = 5000.0 // is this really MS????
-        let delay: DispatchTime = .now() + .seconds(1)
-        taskControllerQueue.asyncAfter(deadline: delay) {
+        taskControllerQueue.asyncAfter(deadline: .now() + .milliseconds(taskDelay)) {
             task.status = .done
             task.doneTimestamp = Double(Date().timeIntervalSince1970 * 1000)
             task.lastModificationTimestamp = Double(Date().timeIntervalSince1970 * 1000)
@@ -170,8 +166,8 @@ class TaskController: Controller {
                                                  coreTypes: [.Snapshot],
                                                  objectFilter: objectFilter)
             
-            let subscription = try? self.communicationManager?.publishQuery(event: queryEvent)
-                // .timeout(queryTimeoutMillis, scheduler: MainScheduler.instance)
+            _ = try? self.communicationManager?.publishQuery(event: queryEvent)
+                .timeout(Double(self.queryTimeout), scheduler: MainScheduler.instance)
                 .subscribe({ (event) in
                     
                     if event.error != nil {
@@ -188,11 +184,9 @@ class TaskController: Controller {
 
                     }
 
-                })
+                }).disposed(by: self.disposeBag)
             
-            self.isBusy = false
-            
-            self.observeSubscriptions.append(subscription!!)
+            self.setBusy(false)
         }
         
         
