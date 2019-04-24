@@ -48,23 +48,22 @@ extension CommunicationManager {
     ///     - event: the Update event to be published.
     /// - Returns: a hot observable on which associated Resolve events are emitted.
     public func publishUpdate<V: CompleteEvent<Family>>(event: UpdateEvent<Family>) throws -> Observable<V> {
-        let updateMessageToken = UUID.init().uuidString
+        let updateMessageToken = UUID.init().uuidString.lowercased()
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Update,
                                                                   eventTypeFilter: nil,
                                                                   associatedUserId: EMPTY_ASSOCIATED_USER_ID,
                                                                   sourceObject: event.eventSource,
                                                                   messageToken: updateMessageToken)
-        
-        publish(topic: topic, message: event.json)
-        
-        
+  
         let completeTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Complete,
                                                                             eventTypeFilter: nil,
                                                                             associatedUserId: nil,
                                                                             sourceObject: nil,
                                                                             messageToken: updateMessageToken)
+    
         // FIXME: Only subscribe to topic if not already subscribed...
         subscribe(topic: completeTopic)
+        publish(topic: topic, message: event.json)
         
         let observable = rawMessages.map(convertToTupleFormat)
             .filter(isComplete)
@@ -114,7 +113,6 @@ extension CommunicationManager {
                                                                   associatedUserId: EMPTY_ASSOCIATED_USER_ID,
                                                                   sourceObject: event.eventSource,
                                                                   messageToken: discoverMessageToken)
-        publish(topic: topic, message: event.json)
         
         let resolveTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Resolve,
                                                                            eventTypeFilter: nil,
@@ -122,6 +120,7 @@ extension CommunicationManager {
                                                                            sourceObject: nil,
                                                                            messageToken: discoverMessageToken)
         subscribe(topic: resolveTopic)
+        publish(topic: topic, message: event.json)
         
         let observable = rawMessages.map(convertToTupleFormat)
             .filter(isResolve)
@@ -251,9 +250,6 @@ extension CommunicationManager {
                                                                   sourceObject: event.eventSource,
                                                                   messageToken: publishMessageToken)
         
-        publish(topic: topic, message: event.json)
-        
-        
         let returnTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Return,
                                                                             eventTypeFilter: nil,
                                                                             associatedUserId: nil,
@@ -261,6 +257,7 @@ extension CommunicationManager {
                                                                             messageToken: publishMessageToken)
         // FIXME: Only subscribe to topic if not already subscribed...
         subscribe(topic: returnTopic)
+        publish(topic: topic, message: event.json)
         
         let observable = rawMessages.map(convertToTupleFormat)
             .filter(isReturn)

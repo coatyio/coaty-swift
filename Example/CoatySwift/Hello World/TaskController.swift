@@ -23,8 +23,7 @@ class TaskController: Controller {
     private var assignedTask: HelloWorldTask?
     private var taskControllerQueue = DispatchQueue(label: "com.siemens.helloWorld.taskControllerQueue")
     
-    // Option
-    // TODO: make random. include option "minTaskOfferDelay"
+    // MARK: - Configurable options.
     let minTaskOfferDelay = 2000 // ms
     let minTaskDuration = 5000 // ms
     let queryTimeout = 5000 // ms
@@ -34,9 +33,7 @@ class TaskController: Controller {
         isBusy = to
         semaphore.signal()
     }
-
     
-    /// - TODO: Convert into mutex.
     let semaphore = DispatchSemaphore(value: 1)
     
     private var isBusy: Bool = false
@@ -44,7 +41,7 @@ class TaskController: Controller {
     // MARK: - Controller lifecycle methods.
 
     override func onInit() {
-        isBusy = false
+        setBusy(false)
     }
     
     override func onCommunicationManagerStarting() {
@@ -86,17 +83,24 @@ class TaskController: Controller {
     }
     
     private func handleRequests(request: HelloWorldTask) {
+        
+        semaphore.wait()
         if isBusy {
             logConsole(message: "Request ignored while busy: \(request.name)",
-                       eventName: "ADVERTISE",
-                       eventDirection: .In)
+                eventName: "ADVERTISE",
+                eventDirection: .In)
+            semaphore.signal()
+            return
         }
         
-        setBusy(true)
+        isBusy = true
+        semaphore.signal()
+        
         logConsole(message: "Request received: \(request.name)", eventName: "ADVERTISE", eventDirection: .In)
         
         let offerDelay = Int.random(in: minTaskOfferDelay..<2*minTaskOfferDelay)
         taskControllerQueue.asyncAfter(deadline: .now() + .milliseconds(offerDelay)) {
+            self.logConsole(message: "Make an offer for request \(request.name)", eventName: "UPDATE", eventDirection: .Out)
             
             // TODO: Check if associated user id exists.
             let dueTimeStamp = Int(Date().timeIntervalSince1970 * 1000)
@@ -106,8 +110,9 @@ class TaskController: Controller {
             let event = UpdateEvent<HelloWorldObjectFamily>.withPartial(eventSource: self.identity,
                                                 objectId: request.objectId,
                                                 changedValues: changedValues)
-            
+
             _ = try? self.communicationManager?.publishUpdate(event: event)
+                .take(1)
                 .map({ (completeEvent) -> HelloWorldTask? in
                     return completeEvent.eventData.object as? HelloWorldTask
                 })
@@ -167,14 +172,24 @@ class TaskController: Controller {
                                                  objectFilter: objectFilter)
             
             _ = try? self.communicationManager?.publishQuery(event: queryEvent)
-                .timeout(Double(self.queryTimeout), scheduler: MainScheduler.instance)
+                .take(1)
+                .timeout(Double(self.queryTimeout), scheduler: SerialDispatchQueueScheduler(
+                    queue: self.taskControllerQueue,
+                    internalSerialQueueName: "com.siemens.coaty.internalQueryQueue"))
                 .subscribe({ (event) in
+                    
+                    if event.isCompleted || event.isStopEvent {
+                        // We reached the timeout.
+                        return
+                    }
                     
                     if event.error != nil {
                         print("Failed to create snapshot objects.")
                         return
                     }
-                
+                    
+                    self.logConsole(message: "Snapshots by parentObjectId: \(task.name)",eventName: "RETRIEVE", eventDirection: .In)
+                    
                     if let snapshots = event.element?.eventData.objects
                         .map({ (coatyObject) -> Snapshot<HelloWorldObjectFamily> in
                         return coatyObject as! Snapshot<HelloWorldObjectFamily>
