@@ -10,20 +10,16 @@ import RxSwift
 /// Listens for task requests advertised by the service and carries out assigned tasks.
 class TaskController: Controller {
     
+    // MARK: - Attributes.
+
     /// This is the communicationManager for this particular controller. Note that,
     /// you _must_ call `self.communicationManager = getCommunicationManager()`
     /// somewhere in `onCommunicationManagerStarting()` in order to store this reference.
     private var communicationManager: CommunicationManager<HelloWorldObjectFamily>?
     
-    // MARK: - Attributes.
-    
     /// This disposebag holds references to all of your subscriptions. It's standard in RxSwift
     /// to call `.disposed(by: self.disposeBag)` at the end of every subscription.
     private var disposeBag = DisposeBag()
-    
-    /// An object that represents the currently assigned Task. See the `HelloWorldTask.swift`
-    /// class for more insights.
-    private var assignedTask: HelloWorldTask?
     
     /// This is a DispatchQueue for this particular controller that handles
     private var taskControllerQueue = DispatchQueue(label: "com.siemens.helloWorld.taskControllerQueue")
@@ -73,7 +69,6 @@ class TaskController: Controller {
     }
     
     // MARK: Application logic.
-    
     
     /// Observe Advertises with the objectType of `OBJECT_TYPE_HELLO_WORLD_TASK`.
     /// When a HelloWorldTask Advertise was received, handle it via the `handleRequests`
@@ -166,17 +161,12 @@ class TaskController: Controller {
             }
     }
     
-    private func createTaskOfferEvent(_ request: HelloWorldTask) -> UpdateEvent<HelloWorldObjectFamily> {
-        let dueTimeStamp = Int(Date().timeIntervalSince1970 * 1000)
-        let assigneeUserId = self.identity.assigneeUserId?.uuidString.lowercased()
-        let changedValues: [String: Any] = ["dueTimestamp": dueTimeStamp,
-                                            "assigneeUserId": assigneeUserId!]
-        return UpdateEvent<HelloWorldObjectFamily>.withPartial(eventSource: self.identity,
-                                                                objectId: request.objectId,
-                                                                    changedValues: changedValues)
-    }
-    
+    /// Accomplishes a task after it was assigned to this task controller.
+    ///
+    /// - Parameter task: the task that should be accomplished.
     private func accomplishTask(task: HelloWorldTask) {
+        
+        // Update the task status and the modification timestamp.
         task.status = .inProgress
         task.lastModificationTimestamp = Date().timeIntervalSince1970
         
@@ -186,9 +176,12 @@ class TaskController: Controller {
         let event = AdvertiseEvent<HelloWorldObjectFamily>.withObject(eventSource: self.identity, object: task)
         _ = try? communicationManager?.publishAdvertise(advertiseEvent: event, eventTarget: self.identity)
         
+        // Calculate random delay to simulate task exection time.
         let taskDelay = Int.random(in: minTaskDuration..<2*minTaskDuration)
         
         taskControllerQueue.asyncAfter(deadline: .now() + .milliseconds(taskDelay)) {
+            
+            // Update the task object to set its status to "done".
             task.status = .done
             task.doneTimestamp = Double(Date().timeIntervalSince1970 * 1000)
             task.lastModificationTimestamp = Double(Date().timeIntervalSince1970 * 1000)
@@ -199,54 +192,77 @@ class TaskController: Controller {
             let advertiseEvent = AdvertiseEvent<HelloWorldObjectFamily>.withObject(eventSource: self.identity, object: task)
             _ = try? self.communicationManager?.publishAdvertise(advertiseEvent: advertiseEvent, eventTarget: self.identity)
             
-            // TODO: Double check string to any codable cast.
-            let objectFilter = try? ObjectFilter.buildWithCondition {
-                let objectId = AnyCodable(task.objectId.uuidString.lowercased())
-                $0.condition = ObjectFilterCondition(property: .init("parentObjectId"),
-                                                     expression: .init(filterOperator: .Equals, op1: objectId))
-                $0.orderByProperties = [OrderByProperty(properties: .init("creationTimestamp"), sortingOrder: .Desc)]
-            }
+            // Send out query to get all available snapshots of the task object.
             
             self.logConsole(message: "Snapshot by parentObjectId: \(task.name)", eventName: "QUERY", eventDirection: .Out)
             
-            let queryEvent = QueryEvent<HelloWorldObjectFamily>.withCoreTypes(eventSource: self.identity,
-                                                 coreTypes: [.Snapshot],
-                                                 objectFilter: objectFilter)
+            let queryEvent = self.createSnapshotQuery(forTask: task)
             
             _ = try? self.communicationManager?.publishQuery(event: queryEvent)
                 .take(1)
-                .timeout(Double(self.queryTimeout), scheduler: SerialDispatchQueueScheduler(
-                    queue: self.taskControllerQueue,
-                    internalSerialQueueName: "com.siemens.coaty.internalQueryQueue"))
-                .subscribe({ (event) in
+                .timeout(Double(self.queryTimeout),
+                         scheduler: SerialDispatchQueueScheduler(
+                            queue: self.taskControllerQueue,
+                            internalSerialQueueName: "com.siemens.coaty.internalQueryQueue"))
+                .subscribe(
                     
-                    if event.isCompleted || event.isStopEvent {
-                        // We reached the timeout.
-                        return
-                    }
-                    
-                    if event.error != nil {
-                        print("Failed to create snapshot objects.")
-                        return
-                    }
-                    
+                    // Handle incoming snapshots.
+                    onNext: { (retrieveEvent) in
                     self.logConsole(message: "Snapshots by parentObjectId: \(task.name)",eventName: "RETRIEVE", eventDirection: .In)
                     
-                    if let snapshots = event.element?.eventData.objects
-                        .map({ (coatyObject) -> Snapshot<HelloWorldObjectFamily> in
-                        return coatyObject as! Snapshot<HelloWorldObjectFamily>
-                        }){
+                    let objects = retrieveEvent.eventData.objects
+                    let snapshots = objects.map { (coatyObject) -> Snapshot<HelloWorldObjectFamily> in
+                            coatyObject as! Snapshot<HelloWorldObjectFamily>
+                        }
                         
-                        self.logHistorian(snapshots)
-
-                    }
-
-                }).disposed(by: self.disposeBag)
+                    self.logHistorian(snapshots)
+                    },
+                    
+                    // Handle possible errors.
+                    onError: { _ in
+                                print("Failed to retrieve snapshot objects.")
+                    })
+                .disposed(by: self.disposeBag)
             
+            // Task was accomplished, set busy state to free.
             self.setBusy(false)
         }
+    }
+    
+    // MARK: - Event creation methods.
+    
+    /// Convenience method to create an offer for a task request.
+    ///
+    /// - Parameter request: the task request we want to make an offer to.
+    /// - Returns: an update event that updates the dueTimeStamp and the assigneeUserId.
+    private func createTaskOfferEvent(_ request: HelloWorldTask) -> UpdateEvent<HelloWorldObjectFamily> {
+        let dueTimeStamp = Int(Date().timeIntervalSince1970 * 1000)
+        let assigneeUserId = self.identity.assigneeUserId?.uuidString.lowercased()
+        let changedValues: [String: Any] = ["dueTimestamp": dueTimeStamp,
+                                            "assigneeUserId": assigneeUserId!]
+        return UpdateEvent<HelloWorldObjectFamily>.withPartial(eventSource: self.identity,
+                                                               objectId: request.objectId,
+                                                               changedValues: changedValues)
+    }
+    
+    /// Builds a query that asks for snapshots of the provided task object.
+    ///
+    /// - Parameter task: the tasks that we are interested in.
+    /// - Returns: a query event.
+    private func createSnapshotQuery(forTask task: HelloWorldTask) -> QueryEvent<HelloWorldObjectFamily> {
         
+        // Setup the object filter to match on the `parentObjectId` and sort the results by the
+        // creation timestamp.
+        let objectFilter = try? ObjectFilter.buildWithCondition {
+            let objectId = AnyCodable(task.objectId.uuidString.lowercased())
+            $0.condition = ObjectFilterCondition(property: .init("parentObjectId"),
+                                                 expression: .init(filterOperator: .Equals, op1: objectId))
+            $0.orderByProperties = [OrderByProperty(properties: .init("creationTimestamp"), sortingOrder: .Desc)]
+        }
         
+        return QueryEvent<HelloWorldObjectFamily>.withCoreTypes(eventSource: self.identity,
+                                                                coreTypes: [.Snapshot],
+                                                                objectFilter: objectFilter)
     }
     
     // MARK: Util methods.
@@ -256,13 +272,21 @@ class TaskController: Controller {
         case Out
     }
     
+    /// Pretty printing for event flow.
+    ///
+    /// - Parameters:
+    ///   - message: the text that is displayed as description.
+    ///   - eventName: typically the core type.
+    ///   - eventDirection: either in or out.
     private func logConsole(message: String, eventName: String, eventDirection: Direction = .In) {
         let direction = eventDirection == .Out ? "<-" : "->"
         print("\(direction) \(eventName) | \(message)")
     }
     
+    /// Pretty printing method for snapshots.
+    ///
+    /// - Parameter snapshots: the snapshots we want to print.
     private func logHistorian(_ snapshots: [Snapshot<HelloWorldObjectFamily>]) {
-        
         print("#############################")
         print("## Snapshots retrieved: \(snapshots.count)")
         snapshots.forEach {
@@ -274,6 +298,9 @@ class TaskController: Controller {
         print("#############################\n")
     }
     
+    /// Thread-safe setter for `isBusy`
+    ///
+    /// - Parameter to: value that `isBusy` should be set to.
     private func setBusy(_ to: Bool) {
         mutex.wait()
         isBusy = to
