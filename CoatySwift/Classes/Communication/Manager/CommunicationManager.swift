@@ -30,7 +30,7 @@ public class AnyCommunicationManager {
     
     // MARK: - Dummy methods.
     
-    public func publishAdvertise<S: CoatyObject,T: AdvertiseEvent<S>>(advertiseEvent: T,
+    public func publishAdvertise<Family: ObjectFamily,T: AdvertiseEvent<Family>>(advertiseEvent: T,
                                                                       eventTarget: Component) throws {}
     
     func onDispose() {}
@@ -89,12 +89,12 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
         
         // FIXME: Remove debugging statements at later point in development.
         operatingState.subscribe { (event) in
-            self.log.info("Operating State: \(String(describing: event.element!))")
+            self.log.debug("Operating State: \(String(describing: event.element!))")
             // print("Operating State: \(String(describing: event.element!))")
             }.disposed(by: disposeBag)
         
         communicationState.subscribe { (event) in
-            self.log.info("Comm. State: \(String(describing: event.element!))")
+            self.log.debug("Comm. State: \(String(describing: event.element!))")
             // print("Comm. State: \(String(describing: event.element!))")
             }.disposed(by: disposeBag)
         
@@ -354,11 +354,11 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
     }
     
     public func mqtt(_ mqtt: CocoaMQTT, didSubscribeTopic topic: String) {
-        log.info("Subscribed to topic \(topic).")
+        log.debug("Subscribed to topic \(topic).")
     }
     
     public func mqtt(_ mqtt: CocoaMQTT, didUnsubscribeTopic topic: String) {
-        log.info("Unsubscribed from topic \(topic).")
+        log.debug("Unsubscribed from topic \(topic).")
     }
     
     public func mqttDidPing(_ mqtt: CocoaMQTT) {
@@ -381,7 +381,7 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
     ///
     /// - Parameters:
     ///     - advertiseEvent: The event that should be advertised.
-    public override func publishAdvertise<S: CoatyObject,T: AdvertiseEvent<S>>(advertiseEvent: T,
+    public override func publishAdvertise<Family: ObjectFamily,T: AdvertiseEvent<Family>>(advertiseEvent: T,
                                                                                eventTarget: Component) throws {
         
         let topicForObjectType = try Topic

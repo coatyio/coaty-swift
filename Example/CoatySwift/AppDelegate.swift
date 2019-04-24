@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set starting point for application
         window = UIWindow(frame: UIScreen.main.bounds)
-        let vc = ViewController()
+        let vc = HelloWorldExampleViewController()
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
         

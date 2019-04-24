@@ -17,8 +17,12 @@ open class Controller {
     private(set) public var identity: Component
     private var anyComManager: AnyCommunicationManager
     
-    public func getCommunicationManager<Family: ObjectFamily>() -> CommunicationManager<Family>? {
-        return anyComManager as? CommunicationManager<Family>
+    /// - Note: This method will crash in case the specified Object Family is NOT correctly set.
+    /// - Returns: The Communication Manager for this particular Controller. This method is the only
+    /// way of accessing the Communication Manager, and a reference to the Communication Manager
+    /// should be stored inside the Controller subclass, preferably in a class variable.
+    public func getCommunicationManager<Family: ObjectFamily>() -> CommunicationManager<Family> {
+        return anyComManager as! CommunicationManager<Family>
     }
     
     required public init(runtime: Runtime,
@@ -100,7 +104,7 @@ open class Controller {
     open func initializeIdentity(identity: Component) {}
     
     private func advertiseIdentity() {
-        let event = AdvertiseEvent.withObject(eventSource: self.identity,
+        let event = AdvertiseEvent<CoatyObjectFamily>.withObject(eventSource: self.identity,
                                               object: self.identity)
         
         try? self.anyComManager.publishAdvertise(advertiseEvent: event,

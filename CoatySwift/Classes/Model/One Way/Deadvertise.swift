@@ -37,6 +37,10 @@ public class Deadvertise: Codable {
         var container = encoder.container(keyedBy: DeadvertiseCodingKeys.self)
         
         // Encode required attributes.
+        let objectIds = self.objectIds.map { (uuid) -> String in
+            return uuid.uuidString.lowercased()
+        }
+        
         try container.encode(objectIds, forKey: .objectIds)
     }
 }
