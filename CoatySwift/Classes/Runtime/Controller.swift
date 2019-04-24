@@ -106,4 +106,8 @@ open class Controller {
         try? self.anyComManager.publishAdvertise(advertiseEvent: event,
                                                         eventTarget: self.identity)
     }
+    
+    deinit {
+        onDispose()
+    }
 }
