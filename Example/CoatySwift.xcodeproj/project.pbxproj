@@ -21,6 +21,7 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		7DC4D4F34380C5B9D465F0F9 /* Pods_CoatySwift_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B9CCE17A7ADBB73A053ACB4 /* Pods_CoatySwift_Example.framework */; };
+		BCCCDB762270708200A780DE /* ModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCDB752270708200A780DE /* ModelTypes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		940FCFEA809ED5A86291D93D /* Pods-CoatySwift_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example.release.xcconfig"; sourceTree = "<group>"; };
 		9914431535FD0B653582AF30 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		ADEEFD5354A32F3127D3F18E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		BCCCDB752270708200A780DE /* ModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTypes.swift; sourceTree = "<group>"; };
 		C87AF40D4ACD8A212C6EC978 /* Pods-CoatySwift_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		DD23F046978D94FF26EBCE73 /* Pods-CoatySwift_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		E0DCD879F1B72E4B86ED5D50 /* Pods-CoatySwift_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				2AF1EF9D225CEBFF0099E170 /* HelloWorldTask.swift */,
 				2AF1EF9F225CEC140099E170 /* TaskController.swift */,
 				2AF1EFA1225CED460099E170 /* HelloWorldObjectFamily.swift */,
+				BCCCDB752270708200A780DE /* ModelTypes.swift */,
 			);
 			path = "Hello World";
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				2A427B0D2232816F0056D67A /* CustomCoatyObjectFamily.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				BCCCDB762270708200A780DE /* ModelTypes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

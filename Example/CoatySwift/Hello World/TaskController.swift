@@ -7,36 +7,45 @@ import Foundation
 import CoatySwift
 import RxSwift
 
-enum ModelTypes: String {
-    case OBJECT_TYPE_HELLO_WORLD_TASK = "com.helloworld.Task"
-    case OBJECT_TYPE_DATABASE_CHANGE = "com.helloworld.DatabaseChange"
-}
-
 /// Listens for task requests advertised by the service and carries out assigned tasks.
 class TaskController: Controller {
     
+    /// This is the communicationManager for this particular controller. Note that,
+    /// you _must_ call `self.communicationManager = getCommunicationManager()`
+    /// somewhere in `onCommunicationManagerStarting()` in order to store this reference.
     private var communicationManager: CommunicationManager<HelloWorldObjectFamily>?
     
     // MARK: - Attributes.
     
+    /// This disposebag holds references to all of your subscriptions. It's standard in RxSwift
+    /// to call `.disposed(by: self.disposeBag)` at the end of every subscription.
     private var disposeBag = DisposeBag()
+    
+    /// An object that represents the currently assigned Task. See the `HelloWorldTask.swift`
+    /// class for more insights.
     private var assignedTask: HelloWorldTask?
+    
+    /// This is a DispatchQueue for this particular controller that handles
     private var taskControllerQueue = DispatchQueue(label: "com.siemens.helloWorld.taskControllerQueue")
     
-    // MARK: - Configurable options.
-    let minTaskOfferDelay = 2000 // ms
-    let minTaskDuration = 5000 // ms
-    let queryTimeout = 5000 // ms
-
-    func setBusy(_ to: Bool) {
-        semaphore.wait()
-        isBusy = to
-        semaphore.signal()
-    }
+    // MARK: - Thread safety measures for working on tasks.
     
-    let semaphore = DispatchSemaphore(value: 1)
+    /// A mutex lock managing the access to the `isBusy` variable.
+    private let mutex = DispatchSemaphore(value: 1)
     
+    /// Indicates whether the TaskController is currently working on a task already.
     private var isBusy: Bool = false
+    
+    // MARK: - Configurable options.
+    
+    /// Minimum amount of time in milliseconds until an offer is sent.
+    let minTaskOfferDelay = 2000
+    
+    /// Minimum amount of time in milliseconds until a task is completed.
+    let minTaskDuration = 5000
+    
+    /// Timeout for the query-retrieve event in milliseconds.
+    let queryTimeout = 5000
     
     // MARK: - Controller lifecycle methods.
 
@@ -59,79 +68,112 @@ class TaskController: Controller {
     }
     
     override func initializeIdentity(identity: Component) {
-        // super.initializeIdentity(identity: identity)
+        // You can change your client identity in the following way, for example:
         identity.assigneeUserId = self.runtime.commonOptions?.associatedUser?.objectId
     }
     
     // MARK: Application logic.
     
+    
+    /// Observe Advertises with the objectType of `OBJECT_TYPE_HELLO_WORLD_TASK`.
+    /// When a HelloWorldTask Advertise was received, handle it via the `handleRequests`
+    /// method.
     private func observeAdvertiseRequests() throws {
         try communicationManager?
-            .observeAdvertiseWithObjectType(eventTarget: identity, objectType: ModelTypes.OBJECT_TYPE_HELLO_WORLD_TASK.rawValue)
-            .map({ (advertiseEvent) -> HelloWorldTask? in
+            .observeAdvertiseWithObjectType(eventTarget: identity,
+                                            objectType: ModelObjectTypes.HELLO_WORLD_TASK.rawValue)
+            .map {(advertiseEvent) -> HelloWorldTask? in
+                /// Make sure that the received event if of the expected type.
                 return advertiseEvent.eventData.object as? HelloWorldTask
-            })
-            .flatMap{Observable.from(optional: $0)}
-            .filter({ (task) -> Bool in
+            }
+            .flatMap {
+                /// This is a "hack" to remove nil values from our observable stream.
+                Observable.from(optional: $0)
+            }
+            .filter { (task) -> Bool in
                 return task.status == .request
-            })
-            .subscribe({ (event) in
-                if let helloWorldTask = event.element {
-                    self.handleRequests(request: helloWorldTask)
-                }
+            }
+            .subscribe(onNext: { (task) in
+                // Subscribe to received Hello World Tasks & pass to `handleRequests`.
+                self.handleRequests(request: task)
             }).disposed(by: self.disposeBag)
     }
     
+    /// This methods sends an Update to the Service in order to make an offer to carry out a task.
+    /// If it receives back a complete that matches its own ID, this means it has won the offer
+    /// and can fulfill the task. The task will then be carried out in the `accomplishTask`method.
+    ///
+    /// - Parameter request: The task that was previously advertised by the Service and that needs
+    ///                      to be handled.
     private func handleRequests(request: HelloWorldTask) {
         
-        semaphore.wait()
+        mutex.wait()
+        // If we are busy with another task, we will ignore all incoming requests.
         if isBusy {
             logConsole(message: "Request ignored while busy: \(request.name)",
-                eventName: "ADVERTISE",
-                eventDirection: .In)
-            semaphore.signal()
+                       eventName: "ADVERTISE",
+                       eventDirection: .In)
+            
+            mutex.signal()
             return
         }
         
         isBusy = true
-        semaphore.signal()
+        mutex.signal()
         
-        logConsole(message: "Request received: \(request.name)", eventName: "ADVERTISE", eventDirection: .In)
+        logConsole(message: "Request received: \(request.name)",
+                   eventName: "ADVERTISE",
+                   eventDirection: .In)
         
+        /// This just represents a delay we introduce when we respond to a request.
         let offerDelay = Int.random(in: minTaskOfferDelay..<2*minTaskOfferDelay)
+        
         taskControllerQueue.asyncAfter(deadline: .now() + .milliseconds(offerDelay)) {
-            self.logConsole(message: "Make an offer for request \(request.name)", eventName: "UPDATE", eventDirection: .Out)
             
-            // TODO: Check if associated user id exists.
-            let dueTimeStamp = Int(Date().timeIntervalSince1970 * 1000)
-            let assigneeUserId = self.identity.assigneeUserId?.uuidString.lowercased()
-            let changedValues: [String: Any] = ["dueTimestamp": dueTimeStamp,
-                                                "assigneeUserId": assigneeUserId!]
-            let event = UpdateEvent<HelloWorldObjectFamily>.withPartial(eventSource: self.identity,
-                                                objectId: request.objectId,
-                                                changedValues: changedValues)
+            self.logConsole(message: "Make an offer for request \(request.name)",
+                            eventName: "UPDATE",
+                            eventDirection: .Out)
+            
+            // Create the Update Event, which represents our Offer to carry out the given task.
+            let event = self.createTaskOfferEvent(request)
 
+            // Send it out and wait for the Service to answer.
             _ = try? self.communicationManager?.publishUpdate(event: event)
                 .take(1)
-                .map({ (completeEvent) -> HelloWorldTask? in
+                .map { (completeEvent) -> HelloWorldTask? in
                     return completeEvent.eventData.object as? HelloWorldTask
-                })
-                .flatMap{Observable.from(optional: $0)}
-                .subscribe({ (event) in
-                    guard let task = event.element else {
-                        return
-                    }
-                    
+                }
+                .flatMap {
+                    Observable.from(optional: $0)
+                }
+                .subscribe(onNext: { (task) in
+                    // If our Id is the same of the received complete event from the service, this
+                    // means the Service has chosen us to carry out the task.
                     if task.assigneeUserId?.uuidString.lowercased() == self.identity.assigneeUserId?.uuidString.lowercased() {
-                        self.logConsole(message: "Offer accepted for request: \(task.name)", eventName: "COMPLETE", eventDirection: .In)
+                        self.logConsole(message: "Offer accepted for request: \(task.name)",
+                                        eventName: "COMPLETE",
+                                        eventDirection: .In)
                         self.accomplishTask(task: task)
+                        
                     } else {
+                        // We were not chosen to carry out the task.
                         self.setBusy(false)
-                        self.logConsole(message: "Offer rejected for request: \(task.name)", eventName: "COMPLETE", eventDirection: .In)
+                        self.logConsole(message: "Offer rejected for request: \(task.name)",
+                                        eventName: "COMPLETE",
+                                        eventDirection: .In)
                     }
                 }).disposed(by: self.disposeBag)
-
             }
+    }
+    
+    private func createTaskOfferEvent(_ request: HelloWorldTask) -> UpdateEvent<HelloWorldObjectFamily> {
+        let dueTimeStamp = Int(Date().timeIntervalSince1970 * 1000)
+        let assigneeUserId = self.identity.assigneeUserId?.uuidString.lowercased()
+        let changedValues: [String: Any] = ["dueTimestamp": dueTimeStamp,
+                                            "assigneeUserId": assigneeUserId!]
+        return UpdateEvent<HelloWorldObjectFamily>.withPartial(eventSource: self.identity,
+                                                                objectId: request.objectId,
+                                                                    changedValues: changedValues)
     }
     
     private func accomplishTask(task: HelloWorldTask) {
@@ -230,5 +272,11 @@ class TaskController: Controller {
         }
         
         print("#############################\n")
+    }
+    
+    private func setBusy(_ to: Bool) {
+        mutex.wait()
+        isBusy = to
+        mutex.signal()
     }
 }
