@@ -12,8 +12,9 @@ import CoatySwift
 /// to create your own class family that holds references to these custom objectTypes.
 /// This way, CoatySwift can infer the types of your objects properly when
 /// decoding messages.
-/// - NOTE: If you wish to see another example for a ClassFamily, please see `CoatyObjectFamily`
-/// in the CoatySwift framework.
+/// - NOTE: If you wish to see another example for a ObjectFamily, please see `CoatyObjectFamily`
+/// in the CoatySwift framework. The `CoatyObjectFamily` represents a standard implementation
+/// using the built-in CoatyObject types.
 enum HelloWorldObjectFamily: String, ObjectFamily {
     
     /// This is the objectType for a custom CoatyObject.
@@ -30,6 +31,5 @@ enum HelloWorldObjectFamily: String, ObjectFamily {
             return Snapshot<HelloWorldObjectFamily>.self
         }
     }
-    
-    
+
 }
