@@ -15,7 +15,7 @@ class LogManager {
                                includeDefaultDestinations: false)
         
         let systemDestination = AppleSystemLogDestination(identifier: "CoatySwift.systemDestination")
-        systemDestination.outputLevel = .debug
+        systemDestination.outputLevel = .info
         systemDestination.showLogIdentifier = true
         systemDestination.showFunctionName = false
         systemDestination.showThreadName = false

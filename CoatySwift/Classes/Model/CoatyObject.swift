@@ -107,7 +107,7 @@ open class CoatyObject: Codable {
 
 // MARK: - Extension enable easy access to JSON representation of Coaty object.
 extension CoatyObject {
-    var json: String {
+    public var json: String {
         get {
             return PayloadCoder.encode(self)
         }

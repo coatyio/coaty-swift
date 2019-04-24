@@ -117,7 +117,7 @@ public class Discover: Codable {
     
         // Encode attributes.
         try container.encodeIfPresent(externalId, forKey: .externalId)
-        try container.encodeIfPresent(objectId, forKey: .objectId)
+        try container.encodeIfPresent(objectId?.uuidString.lowercased(), forKey: .objectId)
         try container.encodeIfPresent(coreTypes, forKey: .coreTypes)
         try container.encodeIfPresent(objectTypes, forKey: .objectTypes)
     }

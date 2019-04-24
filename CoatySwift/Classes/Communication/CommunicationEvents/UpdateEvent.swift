@@ -128,7 +128,7 @@ public class UpdateEventData<Family: ObjectFamily>: CommunicationEventData {
     override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.object, forKey: .object)
-        try container.encodeIfPresent(self.objectId, forKey: .objectId)
+        try container.encodeIfPresent(self.objectId?.uuidString.lowercased(), forKey: .objectId)
         try container.encodeIfPresent(self.changedValues, forKey: .changedValues)
     }
 
