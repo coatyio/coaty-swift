@@ -7,6 +7,11 @@
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
+We provide the `HelloWorld` example that is also included in the coaty-js implementation.
+
+## Documentation
+
+You can find important design decisions and rational [here](docs/CoatySwiftInternals).
 
 ## Requirements
 
