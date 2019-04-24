@@ -11,7 +11,7 @@ We provide the `HelloWorld` example that is also included in the coaty-js implem
 
 ## Documentation
 
-You can find important design decisions and rational [here](docs/CoatySwiftInternals).
+You can find important design decisions and rationale [here](docs/CoatySwiftInternals.md).
 
 ## Requirements
 
