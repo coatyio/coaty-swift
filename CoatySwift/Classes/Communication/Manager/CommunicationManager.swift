@@ -64,9 +64,6 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
     
     /// Holds deferred publications (topic, payload) while the communication manager is offline.
     private var deferredPublications = [(String, String)]()
-    
-    /// Holds deferred unsubscriptions while the communication manager is offline.
-    private var deferredUnsubscriptions = [String]()
 
     /// Ids of all advertised components that should be deadvertised when the client ends.
     internal var deadvertiseIds = [UUID]()
@@ -279,27 +276,9 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
     }
     
     func unsubscribe(topic: String) {
-        queue.sync {
-            
-            _ = getCommunicationState().subscribe {
-                guard let state = $0.element else {
-                    return
-                }
-                
-                self.deferredUnsubscriptions.append(topic)
-                
-                // Unsubscribe if the client is online.
-                
-                if state == .online {
-                    self.deferredUnsubscriptions.forEach({ (topic) in
-                        self.mqtt?.unsubscribe(topic)
-                    })
-                    
-                    self.deferredUnsubscriptions = []
-                }
-            }
+        _ = queue.sync {
+            self.mqtt?.unsubscribe(topic)
         }
-
     }
     
     /// Publish defers publications until the communication manager comes online.
