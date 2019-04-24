@@ -4,11 +4,11 @@ This document aims to explain some of the rationale behind our decisions when bu
 
 ## Table of Contents
 
-* [Porting Dynamic- to Static Types](#The-Pleasure-and-Pain-of-Static-Languages)
-    * [Codable Subclassing with Generics](#Codable-Subclassing-with-Generics)
-    * [Object Families](#The-importance-of-ObjectFamily)
-    * [Decoding and Encoding - A Complex Process](#Decoding-and-Encoding---A-Complex-Process)
-    * [Type Erased Communication Manager](#Type-Erased-Communication-Manager)
+* [Porting Dynamic- to Static Types](#the-pleasure-and-pain-of-static-languages)
+    * [Codable Subclassing with Generics](#codable-subclassing-with-generics)
+    * [Object Families](#the-importance-of-objectfamily)
+    * [Decoding and Encoding - A Complex Process](#decoding-and-encoding-a-complex-process)
+    * [Type Erased Communication Manager](#type-erased-communication-manager)
 
 
 ## The Pleasure and Pain of Static Languages 
