@@ -140,7 +140,7 @@ class TaskController: Controller {
             let event = self.createTaskOfferEvent(request)
 
             // Send it out and wait for the Service to answer.
-            _ = try? self.communicationManager?.publishUpdate(event: event)
+            try? self.communicationManager?.publishUpdate(event: event)
                 .take(1)
                 .map { (completeEvent) -> HelloWorldTask? in
                     return completeEvent.eventData.object as? HelloWorldTask
@@ -181,7 +181,8 @@ class TaskController: Controller {
         
         // Notify other components that task is now in progress.
         let event = factory.AdvertiseEvent.withObject(eventSource: self.identity, object: task)
-        _ = try? communicationManager?.publishAdvertise(advertiseEvent: event, eventTarget: self.identity)
+        try? communicationManager?.publishAdvertise(advertiseEvent: event,
+                                                    eventTarget: self.identity)
         
         // Calculate random delay to simulate task exection time.
         let taskDelay = Int.random(in: minTaskDuration..<2*minTaskDuration)
@@ -193,19 +194,26 @@ class TaskController: Controller {
             task.doneTimestamp = Double(Date().timeIntervalSince1970 * 1000)
             task.lastModificationTimestamp = Double(Date().timeIntervalSince1970 * 1000)
             
-            self.logConsole(message: "Completed task: \(task.name)", eventName: "ADVERTISE", eventDirection: .Out)
+            self.logConsole(message: "Completed task: \(task.name)",
+                            eventName: "ADVERTISE",
+                            eventDirection: .Out)
             
             // Notify other components that task has been completed.
-            let advertiseEvent = self.factory.AdvertiseEvent.withObject(eventSource: self.identity, object: task)
-            _ = try? self.communicationManager?.publishAdvertise(advertiseEvent: advertiseEvent, eventTarget: self.identity)
+            let advertiseEvent = self.factory.AdvertiseEvent.withObject(eventSource: self.identity,
+                                                                        object: task)
+            
+            try? self.communicationManager?.publishAdvertise(advertiseEvent: advertiseEvent,
+                                                             eventTarget: self.identity)
             
             // Send out query to get all available snapshots of the task object.
             
-            self.logConsole(message: "Snapshot by parentObjectId: \(task.name)", eventName: "QUERY", eventDirection: .Out)
+            self.logConsole(message: "Snapshot by parentObjectId: \(task.name)",
+                            eventName: "QUERY",
+                            eventDirection: .Out)
             
             let queryEvent = self.createSnapshotQuery(forTask: task)
             
-            _ = try? self.communicationManager?.publishQuery(event: queryEvent)
+            try? self.communicationManager?.publishQuery(event: queryEvent)
                 .take(1)
                 .timeout(Double(self.queryTimeout),
                          scheduler: SerialDispatchQueueScheduler(
@@ -215,7 +223,9 @@ class TaskController: Controller {
                     
                     // Handle incoming snapshots.
                     onNext: { (retrieveEvent) in
-                    self.logConsole(message: "Snapshots by parentObjectId: \(task.name)",eventName: "RETRIEVE", eventDirection: .In)
+                    self.logConsole(message: "Snapshots by parentObjectId: \(task.name)",
+                                    eventName: "RETRIEVE",
+                                    eventDirection: .In)
                     
                     let objects = retrieveEvent.eventData.objects
                     let snapshots = objects.map { (coatyObject) -> Snapshot<HelloWorldObjectFamily> in
@@ -249,8 +259,8 @@ class TaskController: Controller {
                                             "assigneeUserId": assigneeUserId!]
         
         return factory.UpdateEvent.withPartial(eventSource: self.identity,
-                                        objectId: request.objectId,
-                                        changedValues: changedValues)
+                                               objectId: request.objectId,
+                                               changedValues: changedValues)
     }
     
     /// Builds a query that asks for snapshots of the provided task object.
@@ -269,8 +279,8 @@ class TaskController: Controller {
         }
         
         return factory.QueryEvent.withCoreTypes(eventSource: self.identity,
-                                                                coreTypes: [.Snapshot],
-                                                                objectFilter: objectFilter)
+                                                coreTypes: [.Snapshot],
+                                                objectFilter: objectFilter)
     }
     
     // MARK: Util methods.
