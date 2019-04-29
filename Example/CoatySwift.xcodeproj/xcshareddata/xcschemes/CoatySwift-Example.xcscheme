@@ -42,7 +42,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "077F176A8FEA7A5BA402059A82C35DE6"
+               BlueprintIdentifier = "3DE951D545C6F1A7F69647C3B6B1A160"
                BuildableName = "CoatySwift.framework"
                BlueprintName = "CoatySwift"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
