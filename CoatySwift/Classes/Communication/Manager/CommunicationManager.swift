@@ -132,7 +132,6 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
             log.error("Could not create topic string for last will.")
             return
         }
-        
         let deadvertise = Deadvertise(objectIds: deadvertiseIds)
         guard let deadvertiseEvent = try? DeadvertiseEvent.withObject(eventSource: identity!,
                                                                       object: deadvertise) else {

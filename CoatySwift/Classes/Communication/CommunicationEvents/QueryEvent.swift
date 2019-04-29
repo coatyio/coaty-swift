@@ -5,32 +5,8 @@
 
 import Foundation
 
-/// QueryEvent provides a generic implementation for all Query Events.
-public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData<Family>> {
-    
-    // MARK: - Internal attributes.
-    
-    /// Provides a complete handler for reacting to query events.
-    internal var retrieveHandler: ((RetrieveEvent<Family>) -> Void)?
-    
-    /// Respond to an observed Query event by sending the given Retrieve event.
-    ///
-    /// - Parameter retrieveEvent: a Retrieve event.
-    public func retrieve(retrieveEvent: RetrieveEvent<Family>) {
-        if let retrieveHandler = retrieveHandler {
-            retrieveHandler(retrieveEvent)
-        }
-    }
-    
-    // MARK: - Initializers.
-    
-    /// - NOTE: This method should never be called directly by application programmers.
-    /// Inside the framework, calling is ok.
-    private override init(eventSource: Component, eventData: QueryEventData<Family>) {
-        super.init(eventSource: eventSource, eventData: eventData)
-    }
 
-    // MARK: - Factory methods.
+public class QueryEventFactory<Family: ObjectFamily> {
     
     /// Create a QueryEvent instance for querying the given object types, filter, and join conditions.
     /// The object filter and join conditions are optional.
@@ -61,15 +37,42 @@ public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData
     ///     - objectFilter: restrict results by object filter (optional).
     ///     - objectJoinConditions: join related objects into results (optional).
     public static func withCoreTypes(eventSource: Component,
-                                       coreTypes: [CoreType],
-                                       objectFilter: ObjectFilter? = nil,
-                                       objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEvent<Family> {
+                                     coreTypes: [CoreType],
+                                     objectFilter: ObjectFilter? = nil,
+                                     objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEvent<Family> {
         
         let queryEventData = QueryEventData<Family>.createFrom(coreTypes: coreTypes,
                                                                objectFilter: objectFilter,
                                                                objectJoinConditions: objectJoinConditions)
         
         return .init(eventSource: eventSource, eventData: queryEventData)
+    }
+
+}
+
+/// QueryEvent provides a generic implementation for all Query Events.
+public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData<Family>> {
+    
+    // MARK: - Internal attributes.
+    
+    /// Provides a complete handler for reacting to query events.
+    internal var retrieveHandler: ((RetrieveEvent<Family>) -> Void)?
+    
+    /// Respond to an observed Query event by sending the given Retrieve event.
+    ///
+    /// - Parameter retrieveEvent: a Retrieve event.
+    public func retrieve(retrieveEvent: RetrieveEvent<Family>) {
+        if let retrieveHandler = retrieveHandler {
+            retrieveHandler(retrieveEvent)
+        }
+    }
+    
+    // MARK: - Initializers.
+    
+    /// - NOTE: This method should never be called directly by application programmers.
+    /// Inside the framework, calling is ok.
+    fileprivate override init(eventSource: Component, eventData: QueryEventData<Family>) {
+        super.init(eventSource: eventSource, eventData: eventData)
     }
 
     // MARK: - Codable methods.

@@ -16,6 +16,7 @@ public class Container {
     
     private (set) public var runtime: Runtime?
     private (set) public var comManager: AnyCommunicationManager?
+    private (set) public var factory: AnyEventFactory?
     private var controllers = [String: Controller]()
     private var isShutdown = false
     private var operatingState: Observable<OperatingState>?
@@ -69,7 +70,9 @@ public class Container {
                 return
             }
             
-            guard let runtime = self.runtime, let comManager = self.comManager else {
+            guard let runtime = self.runtime,
+                let comManager = self.comManager,
+                let factory = self.factory else {
                 LogManager.log.error("Runtime or CommunicationManager was not initialized.")
                 throw CoatySwiftError.InvalidConfiguration("Runtime or CommunicationManager was not initialized.")
             }
@@ -78,11 +81,12 @@ public class Container {
                 LogManager.log.error("Controller with given name already exists.")
                 throw CoatySwiftError.InvalidConfiguration("Controller with given name already exists.")
             }
-            
+
             let controller = resolveController(name: name,
                                                controllerType: controllerType,
                                                runtime: runtime,
                                                comManager: comManager,
+                                               factory: factory,
                                                controllerOptions: config.controllerOptions[name])
             self.controllers[name] = controller
             
@@ -136,10 +140,12 @@ public class Container {
                                    controllerType: Controller.Type,
                                    runtime: Runtime,
                                    comManager: AnyCommunicationManager,
+                                   factory: AnyEventFactory,
                                    controllerOptions: ControllerOptions?) -> Controller {
         let controller = controllerType.init(runtime: runtime,
                                              options: controllerOptions,
                                              communicationManager: comManager,
+                                             factory: factory,
                                              controllerType: name)
         controller.onInit()
         return controller
@@ -154,10 +160,16 @@ public class Container {
         // TODO: Fix force unwrap.
         let host = configuration.communication.brokerOptions!.host
         let port = configuration.communication.brokerOptions!.port
+        
+        // Create CommunicationManager.
         let comManager = CommunicationManager<Family>(host: host, port: Int(port))
         self.comManager = comManager
         self.operatingState = comManager.operatingState.asObservable()
         self.communicationState = comManager.communicationState.asObservable()
+        
+        // Create EventFactory.
+        let factory = EventFactory<Family>()
+        self.factory = factory
 
         components.controllers?.forEach { (name, controllerType) in
             let options = configuration.controllers?.controllerOptions[name]
@@ -165,6 +177,7 @@ public class Container {
                                                controllerType: controllerType,
                                                runtime: runtime,
                                                comManager: comManager,
+                                               factory: factory,
                                                controllerOptions: options)
             self.controllers[name] = controller
         }

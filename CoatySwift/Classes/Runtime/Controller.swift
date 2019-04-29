@@ -16,6 +16,7 @@ open class Controller {
     private(set) public var controllerType: String
     private(set) public var identity: Component
     private var anyComManager: AnyCommunicationManager
+    private var anyEventFactory: AnyEventFactory
     
     /// - Note: This method will crash in case the specified Object Family is NOT correctly set.
     /// - Returns: The Communication Manager for this particular Controller. This method is the only
@@ -25,14 +26,24 @@ open class Controller {
         return anyComManager as! CommunicationManager<Family>
     }
     
+    /// - Note: This method will crash in case the specified Object Family is NOT correctly set.
+    /// - Returns: The Factory responsible for creating Communication Events for this particular
+    /// Controller. This method is the only way of accessing the Factory, and a reference to the
+    /// Factory should be stored inside the Controller subclass, preferably in a class variable.
+    public func getFactory<Family: ObjectFamily>() -> EventFactory<Family> {
+        return anyEventFactory as! EventFactory<Family>
+    }
+    
     required public init(runtime: Runtime,
                   options: ControllerOptions?,
                   communicationManager: AnyCommunicationManager,
+                  factory: AnyEventFactory,
                   controllerType: String) {
         self.runtime = runtime
         self.options = options ?? ControllerOptions()
         self.anyComManager = communicationManager
         self.controllerType = controllerType
+        self.anyEventFactory = factory
         
         // Create default identity.
         self.identity = Component(name: self.controllerType,
@@ -106,9 +117,10 @@ open class Controller {
     private func advertiseIdentity() {
         let event = AdvertiseEvent<CoatyObjectFamily>.withObject(eventSource: self.identity,
                                               object: self.identity)
-        
+ 
         try? self.anyComManager.publishAdvertise(advertiseEvent: event,
                                                         eventTarget: self.identity)
+        
     }
     
     deinit {

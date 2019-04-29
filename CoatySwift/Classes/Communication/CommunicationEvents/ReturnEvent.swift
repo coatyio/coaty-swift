@@ -5,18 +5,9 @@
 
 import Foundation
 
-public class ReturnEvent<Family: ObjectFamily>: CommunicationEvent<ReturnEventData<Family>> {
+/// A Factory that creates ReturnEvents.
+public class ReturnEventFactory<Family: ObjectFamily> {
     
-    // MARK: - Initializers.
-    
-    /// - NOTE: This method should never be called directly by application programmers.
-    /// Inside the framework, calling is ok.
-    private override init(eventSource: Component, eventData: ReturnEventData<Family>) {
-        super.init(eventSource: eventSource, eventData: eventData)
-    }
-    
-    // MARK: - Factory methods.
-
     /// Create a ReturnEvent instance for a remote operation call that successfully yields a result.
     ///
     /// - Parameters:
@@ -24,8 +15,8 @@ public class ReturnEvent<Family: ObjectFamily>: CommunicationEvent<ReturnEventDa
     ///   - result: the result value to be returned (any JSON data type)
     ///   - executionTime: the time interval needed for execution of the operation (optional)
     public static func withResult(eventSource: Component,
-                           result: AnyCodable,
-                           executionTime: ReturnExecutionTime?) -> ReturnEvent<Family> {
+                                  result: AnyCodable,
+                                  executionTime: ReturnExecutionTime?) -> ReturnEvent<Family> {
         let returnEventData = ReturnEventData<Family>.createFrom(result: result,
                                                                  executionTime: executionTime,
                                                                  error: nil)
@@ -51,16 +42,26 @@ public class ReturnEvent<Family: ObjectFamily>: CommunicationEvent<ReturnEventDa
     ///   - executionTime: the time interval needed for execution of the operation until
     ///                    the error occurred (optional).
     public static func withError(eventSource: Component,
-                          error: ReturnError,
-                          executionTime: ReturnExecutionTime?) -> ReturnEvent<Family> {
+                                 error: ReturnError,
+                                 executionTime: ReturnExecutionTime?) -> ReturnEvent<Family> {
         let returnEventData = ReturnEventData<Family>.createFrom(result: nil,
                                                                  executionTime: executionTime,
                                                                  error: error)
         return .init(eventSource: eventSource, eventData: returnEventData)
     }
     
+}
+
+public class ReturnEvent<Family: ObjectFamily>: CommunicationEvent<ReturnEventData<Family>> {
     
+    // MARK: - Initializers.
     
+    /// - NOTE: This method should never be called directly by application programmers.
+    /// Inside the framework, calling is ok.
+    fileprivate override init(eventSource: Component, eventData: ReturnEventData<Family>) {
+        super.init(eventSource: eventSource, eventData: eventData)
+    }
+
     // MARK: - Codable methods.
     
     required init(from decoder: Decoder) throws {

@@ -149,7 +149,7 @@ extension CommunicationManager {
     /// - Parameters:
     ///     - eventTarget: target for which Deadvertise events should be emitted
     /// - Returns:  a hot observable emitting incoming Deadvertise events
-    public func observeDeadvertise(eventTarget: Component) throws -> Observable<DeadvertiseEvent<Deadvertise>> {
+    public func observeDeadvertise(eventTarget: Component) throws -> Observable<DeadvertiseEvent> {
         let deadvertiseTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Deadvertise)
         
         self.subscribe(topic: deadvertiseTopic)
@@ -159,7 +159,7 @@ extension CommunicationManager {
                 let (topic, _) = rawMessageTopic
                 return topic.eventType == .Deadvertise
             })
-            .map({ (message) -> DeadvertiseEvent<Deadvertise> in
+            .map({ (message) -> DeadvertiseEvent in
                 let (_, payload) = message
                 
                 // FIXME: Remove force unwrap.

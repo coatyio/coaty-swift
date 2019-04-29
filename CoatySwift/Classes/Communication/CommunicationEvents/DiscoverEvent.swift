@@ -6,6 +6,103 @@
 
 import Foundation
 
+/// A Factory that creates DiscoverEvents.
+public class DisoverEventFactory<Family: ObjectFamily> {
+    
+    /// Create a DiscoverEvent instance for discovering objects with the given external Id.
+    ///
+    /// - Parameters:
+    ///     - eventSource: the event source component
+    ///     - externalId: the external ID to discover
+    public static func withExternalId(eventSource: Component,
+                                      externalId: String) -> DiscoverEvent<Family> {
+        let discover = Discover(externalId: externalId)
+        let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
+        return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
+    }
+    
+    /// Create a DiscoverEvent instance for discovering objects with the given external Id and
+    /// core types.
+    ///
+    /// - Parameters:
+    ///     - eventSource: the event source component
+    ///     - externalId: the external ID to discover
+    ///     - coreTypes: an array of core types to discover
+    public static func withExternalIdAndCoreTypes(eventSource: Component,
+                                                  externalId: String,
+                                                  coreTypes: [CoreType]) -> DiscoverEvent<Family> {
+        let discover = Discover(externalId: externalId, coreTypes: coreTypes)
+        let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
+        return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
+    }
+    
+    /// Create a DiscoverEvent instance for discovering objects with the given external Id and
+    /// object types.
+    ///
+    /// - Parameters:
+    ///   - eventSource: the event source component.
+    ///   - externalId: the external ID to discover.
+    ///   - objectTypes: an array of object types to discover.
+    public static func withExternalIdAndObjectTypes(eventSource: Component,
+                                                    externalId: String,
+                                                    objectTypes: [String]) -> DiscoverEvent<Family> {
+        let discover = Discover(externalId: externalId, objectTypes: objectTypes)
+        let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
+        return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
+    }
+    
+    /// Create a DiscoverEvent instance for discovering objects with the given object Id.
+    ///
+    /// - Parameters:
+    ///   - eventSource: the event source component
+    ///   - objectId: the object ID to discover
+    public static func withObjectId(eventSource: Component,
+                                    objectId: UUID) -> DiscoverEvent<Family> {
+        let discover = Discover(objectId: objectId)
+        let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
+        return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
+    }
+    
+    /// Create a DiscoverEvent instance for discovering objects with the given external Id and
+    /// object Id.
+    ///
+    /// - Parameters:
+    ///   - eventSource: the event source component
+    ///   - externalId: the external ID to discover
+    ///   - objectId: the object ID to discover
+    public static func withExternalAndObjectId(eventSource: Component,
+                                               externalId: String,
+                                               objectId: UUID) -> DiscoverEvent<Family> {
+        let discover = Discover(objectId: objectId, externalId: externalId)
+        let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
+        return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
+    }
+    
+    /// Create a DiscoverEvent instance for discovering objects with the given core types.
+    ///
+    /// - Parameters:
+    ///   - eventSource: the event source component
+    ///   - coreTypes: coreTypes the core types to discover
+    public static func withCoreTypes(eventSource: Component,
+                                     coreTypes: [CoreType]) -> DiscoverEvent<Family> {
+        let discover = Discover(coreTypes: coreTypes)
+        let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
+        return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
+    }
+    
+    /// Create a DiscoverEvent instance for discovering objects with the given object types.
+    ///
+    /// - Parameters:
+    ///   - eventSource: the event source component
+    ///   - objectTypes: the object types to discover
+    public static func withObjectTypes(eventSource: Component,
+                                       objectTypes: [String]) -> DiscoverEvent<Family> {
+        let discover = Discover(objectTypes: objectTypes)
+        let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
+        return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
+    }
+}
+
 /// DiscoverEvent provides a generic implementation for all DiscoverEvents.
 /// Note that this class should preferably initialized via its withObject() method.
 /// - NOTE: DiscoverEvents also need an object family. This is because Discover-Resolve
@@ -33,102 +130,6 @@ public class DiscoverEvent<Family: ObjectFamily>: CommunicationEvent<DiscoverEve
     override init(eventSource: Component, eventData: DiscoverEventData) {
         super.init(eventSource: eventSource, eventData: eventData)
         eventType = .Discover
-    }
-    
-    // MARK: - Accessible Initialiser for DiscoverEvent.
-    
-    
-    /// Create a DiscoverEvent instance for discovering objects with the given external Id.
-    ///
-    /// - Parameters:
-    ///     - eventSource: the event source component
-    ///     - externalId: the external ID to discover
-    public static func withExternalId(eventSource: Component,
-                               externalId: String) -> DiscoverEvent<Family> {
-        let discover = Discover(externalId: externalId)
-        let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
-        return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
-    }
-    
-    /// Create a DiscoverEvent instance for discovering objects with the given external Id and
-    /// core types.
-    ///
-    /// - Parameters:
-    ///     - eventSource: the event source component
-    ///     - externalId: the external ID to discover
-    ///     - coreTypes: an array of core types to discover
-    public static func withExternalIdAndCoreTypes(eventSource: Component,
-                                           externalId: String,
-                                           coreTypes: [CoreType]) -> DiscoverEvent<Family> {
-        let discover = Discover(externalId: externalId, coreTypes: coreTypes)
-        let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
-        return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
-    }
-    
-    /// Create a DiscoverEvent instance for discovering objects with the given external Id and
-    /// object types.
-    ///
-    /// - Parameters:
-    ///   - eventSource: the event source component.
-    ///   - externalId: the external ID to discover.
-    ///   - objectTypes: an array of object types to discover.
-    public static func withExternalIdAndObjectTypes(eventSource: Component,
-                                             externalId: String,
-                                             objectTypes: [String]) -> DiscoverEvent<Family> {
-        let discover = Discover(externalId: externalId, objectTypes: objectTypes)
-        let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
-        return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
-    }
-    
-    /// Create a DiscoverEvent instance for discovering objects with the given object Id.
-    ///
-    /// - Parameters:
-    ///   - eventSource: the event source component
-    ///   - objectId: the object ID to discover
-    public static func withObjectId(eventSource: Component,
-                             objectId: UUID) -> DiscoverEvent {
-        let discover = Discover(objectId: objectId)
-        let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
-        return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
-    }
-    
-    /// Create a DiscoverEvent instance for discovering objects with the given external Id and
-    /// object Id.
-    ///
-    /// - Parameters:
-    ///   - eventSource: the event source component
-    ///   - externalId: the external ID to discover
-    ///   - objectId: the object ID to discover
-    public static func withExternalAndObjectId(eventSource: Component,
-                                        externalId: String,
-                                        objectId: UUID) -> DiscoverEvent<Family> {
-        let discover = Discover(objectId: objectId, externalId: externalId)
-        let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
-        return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
-    }
-    
-    /// Create a DiscoverEvent instance for discovering objects with the given core types.
-    ///
-    /// - Parameters:
-    ///   - eventSource: the event source component
-    ///   - coreTypes: coreTypes the core types to discover
-    public static func withCoreTypes(eventSource: Component,
-                              coreTypes: [CoreType]) -> DiscoverEvent<Family> {
-        let discover = Discover(coreTypes: coreTypes)
-        let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
-        return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
-    }
-    
-    /// Create a DiscoverEvent instance for discovering objects with the given object types.
-    ///
-    /// - Parameters:
-    ///   - eventSource: the event source component
-    ///   - objectTypes: the object types to discover
-    public static func withObjectTypes(eventSource: Component,
-                                objectTypes: [String]) -> DiscoverEvent<Family> {
-        let discover = Discover(objectTypes: objectTypes)
-        let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
-        return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
     }
     
     // MARK: - Codable methods.
