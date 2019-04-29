@@ -5,6 +5,34 @@
 
 import Foundation
 
+/// A Factory that creates UpdateEvents.
+public class UpdateEventFactory<Family: ObjectFamily> {
+    
+    /// Create an UpdateEvent instance for the given partial update.
+    ///
+    /// - Parameters:
+    ///   - eventSource: the event source component
+    ///   - objectId: the UUID of the object to be updated (partial update)
+    ///   - changedValues: Object hash for properties that have changed or should
+    ///     be changed (partial update)
+    public static func withPartial(eventSource: Component,
+                                   objectId: UUID,
+                                   changedValues: [String: Any]) -> UpdateEvent<Family> {
+        let updateEventData = UpdateEventData<Family>(objectId: objectId, changedValues: changedValues)
+        return .init(eventSource: eventSource, eventData: updateEventData)
+    }
+    
+    /// Create an UpdateEvent instance for the given full update.
+    ///
+    /// - Parameters:
+    ///   - eventSource: the event source component
+    ///   - object: the full object to be updated
+    public static func withFull(eventSource: Component, object: CoatyObject) -> UpdateEvent<Family> {
+        let updateEventData = UpdateEventData<Family>(object: object)
+        return .init(eventSource: eventSource, eventData: updateEventData)
+    }
+}
+
 /// UpdateEvent provides a generic implementation for all Update Events.
 ///
 /// - NOTE: This class should preferably initialized via its withPartial() or withFull() method.
@@ -29,32 +57,8 @@ public class UpdateEvent<Family: ObjectFamily>: CommunicationEvent<UpdateEventDa
     
     /// - NOTE: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
-    private override init(eventSource: Component, eventData: UpdateEventData<Family>) {
+    fileprivate override init(eventSource: Component, eventData: UpdateEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
-    }
-
-    /// Create an UpdateEvent instance for the given partial update.
-    ///
-    /// - Parameters:
-    ///   - eventSource: the event source component
-    ///   - objectId: the UUID of the object to be updated (partial update)
-    ///   - changedValues: Object hash for properties that have changed or should
-    ///     be changed (partial update)
-    public static func withPartial(eventSource: Component,
-                            objectId: UUID,
-                            changedValues: [String: Any]) -> UpdateEvent {
-        let updateEventData = UpdateEventData<Family>(objectId: objectId, changedValues: changedValues)
-        return .init(eventSource: eventSource, eventData: updateEventData)
-    }
-    
-    /// Create an UpdateEvent instance for the given full update.
-    ///
-    /// - Parameters:
-    ///   - eventSource: the event source component
-    ///   - object: the full object to be updated
-    public static func withFull(eventSource: Component, object: CoatyObject) -> UpdateEvent {
-        let updateEventData = UpdateEventData<Family>(object: object)
-        return .init(eventSource: eventSource, eventData: updateEventData)
     }
     
     // MARK: - Codable methods.

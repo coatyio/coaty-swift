@@ -5,43 +5,8 @@
 
 import Foundation
 
-public typealias ContextFilter = ObjectFilter
-
-/// CallEvent provides a generic implementation for all Call Events.
-public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<Family>> {
-    
-    // MARK: - Internal attributes.
-    
-    internal var operation: String?
-    
-    /// Provides a Return handler for reacting to Call events.
-    internal var returnHandler: ((ReturnEvent<Family>) -> Void)?
-    
-    /// Respond to an observed Call event by sending the given Return event.
-    ///
-    /// - Parameter returnEvent: a Return event.
-    public func returned(returnEvent: ReturnEvent<Family>) {
-        if let returnHandler = returnHandler {
-            returnHandler(returnEvent)
-        }
-    }
-    
-    // MARK: - Initializers.
-    
-    /// - NOTE: This method should never be called directly by application programmers.
-    /// Inside the framework, calling is ok.
-    private override init(eventSource: Component, eventData: CallEventData<Family>) {
-        super.init(eventSource: eventSource, eventData: eventData)
-    }
-    
-    /// - NOTE: This method should never be called directly by application programmers.
-    /// Inside the framework, calling is ok.
-    private init(eventSource: Component, eventData: CallEventData<Family>, operation: String) {
-        super.init(eventSource: eventSource, eventData: eventData)
-        self.operation = operation
-    }
-    
-    // MARK: - Factory methods.
+/// A Factory that creates CallEvents.
+public class CallEventFactory<Family: ObjectFamily> {
     
     /// Create a CallEvent instance for invoking a remote operation call with the given
     /// operation name, parameters (optional), and a context filter (optional).
@@ -90,6 +55,44 @@ public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<F
         return .init(eventSource: eventSource, eventData: callEventdata, operation: operation)
     }
 
+}
+
+public typealias ContextFilter = ObjectFilter
+
+/// CallEvent provides a generic implementation for all Call Events.
+public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<Family>> {
+    
+    // MARK: - Internal attributes.
+    
+    internal var operation: String?
+    
+    /// Provides a Return handler for reacting to Call events.
+    internal var returnHandler: ((ReturnEvent<Family>) -> Void)?
+    
+    /// Respond to an observed Call event by sending the given Return event.
+    ///
+    /// - Parameter returnEvent: a Return event.
+    public func returned(returnEvent: ReturnEvent<Family>) {
+        if let returnHandler = returnHandler {
+            returnHandler(returnEvent)
+        }
+    }
+    
+    // MARK: - Initializers.
+    
+    /// - NOTE: This method should never be called directly by application programmers.
+    /// Inside the framework, calling is ok.
+    fileprivate override init(eventSource: Component, eventData: CallEventData<Family>) {
+        super.init(eventSource: eventSource, eventData: eventData)
+    }
+    
+    /// - NOTE: This method should never be called directly by application programmers.
+    /// Inside the framework, calling is ok.
+    fileprivate init(eventSource: Component, eventData: CallEventData<Family>, operation: String) {
+        super.init(eventSource: eventSource, eventData: eventData)
+        self.operation = operation
+    }
+    
     // MARK: - Codable methods.
     
     required init(from decoder: Decoder) throws {

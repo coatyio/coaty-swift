@@ -27,7 +27,7 @@ extension CommunicationManager {
     /// Notify subscribers that an advertised object has been deadvertised.
     ///
     /// - Parameter deadvertiseEvent: the Deadvertise event to be published
-    public func publishDeadvertise<S: Deadvertise,T: DeadvertiseEvent<S>>(deadvertiseEvent: T) throws {
+    public func publishDeadvertise(deadvertiseEvent: DeadvertiseEvent) throws {
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Deadvertise,
                                                                   eventTypeFilter: nil,
                                                                   associatedUserId: deadvertiseEvent.eventUserId

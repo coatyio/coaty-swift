@@ -5,23 +5,8 @@
 
 import Foundation
 
-/// RetrieveEvent provides a generic implementation for all RetrieveEvents.
-///
-/// The class requires the definition of a `ObjectFamily`, e.g. `CoatyObjectFamily` or a
-/// custom implementation of a `ObjectFamily` to support custom object types.
-/// - NOTE: This class should preferably initialized via its withObject() method.
-public class RetrieveEvent<Family: ObjectFamily>: CommunicationEvent<RetrieveEventData<Family>> {
-    
-    
-    // MARK: - Initializers.
-    
-    /// - NOTE: This method should never be called directly by application programmers.
-    /// Inside the framework, calling is ok.
-    private override init(eventSource: Component, eventData: RetrieveEventData<Family>) {
-        super.init(eventSource: eventSource, eventData: eventData)
-    }
-    
-    // MARK: - Factory methods.
+/// A Factory that creates RetrieveEvents.
+public class RetrieveEventFactory<Family: ObjectFamily> {
     
     /// Create a RetrieveEvent instance for delivering the given objects.
     ///
@@ -35,6 +20,23 @@ public class RetrieveEvent<Family: ObjectFamily>: CommunicationEvent<RetrieveEve
                             privateData: [String: Any]? = nil) -> RetrieveEvent<Family> {
         let retrieveEventData = RetrieveEventData<Family>(objects: objects, privateData: privateData)
         return .init(eventSource: eventSource, eventData: retrieveEventData)
+    }
+    
+}
+
+/// RetrieveEvent provides a generic implementation for all RetrieveEvents.
+///
+/// The class requires the definition of a `ObjectFamily`, e.g. `CoatyObjectFamily` or a
+/// custom implementation of a `ObjectFamily` to support custom object types.
+/// - NOTE: This class should preferably initialized via its withObject() method.
+public class RetrieveEvent<Family: ObjectFamily>: CommunicationEvent<RetrieveEventData<Family>> {
+    
+    // MARK: - Initializers.
+    
+    /// - NOTE: This method should never be called directly by application programmers.
+    /// Inside the framework, calling is ok.
+    fileprivate override init(eventSource: Component, eventData: RetrieveEventData<Family>) {
+        super.init(eventSource: eventSource, eventData: eventData)
     }
     
     // MARK: - Codable methods.

@@ -6,34 +6,9 @@
 
 import Foundation
 
-/// ChannelEvent provides a generic implementation for all ChannelEvents.
-///
-/// The class requires the definition of a `ClassFamily`, e.g. `CoatyObjectFamily` or a
-/// custom implementation of a `ClassFamily` to support custom object types.
-/// - NOTE: This class should preferably initialized via its withObject() method.
-public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEventData<Family>> {
+/// A Factory that creates ChannelEvents.
+public class ChannelEventFactory<Family: ObjectFamily> {
     
-    var channelId: String?
-    
-    // MARK: - Initializers.
-    
-    /// - NOTE: This method should never be called directly by application programmers.
-    /// Inside the framework, calling is ok.
-    private override init(eventSource: Component, eventData: ChannelEventData<Family>) {
-        super.init(eventSource: eventSource, eventData: eventData)
-    }
-    
-    /// Main initializer.
-    ///
-    /// - NOTE: Should not be called directly by application programmers. Needed because of
-    /// extra parameter channelId.
-    internal init(eventSource: Component, eventData: ChannelEventData<Family>, channelId: String) {
-        super.init(eventSource: eventSource, eventData: eventData)
-        self.channelId = channelId
-    }
-    
-    // MARK: - Factory methods.
-
     /// Create a ChannelEvent instance for delivering the given object.
     ///
     /// - TODO: Missing documentation.
@@ -44,9 +19,9 @@ public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEvent
     ///   - privateData: application-specific options (optional).
     /// - Returns: a channel event that emits CoatyObjects that are part of the `ClassFamily`.
     public static func withObject(eventSource: Component,
-                           channelId: String,
-                           object: CoatyObject,
-                           privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
+                                  channelId: String,
+                                  object: CoatyObject,
+                                  privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
         let channelEventData = ChannelEventData<Family>(object: object, privateData: privateData)
         return .init(eventSource: eventSource, eventData: channelEventData, channelId: channelId)
     }
@@ -61,11 +36,39 @@ public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEvent
     ///   - privateData: application-specific options (optional)
     /// - Returns: a channel event that emits CoatyObjects that are part of the `ClassFamily`.
     public static func withObjects(eventSource: Component,
-                            channelId: String,
-                            objects: [CoatyObject],
-                            privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
+                                   channelId: String,
+                                   objects: [CoatyObject],
+                                   privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
         let channelEventData = ChannelEventData<Family>(objects: objects, privateData: privateData)
         return .init(eventSource: eventSource, eventData: channelEventData, channelId: channelId)
+    }
+    
+}
+
+/// ChannelEvent provides a generic implementation for all ChannelEvents.
+///
+/// The class requires the definition of a `ClassFamily`, e.g. `CoatyObjectFamily` or a
+/// custom implementation of a `ClassFamily` to support custom object types.
+/// - NOTE: This class should preferably initialized via its withObject() method.
+public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEventData<Family>> {
+    
+    var channelId: String?
+    
+    // MARK: - Initializers.
+    
+    /// - NOTE: This method should never be called directly by application programmers.
+    /// Inside the framework, calling is ok.
+    fileprivate override init(eventSource: Component, eventData: ChannelEventData<Family>) {
+        super.init(eventSource: eventSource, eventData: eventData)
+    }
+    
+    /// Main initializer.
+    ///
+    /// - NOTE: Should not be called directly by application programmers. Needed because of
+    /// extra parameter channelId.
+    internal init(eventSource: Component, eventData: ChannelEventData<Family>, channelId: String) {
+        super.init(eventSource: eventSource, eventData: eventData)
+        self.channelId = channelId
     }
     
     // MARK: - Codable methods.

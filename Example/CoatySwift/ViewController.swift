@@ -63,7 +63,7 @@ class ControllerA: Controller {
         
         }
         
-        sub.dispose()*/
+        sub.dispose()
         
         guard let comManager = communicationManager else {
             // CommunicationManager could not be fetched.
@@ -78,6 +78,7 @@ class ControllerA: Controller {
         
         // Publish update and subscribe to the complete event.
         observable = try? comManager.observeChannel(eventTarget: self.identity, channelId: "123456")
+ */
         
         /*observable!.subscribe {
             

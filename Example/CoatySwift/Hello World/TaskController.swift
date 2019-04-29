@@ -17,6 +17,11 @@ class TaskController: Controller {
     /// somewhere in `onCommunicationManagerStarting()` in order to store this reference.
     private var communicationManager: CommunicationManager<HelloWorldObjectFamily>?
     
+    /// This is the factory for this particular controller that is used to
+    /// create CommunicationEvents. Note that you _must_ call `self.factory = getFactory()`
+    /// somewhere in `onCommunicationManagerStarting()` in order to store this reference.
+    private var factory: EventFactory<HelloWorldObjectFamily>!
+    
     /// This disposebag holds references to all of your subscriptions. It is standard in RxSwift
     /// to call `.disposed(by: self.disposeBag)` at the end of every subscription.
     private var disposeBag = DisposeBag()
@@ -48,6 +53,7 @@ class TaskController: Controller {
 
     override func onInit() {
         setBusy(false)
+        factory = self.getFactory()
     }
     
     override func onCommunicationManagerStarting() {
@@ -174,7 +180,7 @@ class TaskController: Controller {
         print("Carrying out task: \(task.name)")
         
         // Notify other components that task is now in progress.
-        let event = AdvertiseEvent<HelloWorldObjectFamily>.withObject(eventSource: self.identity, object: task)
+        let event = factory.AdvertiseEvent.withObject(eventSource: self.identity, object: task)
         _ = try? communicationManager?.publishAdvertise(advertiseEvent: event, eventTarget: self.identity)
         
         // Calculate random delay to simulate task exection time.
@@ -190,7 +196,7 @@ class TaskController: Controller {
             self.logConsole(message: "Completed task: \(task.name)", eventName: "ADVERTISE", eventDirection: .Out)
             
             // Notify other components that task has been completed.
-            let advertiseEvent = AdvertiseEvent<HelloWorldObjectFamily>.withObject(eventSource: self.identity, object: task)
+            let advertiseEvent = self.factory.AdvertiseEvent.withObject(eventSource: self.identity, object: task)
             _ = try? self.communicationManager?.publishAdvertise(advertiseEvent: advertiseEvent, eventTarget: self.identity)
             
             // Send out query to get all available snapshots of the task object.
@@ -241,9 +247,10 @@ class TaskController: Controller {
         let assigneeUserId = self.identity.assigneeUserId?.uuidString.lowercased()
         let changedValues: [String: Any] = ["dueTimestamp": dueTimeStamp,
                                             "assigneeUserId": assigneeUserId!]
-        return UpdateEvent<HelloWorldObjectFamily>.withPartial(eventSource: self.identity,
-                                                               objectId: request.objectId,
-                                                               changedValues: changedValues)
+        
+        return factory.UpdateEvent.withPartial(eventSource: self.identity,
+                                        objectId: request.objectId,
+                                        changedValues: changedValues)
     }
     
     /// Builds a query that asks for snapshots of the provided task object.
@@ -261,7 +268,7 @@ class TaskController: Controller {
             $0.orderByProperties = [OrderByProperty(properties: .init("creationTimestamp"), sortingOrder: .Desc)]
         }
         
-        return QueryEvent<HelloWorldObjectFamily>.withCoreTypes(eventSource: self.identity,
+        return factory.QueryEvent.withCoreTypes(eventSource: self.identity,
                                                                 coreTypes: [.Snapshot],
                                                                 objectFilter: objectFilter)
     }

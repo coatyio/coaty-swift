@@ -5,6 +5,24 @@
 
 import Foundation
 
+/// A Factory that creates CompleteEvents.
+public class CompleteEventFactory<Family: ObjectFamily> {
+    
+    /// Create a CompleteEvent instance for updating the given object.
+    ///
+    /// - Parameters:
+    ///   - eventSource: the event source component
+    ///   - object: the updated object
+    ///   - privateData: application-specific options (optional)
+    public static func withObject(eventSource: Component,
+                                  object: CoatyObject,
+                                  privateData: [String: Any]? = nil) -> CompleteEvent<Family> {
+        
+        let completeEventData = CompleteEventData<Family>(object, privateData)
+        return .init(eventSource: eventSource, eventData: completeEventData)
+    }
+}
+
 
 /// CompleteEvent provides a generic implementation for all CompleteEvents.
 /// Note that this class should preferably initialized via its withObject() method.
@@ -14,22 +32,6 @@ public class CompleteEvent<Family: ObjectFamily>: CommunicationEvent<CompleteEve
     /// Inside the framework, calling is ok.
     override init(eventSource: Component, eventData: CompleteEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
-    }
-    
-    // MARK: - Factory methods.
-    
-    /// Create a CompleteEvent instance for updating the given object.
-    ///
-    /// - Parameters:
-    ///   - eventSource: the event source component
-    ///   - object: the updated object
-    ///   - privateData: application-specific options (optional)
-    public static func withObject(eventSource: Component,
-                           object: CoatyObject,
-                           privateData: [String: Any]? = nil) -> CompleteEvent {
-        
-        let completeEventData = CompleteEventData<Family>(object, privateData)
-        return .init(eventSource: eventSource, eventData: completeEventData)
     }
     
     // MARK: - Codable methods.
