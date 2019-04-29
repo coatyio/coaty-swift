@@ -3,23 +3,21 @@ PODS:
     - CocoaMQTT (~> 1.1.3)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
-    - XCGLogger (~> 6.1.0)
+    - XCGLogger (~> 7.0.0)
   - CocoaAsyncSocket (7.6.3)
   - CocoaMQTT (1.1.3):
     - CocoaAsyncSocket (~> 7.6.3)
-  - Nimble (7.3.4)
+  - Nimble (8.0.1)
   - ObjcExceptionBridging (1.0.1):
     - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
   - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
-  - Quick (1.3.4)
-  - RxAtomic (4.4.1)
-  - RxCocoa (4.4.1):
-    - RxSwift (~> 4.0)
-  - RxSwift (4.4.1):
-    - RxAtomic (~> 4.4)
-  - XCGLogger (6.1.0):
-    - XCGLogger/Core (= 6.1.0)
-  - XCGLogger/Core (6.1.0):
+  - Quick (2.1.0)
+  - RxCocoa (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxSwift (4.5.0)
+  - XCGLogger (7.0.0):
+    - XCGLogger/Core (= 7.0.0)
+  - XCGLogger/Core (7.0.0):
     - ObjcExceptionBridging
 
 DEPENDENCIES:
@@ -34,7 +32,6 @@ SPEC REPOS:
     - Nimble
     - ObjcExceptionBridging
     - Quick
-    - RxAtomic
     - RxCocoa
     - RxSwift
     - XCGLogger
@@ -44,17 +41,16 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CoatySwift: fb7e2d094952d53b49be0094d5042ce14e4b4bb4
+  CoatySwift: 86183a8a67d3d5c581de0d5bf3d3cf5a884c2904
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   CocoaMQTT: b506d38ad3bbe1c55a4f8ee8c9fd02c35da1a7d8
-  Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
+  Nimble: 45f786ae66faa9a709624227fae502db55a8bdd0
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
-  Quick: f4f7f063c524394c73ed93ac70983c609805d481
-  RxAtomic: f8d6adc1ccb87a767811269e4875887bc74dbf19
-  RxCocoa: 2f35a76bf8887872e28a1914112395b11b8e0e64
-  RxSwift: 92fcf68dfef21f3e2ab1965363d9e7b3d787597e
-  XCGLogger: 7f7f43f15dfe3a305fa1342b7dc29af656289abd
+  Quick: 4be43f6634acfa727dd106bdf3929ce125ffa79d
+  RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
+  RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
+  XCGLogger: 0434f15e3909cdc450bb63faf638b8792ab782ab
 
-PODFILE CHECKSUM: 43b990616084a4c39ecfc20f87e79856d54073bd
+PODFILE CHECKSUM: c76dce31808b2c409317ccc272aeb4ad801a3be3
 
 COCOAPODS: 1.6.1

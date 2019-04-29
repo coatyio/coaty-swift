@@ -31,7 +31,7 @@ The Coaty framework enables realization of collaborative IoT applications and sc
   s.macos.deployment_target = '10.14'
 
   s.source_files = 'CoatySwift/Classes/**/*'
-  
+    
   # s.resource_bundles = {
   #   'CoatySwift' => ['CoatySwift/Assets/*.png']
   # }
@@ -42,6 +42,7 @@ The Coaty framework enables realization of collaborative IoT applications and sc
   s.dependency 'CocoaMQTT', '~> 1.1.3'
   s.dependency 'RxSwift', '~> 4.0'
   s.dependency 'RxCocoa', '~> 4.0'
-  s.dependency 'XCGLogger', '~> 6.1.0'
+  s.dependency 'XCGLogger', '~> 7.0.0'
 
 end
+
