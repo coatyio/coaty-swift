@@ -5,6 +5,7 @@
 
 import Foundation
 import RxSwift
+import XCGLogger
 
 /// An IoC container that uses constructor dependency injection to
 /// create container components and to resolve dependencies.
@@ -47,13 +48,15 @@ public class Container {
                                configuration: Configuration,
                                objectFamily: Family.Type
                                /* configTransformer: */)  -> Container {
-      
+        
+        // Adjust logging level for CoatySwift.
+        LogManager.logLevel = LogManager.getLogLevel(logLevel: configuration.common.logLevel)
+        
         let container = Container()
         container.resolveComponents(components, configuration, objectFamily)
         return container
     }
     
-
     /// Dynamically registers and resolves the given controller class
     /// with the specified controller config options.
     /// The request is silently ignored if the container has already

@@ -84,18 +84,25 @@ public class CommonOptions {
     /// Any other custom properties accessible by indexer.
     public var extra = [String: Any]()
     
+    /// Setting for the level of the CoatySwift Logger.
+    public var logLevel = LogLevel.error
+    
     public init(associatedUser: User? = nil, associatedDevice: Device? = nil,
-         agentInfo: AgentInfo? = nil, extra: [String: Any]? = nil) {
+         agentInfo: AgentInfo? = nil, extra: [String: Any]? = nil,
+         logLevel: LogLevel? = nil) {
         self.associatedUser = associatedUser
         self.associatedDevice = associatedDevice
         self.agentInfo = agentInfo
         if let extra = extra {
             self.extra = extra
         }
+        
+        if let logLevel = logLevel {
+            self.logLevel = logLevel
+        }
     }
     
 }
-
 
 /// Options used for communication
 public class CommunicationOptions {

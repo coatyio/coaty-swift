@@ -58,6 +58,9 @@ class HelloWorldExampleViewController: UIViewController {
                                                  objectType: CoatyObjectFamily.user.rawValue,
                                                  objectId: UUID())
             
+            // Adjusts the logging level of CoatySwift messages.
+            config.common?.logLevel = .info
+            
             // Here, we define that the TaskController should advertise its identity as soon as
             // it gets online.
             config.controllers = ControllerConfig(
@@ -75,6 +78,7 @@ class HelloWorldExampleViewController: UIViewController {
             // The communicationManager will also advertise its identity upon connection to the
             // mqtt broker.
             config.communication?.shouldAdvertiseIdentity = true
+            
         }
     }
 }
