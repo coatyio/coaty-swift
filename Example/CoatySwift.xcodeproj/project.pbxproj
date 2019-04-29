@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2A427B0D2232816F0056D67A /* CustomCoatyObjectFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A427B0C2232816F0056D67A /* CustomCoatyObjectFamily.swift */; };
 		2A427B112232826D0056D67A /* Demo+CoatyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A427B102232826D0056D67A /* Demo+CoatyObject.swift */; };
-		2AB9CEC722520B3000C7D1CB /* HelloWorldExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB9CEC622520B3000C7D1CB /* HelloWorldExampleViewController.swift */; };
 		2AF1EF9E225CEBFF0099E170 /* HelloWorldTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF1EF9D225CEBFF0099E170 /* HelloWorldTask.swift */; };
 		2AF1EFA0225CEC140099E170 /* TaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF1EF9F225CEC140099E170 /* TaskController.swift */; };
 		2AF1EFA2225CED460099E170 /* HelloWorldObjectFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF1EFA1225CED460099E170 /* HelloWorldObjectFamily.swift */; };
@@ -21,6 +20,7 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		7DC4D4F34380C5B9D465F0F9 /* Pods_CoatySwift_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B9CCE17A7ADBB73A053ACB4 /* Pods_CoatySwift_Example.framework */; };
+		BCB411C6227720010057DC4C /* HelloWorldExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB411C5227720010057DC4C /* HelloWorldExampleViewController.swift */; };
 		BCCCDB762270708200A780DE /* ModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCDB752270708200A780DE /* ModelTypes.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +38,6 @@
 		0E082A6916A9EE8CD84E196D /* CoatySwift.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = CoatySwift.podspec; path = ../CoatySwift.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		2A427B0C2232816F0056D67A /* CustomCoatyObjectFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCoatyObjectFamily.swift; sourceTree = "<group>"; };
 		2A427B102232826D0056D67A /* Demo+CoatyObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Demo+CoatyObject.swift"; sourceTree = "<group>"; };
-		2AB9CEC622520B3000C7D1CB /* HelloWorldExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloWorldExampleViewController.swift; sourceTree = "<group>"; };
 		2AF1EF9D225CEBFF0099E170 /* HelloWorldTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloWorldTask.swift; sourceTree = "<group>"; };
 		2AF1EF9F225CEC140099E170 /* TaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskController.swift; sourceTree = "<group>"; };
 		2AF1EFA1225CED460099E170 /* HelloWorldObjectFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloWorldObjectFamily.swift; sourceTree = "<group>"; };
@@ -57,6 +56,7 @@
 		940FCFEA809ED5A86291D93D /* Pods-CoatySwift_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example.release.xcconfig"; sourceTree = "<group>"; };
 		9914431535FD0B653582AF30 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		ADEEFD5354A32F3127D3F18E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		BCB411C5227720010057DC4C /* HelloWorldExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloWorldExampleViewController.swift; sourceTree = "<group>"; };
 		BCCCDB752270708200A780DE /* ModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTypes.swift; sourceTree = "<group>"; };
 		C87AF40D4ACD8A212C6EC978 /* Pods-CoatySwift_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		DD23F046978D94FF26EBCE73 /* Pods-CoatySwift_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -95,7 +95,7 @@
 		2AF1EF9C225CEBE50099E170 /* Hello World */ = {
 			isa = PBXGroup;
 			children = (
-				2AB9CEC622520B3000C7D1CB /* HelloWorldExampleViewController.swift */,
+				BCB411C5227720010057DC4C /* HelloWorldExampleViewController.swift */,
 				2AF1EF9D225CEBFF0099E170 /* HelloWorldTask.swift */,
 				2AF1EF9F225CEC140099E170 /* TaskController.swift */,
 				2AF1EFA1225CED460099E170 /* HelloWorldObjectFamily.swift */,
@@ -324,7 +324,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CoatySwift/CoatySwift.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaMQTT/CocoaMQTT.framework",
@@ -349,7 +349,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4CA762C234CD0F0D32D615B2 /* [CP] Check Pods Manifest.lock */ = {
@@ -382,7 +382,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 			);
@@ -395,7 +395,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -407,9 +407,9 @@
 			files = (
 				2AF1EFA0225CEC140099E170 /* TaskController.swift in Sources */,
 				2A427B112232826D0056D67A /* Demo+CoatyObject.swift in Sources */,
-				2AB9CEC722520B3000C7D1CB /* HelloWorldExampleViewController.swift in Sources */,
 				2AF1EFA2225CED460099E170 /* HelloWorldObjectFamily.swift in Sources */,
 				2AF1EF9E225CEBFF0099E170 /* HelloWorldTask.swift in Sources */,
+				BCB411C6227720010057DC4C /* HelloWorldExampleViewController.swift in Sources */,
 				2A427B0D2232816F0056D67A /* CustomCoatyObjectFamily.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,

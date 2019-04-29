@@ -28,6 +28,7 @@ The Coaty framework enables realization of collaborative IoT applications and sc
   s.source           = { :git => 'https://code.siemens.com/collaborative-iot/coaty/coaty-swift.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '8.0'
+  s.macos.deployment_target = '10.14'
 
   s.source_files = 'CoatySwift/Classes/**/*'
   
