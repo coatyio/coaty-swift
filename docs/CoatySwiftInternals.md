@@ -4,7 +4,7 @@ This document aims to explain some of the rationale behind our decisions when bu
 
 ## Table of Contents
 
-* [Porting Dynamic- to Static Types](#the-pleasure-and-pain-of-static-languages)
+* [Porting Dynamic to Static Types](#the-pleasure-and-pain-of-static-languages)
     * [Codable Subclassing with Generics](#codable-subclassing-with-generics)
     * [Object Families](#the-importance-of-objectfamily)
     * [Decoding and Encoding - A Complex Process](#decoding-and-encoding-a-complex-process)
@@ -81,29 +81,3 @@ First, our implementation tries to match an object against one of the classes pr
 If none of the custom objects matched the object we want to encode / decode, check whether it's a built-in CoatySwift type. You can find all generic CoatyObjects in `CoatySwift/Classes/Common/CoatyObjectFamily.swift`. If even this fails, a coding error will be thrown, as there is no type information given to us that can help us to infer the actual type of the object.
 
 
-
-### Type Erased Communication Manager
-
-The `CommunicationManager` has a generic implementation that requires an `ObjectFamily` to instantiate it. By using this generic approach we are able to offer a slimmer API to the application programmer that needs less compiler type hints for operations such as for calls to `.observeChannel()` that expect non-standard Coaty objects as return types. By using the generic implementation the knowledge about the custom types can now be directly encoded into the `CommunicationManager` instance. In order to be able to provide the customized `CommunicationManager` instance to each controller, we are required to use __type erasure__ in the form of the `AnyCommunicationManager` that is a super class to all generic `CommunicationManagers`. As noted in the [Wikipedia Article](https://en.wikipedia.org/wiki/Type_erasure): 
-> In programming languages, __type erasure__ refers to the load-time process by which explicit type annotations are removed from a program, before it is executed at run-time.
-
-In order to use the generic implementation of the `CommunicationManager` we need to fetch it using the `getCommunicationManager()` method that should always be called inside the `onCommunicationManagerStarting()` lifecycle method that is provided by the `Controller` class. An application programmer now __must__ specify the custom `ObjectFamily` they use, as shown below by `<HelloWorldObjectFamily>`. 
-
-This is an additional step over the coaty-js version, however, __it is the only way to slimmen down the API and remove the need for generic annotations in all methods and classes referencing a`CommunicationManager`__.
-
-```swift
-class TaskController: Controller {
-
-    /// This is the communicationManager for this particular controller. Note that,
-    /// you _must_ call `self.communicationManager = getCommunicationManager()`
-    /// somewhere in `onCommunicationManagerStarting()` in order to store this reference.
-    private var communicationManager: CommunicationManager<HelloWorldObjectFamily>?
-    
-    override func onCommunicationManagerStarting() {
-            super.onCommunicationManagerStarting()
-            communicationManager = self.getCommunicationManager()
-
-            // Setup subscriptions...
-    }
-}
-```
