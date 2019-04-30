@@ -18,7 +18,7 @@ class HelloWorldExampleViewController: UIViewController {
         setupView()
         
         // Instantiate controllers.
-        let components = Components(controllers: ["TaskController": TaskController.self])
+        let components = Components(controllers: ["TaskController": TaskController<HelloWorldObjectFamily>.self])
         
         guard let configuration = createHelloWorldConfiguration() else {
             print("Invalid configuration! Please check your options.")

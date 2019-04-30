@@ -9,48 +9,36 @@ import Foundation
 /// create container components and to resolve dependencies.
 /// This container defines the entry and exit points for any Coaty application
 /// providing lifecycle management for its components.
-open class Controller {
+open class Controller<Family: ObjectFamily> {
     
-    private(set) public var runtime: Runtime
-    private(set) public var options: ControllerOptions?
-    private(set) public var controllerType: String
-    private(set) public var identity: Component
-    private var anyComManager: AnyCommunicationManager
-    private var anyEventFactory: AnyEventFactory
+    /// This is the communicationManager for this particular controller.
+    private (set) public var communicationManager: CommunicationManager<Family>
     
-    /// - Note: This method will crash in case the specified Object Family is NOT correctly set.
-    /// - Returns: The Communication Manager for this particular Controller. This method is the only
-    /// way of accessing the Communication Manager, and a reference to the Communication Manager
-    /// should be stored inside the Controller subclass, preferably in a class variable.
-    public func getCommunicationManager<Family: ObjectFamily>() -> CommunicationManager<Family> {
-        return anyComManager as! CommunicationManager<Family>
-    }
-    
-    /// - Note: This method will crash in case the specified Object Family is NOT correctly set.
-    /// - Returns: The Factory responsible for creating Communication Events for this particular
-    /// Controller. This method is the only way of accessing the Factory, and a reference to the
-    /// Factory should be stored inside the Controller subclass, preferably in a class variable.
-    public func getFactory<Family: ObjectFamily>() -> EventFactory<Family> {
-        return anyEventFactory as! EventFactory<Family>
-    }
+    /// This is the factory for this particular controller that is used to
+    /// create CommunicationEvents.
+    private (set) public var eventFactory: EventFactory<Family>
+    private (set) public var runtime: Runtime
+    private (set) public var options: ControllerOptions?
+    private (set) public var controllerType: String
+    private (set) public var identity: Component
     
     required public init(runtime: Runtime,
                   options: ControllerOptions?,
-                  communicationManager: AnyCommunicationManager,
-                  factory: AnyEventFactory,
+                  communicationManager: CommunicationManager<Family>,
+                  eventFactory: EventFactory<Family>,
                   controllerType: String) {
         self.runtime = runtime
         self.options = options ?? ControllerOptions()
-        self.anyComManager = communicationManager
+        self.communicationManager = communicationManager
+        self.eventFactory = eventFactory
         self.controllerType = controllerType
-        self.anyEventFactory = factory
         
         // Create default identity.
         self.identity = Component(name: self.controllerType,
                                   objectType: "\(COATY_PREFIX)\(CoreType.Component.rawValue)",
                                   objectId: .init())
         
-        identity.parentObjectId = self.anyComManager.identity!.objectId
+        identity.parentObjectId = self.communicationManager.identity!.objectId
         self.initializeIdentity(identity: identity)
         
     }
@@ -73,7 +61,7 @@ open class Controller {
     /// effects here. The base implementation does nothing.
     ///
     /// - Parameters: the Coaty container of this controller.
-    open func onContainerResolved(container: Container) {}
+    open func onContainerResolved(container: Container<Family>) {}
     
     /// Called when the communication manager is about to start or restart.
     /// Implement side effects here. Ensure that super.onCommunicationManagerStarting
@@ -118,7 +106,7 @@ open class Controller {
         let event = AdvertiseEvent<CoatyObjectFamily>.withObject(eventSource: self.identity,
                                               object: self.identity)
  
-        try? self.anyComManager.publishAdvertise(advertiseEvent: event,
+        try? self.communicationManager.publishAdvertise(advertiseEvent: event,
                                                         eventTarget: self.identity)
         
     }
