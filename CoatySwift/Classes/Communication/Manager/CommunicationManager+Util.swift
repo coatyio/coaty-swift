@@ -8,6 +8,18 @@ import RxSwift
 
 extension CommunicationManager {
     
+    // MARK: - CommunicationManager+Util methods.
+    
+    public func getCommunicationState() -> Observable<CommunicationState> {
+        return communicationState.asObserver()
+    }
+    
+    public func getOperatingState() -> Observable<OperatingState> {
+        return operatingState.asObserver()
+    }
+    
+    // MARK: - Filtering methods.
+    
     func convertToTupleFormat(rawMessage: (String, String)) throws -> (Topic, String) {
         let (topic, payload) = rawMessage
         return try (Topic(topic), payload)

@@ -7,8 +7,44 @@ import Foundation
 import RxSwift
 
 extension CommunicationManager {
-
+    
     // MARK: - One way events.
+    
+    /// Publishes a given advertise event.
+    ///
+    /// - Parameters:
+    ///     - advertiseEvent: The event that should be advertised.
+    public func publishAdvertise<Family: ObjectFamily,T: AdvertiseEvent<Family>>(advertiseEvent: T,
+                                                                                 eventTarget: Component) throws {
+        
+        let topicForObjectType = try Topic
+            .createTopicStringByLevelsForPublish( eventType: .Advertise,
+                                                  eventTypeFilter:advertiseEvent.eventData.object.objectType,
+                                                  associatedUserId: "-",
+                                                  sourceObject: advertiseEvent.eventSource,
+                                                  messageToken: CoatyUUID().string)
+        
+        let topicForCoreType = try Topic
+            .createTopicStringByLevelsForPublish(eventType: .Advertise,
+                                                 eventTypeFilter: advertiseEvent.eventData.object.coreType.rawValue,
+                                                 associatedUserId: "-",
+                                                 sourceObject: advertiseEvent.eventSource,
+                                                 messageToken: CoatyUUID().string)
+        
+        // Save advertises for Components or Devices.
+        if advertiseEvent.eventData.object.coreType == .Component ||
+            advertiseEvent.eventData.object.coreType == .Device {
+            
+            // Add if not existing already in deadvertiseIds.
+            if !deadvertiseIds.contains(advertiseEvent.eventData.object.objectId) {
+                deadvertiseIds.append(advertiseEvent.eventData.object.objectId)
+            }
+        }
+        
+        // Publish the advertise for core AND object type.
+        publish(topic: topicForCoreType, message: advertiseEvent.json)
+        publish(topic: topicForObjectType, message: advertiseEvent.json)
+    }
     
     /// Advertises the identity of a CommunicationManager.
     public func advertiseIdentityOrDevice(eventTarget: Component) throws {

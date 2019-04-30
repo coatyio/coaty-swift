@@ -17,7 +17,6 @@ open class Controller<Family: ObjectFamily> {
     /// This is the factory for this particular controller that is used to
     /// create CommunicationEvents.
     private (set) public var eventFactory: EventFactory<Family>
-    
     private (set) public var runtime: Runtime
     private (set) public var options: ControllerOptions?
     private (set) public var controllerType: String
