@@ -76,10 +76,7 @@ class TaskController<Family: ObjectFamily>: Controller<Family> {
                 /// Make sure that the received event if of the expected type.
                 return advertiseEvent.eventData.object as? HelloWorldTask
             }
-            .flatMap {
-                /// This is a "hack" to remove nil values from our observable stream.
-                Observable.from(optional: $0)
-            }
+            .filterNil()
             .filter { (task) -> Bool in
                 return task.status == .request
             }
@@ -133,9 +130,7 @@ class TaskController<Family: ObjectFamily>: Controller<Family> {
                 .map { (completeEvent) -> HelloWorldTask? in
                     return completeEvent.eventData.object as? HelloWorldTask
                 }
-                .flatMap {
-                    Observable.from(optional: $0)
-                }
+                .filterNil()
                 .subscribe(onNext: { (task) in
                     // If our Id is the same of the received complete event from the service, this
                     // means the Service has chosen us to carry out the task.
