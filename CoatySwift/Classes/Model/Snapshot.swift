@@ -14,7 +14,7 @@ open class Snapshot<Family: ObjectFamily>: CoatyObject {
     public var creationTimestamp: Double
     
     /// UUID of controller which created this snapshot.
-    public var creatorId: UUID
+    public var creatorId: CoatyUUID
     
     /// Deep copy of the object and its state stored in this snapshot.
     public var object: CoatyObject
@@ -25,10 +25,10 @@ open class Snapshot<Family: ObjectFamily>: CoatyObject {
     
     
     public init(creationTimestamp: Double,
-         creatorId: UUID,
+         creatorId: CoatyUUID,
          tags: [String]? = nil,
          object: CoatyObject,
-         objectId: UUID = .init(),
+         objectId: CoatyUUID = .init(),
          name: String) {
         self.creationTimestamp = creationTimestamp
         self.creatorId = creatorId
@@ -40,7 +40,7 @@ open class Snapshot<Family: ObjectFamily>: CoatyObject {
                    name: name)
     }
     
-    public required init(coreType: CoreType, objectType: String, objectId: UUID, name: String) {
+    public required init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {
         fatalError("init(coreType:objectType:objectId:name:) has not been implemented")
     }
     
@@ -57,7 +57,7 @@ open class Snapshot<Family: ObjectFamily>: CoatyObject {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.creationTimestamp = try container.decode(Double.self, forKey: .creationTimestamp)
-        self.creatorId = try container.decode(UUID.self, forKey: .creatorId)
+        self.creatorId = try container.decode(CoatyUUID.self, forKey: .creatorId)
         
         guard let object = try container.decode(ClassWrapper<Family, CoatyObject>.self,
                                                 forKey: .object).object else {
@@ -73,7 +73,7 @@ open class Snapshot<Family: ObjectFamily>: CoatyObject {
     override open func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(creatorId.uuidString.lowercased(), forKey: .creatorId)
+        try container.encode(creatorId.string, forKey: .creatorId)
         try container.encode(creationTimestamp, forKey: .creationTimestamp)
         try container.encode(object, forKey: .object)
         try container.encodeIfPresent(tags, forKey: .tags)

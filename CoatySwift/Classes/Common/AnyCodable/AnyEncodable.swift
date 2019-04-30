@@ -79,6 +79,8 @@ extension _AnyEncodable {
             try container.encode(double)
         case let string as String:
             try container.encode(string)
+        case let coatyUUID as CoatyUUID:
+            try container.encode(coatyUUID)
         case let date as Date:
             try container.encode(date)
         case let url as URL:
@@ -126,6 +128,8 @@ extension AnyEncodable: Equatable {
         case let (lhs as Double, rhs as Double):
             return lhs == rhs
         case let (lhs as String, rhs as String):
+            return lhs == rhs
+        case let (lhs as CoatyUUID, rhs as CoatyUUID):
             return lhs == rhs
         case (let lhs as [String: AnyEncodable], let rhs as [String: AnyEncodable]):
             return lhs == rhs

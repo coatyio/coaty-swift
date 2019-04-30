@@ -13,7 +13,7 @@ public class Discover: Codable {
     // MARK: - Attributes.
     
     public var externalId: String?
-    public var objectId: UUID?
+    public var objectId: CoatyUUID?
     public var objectTypes: [String]?
     public var coreTypes: [CoreType]?
     
@@ -36,7 +36,7 @@ public class Discover: Codable {
     ///     - objectId: The internal UUID of the object to be discovered or undefined.
     ///     - objectTypes: Restrict objects by object types (logical OR).
     ///     - coreTypes: Restrict objects by core types (logical OR).
-    private init(externalId: String?, objectId: UUID?, objectTypes: [String]?, coreTypes: [CoreType]?) {
+    private init(externalId: String?, objectId: CoatyUUID?, objectTypes: [String]?, coreTypes: [CoreType]?) {
         self.externalId = externalId
         self.objectId = objectId
         self.objectTypes = objectTypes
@@ -45,7 +45,7 @@ public class Discover: Codable {
 
     // MARK: - Convenience initializers that cover all permitted parameter combinations.
     
-    required init(objectId: UUID) {
+    required init(objectId: CoatyUUID) {
         self.objectId = objectId
     }
     
@@ -69,7 +69,7 @@ public class Discover: Codable {
         self.externalId = externalId
     }
     
-    required init(objectId: UUID, externalId: String) {
+    required init(objectId: CoatyUUID, externalId: String) {
         self.objectId = objectId
         self.externalId = externalId
     }
@@ -87,7 +87,7 @@ public class Discover: Codable {
         self.objectTypes = objectTypes
     }
     
-    required init(externalId: String, objectId: UUID) {
+    required init(externalId: String, objectId: CoatyUUID) {
         self.externalId = externalId
         self.objectId = objectId
     }
@@ -106,7 +106,7 @@ public class Discover: Codable {
         
         // Decode attributes.
         externalId = try container.decodeIfPresent(String.self, forKey: .externalId)
-        objectId = try container.decodeIfPresent(UUID.self, forKey: .objectId)
+        objectId = try container.decodeIfPresent(CoatyUUID.self, forKey: .objectId)
         coreTypes = try container.decodeIfPresent([CoreType].self, forKey: .coreTypes)
         objectTypes = try container.decodeIfPresent([String].self, forKey: .objectTypes)
 
@@ -117,7 +117,7 @@ public class Discover: Codable {
     
         // Encode attributes.
         try container.encodeIfPresent(externalId, forKey: .externalId)
-        try container.encodeIfPresent(objectId?.uuidString.lowercased(), forKey: .objectId)
+        try container.encodeIfPresent(objectId, forKey: .objectId)
         try container.encodeIfPresent(coreTypes, forKey: .coreTypes)
         try container.encodeIfPresent(objectTypes, forKey: .objectTypes)
     }

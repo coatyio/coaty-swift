@@ -23,7 +23,7 @@ public class User: CoatyObject {
     public init(name: String,
                 names: ScimUserNames,
                 objectType: String = "\(COATY_PREFIX)\(CoreType.User)",
-                objectId: UUID = .init()) {
+                objectId: CoatyUUID = .init()) {
         
         self.names = names
         super.init(coreType: .User, objectType: objectType, objectId: objectId, name: name)
@@ -31,7 +31,7 @@ public class User: CoatyObject {
     
     
     /// - NOTE: Should NOT be used by the application programmer.
-    internal required init(coreType: CoreType, objectType: String, objectId: UUID, name: String) {
+    internal required init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {
         fatalError("init(coreType:objectType:objectId:name:) has not been implemented")
     }
     

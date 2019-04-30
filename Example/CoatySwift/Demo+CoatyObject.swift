@@ -19,7 +19,11 @@ public class DemoObject: CoatyObject {
     
     // MARK: - Initializers.
     
-    public init(coreType: CoreType, objectType: String, objectId: UUID, name: String, message: String) {
+    public init(coreType: CoreType,
+                objectType: String,
+                objectId: CoatyUUID,
+                name: String,
+                message: String) {
         self.message = message
         super.init(coreType: coreType, objectType: objectType, objectId: objectId, name: name)
     }
@@ -36,7 +40,7 @@ public class DemoObject: CoatyObject {
         try super.init(from: decoder)
     }
     
-    required init(coreType: CoreType, objectType: String, objectId: UUID, name: String) {
+    required init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {
         fatalError("init(coreType:objectType:objectId:name:) has not been implemented")
     }
     

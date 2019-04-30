@@ -19,7 +19,7 @@ public class CommunicationEvent<T: CommunicationEventData>: Codable {
     // MARK: - Private attributes.
     
     public var eventSource: Component?
-    public var eventSourceId: UUID?
+    public var eventSourceId: CoatyUUID?
     public var eventUserId: String? // or UUID?
     
     // MARK: - Initializer.
