@@ -367,6 +367,7 @@
 		BA9B165014D1A13A2E172964DF0DB5F1 /* ObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E62BF077C3DCFBCC00E08F140401A4 /* ObserverType.swift */; };
 		BB87D51CFF8E5932F0A46A3DC7A10B62 /* JSONDecoder+HeterogeneousArrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CA6393CA2925DEE1969250603889F6 /* JSONDecoder+HeterogeneousArrays.swift */; };
 		BCF6CD522278531800A63514 /* CoatyUUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF6CD512278531800A63514 /* CoatyUUID.swift */; };
+		BCF6CD5622789BD000A63514 /* RxOptional.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF6CD5522789BD000A63514 /* RxOptional.swift */; };
 		BD337F23D4DA5FA160C00CDF99BE512D /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279A88BD8DC24ADCC04B2197C22044F2 /* Debug.swift */; };
 		BE0277CADF94748039991B80B9711AB9 /* InvocableScheduledItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28ABBA3EA9198F66ACD208D5242DAFCA /* InvocableScheduledItem.swift */; };
 		BE0A8E852C11F37E29400B0AD3FA010B /* PrePostFixLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8511E58E941E07F7E1B3A5557E633A0 /* PrePostFixLogFormatter.swift */; };
@@ -1137,6 +1138,7 @@
 		BC6259543B9C7B9FFD797B2185DBE9A0 /* Errors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Errors.swift; path = RxSwift/Errors.swift; sourceTree = "<group>"; };
 		BC9FDD2AEA7E12196ED1DAA0B5FB3F65 /* CwlCatchException.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CwlCatchException.m; path = Carthage/Checkouts/CwlCatchException/Sources/CwlCatchExceptionSupport/CwlCatchException.m; sourceTree = "<group>"; };
 		BCF6CD512278531800A63514 /* CoatyUUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoatyUUID.swift; sourceTree = "<group>"; };
+		BCF6CD5522789BD000A63514 /* RxOptional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxOptional.swift; sourceTree = "<group>"; };
 		BD1259172E47CB40CFE1A3B7CA3BE033 /* CombineLatest+Collection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CombineLatest+Collection.swift"; path = "RxSwift/Observables/CombineLatest+Collection.swift"; sourceTree = "<group>"; };
 		BDAD195C968D4D4CFD3663352E3D6115 /* UISearchController+Rx.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UISearchController+Rx.swift"; path = "RxCocoa/iOS/UISearchController+Rx.swift"; sourceTree = "<group>"; };
 		BE74A2F5EB8620B7CFADE5EBBF56DB85 /* Quick-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Quick-Info.plist"; sourceTree = "<group>"; };
@@ -1529,6 +1531,7 @@
 				D614A2C7239010C056085B65DAE8FA11 /* PayloadCoder.swift */,
 				BCF6CD512278531800A63514 /* CoatyUUID.swift */,
 				33C2E530DF26AEA19006502197F11D22 /* AnyCodable */,
+				BCF6CD5522789BD000A63514 /* RxOptional.swift */,
 			);
 			name = Common;
 			path = CoatySwift/Classes/Common;
@@ -2917,6 +2920,7 @@
 				F2AE5C1E13EAB859C7F62BA377509876 /* AdvertiseEvent.swift in Sources */,
 				C2327E16772DA50BDA134BCEAAB9A2BC /* AgentInfo.swift in Sources */,
 				58B37535F492289A20ADCFE57A2A5EFE /* AnyCodable.swift in Sources */,
+				BCF6CD5622789BD000A63514 /* RxOptional.swift in Sources */,
 				E5F20CBC8125D525B7ED6D4377DAB471 /* AnyDecodable.swift in Sources */,
 				7D265981036E4FEC9DA63C90F5E30BF9 /* AnyEncodable.swift in Sources */,
 				06C89FAE96EBA70B4AB903646236722E /* CallEvent.swift in Sources */,
