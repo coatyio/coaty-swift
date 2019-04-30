@@ -8,20 +8,10 @@ import CoatySwift
 import RxSwift
 
 /// Listens for task requests advertised by the service and carries out assigned tasks.
-class TaskController: Controller {
+class TaskController<Family: ObjectFamily>: Controller<Family> {
     
     // MARK: - Attributes.
 
-    /// This is the communicationManager for this particular controller. Note that,
-    /// you _must_ call `self.communicationManager = getCommunicationManager()`
-    /// somewhere in `onCommunicationManagerStarting()` in order to store this reference.
-    private var communicationManager: CommunicationManager<HelloWorldObjectFamily>?
-    
-    /// This is the factory for this particular controller that is used to
-    /// create CommunicationEvents. Note that you _must_ call `self.factory = getFactory()`
-    /// somewhere in `onCommunicationManagerStarting()` in order to store this reference.
-    private var factory: EventFactory<HelloWorldObjectFamily>!
-    
     /// This disposebag holds references to all of your subscriptions. It is standard in RxSwift
     /// to call `.disposed(by: self.disposeBag)` at the end of every subscription.
     private var disposeBag = DisposeBag()
@@ -53,12 +43,10 @@ class TaskController: Controller {
 
     override func onInit() {
         setBusy(false)
-        factory = self.getFactory()
     }
     
     override func onCommunicationManagerStarting() {
         super.onCommunicationManagerStarting()
-        communicationManager = self.getCommunicationManager()
         
         // Setup subscriptions.
         try? observeAdvertiseRequests()
@@ -81,7 +69,7 @@ class TaskController: Controller {
     /// When a HelloWorldTask Advertise was received, handle it via the `handleRequests`
     /// method.
     private func observeAdvertiseRequests() throws {
-        try communicationManager?
+        try communicationManager
             .observeAdvertiseWithObjectType(eventTarget: identity,
                                             objectType: ModelObjectTypes.HELLO_WORLD_TASK.rawValue)
             .map {(advertiseEvent) -> HelloWorldTask? in
@@ -140,7 +128,7 @@ class TaskController: Controller {
             let event = self.createTaskOfferEvent(request)
 
             // Send it out and wait for the Service to answer.
-            try? self.communicationManager?.publishUpdate(event: event)
+            try? self.communicationManager.publishUpdate(event: event)
                 .take(1)
                 .map { (completeEvent) -> HelloWorldTask? in
                     return completeEvent.eventData.object as? HelloWorldTask
@@ -180,8 +168,8 @@ class TaskController: Controller {
         print("Carrying out task: \(task.name)")
         
         // Notify other components that task is now in progress.
-        let event = factory.AdvertiseEvent.withObject(eventSource: self.identity, object: task)
-        try? communicationManager?.publishAdvertise(advertiseEvent: event,
+        let event = eventFactory.AdvertiseEvent.withObject(eventSource: self.identity, object: task)
+        try? communicationManager.publishAdvertise(advertiseEvent: event,
                                                     eventTarget: self.identity)
         
         // Calculate random delay to simulate task exection time.
@@ -199,10 +187,10 @@ class TaskController: Controller {
                             eventDirection: .Out)
             
             // Notify other components that task has been completed.
-            let advertiseEvent = self.factory.AdvertiseEvent.withObject(eventSource: self.identity,
+            let advertiseEvent = self.eventFactory.AdvertiseEvent.withObject(eventSource: self.identity,
                                                                         object: task)
             
-            try? self.communicationManager?.publishAdvertise(advertiseEvent: advertiseEvent,
+            try? self.communicationManager.publishAdvertise(advertiseEvent: advertiseEvent,
                                                              eventTarget: self.identity)
             
             // Send out query to get all available snapshots of the task object.
@@ -213,7 +201,7 @@ class TaskController: Controller {
             
             let queryEvent = self.createSnapshotQuery(forTask: task)
             
-            try? self.communicationManager?.publishQuery(event: queryEvent)
+            try? self.communicationManager.publishQuery(event: queryEvent)
                 .take(1)
                 .timeout(Double(self.queryTimeout),
                          scheduler: SerialDispatchQueueScheduler(
@@ -252,13 +240,13 @@ class TaskController: Controller {
     ///
     /// - Parameter request: the task request we want to make an offer to.
     /// - Returns: an update event that updates the dueTimeStamp and the assigneeUserId.
-    private func createTaskOfferEvent(_ request: HelloWorldTask) -> UpdateEvent<HelloWorldObjectFamily> {
+    private func createTaskOfferEvent(_ request: HelloWorldTask) -> UpdateEvent<Family> {
         let dueTimeStamp = Int(Date().timeIntervalSince1970 * 1000)
         let assigneeUserId = self.identity.assigneeUserId
         let changedValues: [String: Any] = ["dueTimestamp": dueTimeStamp,
                                             "assigneeUserId": assigneeUserId?.string]
         
-        return factory.UpdateEvent.withPartial(eventSource: self.identity,
+        return eventFactory.UpdateEvent.withPartial(eventSource: self.identity,
                                                objectId: request.objectId,
                                                changedValues: changedValues)
     }
@@ -267,7 +255,7 @@ class TaskController: Controller {
     ///
     /// - Parameter task: the tasks that we are interested in.
     /// - Returns: a query event.
-    private func createSnapshotQuery(forTask task: HelloWorldTask) -> QueryEvent<HelloWorldObjectFamily> {
+    private func createSnapshotQuery(forTask task: HelloWorldTask) -> QueryEvent<Family> {
         
         // Setup the object filter to match on the `parentObjectId` and sort the results by the
         // creation timestamp.
@@ -278,7 +266,7 @@ class TaskController: Controller {
             $0.orderByProperties = [OrderByProperty(properties: .init("creationTimestamp"), sortingOrder: .Desc)]
         }
         
-        return factory.QueryEvent.withCoreTypes(eventSource: self.identity,
+        return eventFactory.QueryEvent.withCoreTypes(eventSource: self.identity,
                                                 coreTypes: [.Snapshot],
                                                 objectFilter: objectFilter)
     }

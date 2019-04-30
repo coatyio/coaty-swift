@@ -10,7 +10,7 @@ import RxSwift
 import CoatySwift
 
 
-class ControllerA: Controller {
+/*class ControllerA: Controller {
     
     // MARK: - Attributes.
     
@@ -369,4 +369,4 @@ class ViewController: UIViewController {
      }*/
     
 }
-
+*/
