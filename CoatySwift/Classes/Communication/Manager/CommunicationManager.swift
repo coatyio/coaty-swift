@@ -66,7 +66,7 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
     private var deferredPublications = [(String, String)]()
 
     /// Ids of all advertised components that should be deadvertised when the client ends.
-    internal var deadvertiseIds = [UUID]()
+    internal var deadvertiseIds = [CoatyUUID]()
     
     /// Observable emitting raw (topic, payload) values.
     let rawMessages: PublishSubject<(String, String)> = PublishSubject<(String, String)>()
@@ -128,7 +128,7 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
                                                                                  eventTypeFilter: nil,
                                                                                  associatedUserId: nil,
                                                                                  sourceObject: identity,
-                                                                                 messageToken: UUID.init().uuidString) else {
+                                                                                 messageToken: CoatyUUID().string) else {
             log.error("Could not create topic string for last will.")
             return
         }
@@ -145,7 +145,7 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
     /// Generates Coaty client Id.
     /// - TODO: Adjust to MQTT specification (maximum length is currently ignored).
     func generateClientId() -> String {
-        return "COATY-\(UUID.init())"
+        return "COATY-\(CoatyUUID().string)"
     }
     
     /// - NOTE: In case there was no brokerClientId before, it is set.
@@ -367,14 +367,14 @@ public class CommunicationManager<Family: ObjectFamily>: AnyCommunicationManager
                                                   eventTypeFilter:advertiseEvent.eventData.object.objectType,
                                                   associatedUserId: "-",
                                                   sourceObject: advertiseEvent.eventSource,
-                                                  messageToken: UUID.init().uuidString)
+                                                  messageToken: CoatyUUID().string)
         
         let topicForCoreType = try Topic
             .createTopicStringByLevelsForPublish(eventType: .Advertise,
                                                  eventTypeFilter: advertiseEvent.eventData.object.coreType.rawValue,
                                                  associatedUserId: "-",
                                                  sourceObject: advertiseEvent.eventSource,
-                                                 messageToken: UUID.init().uuidString)
+                                                 messageToken: CoatyUUID().string)
         
         // Save advertises for Components or Devices.
         if advertiseEvent.eventData.object.coreType == .Component ||

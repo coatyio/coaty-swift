@@ -22,7 +22,7 @@ open class CoatyObject: Codable {
     public var objectType: String
     
     /// Unique ID of the object.
-    public var objectId: UUID
+    public var objectId: CoatyUUID
     
     /// The name/description of the object.
     public var name: String
@@ -33,13 +33,13 @@ open class CoatyObject: Codable {
     public var externalId: String?
     
     /// Unique ID of parent/superordinate object (optional).
-    public var parentObjectId: UUID?
+    public var parentObjectId: CoatyUUID?
     
     /// Unique ID of user/worker whom this object has been assigned to (optional).
-    public var assigneeUserId: UUID?
+    public var assigneeUserId: CoatyUUID?
     
     /// Unique ID of Location object that this object has been associated with (optional).
-    public var locationId: UUID?
+    public var locationId: CoatyUUID?
     
     /// Marks an object that is no longer in use. The concrete definition meaning of this
     /// property is defined by the application. The property value is optional and should
@@ -48,7 +48,7 @@ open class CoatyObject: Codable {
     
     // MARK: - Initializers.
     
-    public required init(coreType: CoreType, objectType: String, objectId: UUID, name: String) {
+    public required init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {
         self.coreType = coreType
         self.objectId = objectId
         self.objectType = objectType
@@ -73,16 +73,16 @@ open class CoatyObject: Codable {
         let container = try decoder.container(keyedBy: CoatyObjectKeys.self)
         
         // Decode required attributes.
-        objectId = try container.decode(UUID.self, forKey: .objectId)
+        objectId = try container.decode(CoatyUUID.self, forKey: .objectId)
         coreType = try container.decode(CoreType.self, forKey: .coreType)
         objectType = try container.decode(String.self, forKey: .objectType)
         name = try container.decode(String.self, forKey: .name)
         
         // Decode optional attributes.
         externalId = try container.decodeIfPresent(String.self, forKey: .externalId)
-        parentObjectId = try container.decodeIfPresent(UUID.self, forKey: .parentObjectId)
-        assigneeUserId = try container.decodeIfPresent(UUID.self, forKey: .assigneeUserId)
-        locationId = try container.decodeIfPresent(UUID.self, forKey: .locationId)
+        parentObjectId = try container.decodeIfPresent(CoatyUUID.self, forKey: .parentObjectId)
+        assigneeUserId = try container.decodeIfPresent(CoatyUUID.self, forKey: .assigneeUserId)
+        locationId = try container.decodeIfPresent(CoatyUUID.self, forKey: .locationId)
         isDeactivated = try container.decodeIfPresent(Bool.self, forKey: .isDeactivated)
     }
     
@@ -91,7 +91,7 @@ open class CoatyObject: Codable {
         
         // Encode required attributes.
         // HACK: Coaty-js currently does not accept uppercase UUIDs.
-        try container.encode(objectId.uuidString.lowercased(), forKey: .objectId)
+        try container.encode(objectId, forKey: .objectId)
         try container.encode(coreType, forKey: .coreType)
         try container.encode(objectType, forKey: .objectType)
         try container.encode(name, forKey: .name)

@@ -57,7 +57,7 @@ public class DisoverEventFactory<Family: ObjectFamily> {
     ///   - eventSource: the event source component
     ///   - objectId: the object ID to discover
     public static func withObjectId(eventSource: Component,
-                                    objectId: UUID) -> DiscoverEvent<Family> {
+                                    objectId: CoatyUUID) -> DiscoverEvent<Family> {
         let discover = Discover(objectId: objectId)
         let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
         return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)
@@ -72,7 +72,7 @@ public class DisoverEventFactory<Family: ObjectFamily> {
     ///   - objectId: the object ID to discover
     public static func withExternalAndObjectId(eventSource: Component,
                                                externalId: String,
-                                               objectId: UUID) -> DiscoverEvent<Family> {
+                                               objectId: CoatyUUID) -> DiscoverEvent<Family> {
         let discover = Discover(objectId: objectId, externalId: externalId)
         let discoverEventData = DiscoverEventData.createFrom(eventData: discover)
         return DiscoverEvent(eventSource: eventSource, eventData: discoverEventData)

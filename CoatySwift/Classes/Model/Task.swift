@@ -36,7 +36,7 @@ open class Task: CoatyObject {
     // MARK: - Attributes.
     
     /// Object ID of user who created the task
-    open var creatorId: UUID
+    open var creatorId: CoatyUUID
     
     /// Timestamp when task was issued/created.
     /// Value represents the number of milliseconds since the epoc in UTC.
@@ -74,18 +74,18 @@ open class Task: CoatyObject {
     open var description: [String]?
     
     /// Associated workflow Id (optional)
-    open var workflowId: UUID?
+    open var workflowId: CoatyUUID?
 
     // MARK: - Initializers.
     
-    public required init(coreType: CoreType, objectType: String, objectId: UUID, name: String) {
+    public required init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {
         fatalError("init(coreType:objectType:objectId:name:) has not been implemented")
     }
     
     public init(objectType: String,
-                objectId: UUID,
+                objectId: CoatyUUID,
                 name: String,
-                creatorId: UUID,
+                creatorId: CoatyUUID,
                 creationTimestamp: Double,
                 status: TaskStatus,
                 lastModificationTimestamp: Double? = nil,
@@ -93,7 +93,7 @@ open class Task: CoatyObject {
                 doneTimestamp: Double? = nil,
                 requirements: [String]? = nil,
                 description: [String]? = nil,
-                workflowId: UUID? = nil) {
+                workflowId: CoatyUUID? = nil) {
         self.creatorId = creatorId
         self.creationTimestamp = creationTimestamp
         self.status = status
@@ -122,7 +122,7 @@ open class Task: CoatyObject {
     
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.creatorId = try container.decode(UUID.self, forKey: .creatorId)
+        self.creatorId = try container.decode(CoatyUUID.self, forKey: .creatorId)
         self.creationTimestamp = try container.decode(Double.self, forKey: .creationTimestamp)
         self.status = try container.decode(TaskStatus.self, forKey: .status)
         self.lastModificationTimestamp = try container.decodeIfPresent(Double.self, forKey: .lastModificationTimestamp)
@@ -130,14 +130,14 @@ open class Task: CoatyObject {
         self.doneTimestamp = try container.decodeIfPresent(Double.self, forKey: .doneTimestamp)
         self.requirements = try container.decodeIfPresent([String].self, forKey: .requirements)
         self.description = try container.decodeIfPresent([String].self, forKey: .description)
-        self.workflowId = try container.decodeIfPresent(UUID.self, forKey: .workflowId)
+        self.workflowId = try container.decodeIfPresent(CoatyUUID.self, forKey: .workflowId)
         try super.init(from: decoder)
     }
     
     open override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(creatorId.uuidString.lowercased(), forKey: .creatorId)
+        try container.encode(creatorId.string, forKey: .creatorId)
         try container.encode(creationTimestamp, forKey: .creationTimestamp)
         try container.encode(status, forKey: .status)
         try container.encodeIfPresent(lastModificationTimestamp, forKey: .lastModificationTimestamp)
@@ -145,6 +145,6 @@ open class Task: CoatyObject {
         try container.encodeIfPresent(doneTimestamp, forKey: .doneTimestamp)
         try container.encodeIfPresent(requirements, forKey: .requirements)
         try container.encodeIfPresent(description, forKey: .description)
-        try container.encodeIfPresent(workflowId?.uuidString.lowercased(), forKey: .workflowId)
+        try container.encodeIfPresent(workflowId, forKey: .workflowId)
     }
 }

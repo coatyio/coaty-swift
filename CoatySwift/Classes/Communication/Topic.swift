@@ -22,8 +22,8 @@ class Topic {
     var eventType: CommunicationEventType
     var coreType: CoreType?
     var objectType: String?
-    var associatedUserId: UUID?
-    var sourceObjectId: UUID
+    var associatedUserId: CoatyUUID?
+    var sourceObjectId: CoatyUUID
     var messageToken: String
     var channelId: String?
     
@@ -32,7 +32,7 @@ class Topic {
         return "\(TOPIC_SEPARATOR)\(COATY)"
             + "\(TOPIC_SEPARATOR)\(PROTOCOL_VERSION)"
             + "\(TOPIC_SEPARATOR)\(event)"
-            + "\(TOPIC_SEPARATOR)\(associatedUserId?.uuidString ?? EMPTY_ASSOCIATED_USER_ID)"
+            + "\(TOPIC_SEPARATOR)\(associatedUserId?.string ?? EMPTY_ASSOCIATED_USER_ID)"
             + "\(TOPIC_SEPARATOR)\(sourceObjectId)"
             + "\(TOPIC_SEPARATOR)\(messageToken)"
             + "\(TOPIC_SEPARATOR)"
@@ -84,7 +84,7 @@ class Topic {
             throw CoatySwiftError.InvalidArgument("Could not sanitize associatedUserId")
         }
         
-        self.associatedUserId = UUID.init(uuidString: sanitizedAssociatedUserId)
+        self.associatedUserId = CoatyUUID(uuidString: sanitizedAssociatedUserId)
         
         // Parse sourceObjectId.
         guard let sanitizedSourceObjectId = Topic.extractIdFromReadableString(sourceObjectId) else {
@@ -92,7 +92,7 @@ class Topic {
         }
         
         // Parse associatedUserId.
-        guard let sourceObjectIdAsUUID = UUID.init(uuidString: sanitizedSourceObjectId) else {
+        guard let sourceObjectIdAsUUID = CoatyUUID(uuidString: sanitizedSourceObjectId) else {
             throw CoatySwiftError.InvalidArgument("Invalid sourceObjectId.")
         }
         
@@ -189,7 +189,7 @@ class Topic {
             + "\(TOPIC_SEPARATOR)\(versionString)"
             + "\(TOPIC_SEPARATOR)\(event)"
             + "\(TOPIC_SEPARATOR)\(associatedUserId ?? WILDCARD_TOPIC)"
-            + "\(TOPIC_SEPARATOR)\(sourceObject?.objectId.uuidString ?? WILDCARD_TOPIC)"
+            + "\(TOPIC_SEPARATOR)\(sourceObject?.objectId.string ?? WILDCARD_TOPIC)"
             + "\(TOPIC_SEPARATOR)\(messageToken ?? WILDCARD_TOPIC)"
             + "\(TOPIC_SEPARATOR)"
     }

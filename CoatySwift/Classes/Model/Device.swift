@@ -19,12 +19,12 @@ public class Device: CoatyObject {
     
     // MARK: - Initializers.
     
-    public init(objectType: String, objectId: UUID, name: String, displayType: DisplayType) {
+    public init(objectType: String, objectId: CoatyUUID, name: String, displayType: DisplayType) {
         self.displayType = displayType
         super.init(coreType: .Device, objectType: objectType, objectId: objectId, name: name)
     }
     
-    public required init(coreType: CoreType, objectType: String, objectId: UUID, name: String) {
+    public required init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {
         fatalError("init(coreType:objectType:objectId:name:) has not been implemented")
     }
     

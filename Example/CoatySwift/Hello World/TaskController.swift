@@ -63,7 +63,7 @@ class TaskController: Controller {
         // Setup subscriptions.
         try? observeAdvertiseRequests()
         
-        print("# Client User ID: \(self.runtime.commonOptions?.associatedUser?.objectId.uuidString ?? "-")")
+        print("# Client User ID: \(self.runtime.commonOptions?.associatedUser?.objectId.string ?? "-")")
     }
     
     override func onCommunicationManagerStopping() {
@@ -151,7 +151,7 @@ class TaskController: Controller {
                 .subscribe(onNext: { (task) in
                     // If our Id is the same of the received complete event from the service, this
                     // means the Service has chosen us to carry out the task.
-                    if task.assigneeUserId?.uuidString.lowercased() == self.identity.assigneeUserId?.uuidString.lowercased() {
+                    if task.assigneeUserId == self.identity.assigneeUserId {
                         self.logConsole(message: "Offer accepted for request: \(task.name)",
                                         eventName: "COMPLETE",
                                         eventDirection: .In)
@@ -160,7 +160,7 @@ class TaskController: Controller {
                     } else {
                         // We were not chosen to carry out the task.
                         self.setBusy(false)
-                        self.logConsole(message: "Offer rejected for request: \(task.name)",
+                        self.logConsole(message: "Offer rejected for request: \(task.name) - \(task.assigneeUserId):\(self.identity.assigneeUserId)",
                                         eventName: "COMPLETE",
                                         eventDirection: .In)
                     }
@@ -254,9 +254,9 @@ class TaskController: Controller {
     /// - Returns: an update event that updates the dueTimeStamp and the assigneeUserId.
     private func createTaskOfferEvent(_ request: HelloWorldTask) -> UpdateEvent<HelloWorldObjectFamily> {
         let dueTimeStamp = Int(Date().timeIntervalSince1970 * 1000)
-        let assigneeUserId = self.identity.assigneeUserId?.uuidString.lowercased()
+        let assigneeUserId = self.identity.assigneeUserId
         let changedValues: [String: Any] = ["dueTimestamp": dueTimeStamp,
-                                            "assigneeUserId": assigneeUserId!]
+                                            "assigneeUserId": assigneeUserId?.string]
         
         return factory.UpdateEvent.withPartial(eventSource: self.identity,
                                                objectId: request.objectId,
@@ -272,7 +272,7 @@ class TaskController: Controller {
         // Setup the object filter to match on the `parentObjectId` and sort the results by the
         // creation timestamp.
         let objectFilter = try? ObjectFilter.buildWithCondition {
-            let objectId = AnyCodable(task.objectId.uuidString.lowercased())
+            let objectId = AnyCodable(task.objectId)
             $0.condition = ObjectFilterCondition(property: .init("parentObjectId"),
                                                  expression: .init(filterOperator: .Equals, op1: objectId))
             $0.orderByProperties = [OrderByProperty(properties: .init("creationTimestamp"), sortingOrder: .Desc)]
@@ -309,7 +309,7 @@ class TaskController: Controller {
         print("## Snapshots retrieved: \(snapshots.count)")
         snapshots.forEach {
             if let task = $0.object as? HelloWorldTask {
-                print("# timestamp:\t\(task.creationTimestamp) status:\t\(task.status) assigneeUserId:\t\(task.assigneeUserId?.uuidString ?? "-")")
+                print("# timestamp:\t\(task.creationTimestamp) status:\t\(task.status) assigneeUserId:\t\(task.assigneeUserId?.string ?? "-")")
             }
         }
         

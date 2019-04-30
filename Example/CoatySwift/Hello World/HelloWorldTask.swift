@@ -17,9 +17,9 @@ class HelloWorldTask: Task {
     
     
     public init(objectType: String,
-                objectId: UUID,
+                objectId: CoatyUUID,
                 name: String,
-                creatorId: UUID,
+                creatorId: CoatyUUID,
                 creationTimestamp: Double,
                 status: TaskStatus,
                 urgency: HelloWorldTaskUrgency,
@@ -28,7 +28,7 @@ class HelloWorldTask: Task {
                 doneTimestamp: Double? = nil,
                 requirements: [String]? = nil,
                 description: [String]? = nil,
-                workflowId: UUID? = nil) {
+                workflowId: CoatyUUID? = nil) {
         self.urgency = urgency
         super.init(objectType: objectType, objectId: objectId, name: name,
                    creatorId: creatorId, creationTimestamp: creationTimestamp,
@@ -37,7 +37,7 @@ class HelloWorldTask: Task {
                    requirements: requirements, description:description, workflowId:workflowId)
     }
     
-    required init(coreType: CoreType, objectType: String, objectId: UUID, name: String) {
+    required init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {
         fatalError("init(coreType:objectType:objectId:name:) has not been implemented")
     }
     

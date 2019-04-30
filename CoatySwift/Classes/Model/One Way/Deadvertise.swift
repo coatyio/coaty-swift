@@ -11,11 +11,11 @@ import Foundation
 public class Deadvertise: Codable {
     
     // MARK: - Required attributes.
-    var objectIds: [UUID]
+    var objectIds: [CoatyUUID]
     
     // MARK: - Initializers.
     
-    init(objectIds: [UUID]) {
+    init(objectIds: [CoatyUUID]) {
         self.objectIds = objectIds
     }
     
@@ -29,7 +29,7 @@ public class Deadvertise: Codable {
         let container = try decoder.container(keyedBy: DeadvertiseCodingKeys.self)
         
         // Decode required attributes.
-        objectIds = try container.decode([UUID].self, forKey: .objectIds)
+        objectIds = try container.decode([CoatyUUID].self, forKey: .objectIds)
 
     }
     
@@ -38,7 +38,7 @@ public class Deadvertise: Codable {
         
         // Encode required attributes.
         let objectIds = self.objectIds.map { (uuid) -> String in
-            return uuid.uuidString.lowercased()
+            return uuid.string
         }
         
         try container.encode(objectIds, forKey: .objectIds)

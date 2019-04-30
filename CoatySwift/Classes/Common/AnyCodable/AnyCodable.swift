@@ -60,6 +60,8 @@ extension AnyCodable: Equatable {
             return lhs == rhs
         case (let lhs as [AnyCodable], let rhs as [AnyCodable]):
             return lhs == rhs
+        case (let lhs as CoatyUUID, let rhs as CoatyUUID):
+            return lhs == rhs
         default:
             return false
         }

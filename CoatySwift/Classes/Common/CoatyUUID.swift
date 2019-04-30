@@ -6,8 +6,10 @@
 
 import Foundation
 
-/// TODO: Missing comment
-public class CoatyUUID: Codable {
+/// Custom implementation of a UUID that actually is compatible with the RFC
+/// specification of sending UUIDs over the network (lowercase in contrast to Apple's
+/// uppercase implementation. )
+public class CoatyUUID: Codable, Equatable, CustomStringConvertible {
     
     private var uuid: UUID
     
@@ -19,6 +21,15 @@ public class CoatyUUID: Codable {
         self.uuid = .init()
     }
     
+    public init?(uuidString: String) {
+        guard let uuid = UUID(uuidString: uuidString) else {
+            return nil
+        }
+        
+        self.uuid = uuid
+    }
+    
+    
     // MARK: - Codable methods.
     
     public required init(from decoder: Decoder) throws {
@@ -29,6 +40,18 @@ public class CoatyUUID: Codable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(self.string)
+    }
+    
+    // MARK: - Equatable methods.
+    
+    public static func == (lhs: CoatyUUID, rhs: CoatyUUID) -> Bool {
+        return lhs.uuid == rhs.uuid
+    }
+    
+    // MARK: - String Convertible.
+    
+    public var description: String {
+        return self.string
     }
     
 }

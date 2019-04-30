@@ -56,7 +56,7 @@ class HelloWorldExampleViewController: UIViewController {
                                                  names: ScimUserNames(familyName: "ClientUser",
                                                                       givenName: ""),
                                                  objectType: CoatyObjectFamily.user.rawValue,
-                                                 objectId: UUID())
+                                                 objectId: CoatyUUID())
             
             // Adjusts the logging level of CoatySwift messages.
             config.common?.logLevel = .info

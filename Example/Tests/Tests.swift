@@ -51,7 +51,7 @@ class CommunicationTests: QuickSpec {
                         try Topic.init(protocolVersion: 0,
                                        event: CommunicationEventType.Advertise.rawValue,
                                        associatedUserId: "-",
-                                       sourceObjectId: identity.objectId.uuidString,
+                                       sourceObjectId: identity.objectId.string,
                                        messageToken: messageToken)
                     }.to(throwError())
                 }

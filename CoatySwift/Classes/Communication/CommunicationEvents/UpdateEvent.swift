@@ -16,7 +16,7 @@ public class UpdateEventFactory<Family: ObjectFamily> {
     ///   - changedValues: Object hash for properties that have changed or should
     ///     be changed (partial update)
     public static func withPartial(eventSource: Component,
-                                   objectId: UUID,
+                                   objectId: CoatyUUID,
                                    changedValues: [String: Any]) -> UpdateEvent<Family> {
         let updateEventData = UpdateEventData<Family>(objectId: objectId, changedValues: changedValues)
         return .init(eventSource: eventSource, eventData: updateEventData)
@@ -79,7 +79,7 @@ public class UpdateEventData<Family: ObjectFamily>: CommunicationEventData {
     // MARK: - Public attributes.
     
     public var object: CoatyObject?
-    public var objectId: UUID?
+    public var objectId: CoatyUUID?
     public var changedValues: [String: Any]?
     
     public var isPartialUpdate: Bool {
@@ -92,7 +92,7 @@ public class UpdateEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Initializers.
     
-    private init(_ object: CoatyObject?, objectId: UUID?, _ changedValues: [String: Any]? = nil) {
+    private init(_ object: CoatyObject?, objectId: CoatyUUID?, _ changedValues: [String: Any]? = nil) {
         self.object = object
         self.objectId = objectId
         self.changedValues = changedValues
@@ -103,7 +103,7 @@ public class UpdateEventData<Family: ObjectFamily>: CommunicationEventData {
         self.init(object, objectId: nil, nil)
     }
     
-    convenience init(objectId: UUID, changedValues: [String: Any]) {
+    convenience init(objectId: CoatyUUID, changedValues: [String: Any]) {
         self.init(nil, objectId: objectId, changedValues)
     }
     
@@ -124,7 +124,7 @@ public class UpdateEventData<Family: ObjectFamily>: CommunicationEventData {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.object = try container.decodeIfPresent(ClassWrapper<Family, CoatyObject>.self, forKey: .object)?.object
-        self.objectId = try container.decodeIfPresent(UUID.self, forKey: .objectId)
+        self.objectId = try container.decodeIfPresent(CoatyUUID.self, forKey: .objectId)
         self.changedValues = try container.decodeIfPresent([String: Any].self, forKey: .changedValues)
         try super.init(from: decoder)
     }
@@ -132,7 +132,7 @@ public class UpdateEventData<Family: ObjectFamily>: CommunicationEventData {
     override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.object, forKey: .object)
-        try container.encodeIfPresent(self.objectId?.uuidString.lowercased(), forKey: .objectId)
+        try container.encodeIfPresent(self.objectId, forKey: .objectId)
         try container.encodeIfPresent(self.changedValues, forKey: .changedValues)
     }
 

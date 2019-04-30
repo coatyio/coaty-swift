@@ -116,7 +116,7 @@ extension CommunicationManager {
         // TODO: Unsure about associatedUserId parameters. Is it really assigneeUserId?
         let channelTopic = try Topic.createTopicStringByLevelsForChannel(channelId: channelId,
                                                                          associatedUserId: eventTarget
-                                                                            .assigneeUserId?.uuidString,
+                                                                            .assigneeUserId?.string,
                                                                          sourceObject: nil,
                                                                          messageToken: nil)
         // TODO: Make sure to only subscribe to topic once...
