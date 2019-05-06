@@ -77,11 +77,7 @@ open class Task: CoatyObject {
     open var workflowId: CoatyUUID?
 
     // MARK: - Initializers.
-    
-    public required init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {
-        fatalError("init(coreType:objectType:objectId:name:) has not been implemented")
-    }
-    
+
     public init(objectType: String,
                 objectId: CoatyUUID,
                 name: String,

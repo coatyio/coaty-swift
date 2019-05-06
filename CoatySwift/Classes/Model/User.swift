@@ -29,12 +29,6 @@ public class User: CoatyObject {
         super.init(coreType: .User, objectType: objectType, objectId: objectId, name: name)
     }
     
-    
-    /// - NOTE: Should NOT be used by the application programmer.
-    internal required init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {
-        fatalError("init(coreType:objectType:objectId:name:) has not been implemented")
-    }
-    
     // MARK: - Codable methods.
     
     public required init(from decoder: Decoder) throws {

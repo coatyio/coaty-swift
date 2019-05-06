@@ -24,10 +24,6 @@ public class Device: CoatyObject {
         super.init(coreType: .Device, objectType: objectType, objectId: objectId, name: name)
     }
     
-    public required init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {
-        fatalError("init(coreType:objectType:objectId:name:) has not been implemented")
-    }
-    
     // MARK: - Codable methods.
 
     public required init(from decoder: Decoder) throws {

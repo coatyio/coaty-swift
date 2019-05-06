@@ -13,7 +13,7 @@ public class Component: CoatyObject {
     }
     
     /// - NOTE: Should NOT be used by the application programmer.
-    internal required init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {
+    internal required override init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {
         super.init(coreType: coreType, objectType: objectType, objectId: objectId, name: name)
     }
     

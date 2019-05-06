@@ -40,10 +40,6 @@ open class Snapshot<Family: ObjectFamily>: CoatyObject {
                    name: name)
     }
     
-    public required init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {
-        fatalError("init(coreType:objectType:objectId:name:) has not been implemented")
-    }
-    
     enum CodingKeys: String, CodingKey {
         case creationTimestamp
         case creatorId
