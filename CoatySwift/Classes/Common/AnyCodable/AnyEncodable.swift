@@ -24,7 +24,15 @@ import Foundation
  ]
  
  let encoder = JSONEncoder()
- let json = try! encoder.encode(dictionary)
+ let json = try! encoder.encode(dic
+ var encodableValue: Encodable? {
+ <#code#>
+ }
+ 
+ var encodableValue: Encodable? {
+ <#code#>
+ }
+ tionary)
  */
 public struct AnyEncodable: Encodable {
     public let value: Any
@@ -89,10 +97,19 @@ extension _AnyEncodable {
             try container.encode(array.map { AnyCodable($0) })
         case let dictionary as [String: Any?]:
             try container.encode(dictionary.mapValues { AnyCodable($0) })
+        case let encodable as Encodable:
+            try encodable.encode(to: &container)
         default:
             let context = EncodingError.Context(codingPath: container.codingPath, debugDescription: "AnyCodable value cannot be encoded")
             throw EncodingError.invalidValue(self.value, context)
         }
+    }
+}
+
+/// https://forums.swift.org/t/how-to-encode-objects-of-unknown-type/12253/5
+extension Encodable {
+    fileprivate func encode(to container: inout SingleValueEncodingContainer) throws {
+        try container.encode(self)
     }
 }
 

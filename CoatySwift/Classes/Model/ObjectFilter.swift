@@ -11,26 +11,26 @@ import Foundation
 public class ObjectFilter: Codable {
     
     /// A single condition for filtering objects (optional).
-    var conditions: ObjectFilterConditions?
+    public var conditions: ObjectFilterConditions?
     
     /// A set of conditions for filtering objects (optional).
-    var condition: ObjectFilterCondition?
+    public var condition: ObjectFilterCondition?
     
     /// Determines the ordering of result objects by an array of
     /// OrderByProperty objects.
-    var orderByProperties: [OrderByProperty]?
+    public var orderByProperties: [OrderByProperty]?
     
     /// If a take count is given, no more than that many objects will be returned
     /// (but possibly less, if the request itself yields less objects).
     /// Typically, this option is only useful if the `orderByProperties` option
     /// is also specified to ensure consistent ordering of paginated results.
-    var take: Int?
+    public var take: Int?
     
     /// If skip count is given that many objects are skipped before beginning to
     /// return result objects.
     /// Typically, this option is only useful if the `orderByProperties` option
     /// is also specified to ensure consistent ordering of paginated results.
-    var skip: Int?
+    public var skip: Int?
     
     private init(_ conditions: ObjectFilterConditions? = nil,
                  _ condition: ObjectFilterCondition? = nil,
@@ -371,13 +371,16 @@ public class ObjectFilterExpression: Codable {
         var container = encoder.unkeyedContainer()
         try container.encode(filterOperator.rawValue)
         
+        var operands = [AnyCodable]()
         if let firstOperand = firstOperand {
-            try container.encode(firstOperand)
+            operands.append(firstOperand)
         }
         
         if let secondOperand = secondOperand {
-            try container.encode(secondOperand)
+            operands.append(secondOperand)
         }
+        
+        try container.encode(operands)
     }
     
     public required init(from decoder: Decoder) throws {
@@ -387,6 +390,8 @@ public class ObjectFilterExpression: Codable {
         let filterOperatorInt = try container.decode(Int.self)
         filterOperator = ObjectFilterOperator(rawValue: filterOperatorInt)!
         
+        // WARNING:
+        // TODO: This might not handle operands correctly if they are wrapped in addtional []?
         firstOperand = try container.decodeIfPresent(AnyCodable.self)
         secondOperand = try container.decodeIfPresent(AnyCodable.self)
     }

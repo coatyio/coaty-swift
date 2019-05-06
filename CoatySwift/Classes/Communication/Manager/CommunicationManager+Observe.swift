@@ -238,15 +238,21 @@ extension CommunicationManager {
     }
     
     /// - TODO: Missing documentation!
-    public func observeCall<T: CallEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
+    public func observeCall<T: CallEvent<Family>>(eventTarget: Component, operationId: String) throws -> Observable<T> {
         
         // FIXME: Prevent duplicated subscriptions.
-        let callTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Call)
+        // FIXME: A convenience method that explicitly uses the operationId as parameter would be nice.
+        let callTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Call,
+                                                                        eventTypeFilter: operationId)
         
         self.subscribe(topic: callTopic)
 
         let observable = rawMessages.map(convertToTupleFormat)
             .filter(isCall)
+            .filter({ (topic, string) -> Bool in
+                // Match the operationId and only accept the specified ones.
+                topic.callOperationId == operationId
+            })
             .map({ (message) -> T in
                 let (coatyTopic, payload) = message
                 
