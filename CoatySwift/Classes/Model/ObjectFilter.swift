@@ -11,26 +11,26 @@ import Foundation
 public class ObjectFilter: Codable {
     
     /// A single condition for filtering objects (optional).
-    var conditions: ObjectFilterConditions?
+    public var conditions: ObjectFilterConditions?
     
     /// A set of conditions for filtering objects (optional).
-    var condition: ObjectFilterCondition?
+    public var condition: ObjectFilterCondition?
     
     /// Determines the ordering of result objects by an array of
     /// OrderByProperty objects.
-    var orderByProperties: [OrderByProperty]?
+    public var orderByProperties: [OrderByProperty]?
     
     /// If a take count is given, no more than that many objects will be returned
     /// (but possibly less, if the request itself yields less objects).
     /// Typically, this option is only useful if the `orderByProperties` option
     /// is also specified to ensure consistent ordering of paginated results.
-    var take: Int?
+    public var take: Int?
     
     /// If skip count is given that many objects are skipped before beginning to
     /// return result objects.
     /// Typically, this option is only useful if the `orderByProperties` option
     /// is also specified to ensure consistent ordering of paginated results.
-    var skip: Int?
+    public var skip: Int?
     
     private init(_ conditions: ObjectFilterConditions? = nil,
                  _ condition: ObjectFilterCondition? = nil,
