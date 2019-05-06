@@ -79,9 +79,9 @@ public class ResolveEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
-    var object: CoatyObject?
-    var relatedObjects: [CoatyObject]?
-    var privateData: [String: Any]?
+    public var object: CoatyObject?
+    public var relatedObjects: [CoatyObject]?
+    public var privateData: [String: Any]?
     
     // MARK: - Initializers.
     
