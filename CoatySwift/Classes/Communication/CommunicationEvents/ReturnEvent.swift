@@ -82,7 +82,8 @@ public class ReturnEventData<Family: ObjectFamily>: CommunicationEventData {
     /// if operation execution yielded an error.
     public var result: ReturnResult?
 
-    /// TODO: Comment.
+    /// Defines additional information about the execution environment (any JSON value)
+    /// such as the execution time of the operation or the ID of the operated control unit (optional).
     public var executionInfo: ExecutionInfo?
     
     
@@ -148,73 +149,6 @@ public class ReturnEventData<Family: ObjectFamily>: CommunicationEventData {
 public typealias ReturnResult = AnyCodable
 public typealias ExecutionInfo = AnyCodable
 
-public class ReturnExecutionTime: Codable {
-    public var start: Double?
-    public var end: Double?
-    public var duration: Double?
-    
-    private init(start: Double? = nil, end: Double? = nil, duration: Double? = nil) {
-        self.start = start
-        self.end = end
-        self.duration = duration
-    }
-    
-    public init(start: Double, end: Double) {
-        self.start = start
-        self.end = end
-    }
-    
-    public init(start: Double, duration: Double) {
-        self.start = start
-        self.duration = duration
-    }
-    
-    public init(duration: Double, end: Double? = nil) {
-        self.duration = duration
-        self.end = end
-        
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case start
-        case end
-        case duration
-    }
-    
-    required public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.start = try container.decodeIfPresent(Double.self, forKey: .start)
-        self.end = try container.decodeIfPresent(Double.self, forKey: .end)
-        self.duration = try container.decodeIfPresent(Double.self, forKey: .duration)
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        if let start = start, let end = end {
-            try container.encode(start, forKey: .start)
-            try container.encode(end, forKey: .end)
-            return
-        }
-        
-        if let start = start, let duration = duration {
-            try container.encode(start, forKey: .start)
-            try container.encode(duration, forKey: .duration)
-            return
-        }
-        
-        if let duration = duration, let end = end {
-            try container.encode(duration, forKey: .duration)
-            try container.encode(end, forKey: .end)
-            return
-        }
-        
-        if let duration = duration {
-            try container.encode(duration, forKey: .duration)
-            return
-        }
-    }
-}
-
 /// Defines error codes for pre-defined remote call errors.
 ///
 /// The integer error codes from and including -32768 to -32000 are reserved for pre-defined errors
@@ -238,18 +172,18 @@ public enum RemoteCallErrorMessage: String {
 
 public class ReturnError: Codable {
     
-    public var errorCode: Int
-    public var errorMessage: String
+    public var code: Int
+    public var message: String
     
     public init(code: Int, message: String) {
-        self.errorCode = code
-        self.errorMessage = message
+        self.code = code
+        self.message = message
     }
     
     public init(code: RemoteCallErrorCode = .invalidParameters,
          message: RemoteCallErrorMessage = .invalidParameters) {
-        self.errorCode = RemoteCallErrorCode.invalidParameters.rawValue
-        self.errorMessage = RemoteCallErrorMessage.invalidParameters.rawValue
+        self.code = RemoteCallErrorCode.invalidParameters.rawValue
+        self.message = RemoteCallErrorMessage.invalidParameters.rawValue
     }
     
     enum CodingKeys: String, CodingKey {
@@ -259,14 +193,14 @@ public class ReturnError: Codable {
     
     required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.errorCode = try container.decode(Int.self, forKey: .code)
-        self.errorMessage = try container.decode( String.self, forKey: .message )
+        self.code = try container.decode(Int.self, forKey: .code)
+        self.message = try container.decode( String.self, forKey: .message )
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(self.errorCode, forKey: .code)
-        try container.encodeIfPresent(self.errorMessage, forKey: .message)
+        try container.encodeIfPresent(self.code, forKey: .code)
+        try container.encodeIfPresent(self.message, forKey: .message)
     }
     
 }
