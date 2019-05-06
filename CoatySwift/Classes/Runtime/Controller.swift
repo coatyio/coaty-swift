@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import RxSwift
 
 /// An IoC container that uses constructor dependency injection to
 /// create container components and to resolve dependencies.
@@ -21,6 +22,10 @@ open class Controller<Family: ObjectFamily> {
     private (set) public var options: ControllerOptions?
     private (set) public var controllerType: String
     private (set) public var identity: Component
+    
+    /// This disposebag holds references to all of your subscriptions. It is standard in RxSwift
+    /// to call `.disposed(by: self.disposeBag)` at the end of every subscription.
+    private (set) public var disposeBag = DisposeBag()
     
     required public init(runtime: Runtime,
                   options: ControllerOptions?,

@@ -11,10 +11,6 @@ import RxSwift
 class TaskController<Family: ObjectFamily>: Controller<Family> {
     
     // MARK: - Attributes.
-
-    /// This disposebag holds references to all of your subscriptions. It is standard in RxSwift
-    /// to call `.disposed(by: self.disposeBag)` at the end of every subscription.
-    private var disposeBag = DisposeBag()
     
     /// This is a DispatchQueue for this particular controller that handles
     /// asynchronous workloads, such as when we wait for a reply on our task offer.
