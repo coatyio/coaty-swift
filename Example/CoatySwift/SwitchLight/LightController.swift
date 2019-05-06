@@ -25,6 +25,9 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
     
     // MARK: Private attributes.
     
+    /// This is a DispatchQueue for this particular controller that handles
+    /// asynchronous workloads, such as when we wait for the delay of the `switchTime`
+    private var lightControllerQueue = DispatchQueue(label: "com.siemens.lightSwitch.lightControllerQueue")
     private var light: Light!
     private var lightStatus: LightStatus!
     private var lightContext: LightContext!
@@ -96,17 +99,23 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
                 }
                 
                 // Everything went alright, update the light status and call the delegate.
-                self.updateLightStatus(on, colorRGBA, luminosity)
-                self.delegate?.switchLight(on, colorRGBA, luminosity)
-                
-                // Return successful result to the caller.
-                let result: ReturnResult = .init(self.lightStatus!.on)
-                let executionInfo: ExecutionInfo = ["lightId": self.light.objectId,
-                                                    "triggerTime": self.now()]
-                let event = self.eventFactory.ReturnEvent.withResult(eventSource: self.identity,
-                                                                     result: result,
-                                                                     executionInfo: executionInfo)
-                callEvent.returned(returnEvent: event)
+                self.lightControllerQueue.asyncAfter(deadline: .now() + .milliseconds(switchTime)) {
+                    self.updateLightStatus(on, colorRGBA, luminosity)
+                    
+                    // Make sure to run UI code on the main thread.
+                    DispatchQueue.main.async {
+                        self.delegate?.switchLight(on, colorRGBA, luminosity)
+                    }
+                    
+                    // Return successful result to the caller.
+                    let result: ReturnResult = .init(self.lightStatus!.on)
+                    let executionInfo: ExecutionInfo = ["lightId": self.light.objectId,
+                                                        "triggerTime": self.now()]
+                    let event = self.eventFactory.ReturnEvent.withResult(eventSource: self.identity,
+                                                                         result: result,
+                                                                         executionInfo: executionInfo)
+                    callEvent.returned(returnEvent: event)
+                }
             }).disposed(by: disposeBag)
     }
     
