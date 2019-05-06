@@ -16,9 +16,9 @@ public class ReturnEventFactory<Family: ObjectFamily> {
     ///   - executionTime: the time interval needed for execution of the operation (optional)
     public static func withResult(eventSource: Component,
                                   result: AnyCodable,
-                                  executionTime: ReturnExecutionTime?) -> ReturnEvent<Family> {
+                                  executionInfo: ExecutionInfo?) -> ReturnEvent<Family> {
         let returnEventData = ReturnEventData<Family>.createFrom(result: result,
-                                                                 executionTime: executionTime,
+                                                                 executionInfo: executionInfo,
                                                                  error: nil)
         return .init(eventSource: eventSource, eventData: returnEventData)
     }
@@ -43,9 +43,9 @@ public class ReturnEventFactory<Family: ObjectFamily> {
     ///                    the error occurred (optional).
     public static func withError(eventSource: Component,
                                  error: ReturnError,
-                                 executionTime: ReturnExecutionTime?) -> ReturnEvent<Family> {
+                                 executionInfo: ExecutionInfo?) -> ReturnEvent<Family> {
         let returnEventData = ReturnEventData<Family>.createFrom(result: nil,
-                                                                 executionTime: executionTime,
+                                                                 executionInfo: executionInfo,
                                                                  error: error)
         return .init(eventSource: eventSource, eventData: returnEventData)
     }
@@ -82,12 +82,8 @@ public class ReturnEventData<Family: ObjectFamily>: CommunicationEventData {
     /// if operation execution yielded an error.
     public var result: ReturnResult?
 
-    /// The time interval needed for execution of the operation (optional).
-    /// The value is `nil`, if the execution time has not been tracked.
-    ///
-    /// In case execution yields an error, the execution time (if provided)
-    /// should represent the time period until the error occurred.
-    public var executionTime: ReturnExecutionTime?
+    /// TODO: Comment.
+    public var executionInfo: ExecutionInfo?
     
     
     /// The error object to be returned in case the operation call yielded an error (optional).
@@ -107,9 +103,9 @@ public class ReturnEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Initializers.
     
-    private init(result: ReturnResult?, executionTime: ReturnExecutionTime?, error: ReturnError?) {
+    private init(result: ReturnResult?, executionInfo: ExecutionInfo?, error: ReturnError?) {
         self.result = result
-        self.executionTime = executionTime
+        self.executionInfo = executionInfo
         self.error = error
         super.init()
     }
@@ -117,10 +113,10 @@ public class ReturnEventData<Family: ObjectFamily>: CommunicationEventData {
     // MARK: - Factory methods.
     
     internal static func createFrom(result: ReturnResult?,
-                                    executionTime: ReturnExecutionTime?,
+                                    executionInfo: ExecutionInfo?,
                                     error: ReturnError?) -> ReturnEventData {
         
-        return .init(result: result, executionTime: executionTime, error: error)
+        return .init(result: result, executionInfo: executionInfo, error: error)
     }
     
     // MARK: - Codable methods.
@@ -128,12 +124,12 @@ public class ReturnEventData<Family: ObjectFamily>: CommunicationEventData {
     enum CodingKeys: String, CodingKey {
         case error
         case result
-        case executionTime
+        case executionInfo
     }
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.executionTime = try container.decodeIfPresent(ReturnExecutionTime.self, forKey: .executionTime)
+        self.executionInfo = try container.decodeIfPresent(ExecutionInfo.self, forKey: .executionInfo)
         self.result = try container.decodeIfPresent(ReturnResult.self, forKey: .result)
         self.error = try container.decodeIfPresent(ReturnError.self, forKey: .error)
         try super.init(from: decoder)
@@ -141,7 +137,7 @@ public class ReturnEventData<Family: ObjectFamily>: CommunicationEventData {
     
     override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(self.executionTime, forKey: .executionTime)
+        try container.encodeIfPresent(self.executionInfo, forKey: .executionInfo)
         try container.encodeIfPresent(self.result, forKey: .result)
         try container.encodeIfPresent(self.error, forKey: .error)
     }
@@ -150,6 +146,7 @@ public class ReturnEventData<Family: ObjectFamily>: CommunicationEventData {
 // MARK: - ReturnEvent internal classes.
 
 public typealias ReturnResult = AnyCodable
+public typealias ExecutionInfo = AnyCodable
 
 public class ReturnExecutionTime: Codable {
     public var start: Double?
@@ -244,13 +241,13 @@ public class ReturnError: Codable {
     public var errorCode: Int
     public var errorMessage: String
     
-    public init(errorCode: Int, errorMessage: String) {
-        self.errorCode = errorCode
-        self.errorMessage = errorMessage
+    public init(code: Int, message: String) {
+        self.errorCode = code
+        self.errorMessage = message
     }
     
-    public init(errorCode: RemoteCallErrorCode = .invalidParameters,
-         errorMessage: RemoteCallErrorMessage = .invalidParameters) {
+    public init(code: RemoteCallErrorCode = .invalidParameters,
+         message: RemoteCallErrorMessage = .invalidParameters) {
         self.errorCode = RemoteCallErrorCode.invalidParameters.rawValue
         self.errorMessage = RemoteCallErrorMessage.invalidParameters.rawValue
     }

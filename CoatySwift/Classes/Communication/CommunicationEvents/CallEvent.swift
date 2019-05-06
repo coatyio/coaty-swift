@@ -58,6 +58,8 @@ public class CallEventFactory<Family: ObjectFamily> {
 }
 
 public typealias ContextFilter = ObjectFilter
+public typealias ContextFilterCondition = ObjectFilterCondition
+
 
 /// CallEvent provides a generic implementation for all Call Events.
 public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<Family>> {
@@ -145,6 +147,25 @@ public class CallEventData<Family: ObjectFamily>: CommunicationEventData {
         return .init(nil, parameters, filter)
     }
     
+    // MARK: - Access methods.
+    
+    /// - TODO: The current implementation is unable to handle Decodable directly.
+    public func getParameterByName(name: String) -> Any? {
+        guard let parameter = parameterDictionary?[name] else {
+            return nil
+        }
+        
+        return parameter.value
+    }
+    
+    /// - TODO: The current implementation is unable to handle Decodable directly.
+    public func getParameterByIndex(index: Int) -> Any? {
+        guard let parameterArray = parameterArray, index >= 0, index < parameterArray.count else {
+            return nil
+        }
+        
+        return parameterArray[index].value
+    }
     
     // MARK: - Codable methods.
     

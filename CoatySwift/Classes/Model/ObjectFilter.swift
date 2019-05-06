@@ -371,13 +371,16 @@ public class ObjectFilterExpression: Codable {
         var container = encoder.unkeyedContainer()
         try container.encode(filterOperator.rawValue)
         
+        var operands = [AnyCodable]()
         if let firstOperand = firstOperand {
-            try container.encode(firstOperand)
+            operands.append(firstOperand)
         }
         
         if let secondOperand = secondOperand {
-            try container.encode(secondOperand)
+            operands.append(secondOperand)
         }
+        
+        try container.encode(operands)
     }
     
     public required init(from decoder: Decoder) throws {
@@ -387,6 +390,8 @@ public class ObjectFilterExpression: Codable {
         let filterOperatorInt = try container.decode(Int.self)
         filterOperator = ObjectFilterOperator(rawValue: filterOperatorInt)!
         
+        // WARNING:
+        // TODO: This might not handle operands correctly if they are wrapped in addtional []?
         firstOperand = try container.decodeIfPresent(AnyCodable.self)
         secondOperand = try container.decodeIfPresent(AnyCodable.self)
     }

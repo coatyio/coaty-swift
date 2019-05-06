@@ -274,17 +274,17 @@ extension CommunicationManager {
     /// to release system resources and to avoid memory leaks. After all initial
     /// subscribers have unsubscribed no more response events will be emitted
     /// on the observable and an error will be thrown on resubscription.
+    /// - TODO: AssociatedUserId currently not correctly implemented.
     ///
     /// - Parameter event: the Call event to be published.
     /// - Returns: a hot observable of associated Return events.
     public func publishCall<V: ReturnEvent<Family>>(event: CallEvent<Family>) throws -> Observable<V> {
         
-        let publishMessageToken = UUID.init().uuidString
-        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Call,
-                                                                  eventTypeFilter: event.operation,
-                                                                  associatedUserId: EMPTY_ASSOCIATED_USER_ID,
-                                                                  sourceObject: event.eventSource,
-                                                                  messageToken: publishMessageToken)
+        let publishMessageToken = CoatyUUID().string
+        let topic = try Topic.createTopicStringByLevelsForCall(operationId: event.operation,
+                                                               associatedUserId: EMPTY_ASSOCIATED_USER_ID,
+                                                               sourceObject: event.eventSource,
+                                                               messageToken: publishMessageToken)
         
         let returnTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Return,
                                                                             eventTypeFilter: nil,

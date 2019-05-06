@@ -26,6 +26,7 @@ class Topic {
     var sourceObjectId: CoatyUUID
     var messageToken: String
     var channelId: String?
+    var callOperationId: String?
     
     /// String representation for the topic.
     var string: String { get {
@@ -55,17 +56,21 @@ class Topic {
         
         // Initialize event fields.
         self.event = event
-        self.eventType = try Topic.extractEventType(event)
+        let eventType = try Topic.extractEventType(event)
+        self.eventType = eventType
         let objectType = Topic.extractObjectType(event)
         let coreType = Topic.extractCoreType(event)
         let channelId = Topic.extractChannelId(event)
+        let callOperationId = Topic.extractCallOperationId(event)
 
         // Check if coreType or objectType have been set correctly.
         // TODO: Extract this and implement behavior for topic string convenience methods.
         if Topic.isEventTypeFilterRequired(forEvent: eventType) {
             if eventType == .Channel && channelId == nil {
                  throw CoatySwiftError.InvalidArgument("\(eventType.rawValue) requires a set channelId.")
-            } else if eventType != .Channel && objectType == nil && coreType == nil {
+            } else if eventType == .Call && callOperationId == nil {
+                throw CoatySwiftError.InvalidArgument("\(eventType.rawValue) requires a set callOperationId.")
+            } else if eventType != .Channel && eventType != .Call && objectType == nil && coreType == nil {
                 throw CoatySwiftError.InvalidArgument("\(eventType.rawValue) requires a set eventTypeFilter.")
             }
             
@@ -74,6 +79,7 @@ class Topic {
             }
         }
         
+        self.callOperationId = callOperationId
         self.channelId = channelId
         self.coreType = coreType
         self.objectType = objectType
@@ -173,6 +179,9 @@ class Topic {
             if eventType == .Channel {
                 let separator = CORE_TYPE_SEPARATOR
                 event = eventType.rawValue + separator + eventTypeFilter
+            } else if eventType == .Call {
+                let separator = CORE_TYPE_SEPARATOR
+                event = eventType.rawValue + separator + eventTypeFilter
             } else {
                 let separator = isCoreType(eventTypeFilter) ? CORE_TYPE_SEPARATOR : OBJECT_TYPE_SEPARATOR
                 event = eventType.rawValue + separator + eventTypeFilter
@@ -259,6 +268,19 @@ class Topic {
                                          messageToken: messageToken)
     }
     
+    static func createTopicStringByLevelsForCall(operationId: String? = nil,
+                                                    associatedUserId: String? = nil,
+                                                    sourceObject: CoatyObject? = nil,
+                                                    messageToken: String? = nil) throws -> String {
+        
+        return try createTopicStringByLevels(coatyVersion: PROTOCOL_VERSION,
+                                             eventType: .Call,
+                                             eventTypeFilter: operationId,
+                                             associatedUserId: associatedUserId,
+                                             sourceObject: sourceObject,
+                                             messageToken: messageToken)
+    }
+    
     // MARK: - Parsing helper methods.
     
     /// Checks whether the eventTypeFilter field has to be set for a specific event type.
@@ -268,7 +290,7 @@ class Topic {
     private static func isEventTypeFilterRequired(forEvent event: CommunicationEventType) -> Bool {
         // Events that require an eventTypeFilter to be set.
         // TODO: Are these all events?
-        let events: [CommunicationEventType] = [.Advertise, .Channel]
+        let events: [CommunicationEventType] = [.Advertise, .Channel, .Call]
         return events.contains(event)
     }
     
@@ -308,6 +330,16 @@ class Topic {
         }
         
         // Take the second element (the channelId) and return it.
+        let eventTypeComponents = event.components(separatedBy: CORE_TYPE_SEPARATOR).dropFirst()
+        return eventTypeComponents.first
+    }
+    
+    private static func extractCallOperationId(_ event: String) -> String? {
+        if !event.contains("Call\(CORE_TYPE_SEPARATOR)") {
+            return nil
+        }
+        
+        // Take the second element (the callOperationId) and return it.
         let eventTypeComponents = event.components(separatedBy: CORE_TYPE_SEPARATOR).dropFirst()
         return eventTypeComponents.first
     }

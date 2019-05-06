@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2A427B0D2232816F0056D67A /* CustomCoatyObjectFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A427B0C2232816F0056D67A /* CustomCoatyObjectFamily.swift */; };
 		2A427B112232826D0056D67A /* Demo+CoatyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A427B102232826D0056D67A /* Demo+CoatyObject.swift */; };
+		2A8EB4A5227F2351002712E7 /* ControlController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8EB4A4227F2351002712E7 /* ControlController.swift */; };
 		2AF1EF9E225CEBFF0099E170 /* HelloWorldTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF1EF9D225CEBFF0099E170 /* HelloWorldTask.swift */; };
 		2AF1EFA0225CEC140099E170 /* TaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF1EF9F225CEC140099E170 /* TaskController.swift */; };
 		2AF1EFA2225CED460099E170 /* HelloWorldObjectFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF1EFA1225CED460099E170 /* HelloWorldObjectFamily.swift */; };
@@ -40,6 +41,7 @@
 		16726F2981BAFC555AC9C041 /* Pods_CoatySwift_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoatySwift_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A427B0C2232816F0056D67A /* CustomCoatyObjectFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCoatyObjectFamily.swift; sourceTree = "<group>"; };
 		2A427B102232826D0056D67A /* Demo+CoatyObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Demo+CoatyObject.swift"; sourceTree = "<group>"; };
+		2A8EB4A4227F2351002712E7 /* ControlController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlController.swift; sourceTree = "<group>"; };
 		2AF1EF9D225CEBFF0099E170 /* HelloWorldTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloWorldTask.swift; sourceTree = "<group>"; };
 		2AF1EF9F225CEC140099E170 /* TaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskController.swift; sourceTree = "<group>"; };
 		2AF1EFA1225CED460099E170 /* HelloWorldObjectFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloWorldObjectFamily.swift; sourceTree = "<group>"; };
@@ -83,6 +85,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A8EB4A3227F22EE002712E7 /* SwitchLight */ = {
+			isa = PBXGroup;
+			children = (
+				2A8EB4A4227F2351002712E7 /* ControlController.swift */,
+			);
+			path = SwitchLight;
+			sourceTree = "<group>";
+		};
 		2AF1EF9C225CEBE50099E170 /* Hello World */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,7 +113,6 @@
 				2DEBD46ADBA520DC8C7E6B07 /* Pods-CoatySwift_Tests.debug.xcconfig */,
 				B4018AD735CFA9D4CD944589 /* Pods-CoatySwift_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -131,6 +140,7 @@
 		607FACD21AFB9204008FA782 /* Example for CoatySwift */ = {
 			isa = PBXGroup;
 			children = (
+				2A8EB4A3227F22EE002712E7 /* SwitchLight */,
 				2AF1EF9C225CEBE50099E170 /* Hello World */,
 				2A427B102232826D0056D67A /* Demo+CoatyObject.swift */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
@@ -409,6 +419,7 @@
 				2AF1EFA2225CED460099E170 /* HelloWorldObjectFamily.swift in Sources */,
 				2AF1EF9E225CEBFF0099E170 /* HelloWorldTask.swift in Sources */,
 				BCB411C6227720010057DC4C /* HelloWorldExampleViewController.swift in Sources */,
+				2A8EB4A5227F2351002712E7 /* ControlController.swift in Sources */,
 				2A427B0D2232816F0056D67A /* CustomCoatyObjectFamily.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
