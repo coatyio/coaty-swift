@@ -9,7 +9,7 @@ import Foundation
 /// Custom implementation of a UUID that actually is compatible with the RFC
 /// specification of sending UUIDs over the network (lowercase in contrast to Apple's
 /// uppercase implementation. )
-public class CoatyUUID: Codable, Equatable, CustomStringConvertible {
+public class CoatyUUID: Codable, Equatable, CustomStringConvertible, Hashable {
     
     private var uuid: UUID
     
@@ -53,5 +53,12 @@ public class CoatyUUID: Codable, Equatable, CustomStringConvertible {
     public var description: String {
         return self.string
     }
+    
+    // MARK: - Hashable methods.
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(uuid)
+    }
+
     
 }
