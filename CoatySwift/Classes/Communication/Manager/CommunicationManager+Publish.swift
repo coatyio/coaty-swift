@@ -102,6 +102,9 @@ extension CommunicationManager {
         publish(topic: topic, message: event.json)
         
         let observable = rawMessages.map(convertToTupleFormat)
+            .filter({ (topic, payload) -> Bool in
+                return topic.sourceObjectId != event.eventSourceId
+            })
             .filter(isComplete)
             .filter({ (rawMessageWithTopic) -> Bool in
                 // Filter messages according to message token.
@@ -159,6 +162,9 @@ extension CommunicationManager {
         publish(topic: topic, message: event.json)
         
         let observable = rawMessages.map(convertToTupleFormat)
+            .filter({ (topic, payload) -> Bool in
+                return topic.sourceObjectId != event.eventSourceId
+            })
             .filter(isResolve)
             .filter({ (rawMessageWithTopic) -> Bool in
                 // Filter messages according to message token.
@@ -209,6 +215,9 @@ extension CommunicationManager {
         publish(topic: topic, message: event.json)
         
         let observable = rawMessages.map(convertToTupleFormat)
+            .filter({ (topic, payload) -> Bool in
+                return topic.sourceObjectId != event.eventSourceId
+            })
             .filter(isRetrieve)
             .filter({ (rawMessageWithTopic) -> Bool in
                 // Filter messages according to message token.
@@ -296,6 +305,9 @@ extension CommunicationManager {
         publish(topic: topic, message: event.json)
         
         let observable = rawMessages.map(convertToTupleFormat)
+            .filter({ (topic, payload) -> Bool in
+                return topic.sourceObjectId != event.eventSourceId
+            })
             .filter(isReturn)
             .filter({ (rawMessageWithTopic) -> Bool in
                 // Filter messages according to message token.

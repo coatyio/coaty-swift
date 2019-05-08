@@ -36,6 +36,9 @@ extension CommunicationManager {
         self.subscribe(topic: topic)
         
         let observable = rawMessages.map(convertToTupleFormat)
+            .filter({ (topic, payload) -> Bool in
+                return topic.sourceObjectId != eventTarget.objectId
+            })
             .filter(isAdvertise)
             .filter({ (rawMessageWithTopic) -> Bool in
                 
@@ -123,6 +126,9 @@ extension CommunicationManager {
         self.subscribe(topic: channelTopic)
 
         let observable =  rawMessages.map(convertToTupleFormat)
+            .filter({ (topic, payload) -> Bool in
+                return topic.sourceObjectId != eventTarget.objectId
+            })
             .filter(isChannel)
             .filter({ (rawMessageWithTopic) -> Bool in
                 // Filter messages according to channelId.
@@ -155,6 +161,9 @@ extension CommunicationManager {
         self.subscribe(topic: deadvertiseTopic)
         
         let observable =  rawMessages.map(convertToTupleFormat)
+            .filter({ (topic, payload) -> Bool in
+                return topic.sourceObjectId != eventTarget.objectId
+            })
             .filter({ (rawMessageTopic) -> Bool in
                 let (topic, _) = rawMessageTopic
                 return topic.eventType == .Deadvertise
@@ -186,6 +195,12 @@ extension CommunicationManager {
         self.subscribe(topic: updateTopic)
 
         let observable = rawMessages.map(convertToTupleFormat)
+            .filter({ (topic, payload) -> Bool in
+                return topic.sourceObjectId != eventTarget.objectId
+            })
+            .filter({ (topic, payload) -> Bool in
+                return topic.sourceObjectId != eventTarget.objectId
+            })
             .filter(isUpdate)
             .map({ (message) -> T in
                 let (coatyTopic, payload) = message
@@ -221,6 +236,9 @@ extension CommunicationManager {
         self.subscribe(topic: discoverTopic)
 
         let observable = rawMessages.map(convertToTupleFormat)
+            .filter({ (topic, payload) -> Bool in
+                return topic.sourceObjectId != eventTarget.objectId
+            })
             .filter(isDiscover)
             .map({ (message) -> T in
                 let (coatyTopic, payload) = message
@@ -248,6 +266,9 @@ extension CommunicationManager {
         self.subscribe(topic: callTopic)
 
         let observable = rawMessages.map(convertToTupleFormat)
+            .filter({ (topic, payload) -> Bool in
+                return topic.sourceObjectId != eventTarget.objectId
+            })
             .filter(isCall)
             .filter({ (topic, string) -> Bool in
                 // Match the operationId and only accept the specified ones.
