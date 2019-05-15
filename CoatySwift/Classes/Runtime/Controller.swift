@@ -25,7 +25,7 @@ open class Controller<Family: ObjectFamily> {
     
     /// This disposebag holds references to all of your subscriptions. It is standard in RxSwift
     /// to call `.disposed(by: self.disposeBag)` at the end of every subscription.
-    private (set) public var disposeBag = DisposeBag()
+    public var disposeBag = DisposeBag()
     
     required public init(runtime: Runtime,
                   options: ControllerOptions?,
