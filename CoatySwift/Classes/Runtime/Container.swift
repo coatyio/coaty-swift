@@ -160,12 +160,8 @@ public class Container<Family: ObjectFamily> {
         let runtime = Runtime(commonOptions: configuration.common, databaseOptions: configuration.databases)
         self.runtime = runtime
         
-        // TODO: Fix force unwrap.
-        let host = configuration.communication.brokerOptions!.host
-        let port = configuration.communication.brokerOptions!.port
-        
         // Create CommunicationManager.
-        let communicationManager = CommunicationManager<Family>(host: host, port: Int(port))
+        let communicationManager = CommunicationManager<Family>(brokerOptions: configuration.communication.brokerOptions!)
         self.communicationManager = communicationManager
         self.operatingState = communicationManager.operatingState.asObservable()
         self.communicationState = communicationManager.communicationState.asObservable()

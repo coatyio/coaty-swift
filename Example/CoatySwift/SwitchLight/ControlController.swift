@@ -16,6 +16,7 @@ class ControlController<Family: ObjectFamily>: Controller<Family> {
                       luminosity: Double,
                       rgba: ColorRGBA,
                       switchTime: Double) {
+        self.disposeBag = DisposeBag()
         
         let parameters: [String: AnyCodable] = ["on": .init(onOff),
                                                 "color": .init(rgba),

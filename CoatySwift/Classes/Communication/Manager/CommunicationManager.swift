@@ -57,11 +57,21 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     
     // MARK: - Initializers.
     
-    public init(host: String, port: Int) {
+    public init(brokerOptions: BrokerOptions) {
         initIdentity()
-        brokerClientId = generateClientId()
-        mqtt = CocoaMQTT(clientID: getBrokerClientId(), host: host, port: UInt16(port))
-        configureBroker()
+        
+        // Setup client Id.
+        let brokerClientId = generateClientId(brokerOptions.clientId)
+        self.brokerClientId = brokerClientId
+        
+        // Configure mqtt client.
+        mqtt = CocoaMQTT(clientID: brokerClientId, host: brokerOptions.host, port: UInt16(brokerOptions.port))
+        mqtt?.keepAlive = brokerOptions.keepAlive
+        
+        // TODO: Make this configurable.
+        mqtt?.allowUntrustCACertificate = true
+        mqtt?.enableSSL = brokerOptions.enableSSL
+        mqtt?.delegate = self
         
         // FIXME: Remove debugging statements at later point in development.
         operatingState.subscribe { (event) in
@@ -123,27 +133,11 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     
     /// Generates Coaty client Id.
     /// - TODO: Adjust to MQTT specification (maximum length is currently ignored).
-    func generateClientId() -> String {
-        return "COATY-\(CoatyUUID().string)"
-    }
-    
-    /// - NOTE: In case there was no brokerClientId before, it is set.
-    func getBrokerClientId() -> String {
-        if let brokerClientId = brokerClientId {
-            return brokerClientId
-        }
-        brokerClientId = generateClientId()
-        return brokerClientId!
+    func generateClientId(_ clientId: String) -> String {
+        return "COATY-\(clientId)"
     }
     
     // MARK: - Broker methods.
-    
-    private func configureBroker() {
-        mqtt?.keepAlive = 60
-        mqtt?.allowUntrustCACertificate = true
-        mqtt?.delegate = self
-        setLastWill()
-    }
     
     private func connect() {
         mqtt?.connect()
@@ -308,6 +302,10 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
         if let payloadString = message.string {
             rawMessages.onNext((message.topic, payloadString))
         }
+    }
+    
+    public func mqtt(_ mqtt: CocoaMQTT, didReceive trust: SecTrust, completionHandler: @escaping (Bool) -> Void) {
+        completionHandler(true)
     }
     
     public func mqtt(_ mqtt: CocoaMQTT, didSubscribeTopic topic: String) {

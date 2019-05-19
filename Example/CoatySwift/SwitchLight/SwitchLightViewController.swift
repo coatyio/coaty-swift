@@ -149,7 +149,8 @@ class SwitchLightViewController: UIViewController {
             // to immediately connect with the broker.
             let brokerOptions = BrokerOptions(host: brokerIp,
                                               port: UInt16(brokerPort),
-                                              clientId: CoatyUUID().string)
+                                              clientId: CoatyUUID().string,
+                                              enableSSL: false)
             config.communication = CommunicationOptions(brokerOptions: brokerOptions,
                                                         shouldAutoStart: true)
             

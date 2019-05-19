@@ -11,6 +11,7 @@ import CoatySwift
 /// This example view controller shows how you can set up a basic CoatySwift bootstrap application.
 class HelloWorldExampleViewController: UIViewController {
     
+    let enableSSL = false
     let brokerIp = "192.168.1.120"
     let brokerPort = 1883
     
@@ -71,7 +72,8 @@ class HelloWorldExampleViewController: UIViewController {
             // to immediately connect with the broker.
             let brokerOptions = BrokerOptions(host: brokerIp,
                                               port: UInt16(brokerPort),
-                                              clientId: "\(UUID.init())")
+                                              clientId: "\(UUID.init())",
+                                              enableSSL: enableSSL)
             config.communication = CommunicationOptions(brokerOptions: brokerOptions,
                                                         shouldAutoStart: true)
             

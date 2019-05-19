@@ -244,16 +244,19 @@ public class BrokerOptions {
     public var password: String?
     public var cleanSession: Bool
     public var keepAlive: UInt16
+    public var enableSSL: Bool
     
     public init(host: String,
          port: UInt16,
          clientId: String,
+         enableSSL: Bool,
          username: String? = nil,
          password: String? = nil,
          cleanSession: Bool = true,
-         keepAlive: UInt16 = 3000) {
+         keepAlive: UInt16 = 60) {
         self.host = host
         self.port = port
+        self.enableSSL = enableSSL
         self.clientId = clientId
         self.username = username
         self.password = password
