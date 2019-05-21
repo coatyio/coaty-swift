@@ -68,11 +68,9 @@ class TaskController<Family: ObjectFamily>: Controller<Family> {
         try communicationManager
             .observeAdvertiseWithObjectType(eventTarget: identity,
                                             objectType: ModelObjectTypes.HELLO_WORLD_TASK.rawValue)
-            .map {(advertiseEvent) -> HelloWorldTask? in
-                /// Make sure that the received event if of the expected type.
-                return advertiseEvent.eventData.object as? HelloWorldTask
-            }
-            .filterNil()
+            .compactMap { (advertiseEvent) -> HelloWorldTask? in
+                advertiseEvent.eventData.object as? HelloWorldTask
+            } 
             .filter { (task) -> Bool in
                 return task.status == .request
             }
@@ -123,10 +121,9 @@ class TaskController<Family: ObjectFamily>: Controller<Family> {
             // Send it out and wait for the Service to answer.
             try? self.communicationManager.publishUpdate(event: event)
                 .take(1)
-                .map { (completeEvent) -> HelloWorldTask? in
+                .compactMap { (completeEvent) -> HelloWorldTask? in
                     return completeEvent.eventData.object as? HelloWorldTask
                 }
-                .filterNil()
                 .subscribe(onNext: { (task) in
                     // If our Id is the same of the received complete event from the service, this
                     // means the Service has chosen us to carry out the task.

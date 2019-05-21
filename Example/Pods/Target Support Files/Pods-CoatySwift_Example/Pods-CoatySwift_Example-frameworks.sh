@@ -158,6 +158,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CocoaMQTT/CocoaMQTT.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ObjcExceptionBridging/ObjcExceptionBridging.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework"
 fi
@@ -167,6 +168,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CocoaMQTT/CocoaMQTT.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ObjcExceptionBridging/ObjcExceptionBridging.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework"
 fi

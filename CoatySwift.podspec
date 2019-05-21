@@ -40,8 +40,8 @@ The Coaty framework enables realization of collaborative IoT applications and sc
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
   s.dependency 'CocoaMQTT', '~> 1.1.3'
-  s.dependency 'RxSwift', '~> 4.0'
-  s.dependency 'RxCocoa', '~> 4.0'
+  s.dependency 'RxSwift', '~> 5'
+  s.dependency 'RxCocoa', '~> 5'
   s.dependency 'XCGLogger', '~> 7.0.0'
 
 end
