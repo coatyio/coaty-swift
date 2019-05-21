@@ -19,25 +19,25 @@ extension CommunicationManager {
         
         let topicForObjectType = try Topic
             .createTopicStringByLevelsForPublish( eventType: .Advertise,
-                                                  eventTypeFilter:advertiseEvent.eventData.object.objectType,
+                                                  eventTypeFilter:advertiseEvent.data.object.objectType,
                                                   associatedUserId: "-",
-                                                  sourceObject: advertiseEvent.eventSource,
+                                                  sourceObject: advertiseEvent.source,
                                                   messageToken: CoatyUUID().string)
         
         let topicForCoreType = try Topic
             .createTopicStringByLevelsForPublish(eventType: .Advertise,
-                                                 eventTypeFilter: advertiseEvent.eventData.object.coreType.rawValue,
+                                                 eventTypeFilter: advertiseEvent.data.object.coreType.rawValue,
                                                  associatedUserId: "-",
-                                                 sourceObject: advertiseEvent.eventSource,
+                                                 sourceObject: advertiseEvent.source,
                                                  messageToken: CoatyUUID().string)
         
         // Save advertises for Components or Devices.
-        if advertiseEvent.eventData.object.coreType == .Component ||
-            advertiseEvent.eventData.object.coreType == .Device {
+        if advertiseEvent.data.object.coreType == .Component ||
+            advertiseEvent.data.object.coreType == .Device {
             
             // Add if not existing already in deadvertiseIds.
-            if !deadvertiseIds.contains(advertiseEvent.eventData.object.objectId) {
-                deadvertiseIds.append(advertiseEvent.eventData.object.objectId)
+            if !deadvertiseIds.contains(advertiseEvent.data.object.objectId) {
+                deadvertiseIds.append(advertiseEvent.data.object.objectId)
             }
         }
         
@@ -66,9 +66,9 @@ extension CommunicationManager {
     public func publishDeadvertise(deadvertiseEvent: DeadvertiseEvent) throws {
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Deadvertise,
                                                                   eventTypeFilter: nil,
-                                                                  associatedUserId: deadvertiseEvent.eventUserId
+                                                                  associatedUserId: deadvertiseEvent.userId
                                                                     ?? EMPTY_ASSOCIATED_USER_ID,
-                                                                  sourceObject: deadvertiseEvent.eventSource,
+                                                                  sourceObject: deadvertiseEvent.source,
                                                                   messageToken: UUID().uuidString)
         
         self.publish(topic: topic, message: deadvertiseEvent.json)
@@ -88,7 +88,7 @@ extension CommunicationManager {
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Update,
                                                                   eventTypeFilter: nil,
                                                                   associatedUserId: EMPTY_ASSOCIATED_USER_ID,
-                                                                  sourceObject: event.eventSource,
+                                                                  sourceObject: event.source,
                                                                   messageToken: updateMessageToken)
   
         let completeTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Complete,
@@ -103,7 +103,7 @@ extension CommunicationManager {
         
         let observable = rawMessages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
-                return topic.sourceObjectId != event.eventSourceId
+                return topic.sourceObjectId != event.sourceId
             })
             .filter(isComplete)
             .filter({ (rawMessageWithTopic) -> Bool in
@@ -131,7 +131,7 @@ extension CommunicationManager {
         let publishTopic = try Topic.createTopicStringByLevelsForPublish(eventType: .Channel,
                                                                          eventTypeFilter: channelId,
                                                                          associatedUserId: EMPTY_ASSOCIATED_USER_ID,
-                                                                         sourceObject: event.eventSource,
+                                                                         sourceObject: event.source,
                                                                          messageToken: UUID.init().uuidString)
         
         publish(topic: publishTopic, message: event.json)
@@ -150,7 +150,7 @@ extension CommunicationManager {
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Discover,
                                                                   eventTypeFilter: nil,
                                                                   associatedUserId: EMPTY_ASSOCIATED_USER_ID,
-                                                                  sourceObject: event.eventSource,
+                                                                  sourceObject: event.source,
                                                                   messageToken: discoverMessageToken)
         
         let resolveTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Resolve,
@@ -163,7 +163,7 @@ extension CommunicationManager {
         
         let observable = rawMessages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
-                return topic.sourceObjectId != event.eventSourceId
+                return topic.sourceObjectId != event.sourceId
             })
             .filter(isResolve)
             .filter({ (rawMessageWithTopic) -> Bool in
@@ -201,7 +201,7 @@ extension CommunicationManager {
         let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Query,
                                                                   eventTypeFilter: nil,
                                                                   associatedUserId: EMPTY_ASSOCIATED_USER_ID,
-                                                                  sourceObject: event.eventSource,
+                                                                  sourceObject: event.source,
                                                                   messageToken: queryMessageToken)
         
         let retrieveTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Retrieve,
@@ -216,7 +216,7 @@ extension CommunicationManager {
         
         let observable = rawMessages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
-                return topic.sourceObjectId != event.eventSourceId
+                return topic.sourceObjectId != event.sourceId
             })
             .filter(isRetrieve)
             .filter({ (rawMessageWithTopic) -> Bool in
@@ -292,7 +292,7 @@ extension CommunicationManager {
         let publishMessageToken = CoatyUUID().string
         let topic = try Topic.createTopicStringByLevelsForCall(operationId: event.operation,
                                                                associatedUserId: EMPTY_ASSOCIATED_USER_ID,
-                                                               sourceObject: event.eventSource,
+                                                               sourceObject: event.source,
                                                                messageToken: publishMessageToken)
         
         let returnTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Return,
@@ -306,7 +306,7 @@ extension CommunicationManager {
         
         let observable = rawMessages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
-                return topic.sourceObjectId != event.eventSourceId
+                return topic.sourceObjectId != event.sourceId
             })
             .filter(isReturn)
             .filter({ (rawMessageWithTopic) -> Bool in

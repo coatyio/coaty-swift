@@ -69,7 +69,7 @@ class TaskController<Family: ObjectFamily>: Controller<Family> {
             .observeAdvertiseWithObjectType(eventTarget: identity,
                                             objectType: ModelObjectTypes.HELLO_WORLD_TASK.rawValue)
             .compactMap { (advertiseEvent) -> HelloWorldTask? in
-                advertiseEvent.eventData.object as? HelloWorldTask
+                advertiseEvent.data.object as? HelloWorldTask
             } 
             .filter { (task) -> Bool in
                 return task.status == .request
@@ -122,7 +122,7 @@ class TaskController<Family: ObjectFamily>: Controller<Family> {
             try? self.communicationManager.publishUpdate(event: event)
                 .take(1)
                 .compactMap { (completeEvent) -> HelloWorldTask? in
-                    return completeEvent.eventData.object as? HelloWorldTask
+                    return completeEvent.data.object as? HelloWorldTask
                 }
                 .subscribe(onNext: { (task) in
                     // If our Id is the same of the received complete event from the service, this
@@ -203,7 +203,7 @@ class TaskController<Family: ObjectFamily>: Controller<Family> {
                                     eventName: "RETRIEVE",
                                     eventDirection: .In)
                     
-                    let objects = retrieveEvent.eventData.objects
+                    let objects = retrieveEvent.data.objects
                     let snapshots = objects.map { (coatyObject) -> Snapshot<HelloWorldObjectFamily> in
                             coatyObject as! Snapshot<HelloWorldObjectFamily>
                         }
