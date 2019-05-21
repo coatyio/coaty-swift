@@ -40,7 +40,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     let communicationState: BehaviorSubject<CommunicationState> = BehaviorSubject(value: .offline)
 
     /// Holds deferred subscriptions while the communication manager is offline.
-    private var deferredSubscriptions = [String]()
+    private var deferredSubscriptions = Set<String>()
     
     /// Holds deferred publications (topic, payload) while the communication manager is offline.
     private var deferredPublications = [(String, String)]()
@@ -92,8 +92,26 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
         communicationState
             .filter { $0 == .online }
             .subscribe { (event) in
+                
                 // FIXME: Remove force unwrap.
                 try? self.advertiseIdentityOrDevice(eventTarget: self.identity!)
+                
+                // Publish possible deferred subscriptions and publications.
+                _ = self.queue.sync {
+                    self.deferredSubscriptions.forEach { (topic) in
+                        self.mqtt?.subscribe(topic)
+                    }
+                    
+                    // FIXME: This MAY be a race condition between the subscriptions and the publications.
+                    self.deferredPublications.forEach { (publication) in
+                        let topic = publication.0
+                        let payload = publication.1
+                        self.mqtt?.publish(topic, withString: payload)
+                    }
+                    
+                    self.deferredPublications = []
+                }
+                
             }.disposed(by: disposeBag)
     }
     
@@ -196,6 +214,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
         }
     
         self.isDisposed = true;
+        self.deferredSubscriptions = Set<String>()
         try! endClient() // TODO: Check force unwrwap.
     }
     
@@ -209,6 +228,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
         try deadvertiseIdentityOrDevice()
         
         disconnect()
+        self.deferredSubscriptions = Set<String>()
         updateOperatingState(.stopped)
     }
     
@@ -229,27 +249,24 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     /// - Parameter topic: topic name.
     func subscribe(topic: String) {
         queue.sync {
-        
-            _ = getCommunicationState().subscribe {
-                guard let state = $0.element else {
-                    return
-                }
+            
+            _ = getCommunicationState()
+                .take(1)
+                .subscribe(onNext: { (state) in
                 
-                self.deferredSubscriptions.append(topic)
+                self.deferredSubscriptions.insert(topic)
                 
                 // Subscribe if the client is online.
-                
                 if state == .online {
-                    self.deferredSubscriptions.forEach({ (topic) in
-                        self.mqtt?.subscribe(topic)
-                    })
-                    
-                    self.deferredSubscriptions = []
+                    self.mqtt?.subscribe(topic)
+                    // Do NOT delete deferredSubscriptions since we may need them for reconnects.
                 }
-            }
+            })
         }
     }
     
+    /// - TODO: We currently do not handle unsubscribe events with respect to removing topics from
+    ///   the deferredSubscriptions. Coaty-js handles this via its hashtable structure.
     func unsubscribe(topic: String) {
         _ = queue.sync {
             self.mqtt?.unsubscribe(topic)
@@ -262,26 +279,17 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     ///   - topic: the publication topic.
     ///   - message: the payload message.
     func publish(topic: String, message: String) {
-        queue.sync {
-            _ = getCommunicationState().subscribe {
-                guard let state = $0.element else {
-                    return
-                }
-                
-                self.deferredPublications.append((topic, message))
-                
-                // Publish if the client is online.
-                
-                if state == .online {
-                    self.deferredPublications.forEach({ (publication) in
-                        let topic = publication.0
-                        let payload = publication.1
-                        self.mqtt?.publish(topic, withString: payload)
-                    })
-                    
-                    self.deferredPublications = []
-                }
-            }
+        _ = queue.sync {
+            _ = getCommunicationState()
+                .take(1)
+                .filter { $0 == .offline}
+                .subscribe(onNext: { state in
+                    self.deferredPublications.append((topic, message))
+            })
+            
+            // Attempt to publish regardless of the connection status. If we are offline, this will
+            // fail silently.
+            self.mqtt?.publish(topic, withString: message)
         }
     }
     
