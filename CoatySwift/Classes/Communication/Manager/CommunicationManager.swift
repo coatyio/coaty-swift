@@ -57,32 +57,35 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     
     // MARK: - Initializers.
     
-    public init(brokerOptions: BrokerOptions) {
+    public init(mqttClientOptions: MQTTClientOptions) {
         initIdentity()
         
         // Setup client Id.
-        let brokerClientId = generateClientId(brokerOptions.clientId)
+        let brokerClientId = generateClientId(mqttClientOptions.clientId)
         self.brokerClientId = brokerClientId
         
         // Configure mqtt client.
-        mqtt = CocoaMQTT(clientID: brokerClientId, host: brokerOptions.host, port: UInt16(brokerOptions.port))
-        mqtt?.keepAlive = brokerOptions.keepAlive
+        mqtt = CocoaMQTT(clientID: brokerClientId,
+                         host: mqttClientOptions.host,
+                         port: UInt16(mqttClientOptions.port))
+        mqtt?.keepAlive = mqttClientOptions.keepAlive
         
         // TODO: Make this configurable.
         mqtt?.allowUntrustCACertificate = true
-        mqtt?.enableSSL = brokerOptions.enableSSL
+        mqtt?.enableSSL = mqttClientOptions.enableSSL
+        mqtt?.autoReconnect = mqttClientOptions.autoReconnect
+        
+        // TODO: Make this configurable.
+        mqtt?.autoReconnectTimeInterval = 3 // seconds.
         mqtt?.delegate = self
         
-        // FIXME: Remove debugging statements at later point in development.
-        operatingState.subscribe { (event) in
-            self.log.debug("Operating State: \(String(describing: event.element!))")
-            // print("Operating State: \(String(describing: event.element!))")
-            }.disposed(by: disposeBag)
+        operatingState.subscribe(onNext: { (state) in
+            self.log.debug("Operating State: \(String(describing: state))")
+        }).disposed(by: disposeBag)
         
-        communicationState.subscribe { (event) in
-            self.log.debug("Comm. State: \(String(describing: event.element!))")
-            // print("Comm. State: \(String(describing: event.element!))")
-            }.disposed(by: disposeBag)
+        communicationState.subscribe(onNext: { (state) in
+            self.log.debug("Comm. State: \(String(describing: state))")
+        }).disposed(by: disposeBag)
         
         
         // TODO: opt-out: shouldAdvertiseIdentity from configuration.
@@ -283,7 +286,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     }
     
     // MARK: - CocoaMQTTDelegate methods.
-    // These had to be moved hear because of some objc incompatibility with extensions and
+    // These had to be moved here because of some objc incompatibility with extensions and
     // generics.
     
     public func mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck) {
@@ -325,7 +328,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     }
     
     public func mqttDidDisconnect(_ mqtt: CocoaMQTT, withError err: Error?) {
-        log.error("Did disconnect with error.")
+        log.error("Did disconnect with error. \(err?.localizedDescription ?? "")")
         updateCommunicationState(.offline)
     }
     
