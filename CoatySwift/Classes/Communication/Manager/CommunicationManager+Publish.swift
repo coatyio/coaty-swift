@@ -10,6 +10,20 @@ extension CommunicationManager {
     
     // MARK: - One way events.
     
+    /// Publish a value on the given topic. Used to interoperate
+    /// with external MQTT clients that subscribe on the given topic.
+    ///
+    /// - TODO: The topic is an MQTT publication topic, i.e. a non-empty string
+    /// that must not contain the following characters: `NULL (U+0000)`,
+    /// `# (U+0023)`, `+ (U+002B)`.
+    ///
+    /// - Parameters:
+    ///   - topic: the topic on which to publish the given payload
+    ///   - value: a payload string or Uint8Array (Buffer in Node.js) to be published on the given topic
+    func publishRaw(topic: String, value: String, shouldRetain: Bool = false) {
+        self.publish(topic: topic, message: value, retained: shouldRetain)
+    }
+    
     /// Publishes a given advertise event.
     ///
     /// - Parameters:

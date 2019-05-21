@@ -258,7 +258,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     /// - Parameters:
     ///   - topic: the publication topic.
     ///   - message: the payload message.
-    func publish(topic: String, message: String) {
+    func publish(topic: String, message: String, retained: Bool = false) {
         queue.sync {
             _ = getCommunicationState().subscribe {
                 guard let state = $0.element else {
@@ -273,7 +273,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
                     self.deferredPublications.forEach({ (publication) in
                         let topic = publication.0
                         let payload = publication.1
-                        self.mqtt?.publish(topic, withString: payload)
+                        self.mqtt?.publish(topic, withString: payload, retained: retained)
                     })
                     
                     self.deferredPublications = []
