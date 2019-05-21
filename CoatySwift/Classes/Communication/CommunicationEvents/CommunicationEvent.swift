@@ -11,36 +11,36 @@ public class CommunicationEvent<T: CommunicationEventData>: Codable {
     
     // MARK: - Public attributes.
     
-    public var eventType: CommunicationEventType?
+    public var type: CommunicationEventType?
     
     /// Event data that conforms for CommunicationEventData, e.g. AdvertiseEventData.
-    public var eventData: T
+    public var data: T
 
     // MARK: - Private attributes.
     
-    public var eventSource: Component?
-    public var eventSourceId: CoatyUUID?
-    public var eventUserId: String? // or UUID?
+    public var source: Component?
+    public var sourceId: CoatyUUID?
+    public var userId: String? // or UUID?
     
     // MARK: - Initializer.
     
     init(eventSource: Component, eventData: T) {
-        self.eventSource = eventSource
-        self.eventSourceId = eventSource.objectId
-        self.eventUserId = EMPTY_ASSOCIATED_USER_ID // FIXME: Default value.
-        self.eventData = eventData
+        self.source = eventSource
+        self.sourceId = eventSource.objectId
+        self.userId = EMPTY_ASSOCIATED_USER_ID // FIXME: Default value.
+        self.data = eventData
     }
     
     // MARK: - Codable methods.
     
     public required init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.eventData = try container.decode(T.self)
+        self.data = try container.decode(T.self)
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
-        try container.encode(eventData)
+        try container.encode(data)
     }
 }
 

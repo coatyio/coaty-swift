@@ -122,7 +122,7 @@ public class DiscoverEvent<Family: ObjectFamily>: CommunicationEvent<DiscoverEve
     /// Inside the framework, calling is ok.
     override init(eventSource: Component, eventData: DiscoverEventData) {
         super.init(eventSource: eventSource, eventData: eventData)
-        eventType = .Discover
+        type = .Discover
     }
     
     // MARK: - Codable methods.
