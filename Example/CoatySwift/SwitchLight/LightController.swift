@@ -61,17 +61,17 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
             .subscribe(onNext: { callEvent in
                 
                 // TODO: Add real context matching.
-                guard let _ = callEvent.eventData.filter else {
+                guard let _ = callEvent.data.filter else {
                     print("ContextFilter not found.")
                     return
                 }
                 
                 // Parse the received parameters.
-                let on = callEvent.eventData.getParameterByName(name: "on") as! Bool
-                let color = callEvent.eventData.getParameterByName(name: "color") as! [Any]
+                let on = callEvent.data.getParameterByName(name: "on") as! Bool
+                let color = callEvent.data.getParameterByName(name: "color") as! [Any]
                 let colorRGBA = self.createColorRGBA(color)
-                let luminosity = self.toDouble(callEvent.eventData.getParameterByName(name: "luminosity")!)
-                let switchTime = callEvent.eventData.getParameterByName(name: "switchTime") as! Int
+                let luminosity = self.toDouble(callEvent.data.getParameterByName(name: "luminosity")!)
+                let switchTime = callEvent.data.getParameterByName(name: "switchTime") as! Int
                 
                 // Perform parameter validation.
                 if !self.validateSwitchOpParams(on, colorRGBA, luminosity, switchTime) {
