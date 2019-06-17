@@ -48,8 +48,11 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     /// Ids of all advertised components that should be deadvertised when the client ends.
     internal var deadvertiseIds = [CoatyUUID]()
     
-    /// Observable emitting raw (topic, payload) values.
+    /// Observable emitting (topic, payload) values.
     let rawMessages: PublishSubject<(String, String)> = PublishSubject<(String, String)>()
+    
+    /// Observable emitting *raw* (topic, payload) mqtt messages.
+    let rawMQTTMessages: PublishSubject<(String, [UInt8])> = PublishSubject<(String, [UInt8])>()
     
     /// A dispatchqueue that handles synchronisation issues when accessing
     /// deferred publications and subscriptions.
@@ -310,6 +313,8 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     }
     
     public func mqtt(_ mqtt: CocoaMQTT, didReceiveMessage message: CocoaMQTTMessage, id: UInt16) {
+        rawMQTTMessages.onNext((message.topic, message.payload))
+        
         if let payloadString = message.string {
             rawMessages.onNext((message.topic, payloadString))
         }
