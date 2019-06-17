@@ -40,7 +40,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     let communicationState: BehaviorSubject<CommunicationState> = BehaviorSubject(value: .offline)
 
     /// Holds deferred subscriptions while the communication manager is offline.
-    private var deferredSubscriptions = [String]()
+    private var deferredSubscriptions = Set<String>()
     
     /// Holds deferred publications (topic, payload) while the communication manager is offline.
     private var deferredPublications = [(String, String)]()
@@ -48,8 +48,11 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     /// Ids of all advertised components that should be deadvertised when the client ends.
     internal var deadvertiseIds = [CoatyUUID]()
     
-    /// Observable emitting raw (topic, payload) values.
+    /// Observable emitting (topic, payload) values.
     let rawMessages: PublishSubject<(String, String)> = PublishSubject<(String, String)>()
+    
+    /// Observable emitting *raw* (topic, payload) mqtt messages.
+    let rawMQTTMessages: PublishSubject<(String, [UInt8])> = PublishSubject<(String, [UInt8])>()
     
     /// A dispatchqueue that handles synchronisation issues when accessing
     /// deferred publications and subscriptions.
@@ -57,40 +60,61 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     
     // MARK: - Initializers.
     
-    public init(brokerOptions: BrokerOptions) {
+    public init(mqttClientOptions: MQTTClientOptions) {
         initIdentity()
         
         // Setup client Id.
-        let brokerClientId = generateClientId(brokerOptions.clientId)
+        let brokerClientId = generateClientId(mqttClientOptions.clientId)
         self.brokerClientId = brokerClientId
         
         // Configure mqtt client.
-        mqtt = CocoaMQTT(clientID: brokerClientId, host: brokerOptions.host, port: UInt16(brokerOptions.port))
-        mqtt?.keepAlive = brokerOptions.keepAlive
+        mqtt = CocoaMQTT(clientID: brokerClientId,
+                         host: mqttClientOptions.host,
+                         port: UInt16(mqttClientOptions.port))
+        mqtt?.keepAlive = mqttClientOptions.keepAlive
         
         // TODO: Make this configurable.
         mqtt?.allowUntrustCACertificate = true
-        mqtt?.enableSSL = brokerOptions.enableSSL
+        mqtt?.enableSSL = mqttClientOptions.enableSSL
+        mqtt?.autoReconnect = mqttClientOptions.autoReconnect
+        
+        // TODO: Make this configurable.
+        mqtt?.autoReconnectTimeInterval = 3 // seconds.
         mqtt?.delegate = self
         
-        // FIXME: Remove debugging statements at later point in development.
-        operatingState.subscribe { (event) in
-            self.log.debug("Operating State: \(String(describing: event.element!))")
-            // print("Operating State: \(String(describing: event.element!))")
-            }.disposed(by: disposeBag)
+        operatingState.subscribe(onNext: { (state) in
+            self.log.debug("Operating State: \(String(describing: state))")
+        }).disposed(by: disposeBag)
         
-        communicationState.subscribe { (event) in
-            self.log.debug("Comm. State: \(String(describing: event.element!))")
-            // print("Comm. State: \(String(describing: event.element!))")
-            }.disposed(by: disposeBag)
+        communicationState.subscribe(onNext: { (state) in
+            self.log.debug("Comm. State: \(String(describing: state))")
+        }).disposed(by: disposeBag)
         
         
         // TODO: opt-out: shouldAdvertiseIdentity from configuration.
         communicationState
             .filter { $0 == .online }
             .subscribe { (event) in
+                
                 // FIXME: Remove force unwrap.
                 try? self.advertiseIdentityOrDevice(eventTarget: self.identity!)
+                
+                // Publish possible deferred subscriptions and publications.
+                _ = self.queue.sync {
+                    self.deferredSubscriptions.forEach { (topic) in
+                        self.mqtt?.subscribe(topic)
+                    }
+                    
+                    // FIXME: This MAY be a race condition between the subscriptions and the publications.
+                    self.deferredPublications.forEach { (publication) in
+                        let topic = publication.0
+                        let payload = publication.1
+                        self.mqtt?.publish(topic, withString: payload)
+                    }
+                    
+                    self.deferredPublications = []
+                }
+                
             }.disposed(by: disposeBag)
     }
     
@@ -193,6 +217,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
         }
     
         self.isDisposed = true;
+        self.deferredSubscriptions = Set<String>()
         try! endClient() // TODO: Check force unwrwap.
     }
     
@@ -206,6 +231,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
         try deadvertiseIdentityOrDevice()
         
         disconnect()
+        self.deferredSubscriptions = Set<String>()
         updateOperatingState(.stopped)
     }
     
@@ -226,27 +252,24 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     /// - Parameter topic: topic name.
     func subscribe(topic: String) {
         queue.sync {
-        
-            _ = getCommunicationState().subscribe {
-                guard let state = $0.element else {
-                    return
-                }
+            
+            _ = getCommunicationState()
+                .take(1)
+                .subscribe(onNext: { (state) in
                 
-                self.deferredSubscriptions.append(topic)
+                self.deferredSubscriptions.insert(topic)
                 
                 // Subscribe if the client is online.
-                
                 if state == .online {
-                    self.deferredSubscriptions.forEach({ (topic) in
-                        self.mqtt?.subscribe(topic)
-                    })
-                    
-                    self.deferredSubscriptions = []
+                    self.mqtt?.subscribe(topic)
+                    // Do NOT delete deferredSubscriptions since we may need them for reconnects.
                 }
-            }
+            })
         }
     }
     
+    /// - TODO: We currently do not handle unsubscribe events with respect to removing topics from
+    ///   the deferredSubscriptions. Coaty-js handles this via its hashtable structure.
     func unsubscribe(topic: String) {
         _ = queue.sync {
             self.mqtt?.unsubscribe(topic)
@@ -258,32 +281,23 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     /// - Parameters:
     ///   - topic: the publication topic.
     ///   - message: the payload message.
-    func publish(topic: String, message: String, retained: Bool = false) {
-        queue.sync {
-            _ = getCommunicationState().subscribe {
-                guard let state = $0.element else {
-                    return
-                }
-                
-                self.deferredPublications.append((topic, message))
-                
-                // Publish if the client is online.
-                
-                if state == .online {
-                    self.deferredPublications.forEach({ (publication) in
-                        let topic = publication.0
-                        let payload = publication.1
-                        self.mqtt?.publish(topic, withString: payload, retained: retained)
-                    })
-                    
-                    self.deferredPublications = []
-                }
-            }
+    func publish(topic: String, message: String) {
+        _ = queue.sync {
+            _ = getCommunicationState()
+                .take(1)
+                .filter { $0 == .offline}
+                .subscribe(onNext: { state in
+                    self.deferredPublications.append((topic, message))
+            })
+            
+            // Attempt to publish regardless of the connection status. If we are offline, this will
+            // fail silently.
+            self.mqtt?.publish(topic, withString: message)
         }
     }
     
     // MARK: - CocoaMQTTDelegate methods.
-    // These had to be moved hear because of some objc incompatibility with extensions and
+    // These had to be moved here because of some objc incompatibility with extensions and
     // generics.
     
     public func mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck) {
@@ -299,6 +313,8 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     }
     
     public func mqtt(_ mqtt: CocoaMQTT, didReceiveMessage message: CocoaMQTTMessage, id: UInt16) {
+        rawMQTTMessages.onNext((message.topic, message.payload))
+        
         if let payloadString = message.string {
             rawMessages.onNext((message.topic, payloadString))
         }
@@ -325,7 +341,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     }
     
     public func mqttDidDisconnect(_ mqtt: CocoaMQTT, withError err: Error?) {
-        log.error("Did disconnect with error.")
+        log.error("Did disconnect with error. \(err?.localizedDescription ?? "")")
         updateCommunicationState(.offline)
     }
     

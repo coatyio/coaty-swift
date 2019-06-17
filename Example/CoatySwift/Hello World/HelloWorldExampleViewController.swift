@@ -12,7 +12,7 @@ import CoatySwift
 class HelloWorldExampleViewController: UIViewController {
     
     let enableSSL = false
-    let brokerIp = "192.168.1.120"
+    let brokerIp = "192.168.2.190"
     let brokerPort = 1883
     
     override func viewDidLoad() {
@@ -60,7 +60,7 @@ class HelloWorldExampleViewController: UIViewController {
                                                  objectId: CoatyUUID())
             
             // Adjusts the logging level of CoatySwift messages.
-            config.common?.logLevel = .info
+            config.common?.logLevel = .debug
             
             // Here, we define that the TaskController should advertise its identity as soon as
             // it gets online.
@@ -70,11 +70,11 @@ class HelloWorldExampleViewController: UIViewController {
             // Define the communication-related options, such as the Ip address of your broker and
             // the port it exposes, and your own mqtt client Id. Also, make sure
             // to immediately connect with the broker.
-            let brokerOptions = BrokerOptions(host: brokerIp,
+            let mqttClientOptions = MQTTClientOptions(host: brokerIp,
                                               port: UInt16(brokerPort),
                                               clientId: "\(UUID.init())",
                                               enableSSL: enableSSL)
-            config.communication = CommunicationOptions(brokerOptions: brokerOptions,
+            config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,
                                                         shouldAutoStart: true)
             
             // The communicationManager will also advertise its identity upon connection to the

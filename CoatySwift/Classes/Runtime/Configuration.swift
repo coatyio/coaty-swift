@@ -108,7 +108,7 @@ public class CommonOptions {
 public class CommunicationOptions {
     
     /// Options to connect with CocoaMQTT client to broker.
-    public var brokerOptions: BrokerOptions?
+    public var mqttClientOptions: MQTTClientOptions?
     
     /// Property-value pairs to be initialized on the identity object of the
     /// communication manager (optional). For example, the `name` of the
@@ -157,14 +157,14 @@ public class CommunicationOptions {
     public var useProtocolCompliantClientId: Bool = false
     
     
-    public init(brokerOptions: BrokerOptions? = nil,
+    public init(mqttClientOptions: MQTTClientOptions? = nil,
                 identity: [String: Any]? = nil,
                 shouldAutoStart: Bool? = nil,
                 shouldAdvertiseIdentity: Bool? = true,
                 shouldAdvertiseDevice: Bool? = nil,
                 useReadableTopics: Bool? = nil,
                 useProtocolCompliantClientId: Bool? = nil) {
-        self.brokerOptions = brokerOptions
+        self.mqttClientOptions = mqttClientOptions
         self.identity = identity
         if let shouldAutoStart = shouldAutoStart {
             self.shouldAutoStart = shouldAutoStart
@@ -235,8 +235,8 @@ public class DatabaseOptions {
     }
 }
 
-/// Broker Options based on the CocoaMQTT client.
-public class BrokerOptions {
+/// MQTT client options based on the CocoaMQTT client.
+public class MQTTClientOptions {
     public var host: String
     public var port: UInt16
     public var clientId: String
@@ -245,6 +245,7 @@ public class BrokerOptions {
     public var cleanSession: Bool
     public var keepAlive: UInt16
     public var enableSSL: Bool
+    public var autoReconnect: Bool
     
     public init(host: String,
          port: UInt16,
@@ -253,7 +254,8 @@ public class BrokerOptions {
          username: String? = nil,
          password: String? = nil,
          cleanSession: Bool = true,
-         keepAlive: UInt16 = 60) {
+         keepAlive: UInt16 = 60,
+         autoReconnect: Bool = true) {
         self.host = host
         self.port = port
         self.enableSSL = enableSSL
@@ -262,6 +264,7 @@ public class BrokerOptions {
         self.password = password
         self.cleanSession = cleanSession
         self.keepAlive = keepAlive
+        self.autoReconnect = autoReconnect
     }
 }
 

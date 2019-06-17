@@ -161,7 +161,7 @@ public class Container<Family: ObjectFamily> {
         self.runtime = runtime
         
         // Create CommunicationManager.
-        let communicationManager = CommunicationManager<Family>(brokerOptions: configuration.communication.brokerOptions!)
+        let communicationManager = CommunicationManager<Family>(mqttClientOptions: configuration.communication.mqttClientOptions!)
         self.communicationManager = communicationManager
         self.operatingState = communicationManager.operatingState.asObservable()
         self.communicationState = communicationManager.communicationState.asObservable()

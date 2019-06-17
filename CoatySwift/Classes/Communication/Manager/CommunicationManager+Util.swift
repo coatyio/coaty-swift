@@ -82,6 +82,29 @@ extension CommunicationManager {
             self.unsubscribe(topic: topic)
         })
     }
+    
+    /// TAKEN FROM: https://gist.github.com/melloskitten/fa659ce768eba57e6aff1e60909a20f3
+    /// Returns true if a MQTT topic filter matches to a given topic filter.
+    /// E.g. topic filter: a/b/# will match topic: a/b/c/d, a/b/c, ...
+    /// E.g. topic filter: a/+/+ will match topic: a/b/c, but _not_ a/b/c/d, ...
+    /// - Parameters:
+    ///   - topic: the topic you want to match
+    ///   - topicFilter: your filter condition for the topic
+    /// - Returns: returns true if the topic matches the topic filter, else false.
+    public func isMQTTTopicMatch(topic: String, topicFilter: String) -> Bool {
+        
+        let plusRegEx = "([^/])+";
+        let hashRegEx = ".*";
+        
+        var escapedTopic = topicFilter.replacingOccurrences(of: "/", with: "\\/")
+        escapedTopic = escapedTopic.replacingOccurrences(of: "$", with: "\\$")
+        escapedTopic = escapedTopic.replacingOccurrences(of: "+", with: plusRegEx)
+        escapedTopic = escapedTopic.replacingOccurrences(of: "#", with: hashRegEx)
+        escapedTopic = "^" + escapedTopic + "$"
+        
+        let test =  topic.range(of: escapedTopic, options: .regularExpression)
+        return test != nil
+    }
 
 }
 

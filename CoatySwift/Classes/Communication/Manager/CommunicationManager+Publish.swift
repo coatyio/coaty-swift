@@ -20,8 +20,8 @@ extension CommunicationManager {
     /// - Parameters:
     ///   - topic: the topic on which to publish the given payload
     ///   - value: a payload string or Uint8Array (Buffer in Node.js) to be published on the given topic
-    func publishRaw(topic: String, value: String, shouldRetain: Bool = false) {
-        self.publish(topic: topic, message: value, retained: shouldRetain)
+    public func publishRaw(topic: String, value: String) {
+        self.publish(topic: topic, message: value)
     }
     
     /// Publishes a given advertise event.

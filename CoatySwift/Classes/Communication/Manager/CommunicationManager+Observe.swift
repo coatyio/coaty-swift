@@ -6,8 +6,15 @@
 import Foundation
 import RxSwift
 
-
 extension CommunicationManager {
+    
+    public func observeRaw(eventTarget: CoatyObject, topicFilter: String) -> Observable<(String, [UInt8])>{
+        self.subscribe(topic: topicFilter)
+        
+        return rawMQTTMessages.filter { (topic, payload) -> Bool in
+            self.isMQTTTopicMatch(topic: topic, topicFilter: topicFilter)
+        }
+    }
     
     /// This method should not be called directly, use observeAdvertiseWithCoreType method
     /// or observeAdvertiseWithObjectType method instead.
