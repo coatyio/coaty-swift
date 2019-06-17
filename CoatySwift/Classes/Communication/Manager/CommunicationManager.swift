@@ -8,9 +8,6 @@ import Foundation
 import CocoaMQTT
 import RxSwift
 
-
-
-
 /// Manages a set of predefined communication events and event patterns to query, distribute, and
 /// share Coaty objects across decantralized application components using publish-subscribe on top
 /// of MQTT messaging.

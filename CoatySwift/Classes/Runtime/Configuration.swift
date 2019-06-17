@@ -243,6 +243,9 @@ public class MQTTClientOptions {
     public var username: String?
     public var password: String?
     public var cleanSession: Bool
+    
+    /// Do not set keepAlive under 10 seconds. Otherwise it might happen that you will reconnect
+    /// unnecessarily because of latency issues, especially if you are using a public broker.
     public var keepAlive: UInt16
     public var enableSSL: Bool
     public var autoReconnect: Bool
