@@ -70,11 +70,11 @@ class HelloWorldExampleViewController: UIViewController {
             // Define the communication-related options, such as the Ip address of your broker and
             // the port it exposes, and your own mqtt client Id. Also, make sure
             // to immediately connect with the broker.
-            let brokerOptions = BrokerOptions(host: brokerIp,
+            let mqttClientOptions = MQTTClientOptions(host: brokerIp,
                                               port: UInt16(brokerPort),
                                               clientId: "\(UUID.init())",
                                               enableSSL: enableSSL)
-            config.communication = CommunicationOptions(brokerOptions: brokerOptions,
+            config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,
                                                         shouldAutoStart: true)
             
             // The communicationManager will also advertise its identity upon connection to the
