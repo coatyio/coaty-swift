@@ -235,6 +235,32 @@ public class DiscoverEventData: CommunicationEventData {
         super.init()
     }
     
+    /// Determines whether the given CoreType is compatible with this event data.
+    /// - Parameters:
+    ///     - coreType name of the core type to check
+    /// - Returns: true, if the specified core type is contained in the coreTypes property;
+    /// false otherwise.
+    public func isCoreTypeCompatible(_ coreType: CoreType) -> Bool {
+        return self.coreTypes?.contains(coreType) ?? false
+    }
+    
+    ///  Determines whether this event data discovers an object based on an object ID.
+    public func isDiscoveringObjectId() -> Bool {
+        return externalId == nil && objectId != nil
+    }
+    
+    /// Determines whether this event data discovers an object based on both
+    /// external ID and object ID.
+    public func isDiscoveringExternalAndObjectId() -> Bool {
+        return self.externalId != nil && self.objectId != nil
+    }
+    
+    /// Determines whether this event data discovers an object based
+    /// on types only.
+    func isDiscoveringTypes() -> Bool {
+        return self.externalId == nil && self.objectId == nil
+    }
+    
     // MARK: - Codable methods.
     
     enum DiscoverKeys: String, CodingKey {
