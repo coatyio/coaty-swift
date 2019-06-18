@@ -6,14 +6,24 @@
 
 ## Example
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-We provide the `HelloWorld` example that is also included in the coaty-js implementation.
+To run the example project, clone the repo, and run `pod install` from the Example directory first. We provide two additional examples located in the `Example for CoatySwift` folder:
+
+- `Hello World` which is a CoatySwift implementation of Hello World [this](https://github.com/coatyio/coaty-examples/tree/master/hello-world/js) example. This example demonstrates the basic use of communication event patterns to exchange typed data in a distributed Coaty application.
+- `Switch Light` which is a (simplified) CoatySwift implementation of coaty-js [Remote Operations](https://github.com/coatyio/coaty-examples/tree/master/remote-operations/js).
+- Additional examples can be found in the `swift` section of `coaty-examples`, including a macOS version of the Hello World example.
 
 ## Documentation
 
-You can find important design decisions and rationale [here](docs/CoatySwiftInternals.md).
+If you are new to CoatySwift and would like to learn more, we recommend checking out the following resources:
+
+- __Developer Guide__ - how to build a Coaty application with the CoatySwift framework
+- __Source Code Documentation__
+- __[Design Decisions and Rationale](docs/CoatySwiftInternals.md)__ - in case you want to know why certain things have been implemented in a particular way in the CoatySwift implementation. 
 
 ## Requirements
+
+- min. iOS Deployment Target:  8.0
+- min. macOS Deployment Target = 10.14
 
 ## Installation
 
