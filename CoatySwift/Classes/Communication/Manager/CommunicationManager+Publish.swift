@@ -134,7 +134,7 @@ extension CommunicationManager {
                     return nil
                 }
                 
-                guard !event.ensureValidResponseParameters(eventData: completeEvent.data) else {
+                guard event.ensureValidResponseParameters(eventData: completeEvent.data) else {
                     return nil
                 }
                 
@@ -203,7 +203,7 @@ extension CommunicationManager {
                     return nil
                 }
                 
-                guard !event.ensureValidResponseParameters(eventData: resolveEvent.data) else {
+                guard event.ensureValidResponseParameters(eventData: resolveEvent.data) else {
                     return nil
                 }
                 
@@ -264,7 +264,7 @@ extension CommunicationManager {
                     return nil
                 }
                 
-                guard !event.ensureValidResponseParameters(eventData: retrieveEvent.data) else {
+                guard event.ensureValidResponseParameters(eventData: retrieveEvent.data) else {
                     return nil
                 }
                 
