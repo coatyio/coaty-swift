@@ -1,3 +1,4 @@
+// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  CommunicationManager+Observe.swift
 //  CoatySwift
@@ -8,6 +9,12 @@ import RxSwift
 
 extension CommunicationManager {
     
+    /// Observes raw MQTT communication on a given subscription topic (=topicFilter).
+    /// - Parameters:
+    ///   - eventTarget: target for which values should be emitted
+    ///   - topicFilter: the subscription topic
+    /// - Returns: a hot observable emitting any incoming messages as tuples containing the actual topic
+    /// and the payload as a UInt8 Array.
     public func observeRaw(eventTarget: CoatyObject, topicFilter: String) -> Observable<(String, [UInt8])>{
         self.subscribe(topic: topicFilter)
         
@@ -122,6 +129,10 @@ extension CommunicationManager {
     /// - Returns: a hot observable emitting incoming Channel events.
     public func observeChannel<T: ChannelEvent<Family>>(eventTarget: Component,
                                                         channelId: String) throws -> Observable<T> {
+        
+        if !Topic.isValidEventTypeFilter(filter: channelId) {
+            throw CoatySwiftError.InvalidArgument("\(channelId) is not a valid channel Id.")
+        }
         
         // TODO: Unsure about associatedUserId parameters. Is it really assigneeUserId?
         let channelTopic = try Topic.createTopicStringByLevelsForChannel(channelId: channelId,
@@ -267,6 +278,11 @@ extension CommunicationManager {
         
         // FIXME: Prevent duplicated subscriptions.
         // FIXME: A convenience method that explicitly uses the operationId as parameter would be nice.
+        
+        if !Topic.isValidEventTypeFilter(filter: operationId) {
+            throw CoatySwiftError.InvalidArgument("\(operationId) is not a valid parameter name.")
+        }
+        
         let callTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Call,
                                                                         eventTypeFilter: operationId)
         
@@ -296,6 +312,13 @@ extension CommunicationManager {
             })
         
         return createSelfCleaningObservable(observable: observable, topic: callTopic)
+    }
+    
+    /// Observe communication state changes by the hot observable returned.
+    /// When subscribed the observable immediately emits the current
+    /// communication state.
+    public func observeCommunicationState() -> Observable<CommunicationState> {
+        return communicationState.asObservable()
     }
     
 }

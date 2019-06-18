@@ -1,3 +1,4 @@
+// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  ChannelEvent.swift
 //  CoatySwift
@@ -67,6 +68,11 @@ public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEvent
     /// - NOTE: Should not be called directly by application programmers. Needed because of
     /// extra parameter channelId.
     internal init(eventSource: Component, eventData: ChannelEventData<Family>, channelId: String) {
+        
+        if !Topic.isValidEventTypeFilter(filter: channelId) {
+            LogManager.log.warning("\(channelId) is not a valid channel identifier.")
+        }
+        
         super.init(eventSource: eventSource, eventData: eventData)
         self.channelId = channelId
     }
