@@ -71,6 +71,26 @@ public class UpdateEvent<Family: ObjectFamily>: CommunicationEvent<UpdateEventDa
     override public func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
     }
+    
+    /// For internal use in framework only.
+    ///
+    /// - Parameter eventData: event data for Complete response event
+    /// - Returns: Returns false if the given Complete event data does not correspond to
+    /// the event data of this Update event.
+    internal func ensureValidResponseParameters(eventData: CompleteEventData<Family>) -> Bool {
+        
+        if self.data.isPartialUpdate && self.data.objectId != eventData.object?.objectId {
+            LogManager.log.warning("object ID of Complete event doesn't match object ID of Update event")
+            return false
+        }
+        
+        if self.data.isFullUpdate && self.data.object?.objectId != eventData.object?.objectId {
+            LogManager.log.warning("object ID of Complete event doesn't match object ID of Update event")
+            return false
+        }
+        
+        return true
+    }
 }
 
 /// UpdateEventData provides a wrapper object that stores the entire message payload data
