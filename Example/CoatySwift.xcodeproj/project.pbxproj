@@ -164,13 +164,12 @@
 		607FACD21AFB9204008FA782 /* Example for CoatySwift */ = {
 			isa = PBXGroup;
 			children = (
+				BC6191B622B8D8E4007E4601 /* Model */,
 				2A8EB4A3227F22EE002712E7 /* SwitchLight */,
 				2AF1EF9C225CEBE50099E170 /* Hello World */,
-				2A427B102232826D0056D67A /* Demo+CoatyObject.swift */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
-				2A427B0C2232816F0056D67A /* CustomCoatyObjectFamily.swift */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -221,6 +220,15 @@
 				B853AE32D06F7E858B9ED4F5 /* Pods_CoatySwift_Tests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BC6191B622B8D8E4007E4601 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2A427B0C2232816F0056D67A /* CustomCoatyObjectFamily.swift */,
+				2A427B102232826D0056D67A /* Demo+CoatyObject.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

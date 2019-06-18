@@ -1,3 +1,4 @@
+// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  ColorRGBA.swift
 //  CoatySwift_Example
