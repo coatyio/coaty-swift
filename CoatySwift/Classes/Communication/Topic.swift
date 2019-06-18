@@ -378,8 +378,10 @@ class Topic {
     /// - Parameter filter: an event type filter
     /// - Returns: true if the given topic name is a valid event type filter; false otherwise
     static func isValidEventTypeFilter(filter: String) -> Bool {
-        return filter.count > 0 && !filter.contains("\u{0000}")
-            && !filter.contains("#") && !filter.contains("+")
+        return filter.count > 0
+            && !filter.contains("\u{0000}")
+            && !filter.contains("#")
+            && !filter.contains("+")
             && !filter.contains("/")
     }
 }
