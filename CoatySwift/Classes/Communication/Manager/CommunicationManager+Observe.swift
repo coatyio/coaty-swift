@@ -54,7 +54,7 @@ extension CommunicationManager {
                 return topic.sourceObjectId != eventTarget.objectId
             })
             .filter(isAdvertise)
-            .filter({ (rawMessageWithTopic) -> Bool in
+            .filter { (rawMessageWithTopic) -> Bool in
                 
                 // Filter messages according to coreType or objectType.
                 let (topic, _) = rawMessageWithTopic
@@ -67,12 +67,17 @@ extension CommunicationManager {
                 }
                 
                 return false
-            })
-            .map({ (message) -> T in
+            }
+            .compactMap { (message) -> T? in
                 let (_, payload) = message
-                // FIXME: Remove force unwrap.
-                return PayloadCoder.decode(payload)!
-            })
+                
+                guard let advertiseEvent: T = PayloadCoder.decode(payload) else {
+                    LogManager.log.warning("could not parse advertiseEvent")
+                    return nil
+                }
+                
+                return advertiseEvent
+            }
         
         return createSelfCleaningObservable(observable: observable, topic: topic)
     }
@@ -153,12 +158,16 @@ extension CommunicationManager {
                 let (topic, _) = rawMessageWithTopic
                 return topic.channelId == channelId
             })
-            .map({ (message) -> T in
+            .compactMap { message -> T? in
                 let (_, payload) = message
                 
-                // FIXME: Remove force unwrap.
-                return PayloadCoder.decode(payload)!
-            })
+                guard let channelEvent: T = PayloadCoder.decode(payload) else {
+                    LogManager.log.warning("could not parse channelEvent")
+                    return nil
+                }
+                
+                return channelEvent
+            }
         
         return createSelfCleaningObservable(observable: observable, topic: channelTopic)
     }
@@ -182,16 +191,20 @@ extension CommunicationManager {
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != eventTarget.objectId
             })
-            .filter({ (rawMessageTopic) -> Bool in
+            .filter { rawMessageTopic -> Bool in
                 let (topic, _) = rawMessageTopic
                 return topic.eventType == .Deadvertise
-            })
-            .map({ (message) -> DeadvertiseEvent in
+            }
+            .compactMap { message -> DeadvertiseEvent? in
                 let (_, payload) = message
                 
-                // FIXME: Remove force unwrap.
-                return PayloadCoder.decode(payload)!
-            })
+                guard let deadvertiseEvent: DeadvertiseEvent = PayloadCoder.decode(payload) else {
+                    LogManager.log.warning("could not parse deadvertiseEvent")
+                    return nil
+                }
+                
+                return deadvertiseEvent
+            }
         
         return createSelfCleaningObservable(observable: observable, topic: deadvertiseTopic)
     }
@@ -220,11 +233,14 @@ extension CommunicationManager {
                 return topic.sourceObjectId != eventTarget.objectId
             })
             .filter(isUpdate)
-            .map({ (message) -> T in
+            .compactMap({ (message) -> T? in
                 let (coatyTopic, payload) = message
                 
-                // FIXME: Remove force unwrap.
-                let updateEvent: T = PayloadCoder.decode(payload)!
+                guard let updateEvent: T = PayloadCoder.decode(payload) else {
+                    LogManager.log.warning("could not parse updateEvent")
+                    return nil
+                }
+                
                 updateEvent.completeHandler = {(completeEvent: CompleteEvent) in
                     try? self.publishComplete(identity: eventTarget,
                                               event: completeEvent,
@@ -258,17 +274,20 @@ extension CommunicationManager {
                 return topic.sourceObjectId != eventTarget.objectId
             })
             .filter(isDiscover)
-            .map({ (message) -> T in
+            .compactMap { (message) -> T? in
                 let (coatyTopic, payload) = message
                 
-                // FIXME: Remove force unwrap.
-                let discoverEvent: T = PayloadCoder.decode(payload)!
+                guard let discoverEvent: T = PayloadCoder.decode(payload) else {
+                    LogManager.log.warning("could not parse discoverEvent")
+                    return nil
+                }
+                
                 discoverEvent.resolveHandler = {(resolveEvent: ResolveEvent) in
                     try? self.publishResolve(identity: eventTarget, event: resolveEvent, messageToken: coatyTopic.messageToken)
                 }
                 
                 return discoverEvent
-            })
+            }
         
         return createSelfCleaningObservable(observable: observable, topic: discoverTopic)
     }
@@ -293,15 +312,18 @@ extension CommunicationManager {
                 return topic.sourceObjectId != eventTarget.objectId
             })
             .filter(isCall)
-            .filter({ (topic, string) -> Bool in
+            .filter { (topic, string) -> Bool in
                 // Match the operationId and only accept the specified ones.
                 topic.callOperationId == operationId
-            })
-            .map({ (message) -> T in
+            }
+            .compactMap { message -> T? in
                 let (coatyTopic, payload) = message
                 
-                // FIXME: Remove force unwrap.
-                let callEvent: T = PayloadCoder.decode(payload)!
+                guard let callEvent: T = PayloadCoder.decode(payload) else {
+                    LogManager.log.warning("could not parse callEvent")
+                    return nil
+                }
+                
                 callEvent.returnHandler = {(returnEvent: ReturnEvent) in
                     try? self.publishReturn(identity: eventTarget,
                                              event: returnEvent,
@@ -309,7 +331,7 @@ extension CommunicationManager {
                 }
                 
                 return callEvent
-            })
+            }
         
         return createSelfCleaningObservable(observable: observable, topic: callTopic)
     }

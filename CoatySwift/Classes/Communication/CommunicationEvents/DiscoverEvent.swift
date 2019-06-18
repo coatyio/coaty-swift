@@ -135,6 +135,43 @@ public class DiscoverEvent<Family: ObjectFamily>: CommunicationEvent<DiscoverEve
     override public func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
     }
+    
+    /// For internal use in framework only.
+    /// - Parameter eventData: event data for Resolve response event
+    /// - Returns: false and logs if the given Resolve event data does not correspond to
+    /// the event data of this Discover event.
+    internal func ensureValidResponseParameters(eventData: ResolveEventData<Family>) -> Bool {
+        if (self.data.coreTypes != nil && eventData.object != nil) {
+            if !((self.data.coreTypes?.contains(eventData.object!.coreType))!) {
+                LogManager.log.warning("resolved coreType not contained in Discover coreTypes")
+                return false
+            }
+        }
+        
+        if (self.data.objectId != nil && eventData.object != nil) {
+            if !((self.data.objectTypes?.contains(eventData.object!.objectType))!) {
+                LogManager.log.warning("resolved objectType not contained in Discover objectTypes")
+                return false
+            }
+        }
+            
+        if self.data.objectId != nil && eventData.object != nil {
+            if self.data.objectId != eventData.object?.objectId {
+                LogManager.log.warning("resolved object's UUID doesn't match Discover objectId")
+                return false
+            }
+        }
+        
+        if self.data.externalId != nil && eventData.object != nil {
+            if self.data.externalId != eventData.object!.externalId {
+                LogManager.log.warning("resolved object's external ID doesn't match Discover externalId")
+                return false
+            }
+        }
+        
+        return true
+    }
+    
 }
 
 

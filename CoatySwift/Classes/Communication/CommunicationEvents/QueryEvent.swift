@@ -85,6 +85,39 @@ public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData
     override public func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
     }
+    
+    /// Throws an error if the given Retrieve event data does not correspond to
+    /// the event data of this Query event.
+    ///
+    /// - Parameter eventData:  event data for Retrieve response event
+    /// - Returns: boolean that indicates whether the object is valid
+    internal func ensureValidResponseParameters(eventData: RetrieveEventData<Family>) -> Bool {
+        for object in eventData.objects {
+            if let coreTypes = self.data.coreTypes {
+                let coreTypeValid = coreTypes.contains { type -> Bool in
+                    type == object.coreType
+                }
+                
+                if !coreTypeValid {
+                    LogManager.log.warning("retrieved coreType not contained in Query coreTypes")
+                    return false
+                }
+            }
+            
+            if let objectTypes = self.data.objectTypes {
+                let objectTypeValid = objectTypes.contains { type -> Bool in
+                    type == object.objectType
+                }
+                
+                if !objectTypeValid {
+                    LogManager.log.warning("retrieved objectType not contained in Query objectTypes")
+                    return false
+                }
+            }
+        }
+        
+        return true
+    }
 }
 
 
