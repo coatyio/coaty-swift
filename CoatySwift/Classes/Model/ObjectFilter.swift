@@ -398,6 +398,8 @@ public class ObjectFilterExpression: Codable {
     }
 }
 
+
+/// Defines filter operator functions that yield object filter expressions.
 public class FilterOperations {
     
     static func lessThan(value: Double) -> (ObjectFilterOperator, Double) {
@@ -432,7 +434,6 @@ public class FilterOperations {
         return (ObjectFilterOperator.LessThanOrEqual, value)
     }
     
-    // TODO: Currently only doing betweens that expect the same type from both operands.
     static func between(value1: Double, value2: Double) ->  (ObjectFilterOperator, Double, Double) {
         return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
     }
@@ -461,30 +462,38 @@ public class FilterOperations {
         return ObjectFilterOperator.NotExists
     }
     
-    /// TODO: Missing methods:
-    /*
-     equals: (value: any): [ObjectFilterOperator, any] =>
-     [ObjectFilterOperator.Equals, value],
-     
-     notEquals: (value: any): [ObjectFilterOperator, any] =>
-     [ObjectFilterOperator.NotEquals, value],
-     
-     contains: (values: any): [ObjectFilterOperator, any] =>
-     [ObjectFilterOperator.Contains, values],
-     
-     notContains: (values: any): [ObjectFilterOperator, any] =>
-     [ObjectFilterOperator.NotContains, values],
-     
-     in: (values: any[]): [ObjectFilterOperator, any[]] =>
-     [ObjectFilterOperator.In, values],
-     
-     notIn: (values: any[]): [ObjectFilterOperator, any[]] =>
-     [ObjectFilterOperator.NotIn, values],
-     
-     */
+    static func equals(value: Double) -> (ObjectFilterOperator, Double) {
+        return (ObjectFilterOperator.Equals, value)
+    }
     
+    static func equals(value: String) -> (ObjectFilterOperator, String) {
+        return (ObjectFilterOperator.Equals, value)
+    }
     
+    static func notEquals(value: Double) -> (ObjectFilterOperator, Double) {
+        return (ObjectFilterOperator.NotEquals, value)
+    }
     
+    static func notEquals(value: String) -> (ObjectFilterOperator, String) {
+        return (ObjectFilterOperator.NotEquals, value)
+    }
+    
+    static func contains(values: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
+        return (ObjectFilterOperator.Contains, values)
+    }
+    
+    static func notContains(values: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
+        return (ObjectFilterOperator.NotContains, values)
+    }
+    
+    static func valuesIn(values: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
+        return (ObjectFilterOperator.In, values)
+    }
+    
+    static func valuesNotIn(values: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
+        return (ObjectFilterOperator.NotIn, values)
+    }
+  
 }
 
 public enum ObjectFilterOperator: Int {
