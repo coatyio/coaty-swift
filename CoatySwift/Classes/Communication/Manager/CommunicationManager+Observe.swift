@@ -304,4 +304,11 @@ extension CommunicationManager {
         return createSelfCleaningObservable(observable: observable, topic: callTopic)
     }
     
+    /// Observe communication state changes by the hot observable returned.
+    /// When subscribed the observable immediately emits the current
+    /// communication state.
+    public func observeCommunicationState() -> Observable<CommunicationState> {
+        return communicationState.asObservable()
+    }
+    
 }
