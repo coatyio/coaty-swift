@@ -372,16 +372,19 @@ public class ObjectFilterExpression: Codable {
         var container = encoder.unkeyedContainer()
         try container.encode(filterOperator.rawValue)
         
-        var operands = [AnyCodable]()
-        if let firstOperand = firstOperand {
-            operands.append(firstOperand)
+        // One operand is encoded as a single value
+        if let firstOperand = self.firstOperand, secondOperand == nil {
+            try container.encode(firstOperand)
+            return
         }
         
-        if let secondOperand = secondOperand {
-            operands.append(secondOperand)
-        }
+        // Two operands are embedded into an array.
         
-        try container.encode(operands)
+        var operands = container.nestedUnkeyedContainer()
+        if let firstOperand = firstOperand, let secondOperand = secondOperand {
+            try operands.encode(firstOperand)
+            try operands.encode(secondOperand)
+        }
     }
     
     public required init(from decoder: Decoder) throws {
