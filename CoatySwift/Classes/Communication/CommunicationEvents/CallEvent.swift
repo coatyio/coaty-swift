@@ -92,6 +92,11 @@ public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<F
     /// - NOTE: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
     fileprivate init(eventSource: Component, eventData: CallEventData<Family>, operation: String) {
+        
+        if !Topic.isValidEventTypeFilter(filter: operation) {
+            LogManager.log.warning("\(operation) is not a valid operation name.")
+        }
+        
         super.init(eventSource: eventSource, eventData: eventData)
         self.operation = operation
     }

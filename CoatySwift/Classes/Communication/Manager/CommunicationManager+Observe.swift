@@ -130,6 +130,10 @@ extension CommunicationManager {
     public func observeChannel<T: ChannelEvent<Family>>(eventTarget: Component,
                                                         channelId: String) throws -> Observable<T> {
         
+        if !Topic.isValidEventTypeFilter(filter: channelId) {
+            throw CoatySwiftError.InvalidArgument("\(channelId) is not a valid channel Id.")
+        }
+        
         // TODO: Unsure about associatedUserId parameters. Is it really assigneeUserId?
         let channelTopic = try Topic.createTopicStringByLevelsForChannel(channelId: channelId,
                                                                          associatedUserId: eventTarget
@@ -274,6 +278,11 @@ extension CommunicationManager {
         
         // FIXME: Prevent duplicated subscriptions.
         // FIXME: A convenience method that explicitly uses the operationId as parameter would be nice.
+        
+        if !Topic.isValidEventTypeFilter(filter: operationId) {
+            throw CoatySwiftError.InvalidArgument("\(operationId) is not a valid parameter name.")
+        }
+        
         let callTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Call,
                                                                         eventTypeFilter: operationId)
         
