@@ -121,16 +121,25 @@ extension CommunicationManager {
                 return topic.sourceObjectId != event.sourceId
             })
             .filter(isComplete)
-            .filter({ (rawMessageWithTopic) -> Bool in
+            .filter { rawMessageWithTopic -> Bool in
                 // Filter messages according to message token.
                 let (topic, _) = rawMessageWithTopic
                 return topic.messageToken == updateMessageToken
-            })
-            .map({ (message) -> V in
+            }
+            .compactMap { message -> V? in
                 let (_, payload) = message
-                // FIXME: Remove force unwrap.
-                return PayloadCoder.decode(payload)!
-            })
+                
+                guard let completeEvent: V = PayloadCoder.decode(payload)! else {
+                    LogManager.log.warning("could not parse completeEvent")
+                    return nil
+                }
+                
+                guard !event.ensureValidResponseParameters(eventData: completeEvent.data) else {
+                    return nil
+                }
+                
+                return completeEvent
+            }
         
         return createSelfCleaningObservable(observable: observable, topic: completeTopic)
     }
@@ -186,12 +195,20 @@ extension CommunicationManager {
                 let (topic, _) = rawMessageWithTopic
                 return topic.messageToken == discoverMessageToken
             })
-            .map({ (message) -> V in
+            .compactMap{ message -> V? in
                 let (_, payload) = message
-                // FIXME: Remove force unwrap.
                 
-                return PayloadCoder.decode(payload)!
-            })
+                guard let resolveEvent: V = PayloadCoder.decode(payload)! else {
+                    LogManager.log.warning("could not parse resolveEvent")
+                    return nil
+                }
+                
+                guard !event.ensureValidResponseParameters(eventData: resolveEvent.data) else {
+                    return nil
+                }
+                
+                return resolveEvent
+            }
         
         return createSelfCleaningObservable(observable: observable, topic: resolveTopic)
     }
@@ -234,17 +251,25 @@ extension CommunicationManager {
                 return topic.sourceObjectId != event.sourceId
             })
             .filter(isRetrieve)
-            .filter({ (rawMessageWithTopic) -> Bool in
+            .filter { rawMessageWithTopic -> Bool in
                 // Filter messages according to message token.
                 let (topic, _) = rawMessageWithTopic
                 return topic.messageToken == queryMessageToken
-            })
-            .map({ (message) -> V in
+            }
+            .compactMap { (message) -> V? in
                 let (_, payload) = message
-                // FIXME: Remove force unwrap.
                 
-                return PayloadCoder.decode(payload)!
-            })
+                guard let retrieveEvent: V = PayloadCoder.decode(payload)! else {
+                    LogManager.log.warning("could not parse retrieveEvent")
+                    return nil
+                }
+                
+                guard !event.ensureValidResponseParameters(eventData: retrieveEvent.data) else {
+                    return nil
+                }
+                
+                return retrieveEvent
+            }
         
         return createSelfCleaningObservable(observable: observable, topic: retrieveTopic)
     }
