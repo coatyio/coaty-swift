@@ -161,15 +161,16 @@ public class Container<Family: ObjectFamily> {
         let runtime = Runtime(commonOptions: configuration.common, databaseOptions: configuration.databases)
         self.runtime = runtime
         
-        // Create CommunicationManager.
-        let communicationManager = CommunicationManager<Family>(mqttClientOptions: configuration.communication.mqttClientOptions!)
-        self.communicationManager = communicationManager
-        self.operatingState = communicationManager.operatingState.asObservable()
-        self.communicationState = communicationManager.communicationState.asObservable()
-        
         // Create EventFactory.
         let eventFactory = EventFactory<Family>()
         self.eventFactory = eventFactory
+        
+        // Create CommunicationManager.
+        let communicationManager = CommunicationManager<Family>(communicationOptions: configuration.communication,
+                                                                eventFactory: eventFactory)
+        self.communicationManager = communicationManager
+        self.operatingState = communicationManager.operatingState.asObservable()
+        self.communicationState = communicationManager.communicationState.asObservable()
 
         components.controllers?.forEach { (name, controllerType) in
             let options = configuration.controllers?.controllerOptions[name]

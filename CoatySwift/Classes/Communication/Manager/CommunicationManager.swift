@@ -31,6 +31,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     private var associatedDevice: Device?
     internal var identity: Component?
     private var isDisposed = false
+    private var communicationOptions: CommunicationOptions
     
     // MARK: - State management observables.
     
@@ -56,9 +57,15 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     /// deferred publications and subscriptions.
     private var queue = DispatchQueue(label: "com.siemens.coatyswift.comQueue")
     
+    private var eventFactory: EventFactory<Family>
+    
     // MARK: - Initializers.
     
-    public init(mqttClientOptions: MQTTClientOptions) {
+    public init(communicationOptions: CommunicationOptions, eventFactory: EventFactory<Family>) {
+        self.communicationOptions = communicationOptions
+        self.eventFactory = eventFactory
+        let mqttClientOptions = communicationOptions.mqttClientOptions!
+        
         initIdentity()
         
         // Setup client Id.
@@ -204,6 +211,10 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     /// Starts the client gracefully and connects to the broker.
     public func startClient() {
         updateOperatingState(.starting)
+        
+        observeDiscoverDevice()
+        observeDiscoverIdentity()
+        
         connect()
         updateOperatingState(.started)
     }
@@ -241,6 +252,46 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
         let deadvertiseEvent = DeadvertiseEvent(eventSource: identity!, eventData: deadvertiseEventData)
         
         try publishDeadvertise(deadvertiseEvent: deadvertiseEvent)
+    }
+    
+    private func observeDiscoverDevice() {
+        if self.communicationOptions.shouldAdvertiseDevice == false || self.associatedDevice == nil {
+            return
+        }
+        
+        try? self.observeDiscover(eventTarget: self.identity!)
+            .filter { (event) -> Bool in
+                event.data.isDiscoveringTypes() && event.data.isCoreTypeCompatible(.Device)
+                    || (event.data.isDiscoveringObjectId() && event.data.objectId == self.associatedDevice?.objectId)
+            }
+            .subscribe(onNext: { event in
+                guard let associatedDevice = self.associatedDevice else {
+                    return
+                }
+                
+                let resolveEvent = self.eventFactory
+                    .ResolveEvent.withObject(eventSource: self.identity!, object: associatedDevice)
+                event.resolve(resolveEvent: resolveEvent)
+            }).disposed(by: self.disposeBag)
+    }
+    
+    private func observeDiscoverIdentity() {
+        
+        if self.communicationOptions.shouldAdvertiseIdentity == false {
+            return
+        }
+        
+        try? self.observeDiscover(eventTarget: self.identity!)
+            .filter({ (event) -> Bool in
+                (event.data.isDiscoveringTypes() && event.data.isCoreTypeCompatible(.Component))
+                    || (event.data.isDiscoveringObjectId() && event.data.objectId == self.identity?.objectId)
+            })
+            .subscribe(onNext: { event in
+                let resolveEvent = self.eventFactory
+                    .ResolveEvent.withObject(eventSource: self.identity!, object: self.identity!)
+                
+                event.resolve(resolveEvent: resolveEvent)
+            }).disposed(by: self.disposeBag)
     }
     
     // MARK: - Communication methods.

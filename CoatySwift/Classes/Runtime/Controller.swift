@@ -71,11 +71,16 @@ open class Controller<Family: ObjectFamily> {
     
     /// Called when the communication manager is about to start or restart.
     /// Implement side effects here. Ensure that super.onCommunicationManagerStarting
-    /// is called in your override. The base implementation advertises
-    /// its identity if requested by the controller option property `shouldAdvertiseIdentity`
-    /// (if this property is not specified, the identity is advertised by default).
+    /// is called in your override. The base
+    /// implementation advertises its identity if requested by the controller
+    /// option property `shouldAdvertiseIdentity` (if this property is not
+    /// specified, the identity is advertised by default). The base
+    /// implementation also observes Discover events for core type "Component" or
+    /// the identity's object ID and resolves them with the controller's
+    /// identity.
     open func onCommunicationManagerStarting() {
         if let options = self.options, options.shouldAdvertiseIdentity {
+            self.observeDiscoverIdentity()
             self.advertiseIdentity()
         }
     }
@@ -119,5 +124,22 @@ open class Controller<Family: ObjectFamily> {
     
     deinit {
         onDispose()
+    }
+    
+    private func observeDiscoverIdentity() {
+        if self.options?.shouldAdvertiseIdentity == false {
+            return
+        }
+        
+        try? self.communicationManager
+            .observeDiscover(eventTarget: self.identity)
+            .filter { event -> Bool in
+                event.data.isCoreTypeCompatible(.Component)
+                    || (event.data.isDiscoveringObjectId() && event.data.objectId == self.identity.objectId)
+            }.subscribe(onNext: { event in
+                let resolveEvent = self.eventFactory.ResolveEvent
+                    .withObject(eventSource: self.identity, object: self.identity)
+                event.resolve(resolveEvent: resolveEvent)
+            }).disposed(by: self.disposeBag)
     }
 }
