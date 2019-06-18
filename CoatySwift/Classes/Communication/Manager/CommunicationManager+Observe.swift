@@ -8,6 +8,12 @@ import RxSwift
 
 extension CommunicationManager {
     
+    /// Observes raw MQTT communication on a given subscription topic (=topicFilter).
+    /// - Parameters:
+    ///   - eventTarget: target for which values should be emitted
+    ///   - topicFilter: the subscription topic
+    /// - Returns: a hot observable emitting any incoming messages as tuples containing the actual topic
+    /// and the payload as a UInt8 Array.
     public func observeRaw(eventTarget: CoatyObject, topicFilter: String) -> Observable<(String, [UInt8])>{
         self.subscribe(topic: topicFilter)
         
