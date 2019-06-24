@@ -1,0 +1,8 @@
+included:
+    - CoatySwift/Classes
+
+disabled_rules:
+    - trailing_whitespace
+    - todo
+    - vertical_parameter_alignment
+    - identifier_name

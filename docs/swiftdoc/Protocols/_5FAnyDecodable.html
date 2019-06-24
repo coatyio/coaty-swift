@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>_AnyDecodable Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/_AnyDecodable" class="dashAnchor"></a>
+    <a title="_AnyDecodable Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">CoatySwift Docs</a> (43% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">CoatySwift Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        _AnyDecodable Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AdvertiseEvent.html">AdvertiseEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AdvertiseEventData.html">AdvertiseEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AdvertiseEventData/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AdvertiseEventFactory.html">AdvertiseEventFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AgentBuildInfo.html">AgentBuildInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AgentConfigInfo.html">AgentConfigInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AgentInfo.html">AgentInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AgentPackageInfo.html">AgentPackageInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10CoatySwift15AnyEventFactoryC">AnyEventFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CallEvent.html">CallEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CallEventData.html">CallEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CallEventData/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CallEventFactory.html">CallEventFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ChannelEvent.html">ChannelEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ChannelEventData.html">ChannelEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ChannelEventData/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ChannelEventFactory.html">ChannelEventFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ClassWrapper.html">ClassWrapper</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CoatyObject.html">CoatyObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CoatyObject/CoatyObjectKeys.html">– CoatyObjectKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CoatyUUID.html">CoatyUUID</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CommonOptions.html">CommonOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CommunicationEvent.html">CommunicationEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10CoatySwift22CommunicationEventDataC">CommunicationEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CommunicationManager.html">CommunicationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CommunicationOptions.html">CommunicationOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CompleteEvent.html">CompleteEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CompleteEventData.html">CompleteEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CompleteEventData/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CompleteEventFactory.html">CompleteEventFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Component.html">Component</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Components.html">Components</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Configuration.html">Configuration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ConfigurationBuilder.html">ConfigurationBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Container.html">Container</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Controller.html">Controller</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ControllerConfig.html">ControllerConfig</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ControllerOptions.html">ControllerOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DatabaseOptions.html">DatabaseOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DbConnectionInfo.html">DbConnectionInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Deadvertise.html">Deadvertise</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Deadvertise/DeadvertiseCodingKeys.html">– DeadvertiseCodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DeadvertiseEvent.html">DeadvertiseEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DeadvertiseEventData.html">DeadvertiseEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DeadvertiseEventFactory.html">DeadvertiseEventFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Device.html">Device</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Discover.html">Discover</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Discover/DiscoverKeys.html">– DiscoverKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DiscoverEvent.html">DiscoverEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DiscoverEventData.html">DiscoverEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DiscoverEventData/DiscoverKeys.html">– DiscoverKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DisoverEventFactory.html">DisoverEventFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EventFactory.html">EventFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FilterOperations.html">FilterOperations</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LogManager.html">LogManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MQTTClientOptions.html">MQTTClientOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilter.html">ObjectFilter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilter/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilterBuilder.html">ObjectFilterBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilterCondition.html">ObjectFilterCondition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilterConditionBuilder.html">ObjectFilterConditionBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilterConditions.html">ObjectFilterConditions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilterConditions/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilterConditionsBuilder.html">ObjectFilterConditionsBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilterExpression.html">ObjectFilterExpression</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilterProperty.html">ObjectFilterProperty</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectJoinCondition.html">ObjectJoinCondition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObservableWrapper.html">ObservableWrapper</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OrderByProperty.html">OrderByProperty</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PayloadCoder.html">PayloadCoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/QueryEvent.html">QueryEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/QueryEventData.html">QueryEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/QueryEventData/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/QueryEventFactory.html">QueryEventFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResolveEvent.html">ResolveEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResolveEventData.html">ResolveEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResolveEventData/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResolveEventFactory.html">ResolveEventFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RetrieveEvent.html">RetrieveEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RetrieveEventData.html">RetrieveEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RetrieveEventData/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RetrieveEventFactory.html">RetrieveEventFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ReturnError.html">ReturnError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ReturnError/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ReturnEvent.html">ReturnEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ReturnEventData.html">ReturnEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ReturnEventData/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ReturnEventFactory.html">ReturnEventFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Runtime.html">Runtime</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ScimAddress.html">ScimAddress</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ScimMultiValuedAttribute.html">ScimMultiValuedAttribute</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ScimUserNames.html">ScimUserNames</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Snapshot.html">Snapshot</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Snapshot/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Task.html">Task</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Task/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Topic.html">Topic</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/UpdateEvent.html">UpdateEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/UpdateEventData.html">UpdateEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/UpdateEventData/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/UpdateEventFactory.html">UpdateEventFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User.html">User</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:10CoatySwift5COATYSSvp">COATY</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:10CoatySwift12COATY_PREFIXSSvp">COATY_PREFIX</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:10CoatySwift19CORE_TYPE_SEPARATORSSvp">CORE_TYPE_SEPARATOR</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:10CoatySwift24EMPTY_ASSOCIATED_USER_IDSSvp">EMPTY_ASSOCIATED_USER_ID</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:10CoatySwift21OBJECT_TYPE_SEPARATORSSvp">OBJECT_TYPE_SEPARATOR</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:10CoatySwift16PROTOCOL_VERSIONSivp">PROTOCOL_VERSION</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:10CoatySwift24READABLE_TOPIC_SEPARATORSSvp">READABLE_TOPIC_SEPARATOR</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:10CoatySwift15TOPIC_SEPARATORSSvp">TOPIC_SEPARATOR</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Global Variables.html#/s:10CoatySwift14WILDCARD_TOPICSSvp">WILDCARD_TOPIC</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/CoatyObjectFamily.html">CoatyObjectFamily</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CoatySwiftError.html">CoatySwiftError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CommunicationEventType.html">CommunicationEventType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CommunicationState.html">CommunicationState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CoreType.html">CoreType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Discriminator.html">Discriminator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/DisplayType.html">DisplayType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LogLevel.html">LogLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ObjectFilterOperator.html">ObjectFilterOperator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OperatingState.html">OperatingState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RemoteCallErrorCode.html">RemoteCallErrorCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RemoteCallErrorMessage.html">RemoteCallErrorMessage</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SortingOrder.html">SortingOrder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TaskStatus.html">TaskStatus</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/JSONDecoder.html">JSONDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/KeyedDecodingContainer.html">KeyedDecodingContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/KeyedEncodingContainerProtocol.html">KeyedEncodingContainerProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UnkeyedDecodingContainer.html">UnkeyedDecodingContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UnkeyedEncodingContainer.html">UnkeyedEncodingContainer</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/ObjectFamily.html">ObjectFamily</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/_5FAnyDecodable.html">_AnyDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/_5FAnyEncodable.html">_AnyEncodable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/AnyCodable.html">AnyCodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyDecodable.html">AnyDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyEncodable.html">AnyEncodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/JSONCodingKeys.html">JSONCodingKeys</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10CoatySwift13ContextFiltera">ContextFilter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10CoatySwift22ContextFilterConditiona">ContextFilterCondition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10CoatySwift13ExecutionInfoa">ExecutionInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10CoatySwift7Resolvea">Resolve</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10CoatySwift12ReturnResulta">ReturnResult</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>_AnyDecodable</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">protocol</span> <span class="n">_AnyDecodable</span></code></pre>
+
+                </div>
+              </div>
+            <p>Undocumented</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift13_AnyDecodableP5valueypvp"></a>
+                    <a name="//apple_ref/swift/Property/value" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift13_AnyDecodableP5valueypvp">value</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Any</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift13_AnyDecodablePyxqd__Sgclufc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift13_AnyDecodablePyxqd__Sgclufc">init(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">init</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">T</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift13_AnyDecodablePAAE4fromxs7Decoder_p_tKcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift13_AnyDecodablePAAE4fromxs7Decoder_p_tKcfc">init(from:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">from</span> <span class="nv">decoder</span><span class="p">:</span> <span class="kt">Decoder</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2019 <a class="link" href="https://coaty.io" target="_blank" rel="external">Siemens AG</a>. All rights reserved. (Last updated: 2019-06-24)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
