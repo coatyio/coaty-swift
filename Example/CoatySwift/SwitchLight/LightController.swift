@@ -67,6 +67,8 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
                     return
                 }
                 
+                logConsole(message: "lightSwitchOperation()", eventName: "Call", eventDirection: .In)
+                
                 // Parse the received parameters.
                 let on = callEvent.data.getParameterByName(name: "on") as! Bool
                 let color = callEvent.data.getParameterByName(name: "color") as! [Any]
@@ -83,6 +85,8 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
                     let event = self.eventFactory.ReturnEvent.withError(eventSource: self.identity,
                                                                         error: error,
                                                                         executionInfo: executionInfo)
+                    
+                    logConsole(message: "Invalid parameters.", eventName: "Return", eventDirection: .Out)
                     callEvent.returned(returnEvent: event)
                     return
                 }
@@ -96,6 +100,7 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
                                                                         error: error,
                                                                         executionInfo: executionInfo)
                     callEvent.returned(returnEvent: event)
+                    logConsole(message: "Light is defect.", eventName: "Return", eventDirection: .Out)
                     return
                 }
                 
@@ -115,6 +120,8 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
                     let event = self.eventFactory.ReturnEvent.withResult(eventSource: self.identity,
                                                                          result: result,
                                                                          executionInfo: executionInfo)
+                    
+                    logConsole(message: "Successful switch.", eventName: "Return", eventDirection: .Out)
                     callEvent.returned(returnEvent: event)
                 }
             }).disposed(by: disposeBag)

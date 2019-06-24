@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set starting point for application
         window = UIWindow(frame: UIScreen.main.bounds)
         // let vc = SwitchLightViewController()
-        let vc = HelloWorldExampleViewController()
+        let vc = SwitchLightViewController()
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
         
