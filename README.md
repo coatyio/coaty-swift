@@ -35,7 +35,7 @@ query, and persist hierarchically typed data, and
 
 If you are new to CoatySwift and would like to learn more, we recommend checking out the following resources:
 
-- __Developer Guide__ - This guide explains how to build a Coaty application with CoatySwift.
+- __[Developer Guide](docs/DeveloperGuide.md)__ - This guide explains how to build a Coaty application with CoatySwift.
 - __Source Code Documentation__ - This is the generated sourcecode documentation of the most important functions.
 - __[Design Decisions and Rationale](docs/CoatySwiftInternals.md)__ - in case you want to know why certain things have been implemented in a particular way in the CoatySwift implementation. 
 
@@ -87,7 +87,7 @@ Documentation is licensed under a
 Last but certainly not least, a big *Thank You!* to the following folks that
 helped to implement Coaty and make it even better:
 
-* Markus Sauer 
 * Hubertus Hohl
+* Markus Sauer 
 * Sandra Grujovic
 * Johannes Rohwer
