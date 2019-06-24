@@ -60,7 +60,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 If you like Coaty, please consider &#x2605; starring [the project on github](https://github.com/coatyio/coaty-swift). Contributions to the Coaty framework are welcome and appreciated. 
 
-- ???? #### ????? Please follow the recommended practice described in [CONTRIBUTING.md](https://github.com/coatyio/coaty-js/blob/master/CONTRIBUTING.md). This document also contains detailed information on how to build, test, and release the framework.
+- Please follow the recommended practice described in [CONTRIBUTING.md](CONTRIBUTING.md). This document also contains detailed information on how to build, test, and release the framework.
 
 
 ## License
