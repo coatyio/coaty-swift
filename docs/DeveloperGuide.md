@@ -2,7 +2,7 @@
 
 This document covers everything a developer needs to know about using the CoatySwift framework to implement collaborative IoT applications targeting iOS or macOS. We assume you know nothing about CoatySwift before reading this guide.
 
-> [color=#FF8C00] __NOTE__: We would like to note that more information about the internals and basics of the __Coaty__ framework can be found in [Coaty Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/). The [Coaty JS Developer Guide](https://coatyio.github.io/coaty-js/man/developer-guide/), even though written for TypeScript, shares many similarities with CoatySwift and we recommend checking out this guide as well if you would like to dig deeper, as it is documented in a more detailed way and provides more extensive features.
+> __NOTE__: We would like to note that more information about the internals and basics of the __Coaty__ framework can be found in [Coaty Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/). The [Coaty JS Developer Guide](https://coatyio.github.io/coaty-js/man/developer-guide/), even though written for TypeScript, shares many similarities with CoatySwift and we recommend checking out this guide as well if you would like to dig deeper, as it is documented in a more detailed way and provides more extensive features.
 
 
 ## Table of Contents
@@ -31,7 +31,7 @@ In order to be able to use CoatySwift the way it is intended to, we asume you ar
 
 ---
 
-> [color=#FF8C00] __TL;DR Terminology__
+> __TL;DR Terminology__
 > - Every iOS/macOS app is a Coaty __agent__
 > - Every Coaty agent has one __container__
 > - Every container has
@@ -57,9 +57,7 @@ pod 'CoatySwift'
 
 
 ## Communication Patterns
-> [link text][reference]
-Communication Patterns
-> [color=#FF8C00] Citing the [Coaty Protocol Documentation](https://coatyio.github.io/coaty-js/man/communication-protocol/#events-and-event-patterns):
+> Citing the [Coaty Protocol Documentation](https://coatyio.github.io/coaty-js/man/communication-protocol/#events-and-event-patterns):
 
 The framework uses a minimum set of predefined events and event patterns to discover, distribute, and share object information in a decentralized application:
 
@@ -79,7 +77,7 @@ The framework uses a minimum set of predefined events and event patterns to disc
 
 - __Call - Return__: Request execution of a remote operation and receive results by Return events.
 
-> [color=#FF8C00] __NOTE__: Although Coaty itself also specifices __IoValue__ and __Associate__ events, these are **not** included in the CoatySwift versions and therefore are left out of the documentation.
+> __NOTE__: Although Coaty itself also specifices __IoValue__ and __Associate__ events, these are **not** included in the CoatySwift versions and therefore are left out of the documentation.
 
 We differentiate between __one-way__ and __two-way__ events. Advertise, Deadvertise and Channel are one-way events. Discover-Resolve, Query-Retrieve, Update-Complete and Call-Return are two-way events. 
 
@@ -286,7 +284,7 @@ coatyContainer = Container.resolve(components: components,
 
 
 
-> [color=#FF8C00] __TL;DR Container Bootstrapping__
+> __TL;DR Container Bootstrapping__
 > 1. Create a global variable that holds a reference to the `coatyContainer`. 
 > 2. Specify all controllers that you want to use.
 > 3. Create an appropriate configuration.
@@ -381,7 +379,7 @@ class ExampleObject: CoatyObject {
 
 ```
 
-> [color=#FF8C00] __NOTE:__ You need to implement the conformance to the `Codable` protocol for your custom objects.  
+> __NOTE:__ You need to implement the conformance to the `Codable` protocol for your custom objects.  
 > Please make sure to call the super implementations for the `init(from:)`initializer as well as the `encode(to:)` method.
 
 To let the framework know about the new custom type you need to define a so called `ObjectFamily`. The `ObjectFamily` provides a mapping from a type name that is encoded by the `objectType` attribute of each `CoatyObject` to a Swift class that is used to instantiate an actual Swift object from the JSON representation that is being sent over the wire. A minimal `ObjectFamily` for the `ExampleObject` that was defined above looks like this:
@@ -404,7 +402,7 @@ The `ObjectFamily` is one of the parameters that are required for the configurat
 
 ---
 
-> [color=#FF8C00] __TL;DR Custom Data Types__
+> __TL;DR Custom Data Types__
 > 1. Create a new Swift object that inherits from `CoatyObject` or another core type.
 > 2. Implement conformance to the [Codable](https://developer.apple.com/documentation/swift/codable) protocol. Make sure to call the super implementations of the initializer and the encode method.
 > 3. Create one `ObjectFamily` per CoatySwift application. Add your object type to the enum and assign the correct Swift type.
