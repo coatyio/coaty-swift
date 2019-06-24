@@ -12,7 +12,7 @@ class SwitchLightViewController: UIViewController {
     
     // MARK: Configurable options.
     
-    let brokerIp = "192.168.1.23"
+    let brokerIp = "192.168.1.161"
     let brokerPort = 1883
     
     // MARK: - Private attributes.
@@ -67,37 +67,60 @@ class SwitchLightViewController: UIViewController {
         switchButton.widthAnchor.constraint(equalToConstant: 250).isActive = true
         switchButton.heightAnchor.constraint(equalToConstant: 100).isActive = true
         switchButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        switchButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 125).isActive = true
+        switchButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -125).isActive = true
     }
     
     /// The light view simulates a lightbulb.
     private func setupLight() {
+        
+        // Create lightbulb.
         let lightView = UIView(frame: CGRect(x: 100, y: 300, width: 300, height: 100))
         self.lightView = lightView
         lightView.backgroundColor = .clear
         lightView.layer.borderColor = UIColor.darkGray.cgColor
         lightView.layer.borderWidth = 2.0
+        lightView.layer.cornerRadius = 200 / 2.0
+        lightView.layer.masksToBounds = true
+        
+        // Create label.
+        let lightLabel = UILabel(frame: .zero)
+        lightLabel.textAlignment = .center
+        lightLabel.text = "Lightbulb"
+        lightLabel.textColor = .blue
         
         // Setup the delegate that controls the light.
         guard let lightController = container?.getController(name: "LightController") as? LightController else {
-            print("Could not load LightController")
+            print("Could not load LightController.")
             return
         }
         
+        // Set delegate.
         lightController.delegate = self
         
         // Setup constraints.
         lightView.translatesAutoresizingMaskIntoConstraints = false
+        lightLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         self.view.addSubview(lightView)
-        lightView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        self.view.addSubview(lightLabel)
+        
+        lightView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         lightView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         lightView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        lightView.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        lightView.topAnchor.constraint(equalTo: view.topAnchor, constant: 125).isActive = true
+        
+        lightLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        lightLabel.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        lightLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        lightLabel.topAnchor.constraint(equalTo: lightView.bottomAnchor).isActive = true
+        
+        
+        
     }
     
     @objc func switchButtonTapped() {
         guard let controlController = self.container?.getController(name: "ControlController") as? ControlController<SwitchLightObjectFamily> else {
-            print("Could not load ControlController")
+            print("Could not load ControlController.")
             return
         }
         

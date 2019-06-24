@@ -30,9 +30,17 @@ class ControlController<Family: ObjectFamily>: Controller<Family> {
                                                          parameters: parameters,
                                                          filter: contextFilter)
         
-        try? self.communicationManager.publishCall(event: callEvent)
+        try? self.communicationManager
+            .publishCall(event: callEvent)
             .subscribe(onNext: { returnEvent in
-                print(returnEvent.json)
+                if let result = returnEvent.data.result {
+                    logConsole(message: "Switch success: \(result)", eventName: "Return", eventDirection: .In)
+                }
+                
+                if let error = returnEvent.data.error {
+                    logConsole(message: "\(error)", eventName: "Return", eventDirection: .In)
+
+                }
         }).disposed(by: disposeBag)
     }
 }
