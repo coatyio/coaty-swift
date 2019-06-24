@@ -45,9 +45,9 @@ In order to be able to use CoatySwift the way it is intended to, we asume you ar
 - To build and run Coaty agents with the CoatySwift technology stack you need [XCode](https://developer.apple.com/xcode/) 10.2 or higher.
 
 - __Set up a MQTT Broker__: All messages that are exchanged between agents are sent over a broker - so remember to set up and have a MQTT Broker running. We recommend checking out the following brokers:
-- [Mosquitto](Mosquitto)
-- [HiveMQ](https://www.hivemq.com/)
-- [VerneMQ](https://vernemq.com/)
+    - [Mosquitto](Mosquitto)
+    - [HiveMQ](https://www.hivemq.com/)
+    - [VerneMQ](https://vernemq.com/)
 
 - __Integrate CoatySwift in your project__: CoatySwift is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile, and run `pod install` or `pod update`afterwards:
 
@@ -94,18 +94,18 @@ Note that this procedure is almost the same for publishes of Deadvertise and Cha
 ```swift
 // Create the object.
 let myExampleObject = CoatyObject(coreType: .CoatyObject,
-objectType: "com.siemens.iot.my-example-object", 
-objectId: .init(), 
-name: "My amazing object")
-
-
+                                  objectType: "com.siemens.iot.my-example-object", 
+                                  objectId: .init(), 
+                                  name: "My amazing object")
+                                  
+                                  
 // Create an event by using the event factory.
 let event = self.eventFactory.AdvertiseEvent
-.withObject(eventSource: self.identity, object: myExampleObject)
-
+    .withObject(eventSource: self.identity, object: myExampleObject)
+    
 // Publish the event by using the communication manager.
 try? self.communicationManager.publishAdvertise(advertiseEvent: event, 
-ventTarget: self.identity)
+                                                ventTarget: self.identity)
 
 ```
 
@@ -115,18 +115,18 @@ Note that this procedure is almost the same for observing Deadvertise and Channe
 
 ```swift
 try? self.communicationManager
-.observeAdvertiseWithCoreType(eventTarget: self.identity, coreType: .Task)
-.subscribe(onNext: { (advertiseEvent) in
-guard let task = advertiseEvent.data.object as? Task else {
-print("Could not parse the advertise event as task.")
-return
-}
-
-// Do something with this task...
-print(task.creatorId)
-
-})
-.disposed(by: disposeBag)
+    .observeAdvertiseWithCoreType(eventTarget: self.identity, coreType: .Task)
+    .subscribe(onNext: { (advertiseEvent) in
+        guard let task = advertiseEvent.data.object as? Task else {
+            print("Could not parse the advertise event as task.")
+            return
+        }
+        
+        // Do something with this task...
+        print(task.creatorId)
+    
+    })
+    .disposed(by: disposeBag)
 
 ```
 
@@ -137,16 +137,16 @@ Note that this procedure is almost the same for Query-Retrieve, Update-Complete,
 ```swift
 
 let discoverEvent = self.eventFactory.DiscoverEvent
-.withExternalId(eventSource: self.identity, externalId: "some-uuid")
-
+    .withExternalId(eventSource: self.identity, externalId: "some-uuid")
+    
 try? self.communicationManager
-.publishDiscover(event: discoverEvent)
-.subscribe(onNext: { (resolveEvent) in 
-// Do something with your resolve event.
-print(resolveEvent)
-
-})
-.disposed(by: disposeBag)
+    .publishDiscover(event: discoverEvent)
+    .subscribe(onNext: { (resolveEvent) in 
+        // Do something with your resolve event.
+        print(resolveEvent)
+    
+    })
+    .disposed(by: disposeBag)
 ```
 
 
@@ -157,23 +157,23 @@ Note that this procedure is almost the same for Query-Retrieve, Update-Complete,
 ```swift
 
 try? self.communicationManager
-.observeDiscover(eventTarget: self.identity)
-.subscribe(onNext: { (discoverEvent)
-let externalId = discover.data.externalId
-
-// Search for an external Id...
-let resolveObject = CoatyObject(coreType: .CoreType, 
-objectType: "com.siemens.iot.resolve-example",
-objectId: .init(), 
-name: "My resolve example object")
-resolveObject.externalId = externalId
-
-let event = self.eventFactory.ResolveEvent
-.withObject(eventSource: self.identity, object: resolveObject)
-discoverEvent.resolve(resolveEvent: event)   
-
-})
-.disposed(by: disposeBag)
+    .observeDiscover(eventTarget: self.identity)
+    .subscribe(onNext: { (discoverEvent)
+        let externalId = discover.data.externalId
+        
+        // Search for an external Id...
+        let resolveObject = CoatyObject(coreType: .CoreType, 
+        objectType: "com.siemens.iot.resolve-example",
+        objectId: .init(), 
+        name: "My resolve example object")
+        resolveObject.externalId = externalId
+        
+        let event = self.eventFactory.ResolveEvent
+            .withObject(eventSource: self.identity, object: resolveObject)
+        discoverEvent.resolve(resolveEvent: event)   
+    
+    })
+    .disposed(by: disposeBag)
 ```
 
 ## Bootstrapping a Coaty Container
@@ -216,9 +216,9 @@ The key note of this step is to indicate which key maps to which controller, in 
 // do NOT have to have the exact name of their controller class. Feel free to give
 // them any names you want. The _mapping_ is the important thing, so which name
 // maps to what controller class.
-let components = Components(controllers: [
-"ExampleController": ExampleController<ExampleObjectFamily>.self
-])
+    let components = Components(controllers: [
+    "ExampleController": ExampleController<ExampleObjectFamily>.self
+    ])
 ```
 
 4. The next step is to specify a configuration for your container. Below we have added an example configuration which should be appropriate for most Coaty beginner projects. Note the `BrokerOptions` in particular: Here, you pass in your broker address, port and SSL option. 
@@ -228,33 +228,33 @@ let components = Components(controllers: [
 /// This method creates an exemplary Coaty configuration. You can use it as a basis for your
 /// application.
 private func createExampleConfiguration() -> Configuration? {
-return try? .build { config in
-
-// This part defines the associated user (aka the identity associated with this client).
-config.common = CommonOptions()
-
-// Adjusts the logging level of CoatySwift messages, which is especially
-// helpful when you want to debug applications.
-config.common?.logLevel = .info
-
-// You can also add extra information to your configuration in the form of a
-// [String: String] dictionary.
-config.common?.extra = ["ContainerVersion": "0.0.1"]
-
-// Define the communication-related options, such as the Ip address of your broker and
-// the port it exposes, and your own mqtt client Id. Also, make sure
-// to immediately connect with the broker, indicated by `shouldAutoStart: true`.
-let brokerOptions = BrokerOptions(host: brokerIp,
-port: UInt16(brokerPort),
-clientId: "\(CoatyUUID())",
-enableSSL: enableSSL)
-config.communication = CommunicationOptions(brokerOptions: brokerOptions,
-shouldAutoStart: true)
-
-// The communicationManager will advertise its identity upon connection to the
-// mqtt broker.
-config.communication?.shouldAdvertiseIdentity = true
-}
+    return try? .build { config in
+            
+        // This part defines the associated user (aka the identity associated with this client).
+        config.common = CommonOptions()
+            
+        // Adjusts the logging level of CoatySwift messages, which is especially
+        // helpful when you want to debug applications.
+        config.common?.logLevel = .info
+            
+        // You can also add extra information to your configuration in the form of a
+        // [String: String] dictionary.
+        config.common?.extra = ["ContainerVersion": "0.0.1"]
+            
+        // Define the communication-related options, such as the Ip address of your broker and
+        // the port it exposes, and your own mqtt client Id. Also, make sure
+        // to immediately connect with the broker, indicated by `shouldAutoStart: true`.
+        let brokerOptions = BrokerOptions(host: brokerIp,
+                                             port: UInt16(brokerPort),
+                                             clientId: "\(CoatyUUID())",
+                                             enableSSL: enableSSL)
+        config.communication = CommunicationOptions(brokerOptions: brokerOptions,
+                                                    shouldAutoStart: true)
+            
+        // The communicationManager will advertise its identity upon connection to the
+        // mqtt broker.
+        config.communication?.shouldAdvertiseIdentity = true
+    }
 }
 
 //...
@@ -262,8 +262,8 @@ config.communication?.shouldAdvertiseIdentity = true
 /// And then, simply call it when you need it in order to integrate it 
 /// into your container configuration.
 guard let configuration = createExampleConfiguration() else {
-print("Invalid configuration! Please check your options.")
-return
+    print("Invalid configuration! Please check your options.")
+    return
 }
 
 //...
@@ -276,8 +276,8 @@ return
 // ObjectFamily (in this case, `ExampleObjectFamily`). Then, call Container.resolve(...),
 // save it into our global variable, and you're done!
 coatyContainer = Container.resolve(components: components,
-configuration: configuration,
-objectFamily: ExampleObjectFamily.self)
+                                   configuration: configuration,
+                                   objectFamily: ExampleObjectFamily.self)
 ```
 
 
@@ -303,26 +303,26 @@ Each controller provides __lifecycle methods__ that are called by the framework,
 
 ```swift
 class ExampleController<Family: ObjectFamily>: Controller<Family> {
-
-override func onInit() {
-// Perform additional setup.
-}
-
-override func onContainerResolved(container: Container<Family>) {
-// Gives you a reference to the container as soon as all components have been resolved.
-}
-
-override func onCommunicationManagerStarting() {
-// Here you can setup your subscriptions or start publishing some events.
-}
-
-override func onCommunicationManagerStopping() {
-// Teardown of subscriptions when the communication manager goes offline.
-}
-
-override func onDispose() {
-// Teardown when the container is disposed.
-}
+    
+    override func onInit() {
+        // Perform additional setup.
+    }
+    
+    override func onContainerResolved(container: Container<Family>) {
+        // Gives you a reference to the container as soon as all components have been resolved.
+    }
+    
+    override func onCommunicationManagerStarting() {
+        // Here you can setup your subscriptions or start publishing some events.
+    }
+    
+    override func onCommunicationManagerStopping() {
+        // Teardown of subscriptions when the communication manager goes offline.
+    }
+    
+    override func onDispose() {
+        // Teardown when the container is disposed.
+    }
 }
 
 ```
@@ -331,10 +331,10 @@ Of course you can also additional functionality, such as new methods or variable
 
 ```swift
 class ExampleController<Family: ObjectFamily>: Controller<Family> {
-
-override func onCommunicationManagerStarting() {
-print("[ExampleController] - onCommunicationManagerStarting()")
-}
+    
+    override func onCommunicationManagerStarting() {
+        print("[ExampleController] - onCommunicationManagerStarting()")
+    }
 }
 
 ```
@@ -350,33 +350,33 @@ To use custom objects or datatypes with Coaty you may extend the preexisting cor
 // ...
 
 class ExampleObject: CoatyObject {
-
-let myValue: String
-
-init(myValue: String) {
-self.myValue = myValue
-super.init(coreType: .CoatyObject,
-objectType: ExampleObjectFamily.exampleObject.rawValue,
-objectId: .init(),
-name: "ExampleObject Name :)")
-}
-
-// MARK: Codable methods.
-
-enum CodingKeys: String, CodingKey {
-case myValue
-}
-
-required init(from decoder: Decoder) throws {
-// ...
-try super.init(from: decoder)
-}
-
-override func encode(to encoder: Encoder) throws {
-try super.encode(to: encoder)
-// ...
-}
-
+    
+    let myValue: String
+    
+    init(myValue: String) {
+        self.myValue = myValue
+        super.init(coreType: .CoatyObject,
+                   objectType: ExampleObjectFamily.exampleObject.rawValue,
+                   objectId: .init(),
+                   name: "ExampleObject Name :)")
+    }
+    
+    // MARK: Codable methods.
+    
+    enum CodingKeys: String, CodingKey {
+        case myValue
+    }
+    
+    required init(from decoder: Decoder) throws {
+        // ...
+        try super.init(from: decoder)
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        // ...
+    }
+    
 }
 
 ```
@@ -389,14 +389,14 @@ To let the framework know about the new custom type you need to define a so call
 ```swift
 
 enum ExampleObjectFamily: String, ObjectFamily {
-case exampleObject = "com.siemens.iot.example-object"
-
-func getType() -> AnyObject.Type {
-switch self {
-case .exampleObject:
-return ExampleObject.self
-}
-}
+    case exampleObject = "com.siemens.iot.example-object"
+    
+    func getType() -> AnyObject.Type {
+        switch self {
+        case .exampleObject:
+            return ExampleObject.self
+        }
+    }
 }
 ```
 
@@ -420,22 +420,22 @@ A best practice to pass information from `CoatyControllers` to `UIViewController
 import CoatySwift
 
 class ViewController: UIViewController {
+    
+    private var controller: ExampleController<ExampleObjectFamily>?
 
-private var controller: ExampleController<ExampleObjectFamily>?
-
-override func viewDidLoad() {
-super.viewDidLoad()
-
-self.controller = coatyContainer?.getController(name: "ExampleController")   
-
-// Set the ViewController as the delegate.
-self.controller?.delegate = self
-
-// Call methods of the controller.
-self.controller?.publishExample()
-}
-
-// ...
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.controller = coatyContainer?.getController(name: "ExampleController")   
+        
+        // Set the ViewController as the delegate.
+        self.controller?.delegate = self
+        
+        // Call methods of the controller.
+        self.controller?.publishExample()
+    }
+    
+    // ...
 }
 
 
