@@ -11,7 +11,7 @@ This document covers everything a developer needs to know about using the CoatyS
 
 ## Necessary Background Knowledge
 
-In order to be able to use CoatySwift the way it is intended to, we asume you are familiar with the following programming concepts:
+In order to be able to use CoatySwift the way it is intended to, we assume you are familiar with the following programming concepts:
 
 - [ReactiveX](http://reactivex.io/) - Describes the basics on how incoming asynchronous messages are handled in the CoatySwift framework. In particular, CoatySwift is using [RxSwift](https://github.com/ReactiveX/RxSwift), the Swift version of ReactiveX.
 
@@ -81,13 +81,13 @@ The framework uses a minimum set of predefined events and event patterns to disc
 
 We differentiate between __one-way__ and __two-way__ events. Advertise, Deadvertise and Channel are one-way events. Discover-Resolve, Query-Retrieve, Update-Complete and Call-Return are two-way events. 
 
-We also differentiate between __publishing__ events or __subscribing__ to them. When publishing an event, simply put, you send a message over the broker. When subscribing to (or observing) an event, you sign up to receive messages over the broker. 
+We also differentiate between __publishing__ events or __observing__ them. When publishing an event, simply put, you send a message over the broker. When observing (or subscribing to) an event, you sign up to receive messages over the broker. 
 
-In the following examples, we will show you how you can publish and subscribe one-way events as well as two-way events.
+In the following examples, we will show you how you can publish and observe one-way events as well as two-way events.
 
 ### Publish an Advertise (one-way event)
 
-Note that this procedure is almost the same for publishes of Deadvertise and Channel events.
+Note that this procedure is much the same as publishing Deadvertise and Channel events.
 
 ```swift
 // Create the object.
@@ -107,9 +107,9 @@ try? self.communicationManager.publishAdvertise(advertiseEvent: event,
 
 ```
 
-### Observing Advertises (one-way event)
+### Observe Advertises (one-way event)
 
-Note that this procedure is almost the same for observing Deadvertise and Channel events.
+Note that this procedure is much the same as observing Deadvertise and Channel events.
 
 ```swift
 try? self.communicationManager
@@ -128,9 +128,9 @@ try? self.communicationManager
 
 ```
 
-### Publish a Discover event and Observe a Resolve event (two-way event)
+### Publish a Discover event and Observe Resolve events (two-way event)
 
-Note that this procedure is almost the same for Query-Retrieve, Update-Complete, and Call-Return events.
+Note that this procedure is much the same as for Query-Retrieve, Update-Complete, and Call-Return events.
 
 ```swift
 
@@ -150,7 +150,7 @@ try? self.communicationManager
 
 ### Observe a Discover event (two-way event)
 
-Note that this procedure is almost the same for Query-Retrieve, Update-Complete, and Call-Return events.
+Note that this procedure is much the same as for Query-Retrieve, Update-Complete, and Call-Return events.
 
 ```swift
 
