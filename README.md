@@ -112,12 +112,5 @@ International License](http://creativecommons.org/licenses/by-sa/4.0/).
 Last but certainly not least, a big *Thank You!* to the folks who designed and
 implemented CoatySwift:
 
-* Sandra Grujovic
+* Sandra Grujovic [@melloskitten](https://github.com/melloskitten)
 * Johannes Rohwer [@johannesrohwer](https://github.com/johannesrohwer)
-
-Very special thanks to our community members
-
-* Maksym Hrinenko [@imaxy](https://github.com/imaxy)
-* Florian Bodlée [@fbodlee](https://github.com/fbodlee)
-
-for implementing mDNS broker discovery.
