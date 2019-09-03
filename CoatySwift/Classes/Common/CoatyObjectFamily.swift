@@ -24,6 +24,12 @@ public enum CoatyObjectFamily: String, ObjectFamily {
     case snapshot = "coaty.Snapshot"
     case component = "coaty.Component"
     
+    // Core type matching for dynamic coaty applications.
+    // TODO: Add missing core types.
+    case core_CoatyObject = "CoatyObject"
+    case core_Task = "Task"
+    case core_Snapshot = "Snapshot"
+    
     public func getType() -> AnyObject.Type {
         switch self {
         case .coatyObject:
@@ -33,6 +39,14 @@ public enum CoatyObjectFamily: String, ObjectFamily {
         case .snapshot:
             // TODO: This does _not_ work. For now we decided to let the application programmer
             // implement the mapping. We might decide to drop the CoatyObjectFamily entirely.
+            return Snapshot<CoatyObjectFamily>.self
+        
+        // Core type matching for dynamic coaty applications.
+        case .core_Task:
+            return Task.self
+        case .core_CoatyObject:
+            return CoatyObject.self
+        case .core_Snapshot:
             return Snapshot<CoatyObjectFamily>.self
         default:
             // TODO: Add remaining cases.

@@ -377,6 +377,9 @@
 		BA76BA0CD6F3900225D9817642112AFE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D50095C78BB6FE3E3A97AB834D1DC87 /* Foundation.framework */; };
 		BB29552D3525E8B51ED7A7EB369F94AC /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E01486671F5923B882D3D706761210C /* LogManager.swift */; };
 		BB3740B4D4B492D7F5FA67D35FD8A706 /* UIGestureRecognizer+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C4694AC14EA5CFBC701B72FFD08A5 /* UIGestureRecognizer+Rx.swift */; };
+		BC64F1EB231D57160012BAD4 /* DynamicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64F1EA231D57160012BAD4 /* DynamicController.swift */; };
+		BC64F1ED231D57B20012BAD4 /* DynamicContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64F1EC231D57B20012BAD4 /* DynamicContainer.swift */; };
+		BCAF1EA8231E67AB00C7B707 /* DynamicAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF1EA7231E67AB00C7B707 /* DynamicAliases.swift */; };
 		BCD4124A3E389C994A4FA971AE0575B2 /* RxScrollViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404AA8D776808E7EA5C4DD46363B2EBD /* RxScrollViewDelegateProxy.swift */; };
 		BD3A9E1A170CB9A362B3CFB82A2471D4 /* UIControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = A909E8192DB987B78F539ADF043FE879 /* UIControl+Rx.swift */; };
 		BEA17DD3CA0502E2654095FC74E6B793 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936F97ABAA64FB01C5928749E3A3BC60 /* XCGLogger.framework */; };
@@ -1165,6 +1168,9 @@
 		BB1CCF419EFBA034321FAF9883F6EBDF /* RxTextViewDelegateProxy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxTextViewDelegateProxy.swift; path = RxCocoa/iOS/Proxies/RxTextViewDelegateProxy.swift; sourceTree = "<group>"; };
 		BBA8173040A9D4A5327BC83B5D6D6237 /* Pods-CoatySwift_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CoatySwift_Tests-Info.plist"; sourceTree = "<group>"; };
 		BBC38B48822C5D0E940DC899D6F325A8 /* DemoObject.html */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.html.documentation; name = DemoObject.html; path = docs/swiftdoc/docsets/CoatySwift.docset/Contents/Resources/Documents/Classes/DemoObject.html; sourceTree = "<group>"; };
+		BC64F1EA231D57160012BAD4 /* DynamicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicController.swift; sourceTree = "<group>"; };
+		BC64F1EC231D57B20012BAD4 /* DynamicContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicContainer.swift; sourceTree = "<group>"; };
+		BCAF1EA7231E67AB00C7B707 /* DynamicAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicAliases.swift; sourceTree = "<group>"; };
 		BCF907305726D9401AFDC19E36450FA1 /* Configuration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Configuration.swift; path = Sources/Quick/Configuration/Configuration.swift; sourceTree = "<group>"; };
 		BD9FAE29F513499EE0AEECACE2B0AAD7 /* CurrentThreadScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CurrentThreadScheduler.swift; path = RxSwift/Schedulers/CurrentThreadScheduler.swift; sourceTree = "<group>"; };
 		BDF3C8D14E08253C2ACC37B0BC047783 /* ObserverType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObserverType.swift; path = RxSwift/ObserverType.swift; sourceTree = "<group>"; };
@@ -1789,6 +1795,7 @@
 		8FBBB3DBA8CCF6DB151B78318BB82913 /* Runtime */ = {
 			isa = PBXGroup;
 			children = (
+				BCAF1EA1231E570400C7B707 /* Dynamic */,
 				1EB9B17754575BABF80427915365A412 /* AgentInfo.swift */,
 				8A5B2A2E529A5BCFDB7194F4A8D7834C /* Configuration.swift */,
 				69997A53423E73DB18F93D8A59E35D35 /* Container.swift */,
@@ -1990,6 +1997,7 @@
 				EAEA67488B2C81A8A82FBF5BEBF37DBE /* Snapshot.swift */,
 				95C3CAD09F646AFE1A429078D573AC13 /* Task.swift */,
 				71D6BF9A1AD7772E9C14BF491F6F3670 /* User.swift */,
+				BCAF1EA7231E67AB00C7B707 /* DynamicAliases.swift */,
 				6F55F38A9A3F7FCF212625C38297072C /* One Way */,
 				A6E0685229FD741C84EF067CD749F93F /* Two Way */,
 			);
@@ -2189,6 +2197,15 @@
 				3EC4B9E673AE21A8F44B3565C76850ED /* Support Files */,
 			);
 			path = RxSwift;
+			sourceTree = "<group>";
+		};
+		BCAF1EA1231E570400C7B707 /* Dynamic */ = {
+			isa = PBXGroup;
+			children = (
+				BC64F1EA231D57160012BAD4 /* DynamicController.swift */,
+				BC64F1EC231D57B20012BAD4 /* DynamicContainer.swift */,
+			);
+			path = Dynamic;
 			sourceTree = "<group>";
 		};
 		C077C6077DAD6A254DB9D1D913F8558A /* Frameworks */ = {
@@ -3469,6 +3486,7 @@
 				6119DF957164E6842F72932369102E22 /* CommunicationManager+Publish.swift in Sources */,
 				828617D6AEBF902DE7EDE29C0ACE2435 /* CommunicationManager+Util.swift in Sources */,
 				7FBDB307DE1DBC7F0D87D70467B2B014 /* CommunicationManager.swift in Sources */,
+				BC64F1ED231D57B20012BAD4 /* DynamicContainer.swift in Sources */,
 				7055E21B919DB9DFC00E994F60B40663 /* CommunicationState.swift in Sources */,
 				C2A519E8B7FFB5E548393053A778F69F /* CompleteEvent.swift in Sources */,
 				9BB180DAFC6E63DD27EC9D3186520B36 /* Component.swift in Sources */,
@@ -3486,6 +3504,7 @@
 				ACFF8C9BB0B976D930E498FDB7371112 /* JSONDecoder+HeterogeneousArrays.swift in Sources */,
 				354E98316B5BB5BF207D496AEA14B19F /* KeyedDecodingContainer+HetereogeneousArrays.swift in Sources */,
 				BB29552D3525E8B51ED7A7EB369F94AC /* LogManager.swift in Sources */,
+				BCAF1EA8231E67AB00C7B707 /* DynamicAliases.swift in Sources */,
 				221B8096111CE5EB37369306D1895B33 /* ObjectFamily.swift in Sources */,
 				20268980119F99BB9A5647BCF7EF0DE6 /* ObjectFilter.swift in Sources */,
 				0923D6FC9347FF1BCB7C9B5C52AD5695 /* ObjectJoinCondition.swift in Sources */,
@@ -3495,6 +3514,7 @@
 				3E5BF0F4E36C6112287900048312B490 /* Resolve.swift in Sources */,
 				30B9A4411170859F38A9A80353031E9E /* ResolveEvent.swift in Sources */,
 				F5AF8B8002F95E0B20FD4E6090D3BF81 /* RetrieveEvent.swift in Sources */,
+				BC64F1EB231D57160012BAD4 /* DynamicController.swift in Sources */,
 				5502E30BF7B1609E74FC8ED06EFB20F3 /* ReturnEvent.swift in Sources */,
 				4A63BEC0805A841C9E61BAF671876521 /* Runtime.swift in Sources */,
 				38156C1F39C43E36C4B55F4579042DF8 /* Snapshot.swift in Sources */,

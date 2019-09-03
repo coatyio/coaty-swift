@@ -15,9 +15,11 @@ public protocol ObjectFamily: Decodable {
     func getType() -> AnyObject.Type
 }
 
-/// Discriminator key enum that is used to determine the field that discriminates between
-/// the different object types. For CoatyObjects this is _always_ "objectType".
+/// Discriminator key enum that is used to determine the field that discriminates between the different object types. For CoatyObjects this is "objectType".
+///
+/// __Experimental__: Dynamic Coaty supports matching on coreTypes.
 enum Discriminator: String, CodingKey {
     case objectType = "objectType"
+    case coreType = "coreType"
 }
 

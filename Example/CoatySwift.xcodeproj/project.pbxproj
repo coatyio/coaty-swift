@@ -30,6 +30,8 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		733074A5AF4BE7EAC97E3EFC /* Pods_CoatySwift_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16726F2981BAFC555AC9C041 /* Pods_CoatySwift_Example.framework */; };
 		9440768CD1C5BD1F4368A1B2 /* Pods_CoatySwift_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B853AE32D06F7E858B9ED4F5 /* Pods_CoatySwift_Tests.framework */; };
+		BCAF1EA0231E500F00C7B707 /* DynamicTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF1E9E231E500F00C7B707 /* DynamicTaskController.swift */; };
+		BCAF1EA4231E594300C7B707 /* DynamicHelloWorldExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF1EA3231E594300C7B707 /* DynamicHelloWorldExampleViewController.swift */; };
 		BCB411C6227720010057DC4C /* HelloWorldExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB411C5227720010057DC4C /* HelloWorldExampleViewController.swift */; };
 		BCCCDB762270708200A780DE /* ModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCDB752270708200A780DE /* ModelTypes.swift */; };
 /* End PBXBuildFile section */
@@ -79,6 +81,8 @@
 		ADEEFD5354A32F3127D3F18E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		B4018AD735CFA9D4CD944589 /* Pods-CoatySwift_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Tests.release.xcconfig"; path = "Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		B853AE32D06F7E858B9ED4F5 /* Pods_CoatySwift_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoatySwift_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCAF1E9E231E500F00C7B707 /* DynamicTaskController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicTaskController.swift; sourceTree = "<group>"; };
+		BCAF1EA3231E594300C7B707 /* DynamicHelloWorldExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHelloWorldExampleViewController.swift; sourceTree = "<group>"; };
 		BCB411C5227720010057DC4C /* HelloWorldExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloWorldExampleViewController.swift; sourceTree = "<group>"; };
 		BCCCDB752270708200A780DE /* ModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -167,6 +171,7 @@
 		607FACD21AFB9204008FA782 /* Example for CoatySwift */ = {
 			isa = PBXGroup;
 			children = (
+				BCAF1EA2231E585F00C7B707 /* Dynamic */,
 				BC6191B622B8D8E4007E4601 /* Model */,
 				2A8EB4A3227F22EE002712E7 /* SwitchLight */,
 				2AF1EF9C225CEBE50099E170 /* Hello World */,
@@ -232,6 +237,15 @@
 				2A427B102232826D0056D67A /* Demo+CoatyObject.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		BCAF1EA2231E585F00C7B707 /* Dynamic */ = {
+			isa = PBXGroup;
+			children = (
+				BCAF1E9E231E500F00C7B707 /* DynamicTaskController.swift */,
+				BCAF1EA3231E594300C7B707 /* DynamicHelloWorldExampleViewController.swift */,
+			);
+			path = Dynamic;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -466,7 +480,9 @@
 				2A1F564722C0E43400C05881 /* Util.swift in Sources */,
 				2A56379A228074A200252502 /* LightExecutionInfo.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				BCAF1EA4231E594300C7B707 /* DynamicHelloWorldExampleViewController.swift in Sources */,
 				BCCCDB762270708200A780DE /* ModelTypes.swift in Sources */,
+				BCAF1EA0231E500F00C7B707 /* DynamicTaskController.swift in Sources */,
 				2A56379E228074A200252502 /* ColorRGBA.swift in Sources */,
 				2A56379D228074A200252502 /* Light.swift in Sources */,
 				2A563791228065AB00252502 /* SwitchLightViewController.swift in Sources */,

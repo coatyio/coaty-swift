@@ -76,6 +76,21 @@ internal class ClassWrapper<T: ObjectFamily, U: Decodable>: Decodable {
             return
         }
         
+        // TODO: This parses an object as coreType. We use it for decoding dynamic coaty objects.
+        // This should be documented.
+        // Try to decode the object with the builtin core coaty types.
+        if let defaultFamily = try? container.decode(CoatyObjectFamily.self, forKey: .coreType) {
+            // Decode the object by initialising the corresponding type.
+            if let type = defaultFamily.getType() as? U.Type {
+                object = try type.init(from: decoder)
+            } else {
+                object = nil
+            }
+            
+            // Successfully decoded as core type.
+            return
+        }
+        
         // Could neither decode as custom nor as default type.
         let errorMessage = "Could not decode class wrapper."
         LogManager.log.error(errorMessage)
