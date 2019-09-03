@@ -1,6 +1,6 @@
 // ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
-//  HelloWorldExampleViewController.swift
+//  DynamicHelloWorldExampleViewController.swift
 //  CoatySwift_Example
 //
 
@@ -10,7 +10,7 @@ import RxSwift
 import CoatySwift
 
 /// This example view controller shows how you can set up a basic CoatySwift bootstrap application.
-class HelloWorldExampleViewController: UIViewController {
+class DynamicHelloWorldExampleViewController: UIViewController {
     
     let enableSSL = false
     let brokerIp = "192.168.1.161"
@@ -20,8 +20,9 @@ class HelloWorldExampleViewController: UIViewController {
         setupView()
         
         // Instantiate controllers.
-        let components = Components(controllers: ["TaskController": TaskController<HelloWorldObjectFamily>.self])
-
+        let dynamicComponents = DynamicComponents(controllers:
+            ["DynamicTaskController": DynamicTaskController.self])
+        
         guard let configuration = createHelloWorldConfiguration() else {
             print("Invalid configuration! Please check your options.")
             return
@@ -29,12 +30,7 @@ class HelloWorldExampleViewController: UIViewController {
         
         // Resolve your components with the given configuration and get your CoatySwift
         // application up and running.
-        // Important: You need to specify clearly which Object Family you are going to use.
-        // More details about what an ObjectFamily does can be found
-        // in `HelloWorldObjectFamily.swift`.
-        _ = Container.resolve(components: components,
-                              configuration: configuration,
-                              objectFamily: HelloWorldObjectFamily.self)
+        _ = DynamicContainer.resolve(components: dynamicComponents, configuration: configuration)
         
     }
     
@@ -66,15 +62,15 @@ class HelloWorldExampleViewController: UIViewController {
             // Here, we define that the TaskController should advertise its identity as soon as
             // it gets online.
             config.controllers = ControllerConfig(
-                controllerOptions: ["TaskController": ControllerOptions(shouldAdvertiseIdentity: true)])
+                controllerOptions: ["DynamicTaskController": ControllerOptions(shouldAdvertiseIdentity: true)])
             
             // Define the communication-related options, such as the Ip address of your broker and
             // the port it exposes, and your own mqtt client Id. Also, make sure
             // to immediately connect with the broker.
             let mqttClientOptions = MQTTClientOptions(host: brokerIp,
-                                              port: UInt16(brokerPort),
-                                              clientId: "\(UUID.init())",
-                                              enableSSL: enableSSL)
+                                                      port: UInt16(brokerPort),
+                                                      clientId: "\(UUID.init())",
+                enableSSL: enableSSL)
             config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,
                                                         shouldAutoStart: true)
             

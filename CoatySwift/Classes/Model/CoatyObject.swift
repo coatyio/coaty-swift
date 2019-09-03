@@ -47,6 +47,10 @@ open class CoatyObject: Codable {
     /// default to false.
     public var isDeactivated: Bool?
     
+    /// __Experimental__: Parameter that encodes all custom fields. Needed for
+    /// dynamic Coaty.
+    public var custom: [String: Any]
+    
     // MARK: - Initializers.
     
     public init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {
@@ -54,6 +58,7 @@ open class CoatyObject: Codable {
         self.objectId = objectId
         self.objectType = objectType
         self.name = name
+        self.custom = [String: Any]()
     }
     
     // MARK: - Codable methods.
@@ -68,6 +73,7 @@ open class CoatyObject: Codable {
         case assigneeUserId
         case locationId
         case isDeactivated
+        case custom
     }
     
     public required init(from decoder: Decoder) throws {
@@ -85,6 +91,13 @@ open class CoatyObject: Codable {
         assigneeUserId = try container.decodeIfPresent(CoatyUUID.self, forKey: .assigneeUserId)
         locationId = try container.decodeIfPresent(CoatyUUID.self, forKey: .locationId)
         isDeactivated = try container.decodeIfPresent(Bool.self, forKey: .isDeactivated)
+        
+        guard let custom = try container.decodeIfPresent([String: Any].self, forKey: .custom) else {
+            self.custom = [String: Any]()
+            return
+        }
+        
+        self.custom = custom
     }
     
     open func encode(to encoder: Encoder) throws {
@@ -103,6 +116,7 @@ open class CoatyObject: Codable {
         try container.encodeIfPresent(assigneeUserId, forKey: .assigneeUserId)
         try container.encodeIfPresent(locationId, forKey: .locationId)
         try container.encodeIfPresent(isDeactivated, forKey: .isDeactivated)
+        try container.encodeIfPresent(custom, forKey: .custom)
     }
 }
 

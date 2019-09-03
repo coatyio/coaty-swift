@@ -43,8 +43,6 @@ extension KeyedDecodingContainer {
                 dictionary[key.stringValue] = boolValue
             } else if let stringValue = try? decode(String.self, forKey: key) {
                 dictionary[key.stringValue] = stringValue
-            } else if let intValue = try? decode(Int.self, forKey: key) {
-                dictionary[key.stringValue] = intValue
             } else if let doubleValue = try? decode(Double.self, forKey: key) {
                 dictionary[key.stringValue] = doubleValue
             } else if let nestedDictionary = try? decode([String: Any].self, forKey: key) {
@@ -72,8 +70,6 @@ extension UnkeyedDecodingContainer {
                 continue
             }
             if let value = try? decode(Bool.self) {
-                array.append(value)
-            } else if let value = try? decode(Int.self) {
                 array.append(value)
             } else if let value = try? decode(Double.self) {
                 array.append(value)

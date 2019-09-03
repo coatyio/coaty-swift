@@ -6,6 +6,9 @@
 
 import Foundation
 
+/// __Experimental__: Convenience Snapshot alias for dynamic Coaty.
+public typealias DynamicSnapshot = Snapshot<CoatyObjectFamily>
+
 /// Represents a snapshot in time of the state of any Coaty object.
 open class Snapshot<Family: ObjectFamily>: CoatyObject {
     
