@@ -25,8 +25,7 @@ class ControlController<Family: ObjectFamily>: Controller<Family> {
                                                 "switchTime": .init(switchTime)]
         
         let switchLightOperation = SwitchLightOperations.lightControlOperation.rawValue
-        let callEvent = self.eventFactory.CallEvent.with(eventSource: self.identity,
-                                                         operation: switchLightOperation,
+        let callEvent = self.eventFactory.CallEvent.with(operation: switchLightOperation,
                                                          parameters: parameters,
                                                          filter: contextFilter)
         

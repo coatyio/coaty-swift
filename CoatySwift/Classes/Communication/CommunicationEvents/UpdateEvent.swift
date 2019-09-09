@@ -7,30 +7,27 @@
 import Foundation
 
 /// A Factory that creates UpdateEvents.
-public class UpdateEventFactory<Family: ObjectFamily> {
+public class UpdateEventFactory<Family: ObjectFamily>: EventFactoryInit {
     
     /// Create an UpdateEvent instance for the given partial update.
     ///
     /// - Parameters:
-    ///   - eventSource: the event source component
     ///   - objectId: the UUID of the object to be updated (partial update)
     ///   - changedValues: Object hash for properties that have changed or should
     ///     be changed (partial update)
-    public static func withPartial(eventSource: Component,
-                                   objectId: CoatyUUID,
+    public func withPartial(objectId: CoatyUUID,
                                    changedValues: [String: Any]) -> UpdateEvent<Family> {
         let updateEventData = UpdateEventData<Family>(objectId: objectId, changedValues: changedValues)
-        return .init(eventSource: eventSource, eventData: updateEventData)
+        return .init(eventSource: self.identity, eventData: updateEventData)
     }
     
     /// Create an UpdateEvent instance for the given full update.
     ///
     /// - Parameters:
-    ///   - eventSource: the event source component
     ///   - object: the full object to be updated
-    public static func withFull(eventSource: Component, object: CoatyObject) -> UpdateEvent<Family> {
+    public func withFull(object: CoatyObject) -> UpdateEvent<Family> {
         let updateEventData = UpdateEventData<Family>(object: object)
-        return .init(eventSource: eventSource, eventData: updateEventData)
+        return .init(eventSource: self.identity, eventData: updateEventData)
     }
 }
 

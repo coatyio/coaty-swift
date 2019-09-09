@@ -18,7 +18,6 @@ public class Container<Family: ObjectFamily> {
     
     private (set) public var runtime: Runtime?
     private (set) public var communicationManager: CommunicationManager<Family>?
-    private (set) public var eventFactory: EventFactory<Family>?
     private var controllers = [String: Controller<Family>]()
     private var isShutdown = false
     private var operatingState: Observable<OperatingState>?
@@ -75,8 +74,7 @@ public class Container<Family: ObjectFamily> {
             }
             
             guard let runtime = self.runtime,
-                let communicationManager = self.communicationManager,
-                let eventFactory = self.eventFactory else {
+                let communicationManager = self.communicationManager else {
                 LogManager.log.error("Runtime or CommunicationManager was not initialized.")
                 throw CoatySwiftError.InvalidConfiguration("Runtime or CommunicationManager was not initialized.")
             }
@@ -90,7 +88,6 @@ public class Container<Family: ObjectFamily> {
                                                controllerType: controllerType,
                                                runtime: runtime,
                                                communicationManager: communicationManager,
-                                               eventFactory: eventFactory,
                                                controllerOptions: config.controllerOptions[name])
             self.controllers[name] = controller
             
@@ -144,31 +141,25 @@ public class Container<Family: ObjectFamily> {
                                    controllerType: Controller<Family>.Type,
                                    runtime: Runtime,
                                    communicationManager: CommunicationManager<Family>,
-                                   eventFactory: EventFactory<Family>,
                                    controllerOptions: ControllerOptions?) -> Controller<Family> {
         let controller = controllerType.init(runtime: runtime,
                                              options: controllerOptions,
                                              communicationManager: communicationManager,
-                                             eventFactory: eventFactory,
                                              controllerType: name)
         controller.onInit()
         return controller
     }
     
     private func resolveComponents(_ components: Components<Family>,
-                                                         _ configuration: Configuration,
-                                                         _ family: Family.Type) {
+                                   _ configuration: Configuration,
+                                   _ family: Family.Type) {
         let runtime = Runtime(commonOptions: configuration.common, databaseOptions: configuration.databases)
         self.runtime = runtime
         
-        // Create EventFactory.
-        let eventFactory = EventFactory<Family>()
-        self.eventFactory = eventFactory
-        
         // Create CommunicationManager.
-        let communicationManager = CommunicationManager<Family>(communicationOptions: configuration.communication,
-                                                                eventFactory: eventFactory)
+        let communicationManager = CommunicationManager<Family>(communicationOptions: configuration.communication)
         self.communicationManager = communicationManager
+        
         self.operatingState = communicationManager.operatingState.asObservable()
         self.communicationState = communicationManager.communicationState.asObservable()
 
@@ -178,7 +169,6 @@ public class Container<Family: ObjectFamily> {
                                                controllerType: controllerType,
                                                runtime: runtime,
                                                communicationManager: communicationManager,
-                                               eventFactory: eventFactory,
                                                controllerOptions: options)
             self.controllers[name] = controller
         }

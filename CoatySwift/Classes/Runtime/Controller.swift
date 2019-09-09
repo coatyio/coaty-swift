@@ -18,11 +18,11 @@ open class Controller<Family: ObjectFamily> {
     
     /// This is the factory for this particular controller that is used to
     /// create CommunicationEvents.
-    private (set) public var eventFactory: EventFactory<Family>
+    private (set) public var eventFactory: EventFactory<Family>!
     private (set) public var runtime: Runtime
     private (set) public var options: ControllerOptions?
     private (set) public var controllerType: String
-    private (set) public var identity: Component
+    private (set) public var identity: Component!
     
     /// This disposebag holds references to all of your subscriptions. It is standard in RxSwift
     /// to call `.disposed(by: self.disposeBag)` at the end of every subscription.
@@ -31,11 +31,9 @@ open class Controller<Family: ObjectFamily> {
     required public init(runtime: Runtime,
                   options: ControllerOptions?,
                   communicationManager: CommunicationManager<Family>,
-                  eventFactory: EventFactory<Family>,
                   controllerType: String) {
         self.runtime = runtime
         self.options = options ?? ControllerOptions()
-        self.eventFactory = eventFactory
         self.controllerType = controllerType
         
         // Create default identity.
@@ -45,6 +43,7 @@ open class Controller<Family: ObjectFamily> {
         
         identity.parentObjectId = communicationManager.identity.objectId
         self.initializeIdentity(identity: identity)
+        self.eventFactory = EventFactory<Family>(identity)
         
         self.communicationManager = ControllerCommunicationManager(identity: self.identity,
                                                                    communicationManager: communicationManager)
@@ -138,8 +137,7 @@ open class Controller<Family: ObjectFamily> {
                 event.data.isCoreTypeCompatible(.Component)
                     || (event.data.isDiscoveringObjectId() && event.data.objectId == self.identity.objectId)
             }.subscribe(onNext: { event in
-                let resolveEvent = self.eventFactory.ResolveEvent
-                    .withObject(eventSource: self.identity, object: self.identity)
+                let resolveEvent = self.eventFactory.ResolveEvent.with(object: self.identity)
                 event.resolve(resolveEvent: resolveEvent)
             }).disposed(by: self.disposeBag)
     }

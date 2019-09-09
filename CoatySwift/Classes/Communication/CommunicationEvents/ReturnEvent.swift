@@ -7,24 +7,20 @@
 import Foundation
 
 /// A Factory that creates ReturnEvents.
-public class ReturnEventFactory<Family: ObjectFamily> {
+public class ReturnEventFactory<Family: ObjectFamily>: EventFactoryInit {
     
     /// Create a ReturnEvent instance for a remote operation call that successfully yields a result.
     ///
     /// - Parameters:
-    ///   - eventSource: the event source component
     ///   - result: the result value to be returned (any JSON data type)
     ///   - executionTime: the time interval needed for execution of the operation (optional)
-    public static func withResult(eventSource: Component,
-                                  result: AnyCodable,
-                                  executionInfo: ExecutionInfo?) -> ReturnEvent<Family> {
+    public func with(result: AnyCodable, executionInfo: ExecutionInfo?) -> ReturnEvent<Family> {
         let returnEventData = ReturnEventData<Family>.createFrom(result: result,
                                                                  executionInfo: executionInfo,
                                                                  error: nil)
-        return .init(eventSource: eventSource, eventData: returnEventData)
+        return .init(eventSource: self.identity, eventData: returnEventData)
     }
     
-    ///
     /// Create a ReturnEvent instance for a remote operation call that yields an error.
     ///
     /// The error code given is an integer that indicates the error type
@@ -37,18 +33,15 @@ public class ReturnEventFactory<Family: ObjectFamily> {
     /// exist for all predefined error codes (see enum `RemoteCallErrorMessage`).
     ///
     /// - Parameters:
-    ///   - eventSource: the event source component.
     ///   - error: The error including the code that indicates the error type and the message string
     ///            providing a short description of the error.
     ///   - executionTime: the time interval needed for execution of the operation until
     ///                    the error occurred (optional).
-    public static func withError(eventSource: Component,
-                                 error: ReturnError,
-                                 executionInfo: ExecutionInfo?) -> ReturnEvent<Family> {
+    public func with(error: ReturnError, executionInfo: ExecutionInfo?) -> ReturnEvent<Family> {
         let returnEventData = ReturnEventData<Family>.createFrom(result: nil,
                                                                  executionInfo: executionInfo,
                                                                  error: error)
-        return .init(eventSource: eventSource, eventData: returnEventData)
+        return .init(eventSource: self.identity, eventData: returnEventData)
     }
     
 }

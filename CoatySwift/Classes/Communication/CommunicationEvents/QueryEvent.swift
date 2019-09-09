@@ -7,46 +7,41 @@
 import Foundation
 
 
-public class QueryEventFactory<Family: ObjectFamily> {
+public class QueryEventFactory<Family: ObjectFamily>: EventFactoryInit {
     
     /// Create a QueryEvent instance for querying the given object types, filter, and join conditions.
     /// The object filter and join conditions are optional.
     ///
     /// - Parameters:
-    ///     - eventSource: the event source component
     ///     - objectTypes: restrict results by object types (logical OR).
     ///     - objectFilter: restrict results by object filter (optional).
     ///     - objectJoinConditions: join related objects into results (optional).
-    public static func withObjectTypes(eventSource: Component,
-                                       objectTypes: [String],
-                                       objectFilter: ObjectFilter? = nil,
-                                       objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEvent<Family> {
+    public func with(objectTypes: [String], objectFilter: ObjectFilter? = nil,
+                     objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEvent<Family> {
         
         let queryEventData = QueryEventData<Family>.createFrom(objectTypes: objectTypes,
                                                                objectFilter: objectFilter,
                                                                objectJoinConditions: objectJoinConditions)
         
-        return .init(eventSource: eventSource, eventData: queryEventData)
+        return .init(eventSource: self.identity, eventData: queryEventData)
     }
     
     /// Create a QueryEvent instance for querying the given core types, filter, and join conditions.
     /// The object filter and join conditions are optional.
     ///
     /// - Parameters:
-    ///     - eventSource: the event source component
     ///     - coreTypes: restrict results by core types (logical OR).
     ///     - objectFilter: restrict results by object filter (optional).
     ///     - objectJoinConditions: join related objects into results (optional).
-    public static func withCoreTypes(eventSource: Component,
-                                     coreTypes: [CoreType],
-                                     objectFilter: ObjectFilter? = nil,
-                                     objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEvent<Family> {
+    public func with(coreTypes: [CoreType],
+                     objectFilter: ObjectFilter? = nil,
+                     objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEvent<Family> {
         
         let queryEventData = QueryEventData<Family>.createFrom(coreTypes: coreTypes,
                                                                objectFilter: objectFilter,
                                                                objectJoinConditions: objectJoinConditions)
         
-        return .init(eventSource: eventSource, eventData: queryEventData)
+        return .init(eventSource: self.identity, eventData: queryEventData)
     }
 
 }

@@ -7,44 +7,37 @@
 import Foundation
 
 /// A Factory that creates ResolveEvents.
-public class ResolveEventFactory<Family: ObjectFamily> {
+public class ResolveEventFactory<Family: ObjectFamily>: EventFactoryInit {
     
     /// Create a ResolveEvent instance for resolving the given object.
     ///
     /// - Parameters:
-    ///   - eventSource: the event source component
     ///   - object: the object to be resolved
     ///   - privateData: private data object (optional)
     /// - Returns: a resolve event that emits CoatyObjects.
-    public static func withObject(eventSource: Component,
-                                  object: CoatyObject,
-                                  privateData: [String: Any]? = nil) -> ResolveEvent<Family> {
+    public func with(object: CoatyObject, privateData: [String: Any]? = nil) -> ResolveEvent<Family> {
         let resolveEventData = ResolveEventData<Family>(object: object, privateData: privateData)
-        return .init(eventSource: eventSource, eventData: resolveEventData)
+        return .init(eventSource: self.identity, eventData: resolveEventData)
     }
     
     /// Create a ResolveEvent instance for resolving the given object.
     ///
     /// - Parameters:
-    ///   - eventSource: the event source component
     ///   - relatedObjects: related objects to be resolved (optional)
     ///   - privateData: private data object (optional)
     /// - Returns: a resolve event that emits CoatyObjects.
-    public static func withRelatedObjects(eventSource: Component,
-                                          relatedObjects: [CoatyObject],
-                                          privateData: [String: Any]? = nil) -> ResolveEvent<Family> {
+    public func with(relatedObjects: [CoatyObject],
+                     privateData: [String: Any]? = nil) -> ResolveEvent<Family> {
         let resolveEventData = ResolveEventData<Family>(relatedObjects: relatedObjects, privateData: privateData)
-        return .init(eventSource: eventSource, eventData: resolveEventData)
+        return .init(eventSource: self.identity, eventData: resolveEventData)
     }
     
-    public static func withObjectAndRelatedObjects(eventSource: Component,
-                                                   object: CoatyObject,
-                                                   relatedObjects: [CoatyObject],
-                                                   privateData: [String: Any]? = nil) -> ResolveEvent<Family> {
+    public func with(object: CoatyObject, relatedObjects: [CoatyObject],
+                     privateData: [String: Any]? = nil) -> ResolveEvent<Family> {
         let resolveEventData = ResolveEventData<Family>(object: object,
                                                         relatedObjects: relatedObjects,
                                                         privateData: privateData)
-        return .init(eventSource: eventSource, eventData: resolveEventData)
+        return .init(eventSource: self.identity, eventData: resolveEventData)
     }
 }
 

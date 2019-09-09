@@ -8,40 +8,36 @@
 import Foundation
 
 /// A Factory that creates ChannelEvents.
-public class ChannelEventFactory<Family: ObjectFamily> {
+public class ChannelEventFactory<Family: ObjectFamily>: EventFactoryInit {
     
     /// Create a ChannelEvent instance for delivering the given object.
     ///
     /// - TODO: Missing documentation.
     /// - Parameters:
-    ///   - eventSource: the event source component.
     ///   - channelId: channel identifier string.
     ///   - object: the object to be channelized.
     ///   - privateData: application-specific options (optional).
     /// - Returns: a channel event that emits CoatyObjects that are part of the `ClassFamily`.
-    public static func withObject(eventSource: Component,
-                                  channelId: String,
-                                  object: CoatyObject,
-                                  privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
+    public func with(object: CoatyObject,
+                     channelId: String,
+                     privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
         let channelEventData = ChannelEventData<Family>(object: object, privateData: privateData)
-        return .init(eventSource: eventSource, eventData: channelEventData, channelId: channelId)
+        return .init(eventSource: self.identity, eventData: channelEventData, channelId: channelId)
     }
     
     /// Create a ChannelEvent instance for delivering the given objects.
     ///
     /// - TODO: Missing documentation.
     /// - Parameters:
-    ///   - eventSource: the event source component
     ///   - channelId: channel identifier string.
     ///   - objects: the objects to be channelized
     ///   - privateData: application-specific options (optional)
     /// - Returns: a channel event that emits CoatyObjects that are part of the `ClassFamily`.
-    public static func withObjects(eventSource: Component,
-                                   channelId: String,
-                                   objects: [CoatyObject],
-                                   privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
+    public func with(objects: [CoatyObject],
+                     channelId: String,
+                     privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
         let channelEventData = ChannelEventData<Family>(objects: objects, privateData: privateData)
-        return .init(eventSource: eventSource, eventData: channelEventData, channelId: channelId)
+        return .init(eventSource: self.identity, eventData: channelEventData, channelId: channelId)
     }
     
 }

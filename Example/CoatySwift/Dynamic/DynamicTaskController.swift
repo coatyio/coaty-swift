@@ -163,7 +163,7 @@ class DynamicTaskController: DynamicController {
         print("Carrying out task: \(task.name)")
         
         // Notify other components that task is now in progress.
-        let event = eventFactory.AdvertiseEvent.withObject(eventSource: self.identity, object: task)
+        let event = eventFactory.AdvertiseEvent.with(object: task)
         try? communicationManager.publishAdvertise(event)
         
         // Calculate random delay to simulate task exection time.
@@ -181,8 +181,7 @@ class DynamicTaskController: DynamicController {
                 eventDirection: .Out)
             
             // Notify other components that task has been completed.
-            let advertiseEvent = self.eventFactory.AdvertiseEvent.withObject(eventSource: self.identity,
-                                                                             object: task)
+            let advertiseEvent = self.eventFactory.AdvertiseEvent.with(object: task)
             
             try? self.communicationManager.publishAdvertise(advertiseEvent)
             
@@ -245,8 +244,7 @@ class DynamicTaskController: DynamicController {
         let changedValues: [String: Any] = ["dueTimestamp": dueTimeStamp,
                                             "assigneeUserId": assigneeUserId?.string]
         
-        return eventFactory.UpdateEvent.withPartial(eventSource: self.identity,
-                                                    objectId: request.objectId,
+        return eventFactory.UpdateEvent.withPartial(objectId: request.objectId,
                                                     changedValues: changedValues)
     }
     
@@ -265,9 +263,7 @@ class DynamicTaskController: DynamicController {
             $0.orderByProperties = [OrderByProperty(properties: .init("creationTimestamp"), sortingOrder: .Desc)]
         }
         
-        return eventFactory.QueryEvent.withCoreTypes(eventSource: self.identity,
-                                                     coreTypes: [.Snapshot],
-                                                     objectFilter: objectFilter)
+        return eventFactory.QueryEvent.with(coreTypes: [.Snapshot], objectFilter: objectFilter)
     }
     
     // MARK: Util methods.
