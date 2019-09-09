@@ -67,8 +67,7 @@ class TaskController<Family: ObjectFamily>: Controller<Family> {
     /// method.
     private func observeAdvertiseRequests() throws {
         try communicationManager
-            .observeAdvertiseWithObjectType(eventTarget: identity,
-                                            objectType: ModelObjectTypes.HELLO_WORLD_TASK.rawValue)
+            .observeAdvertise(withObjectType: ModelObjectTypes.HELLO_WORLD_TASK.rawValue)
             .compactMap { (advertiseEvent) -> HelloWorldTask? in
                 advertiseEvent.data.object as? HelloWorldTask
             } 
@@ -120,7 +119,7 @@ class TaskController<Family: ObjectFamily>: Controller<Family> {
             let event = self.createTaskOfferEvent(request)
 
             // Send it out and wait for the Service to answer.
-            try? self.communicationManager.publishUpdate(event: event)
+            try? self.communicationManager.publishUpdate(event)
                 .take(1)
                 .compactMap { (completeEvent) -> HelloWorldTask? in
                     return completeEvent.data.object as? HelloWorldTask
@@ -158,8 +157,7 @@ class TaskController<Family: ObjectFamily>: Controller<Family> {
         
         // Notify other components that task is now in progress.
         let event = eventFactory.AdvertiseEvent.withObject(eventSource: self.identity, object: task)
-        try? communicationManager.publishAdvertise(advertiseEvent: event,
-                                                    eventTarget: self.identity)
+        try? communicationManager.publishAdvertise(event)
         
         // Calculate random delay to simulate task exection time.
         let taskDelay = Int.random(in: minTaskDuration..<2*minTaskDuration)
@@ -179,8 +177,7 @@ class TaskController<Family: ObjectFamily>: Controller<Family> {
             let advertiseEvent = self.eventFactory.AdvertiseEvent.withObject(eventSource: self.identity,
                                                                         object: task)
             
-            try? self.communicationManager.publishAdvertise(advertiseEvent: advertiseEvent,
-                                                             eventTarget: self.identity)
+            try? self.communicationManager.publishAdvertise(advertiseEvent)
             
             // Send out query to get all available snapshots of the task object.
             
@@ -190,7 +187,7 @@ class TaskController<Family: ObjectFamily>: Controller<Family> {
             
             let queryEvent = self.createSnapshotQuery(forTask: task)
             
-            try? self.communicationManager.publishQuery(event: queryEvent)
+            try? self.communicationManager.publishQuery(queryEvent)
                 .take(1)
                 .timeout(Double(self.queryTimeout),
                          scheduler: SerialDispatchQueueScheduler(

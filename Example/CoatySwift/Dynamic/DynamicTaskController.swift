@@ -66,8 +66,7 @@ class DynamicTaskController: DynamicController {
     /// method.
     private func observeAdvertiseRequests() throws {
         try communicationManager
-            .observeAdvertiseWithObjectType(eventTarget: identity,
-                                            objectType: ModelObjectTypes.HELLO_WORLD_TASK.rawValue)
+            .observeAdvertise(withObjectType: ModelObjectTypes.HELLO_WORLD_TASK.rawValue)
             .compactMap { (advertiseEvent) -> Task? in
                 advertiseEvent.data.object as? Task
             }
@@ -127,7 +126,7 @@ class DynamicTaskController: DynamicController {
             let event = self.createTaskOfferEvent(request)
             
             // Send it out and wait for the Service to answer.
-            try? self.communicationManager.publishUpdate(event: event)
+            try? self.communicationManager.publishUpdate(event)
                 .take(1)
                 .compactMap { (completeEvent) -> Task? in
                     return completeEvent.data.object as? Task
@@ -165,8 +164,7 @@ class DynamicTaskController: DynamicController {
         
         // Notify other components that task is now in progress.
         let event = eventFactory.AdvertiseEvent.withObject(eventSource: self.identity, object: task)
-        try? communicationManager.publishAdvertise(advertiseEvent: event,
-                                                   eventTarget: self.identity)
+        try? communicationManager.publishAdvertise(event)
         
         // Calculate random delay to simulate task exection time.
         let taskDelay = Int.random(in: minTaskDuration..<2*minTaskDuration)
@@ -186,8 +184,7 @@ class DynamicTaskController: DynamicController {
             let advertiseEvent = self.eventFactory.AdvertiseEvent.withObject(eventSource: self.identity,
                                                                              object: task)
             
-            try? self.communicationManager.publishAdvertise(advertiseEvent: advertiseEvent,
-                                                            eventTarget: self.identity)
+            try? self.communicationManager.publishAdvertise(advertiseEvent)
             
             // Send out query to get all available snapshots of the task object.
             
@@ -195,38 +192,44 @@ class DynamicTaskController: DynamicController {
                 eventName: "QUERY",
                 eventDirection: .Out)
             
-            let queryEvent = self.createSnapshotQuery(forTask: task)
+            // Prevent race condition between updating the task status to done and querying the
+            // snapshot database.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             
-            try? self.communicationManager.publishQuery(event: queryEvent)
-                .take(1)
-                .timeout(Double(self.queryTimeout),
-                         scheduler: SerialDispatchQueueScheduler(
-                            queue: self.taskControllerQueue,
-                            internalSerialQueueName: "com.siemens.coaty.internalQueryQueue"))
-                .subscribe(
-                    
-                    // Handle incoming snapshots.
-                    onNext: { (retrieveEvent) in
-                        self.logConsole(message: "Snapshots by parentObjectId: \(task.name)",
-                            eventName: "RETRIEVE",
-                            eventDirection: .In)
+                let queryEvent = self.createSnapshotQuery(forTask: task)
+                
+                try? self.communicationManager.publishQuery(queryEvent)
+                    .take(1)
+                    .timeout(Double(self.queryTimeout),
+                             scheduler: SerialDispatchQueueScheduler(
+                                queue: self.taskControllerQueue,
+                                internalSerialQueueName: "com.siemens.coaty.internalQueryQueue")
+                    )
+                    .subscribe(
                         
-                        let objects = retrieveEvent.data.objects
-                        let snapshots = objects.map { (coatyObject) -> DynamicSnapshot in
-                            coatyObject as! DynamicSnapshot
-                        }
+                        // Handle incoming snapshots.
+                        onNext: { (retrieveEvent) in
+                            self.logConsole(message: "Snapshots by parentObjectId: \(task.name)",
+                                eventName: "RETRIEVE",
+                                eventDirection: .In)
+                            
+                            let objects = retrieveEvent.data.objects
+                            let snapshots = objects.map { (coatyObject) -> DynamicSnapshot in
+                                coatyObject as! DynamicSnapshot
+                            }
+                            
+                            self.logHistorian(snapshots)
+                    },
                         
-                        self.logHistorian(snapshots)
-                },
-                    
-                    // Handle possible errors.
-                    onError: { _ in
-                        print("Failed to retrieve snapshot objects.")
-                })
-                .disposed(by: self.disposeBag)
-            
-            // Task was accomplished, set busy state to free.
-            self.setBusy(false)
+                        // Handle possible errors.
+                        onError: { _ in
+                            print("Failed to retrieve snapshot objects.")
+                    })
+                    .disposed(by: self.disposeBag)
+                
+                // Task was accomplished, set busy state to free.
+                self.setBusy(false)
+            }
         }
     }
     

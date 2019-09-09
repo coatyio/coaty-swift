@@ -14,7 +14,7 @@ import RxSwift
 open class Controller<Family: ObjectFamily> {
     
     /// This is the communicationManager for this particular controller.
-    private (set) public var communicationManager: CommunicationManager<Family>
+    private (set) public var communicationManager: ControllerCommunicationManager<Family>!
     
     /// This is the factory for this particular controller that is used to
     /// create CommunicationEvents.
@@ -35,7 +35,6 @@ open class Controller<Family: ObjectFamily> {
                   controllerType: String) {
         self.runtime = runtime
         self.options = options ?? ControllerOptions()
-        self.communicationManager = communicationManager
         self.eventFactory = eventFactory
         self.controllerType = controllerType
         
@@ -44,9 +43,12 @@ open class Controller<Family: ObjectFamily> {
                                   objectType: "\(COATY_PREFIX)\(CoreType.Component.rawValue)",
                                   objectId: .init())
         
-        identity.parentObjectId = self.communicationManager.identity!.objectId
+        identity.parentObjectId = communicationManager.identity.objectId
         self.initializeIdentity(identity: identity)
         
+        self.communicationManager = ControllerCommunicationManager(identity: self.identity,
+                                                                   communicationManager: communicationManager)
+
     }
     
     /// Called when the controller instance has been instantiated.
@@ -117,8 +119,7 @@ open class Controller<Family: ObjectFamily> {
         let event = AdvertiseEvent<CoatyObjectFamily>.withObject(eventSource: self.identity,
                                               object: self.identity)
  
-        try? self.communicationManager.publishAdvertise(advertiseEvent: event,
-                                                        eventTarget: self.identity)
+        try? self.communicationManager.publishAdvertise(event)
         
     }
     
@@ -132,7 +133,7 @@ open class Controller<Family: ObjectFamily> {
         }
         
         try? self.communicationManager
-            .observeDiscover(eventTarget: self.identity)
+            .observeDiscover()
             .filter { event -> Bool in
                 event.data.isCoreTypeCompatible(.Component)
                     || (event.data.isDiscoveringObjectId() && event.data.objectId == self.identity.objectId)

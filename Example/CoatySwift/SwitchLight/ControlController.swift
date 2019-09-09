@@ -31,7 +31,7 @@ class ControlController<Family: ObjectFamily>: Controller<Family> {
                                                          filter: contextFilter)
         
         try? self.communicationManager
-            .publishCall(event: callEvent)
+            .publishCall(callEvent)
             .subscribe(onNext: { returnEvent in
                 if let result = returnEvent.data.result {
                     logConsole(message: "Switch success: \(result)", eventName: "Return", eventDirection: .In)

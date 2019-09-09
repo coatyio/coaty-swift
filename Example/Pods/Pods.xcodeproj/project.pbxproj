@@ -81,6 +81,7 @@
 		28337B57712CF168C2CD6562B73904D7 /* RetryWhen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B883642C102BD99F8EB36EE388E61A8A /* RetryWhen.swift */; };
 		283B8287FC8DC74D50B6865B94A28DC1 /* QuickSpecBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AA778EC5F71DA64F3DE213AD26203F4 /* QuickSpecBase.m */; };
 		2898423F8FD16142140652D133685339 /* QueryEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688FFE96E124C3D34A46DB2E9FB64CE2 /* QueryEvent.swift */; };
+		2A67E801231EB52D001AF747 /* ControllerCommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A67E800231EB52D001AF747 /* ControllerCommunicationManager.swift */; };
 		2BC5A87CEC3D4418132A44C26BE56CBE /* KeyPathBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33A2B063C845B60A940B068A5B44318 /* KeyPathBinder.swift */; };
 		2BF404416D566F6CC76EC1A4A6E7255A /* RefCountDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D715D33DD2DD9F435D06FC3C977BFA8E /* RefCountDisposable.swift */; };
 		2CD50E14AABEDAF0E3B32FCC94B5C3A6 /* SkipUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39386FA33B4A5FAFDD6D2956F1E4628E /* SkipUntil.swift */; };
@@ -794,6 +795,7 @@
 		292BB6AD378E0F68FBEB0F8A1B20B944 /* Scan.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Scan.swift; path = RxSwift/Observables/Scan.swift; sourceTree = "<group>"; };
 		29F4BF4ED503657D8BCE0160CC00C07D /* LogFormatterProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LogFormatterProtocol.swift; path = Sources/XCGLogger/LogFormatters/LogFormatterProtocol.swift; sourceTree = "<group>"; };
 		2A50B7420399B9DF9F8BD8CE5878278A /* Cancelable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Cancelable.swift; path = RxSwift/Cancelable.swift; sourceTree = "<group>"; };
+		2A67E800231EB52D001AF747 /* ControllerCommunicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerCommunicationManager.swift; sourceTree = "<group>"; };
 		2AA778EC5F71DA64F3DE213AD26203F4 /* QuickSpecBase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QuickSpecBase.m; path = Sources/QuickSpecBase/QuickSpecBase.m; sourceTree = "<group>"; };
 		2B086162B3A96F934AC51AB6E45D69E1 /* CommunicationState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CommunicationState.swift; sourceTree = "<group>"; };
 		2B48C016D53DE06C9F5FDB15DFBC0630 /* ObserveOn.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObserveOn.swift; path = RxSwift/Observables/ObserveOn.swift; sourceTree = "<group>"; };
@@ -1480,6 +1482,7 @@
 				E2273A496E3F0F319F2C8C30F16D150F /* CommunicationManager+Observe.swift */,
 				A0981C2538DF484313C1EF2799173AD7 /* CommunicationManager+Publish.swift */,
 				4A4005EDBAF7AF770ABF311B4D919E9F /* CommunicationManager+Util.swift */,
+				2A67E800231EB52D001AF747 /* ControllerCommunicationManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -3512,6 +3515,7 @@
 				9F4C2030854DFDE1FBF4007FDE8A3C89 /* PayloadCoder.swift in Sources */,
 				2898423F8FD16142140652D133685339 /* QueryEvent.swift in Sources */,
 				3E5BF0F4E36C6112287900048312B490 /* Resolve.swift in Sources */,
+				2A67E801231EB52D001AF747 /* ControllerCommunicationManager.swift in Sources */,
 				30B9A4411170859F38A9A80353031E9E /* ResolveEvent.swift in Sources */,
 				F5AF8B8002F95E0B20FD4E6090D3BF81 /* RetrieveEvent.swift in Sources */,
 				BC64F1EB231D57160012BAD4 /* DynamicController.swift in Sources */,
