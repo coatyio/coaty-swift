@@ -7,7 +7,7 @@
 import Foundation
 
 /// A Factory that creates CallEvents.
-public class CallEventFactory<Family: ObjectFamily> {
+public class CallEventFactory<Family: ObjectFamily>: EventFactoryInit {
     
     /// Create a CallEvent instance for invoking a remote operation call with the given
     /// operation name, parameters (optional), and a context filter (optional).
@@ -17,19 +17,18 @@ public class CallEventFactory<Family: ObjectFamily> {
     /// the filter conditions match a context object provided by the remote end.
     ///
     /// - Parameters:
-    ///     - eventSource: the event source component
     ///     - operation: a non-empty string containing the name of the operation to be invoked
     ///     - parameters: holds the parameter values to be used during the invocation of
     ///       the operation (optional)
     ///     - filter: a context filter that must match a given context object at the remote
     ///       end (optional)
-    public static func with(eventSource: Component,
-                            operation: String,
-                            parameters: [String: AnyCodable],
-                            filter: ContextFilter? = nil) -> CallEvent<Family> {
+    public func with(operation: String, parameters: [String: AnyCodable],
+                     filter: ContextFilter? = nil) -> CallEvent<Family> {
         let callEventdata = CallEventData<Family>.createFrom(parameters: parameters,
                                                              filter: filter)
-        return .init(eventSource: eventSource, eventData: callEventdata, operation: operation)
+        return .init(eventSource: self.identity,
+                     eventData: callEventdata,
+                     operation: operation)
     }
     
     /// Create a CallEvent instance for invoking a remote operation call with the given
@@ -40,20 +39,17 @@ public class CallEventFactory<Family: ObjectFamily> {
     /// the filter conditions match a context object provided by the remote end.
     ///
     /// - Parameters:
-    ///     - eventSource: the event source component
     ///     - operation: a non-empty string containing the name of the operation to be invoked
     ///     - parameters: holds the parameter values to be used during the invocation of
     ///       the operation (optional)
     ///     - filter: a context filter that must match a given context object at the remote
     ///       end (optional)
-    public static func with(eventSource: Component,
-                            operation: String,
-                            parameters: [AnyCodable],
-                            filter: ContextFilter? = nil) -> CallEvent<Family> {
+    public func with(operation: String, parameters: [AnyCodable],
+                     filter: ContextFilter? = nil) -> CallEvent<Family> {
         let callEventdata = CallEventData<Family>.createFrom(parameters: parameters,
                                                              filter: filter)
         
-        return .init(eventSource: eventSource, eventData: callEventdata, operation: operation)
+        return .init(eventSource: self.identity, eventData: callEventdata, operation: operation)
     }
 
 }

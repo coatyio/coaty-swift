@@ -89,7 +89,6 @@ public class DynamicContainer {
                                                controllerType: controllerType,
                                                runtime: runtime,
                                                communicationManager: communicationManager,
-                                               eventFactory: eventFactory,
                                                controllerOptions: config.controllerOptions[name])
             self.controllers[name] = controller
             
@@ -143,12 +142,10 @@ public class DynamicContainer {
                                    controllerType: DynamicController.Type,
                                    runtime: Runtime,
                                    communicationManager: DynamicCommunicationManager,
-                                   eventFactory: DynamicEventFactory,
                                    controllerOptions: ControllerOptions?) -> DynamicController {
         let controller = controllerType.init(runtime: runtime,
                                              options: controllerOptions,
                                              communicationManager: communicationManager,
-                                             eventFactory: eventFactory,
                                              controllerType: name)
         controller.onInit()
         return controller
@@ -159,14 +156,14 @@ public class DynamicContainer {
         let runtime = Runtime(commonOptions: configuration.common, databaseOptions: configuration.databases)
         self.runtime = runtime
         
-        // Create EventFactory.
-        let eventFactory = EventFactory<CoatyObjectFamily>()
-        self.eventFactory = eventFactory
-        
         // Create CommunicationManager.
-        let communicationManager = DynamicCommunicationManager(
-            communicationOptions: configuration.communication,
-            eventFactory: eventFactory)
+        let communicationManager = DynamicCommunicationManager(communicationOptions: configuration.communication)
+        
+        // Create EventFactory.
+        let eventFactory = EventFactory<CoatyObjectFamily>(communicationManager.identity)
+        self.eventFactory = eventFactory
+        communicationManager.eventFactory = eventFactory
+        
         self.communicationManager = communicationManager
         self.operatingState = communicationManager.operatingState.asObservable()
         self.communicationState = communicationManager.communicationState.asObservable()
@@ -177,7 +174,6 @@ public class DynamicContainer {
                                                controllerType: controllerType,
                                                runtime: runtime,
                                                communicationManager: communicationManager,
-                                               eventFactory: eventFactory,
                                                controllerOptions: options)
             self.controllers[name] = controller
         }

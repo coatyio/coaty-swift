@@ -6,18 +6,17 @@
 //
 
 /// A Factory that creates AdvertiseEvents.
-public class AdvertiseEventFactory<Family: ObjectFamily> {
+public class AdvertiseEventFactory<Family: ObjectFamily>: EventFactoryInit {
     
     /// Convenience factory method that configures an instance of and AdvertiseEvent with
     /// an object and privateData. Note that the event source should be the controller that
     /// creates the AdvertiseEvent.
     /// - NOTE: It is required to delegate the call to `.withObject()` in order to create
     ///   AdvertiseEvents during the bootstrapping process.
-    public static func withObject(eventSource: Component,
-                                  object: CoatyObject,
-                                  privateData: [String: Any]? = nil) -> AdvertiseEvent<Family> {
+    public func with(object: CoatyObject, privateData: [String: Any]? = nil) -> AdvertiseEvent<Family> {
         
-        return AdvertiseEvent<Family>.withObject(eventSource: eventSource, object: object, privateData: privateData)
+        return AdvertiseEvent<Family>.withObject(eventSource: self.identity,
+                                                 object: object, privateData: privateData)
     }
 }
 

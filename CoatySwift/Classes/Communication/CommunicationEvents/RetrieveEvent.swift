@@ -7,20 +7,18 @@
 import Foundation
 
 /// A Factory that creates RetrieveEvents.
-public class RetrieveEventFactory<Family: ObjectFamily> {
+public class RetrieveEventFactory<Family: ObjectFamily>: EventFactoryInit {
     
     /// Create a RetrieveEvent instance for delivering the given objects.
     ///
     /// - Parameters:
-    ///   - eventSource: the event source component.
     ///   - objects: the objects payload.
     ///   - privateData: application-specific options (optional).
     /// - Returns: a retrieve event that contains CoatyObjects that are part of the `ObjectFamily`.
-    static func withObjects(eventSource: Component,
-                            objects: [CoatyObject],
-                            privateData: [String: Any]? = nil) -> RetrieveEvent<Family> {
+    public func with(objects: [CoatyObject],
+                     privateData: [String: Any]? = nil) -> RetrieveEvent<Family> {
         let retrieveEventData = RetrieveEventData<Family>(objects: objects, privateData: privateData)
-        return .init(eventSource: eventSource, eventData: retrieveEventData)
+        return .init(eventSource: self.identity, eventData: retrieveEventData)
     }
     
 }

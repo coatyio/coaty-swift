@@ -82,9 +82,7 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
                     let error = ReturnError(code: .invalidParameters, message: .invalidParameters)
                     let executionInfo: ExecutionInfo = ["lightId": self.light.objectId,
                                                         "triggerTime": self.now()]
-                    let event = self.eventFactory.ReturnEvent.withError(eventSource: self.identity,
-                                                                        error: error,
-                                                                        executionInfo: executionInfo)
+                    let event = self.eventFactory.ReturnEvent.with(error: error, executionInfo: executionInfo)
                     
                     logConsole(message: "Invalid parameters.", eventName: "Return", eventDirection: .Out)
                     callEvent.returned(returnEvent: event)
@@ -96,9 +94,7 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
                     let error = ReturnError(code: 1, message: "Light is defect")
                     let executionInfo: ExecutionInfo = ["lightId": self.light.objectId,
                                                         "triggerTime": self.now()]
-                    let event = self.eventFactory.ReturnEvent.withError(eventSource: self.identity,
-                                                                        error: error,
-                                                                        executionInfo: executionInfo)
+                    let event = self.eventFactory.ReturnEvent.with(error: error, executionInfo: executionInfo)
                     callEvent.returned(returnEvent: event)
                     logConsole(message: "Light is defect.", eventName: "Return", eventDirection: .Out)
                     return
@@ -117,9 +113,8 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
                     let result: ReturnResult = .init(self.lightStatus!.on)
                     let executionInfo: ExecutionInfo = ["lightId": self.light.objectId,
                                                         "triggerTime": self.now()]
-                    let event = self.eventFactory.ReturnEvent.withResult(eventSource: self.identity,
-                                                                         result: result,
-                                                                         executionInfo: executionInfo)
+                    let event = self.eventFactory.ReturnEvent.with(result: result,
+                                                                   executionInfo: executionInfo)
                     
                     logConsole(message: "Successful switch.", eventName: "Return", eventDirection: .Out)
                     callEvent.returned(returnEvent: event)

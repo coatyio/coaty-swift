@@ -6,16 +6,15 @@
 //
 
 /// A Factory that creates DeadvertiseEvents.
-public class DeadvertiseEventFactory<Family: ObjectFamily> {
+public class DeadvertiseEventFactory<Family: ObjectFamily>: EventFactoryInit {
     
     /// Convenience factory method that configures an instance of and DeadvertiseEvent with
     /// a Deadvertisement Object. Note that the event source should be the controller that
     /// creates the DeadvertiseEvent.
     /// FIXME: Replace CoatyObject with Component object.
-    public static func withObject(eventSource: Component,
-                                  object: Deadvertise) throws -> DeadvertiseEvent {
+    public func with(object: Deadvertise) throws -> DeadvertiseEvent {
         
-        return try DeadvertiseEvent.withObject(eventSource: eventSource, object: object)
+        return try DeadvertiseEvent.withObject(eventSource: self.identity, object: object)
     }
 }
 

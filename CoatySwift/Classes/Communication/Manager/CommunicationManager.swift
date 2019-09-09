@@ -57,16 +57,18 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     /// deferred publications and subscriptions.
     private var queue = DispatchQueue(label: "com.siemens.coatyswift.comQueue")
     
-    private var eventFactory: EventFactory<Family>
+    internal var eventFactory: EventFactory<Family>!
     
     // MARK: - Initializers.
     
-    public init(communicationOptions: CommunicationOptions, eventFactory: EventFactory<Family>) {
+    public init(communicationOptions: CommunicationOptions) {
         self.communicationOptions = communicationOptions
-        self.eventFactory = eventFactory
         let mqttClientOptions = communicationOptions.mqttClientOptions!
         
         initIdentity()
+        
+        // Create EventFactory.
+        self.eventFactory = EventFactory<Family>(self.identity)
         
         // Setup client Id.
         let brokerClientId = generateClientId(mqttClientOptions.clientId)
@@ -268,8 +270,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
                     return
                 }
                 
-                let resolveEvent = self.eventFactory
-                    .ResolveEvent.withObject(eventSource: self.identity!, object: associatedDevice)
+                let resolveEvent = self.eventFactory.ResolveEvent.with(object: associatedDevice)
                 event.resolve(resolveEvent: resolveEvent)
             }).disposed(by: self.disposeBag)
     }
@@ -286,8 +287,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
                     || (event.data.isDiscoveringObjectId() && event.data.objectId == self.identity?.objectId)
             })
             .subscribe(onNext: { event in
-                let resolveEvent = self.eventFactory
-                    .ResolveEvent.withObject(eventSource: self.identity!, object: self.identity!)
+                let resolveEvent = self.eventFactory.ResolveEvent.with( object: self.identity!)
                 
                 event.resolve(resolveEvent: resolveEvent)
             }).disposed(by: self.disposeBag)

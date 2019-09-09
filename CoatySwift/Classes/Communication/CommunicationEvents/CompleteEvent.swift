@@ -7,20 +7,17 @@
 import Foundation
 
 /// A Factory that creates CompleteEvents.
-public class CompleteEventFactory<Family: ObjectFamily> {
+public class CompleteEventFactory<Family: ObjectFamily>: EventFactoryInit {
     
     /// Create a CompleteEvent instance for updating the given object.
     ///
     /// - Parameters:
-    ///   - eventSource: the event source component
     ///   - object: the updated object
     ///   - privateData: application-specific options (optional)
-    public static func withObject(eventSource: Component,
-                                  object: CoatyObject,
-                                  privateData: [String: Any]? = nil) -> CompleteEvent<Family> {
+    public func with(object: CoatyObject, privateData: [String: Any]? = nil) -> CompleteEvent<Family> {
         
         let completeEventData = CompleteEventData<Family>(object, privateData)
-        return .init(eventSource: eventSource, eventData: completeEventData)
+        return .init(eventSource: self.identity, eventData: completeEventData)
     }
 }
 
