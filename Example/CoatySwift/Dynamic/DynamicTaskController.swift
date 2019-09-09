@@ -191,44 +191,45 @@ class DynamicTaskController: DynamicController {
                 eventName: "QUERY",
                 eventDirection: .Out)
             
-            // Prevent race condition between updating the task status to done and querying the
-            // snapshot database.
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            // Note that the queried snapshots may or may not include the latest
+            // task snapshot with task status "Done", because the task snaphot
+            // of the completed task may or may not have been stored in the
+            // database before the query is executed. A proper implementation
+            // should use an Update-Complete event to advertise task status
+            // changes and await the response before querying snapshots.
+            let queryEvent = self.createSnapshotQuery(forTask: task)
             
-                let queryEvent = self.createSnapshotQuery(forTask: task)
-                
-                try? self.communicationManager.publishQuery(queryEvent)
-                    .take(1)
-                    .timeout(Double(self.queryTimeout),
-                             scheduler: SerialDispatchQueueScheduler(
-                                queue: self.taskControllerQueue,
-                                internalSerialQueueName: "com.siemens.coaty.internalQueryQueue")
-                    )
-                    .subscribe(
+            try? self.communicationManager.publishQuery(queryEvent)
+                .take(1)
+                .timeout(Double(self.queryTimeout),
+                         scheduler: SerialDispatchQueueScheduler(
+                            queue: self.taskControllerQueue,
+                            internalSerialQueueName: "com.siemens.coaty.internalQueryQueue")
+                )
+                .subscribe(
+                    
+                    // Handle incoming snapshots.
+                    onNext: { (retrieveEvent) in
+                        self.logConsole(message: "Snapshots by parentObjectId: \(task.name)",
+                            eventName: "RETRIEVE",
+                            eventDirection: .In)
                         
-                        // Handle incoming snapshots.
-                        onNext: { (retrieveEvent) in
-                            self.logConsole(message: "Snapshots by parentObjectId: \(task.name)",
-                                eventName: "RETRIEVE",
-                                eventDirection: .In)
-                            
-                            let objects = retrieveEvent.data.objects
-                            let snapshots = objects.map { (coatyObject) -> DynamicSnapshot in
-                                coatyObject as! DynamicSnapshot
-                            }
-                            
-                            self.logHistorian(snapshots)
-                    },
+                        let objects = retrieveEvent.data.objects
+                        let snapshots = objects.map { (coatyObject) -> DynamicSnapshot in
+                            coatyObject as! DynamicSnapshot
+                        }
                         
-                        // Handle possible errors.
-                        onError: { _ in
-                            print("Failed to retrieve snapshot objects.")
-                    })
-                    .disposed(by: self.disposeBag)
-                
-                // Task was accomplished, set busy state to free.
-                self.setBusy(false)
-            }
+                        self.logHistorian(snapshots)
+                },
+                    
+                    // Handle possible errors.
+                    onError: { _ in
+                        print("Failed to retrieve snapshot objects.")
+                })
+                .disposed(by: self.disposeBag)
+            
+            // Task was accomplished, set busy state to free.
+            self.setBusy(false)
         }
     }
     
