@@ -23,7 +23,9 @@ public class Container<Family: ObjectFamily> {
     private var operatingState: Observable<OperatingState>?
     
     /// A dispatch queue handling controller synchronisation issues.
-    private var queue = DispatchQueue(label: "siemens.coatyswift.containerQueue")
+    private var queue: DispatchQueue!
+    /// A queue ID needed to guarantee each container gets one dedicated queue __only__.
+    private var queueID = "coatyswift.containerQueue." + UUID().uuidString
 
     // FIXME: Currently we're using our communication state observable to find out whether
     // we can subscribe / publish or not.
@@ -51,8 +53,12 @@ public class Container<Family: ObjectFamily> {
         
         // Adjust logging level for CoatySwift.
         LogManager.logLevel = LogManager.getLogLevel(logLevel: configuration.common.logLevel)
-        
+
         let container = Container()
+        
+        // Add container specific dispatch queue.
+        container.queue = DispatchQueue(label: container.queueID)
+        
         container.resolveComponents(components, configuration, objectFamily)
         return container
     }
