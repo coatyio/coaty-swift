@@ -39,5 +39,8 @@ public typealias DynamicChannelEvent = ChannelEvent<CoatyObjectFamily>
 /// __Experimental__: Communication Manager alias for dynamic Coaty.
 public typealias DynamicCommunicationManager = CommunicationManager<CoatyObjectFamily>
 
+/// __Experimental__: Controller Communication Manager alias for dynamic Coaty.
+public typealias DynamicControllerCommunicationManager = ControllerCommunicationManager<CoatyObjectFamily>
+
 /// __Experimental__: Event Factory alias for dynamic Coaty.
 public typealias DynamicEventFactory = EventFactory<CoatyObjectFamily>

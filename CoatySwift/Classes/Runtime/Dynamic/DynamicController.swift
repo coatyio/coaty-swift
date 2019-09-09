@@ -14,7 +14,7 @@ import RxSwift
 open class DynamicController {
     
     /// This is the communicationManager for this particular controller.
-    private (set) public var communicationManager: DynamicCommunicationManager
+    private (set) public var communicationManager: DynamicControllerCommunicationManager!
     
     /// This is the factory for this particular controller that is used to
     /// create CommunicationEvents.
@@ -35,7 +35,6 @@ open class DynamicController {
                          controllerType: String) {
         self.runtime = runtime
         self.options = options ?? ControllerOptions()
-        self.communicationManager = communicationManager
         self.eventFactory = eventFactory
         self.controllerType = controllerType
         
@@ -44,8 +43,11 @@ open class DynamicController {
                                   objectType: "\(COATY_PREFIX)\(CoreType.Component.rawValue)",
             objectId: .init())
         
-        identity.parentObjectId = self.communicationManager.identity!.objectId
+        identity.parentObjectId = communicationManager.identity.objectId
         self.initializeIdentity(identity: identity)
+        self.communicationManager = DynamicControllerCommunicationManager(identity: self.identity,
+                                                                          communicationManager: communicationManager)
+
         
     }
     
@@ -117,8 +119,7 @@ open class DynamicController {
         let event = AdvertiseEvent<CoatyObjectFamily>.withObject(eventSource: self.identity,
                                                                  object: self.identity)
         
-        try? self.communicationManager.publishAdvertise(advertiseEvent: event,
-                                                        eventTarget: self.identity)
+        try? self.communicationManager.publishAdvertise(event)
         
     }
     
@@ -132,7 +133,7 @@ open class DynamicController {
         }
         
         try? self.communicationManager
-            .observeDiscover(eventTarget: self.identity)
+            .observeDiscover()
             .filter { event -> Bool in
                 event.data.isCoreTypeCompatible(.Component)
                     || (event.data.isDiscoveringObjectId() && event.data.objectId == self.identity.objectId)

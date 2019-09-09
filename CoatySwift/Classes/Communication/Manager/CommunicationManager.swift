@@ -29,7 +29,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     private let protocolVersion = 1
     private var associatedUser: User?
     private var associatedDevice: Device?
-    internal var identity: Component?
+    internal var identity: Component!
     private var isDisposed = false
     private var communicationOptions: CommunicationOptions
     
@@ -123,7 +123,6 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
             }.disposed(by: disposeBag)
     }
     
-    /// - TODO: This should most likely return a Component object in the future.
     public func initIdentity() {
         let objectType = COATY_PREFIX + CoreType.Component.rawValue
         identity = Component(coreType: .Component,

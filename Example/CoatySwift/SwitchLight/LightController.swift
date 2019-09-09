@@ -58,7 +58,7 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
     /// offered by this controller.
     private func observeCallEvents() {
         let lightSwitchOperation = SwitchLightOperations.lightControlOperation.rawValue
-        try? self.communicationManager.observeCall(eventTarget: self.identity, operationId: lightSwitchOperation)
+        try? self.communicationManager.observeCall(operationId: lightSwitchOperation)
             .subscribe(onNext: { callEvent in
                 
                 // TODO: Add real context matching.
