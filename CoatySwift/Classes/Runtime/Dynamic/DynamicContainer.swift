@@ -24,7 +24,9 @@ public class DynamicContainer {
     private var operatingState: Observable<OperatingState>?
     
     /// A dispatch queue handling controller synchronisation issues.
-    private var queue = DispatchQueue(label: "siemens.coatyswift.containerQueue")
+    private var queue: DispatchQueue!
+    /// A queue ID needed to guarantee each container gets one dedicated queue __only__.
+    private var queueID = "coatyswift.containerQueue." + UUID().uuidString
     
     // FIXME: Currently we're using our communication state observable to find out whether
     // we can subscribe / publish or not.
@@ -53,6 +55,10 @@ public class DynamicContainer {
         LogManager.logLevel = LogManager.getLogLevel(logLevel: configuration.common.logLevel)
         
         let container = DynamicContainer()
+        
+        // Add container specific dispatch queue.
+        container.queue = DispatchQueue(label: container.queueID)
+        
         container.resolveComponents(components, configuration)
         return container
     }
@@ -74,8 +80,7 @@ public class DynamicContainer {
             }
             
             guard let runtime = self.runtime,
-                let communicationManager = self.communicationManager,
-                let eventFactory = self.eventFactory else {
+                let communicationManager = self.communicationManager else {
                     LogManager.log.error("Runtime or CommunicationManager was not initialized.")
                     throw CoatySwiftError.InvalidConfiguration("Runtime or CommunicationManager was not initialized.")
             }
