@@ -62,17 +62,19 @@ extension CommunicationManager {
     }
     
     /// Advertises the identity of a CommunicationManager.
+    /// - TODO: Implement advertise for device.
+    /// - TODO: opt-out: shouldAdvertiseIdentity (or device) from configuration.
     public func advertiseIdentityOrDevice(eventTarget: Component) throws {
         guard let identity = self.identity else {
             log.error("CommunicationManager identity not set.")
             return
         }
         
-        let advertiseIdentityEvent = AdvertiseEvent<CoatyObjectFamily>.withObject(eventSource: identity,
+        let event = AdvertiseEvent<CoatyObjectFamily>.withObject(eventSource: identity,
                                                                object: identity,
                                                                privateData: nil)
         
-        try publishAdvertise(advertiseEvent: advertiseIdentityEvent, eventTarget: identity)
+        try publishAdvertise(advertiseEvent: event, eventTarget: identity)
     }
     
     /// Notify subscribers that an advertised object has been deadvertised.
