@@ -57,8 +57,6 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     /// deferred publications and subscriptions.
     private var queue = DispatchQueue(label: "com.siemens.coatyswift.comQueue")
     
-    internal var eventFactory: EventFactory<Family>!
-    
     // MARK: - Initializers.
     
     public init(communicationOptions: CommunicationOptions) {
@@ -66,9 +64,6 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
         let mqttClientOptions = communicationOptions.mqttClientOptions!
         
         initIdentity()
-        
-        // Create EventFactory.
-        self.eventFactory = EventFactory<Family>(self.identity)
         
         // Setup client Id.
         let brokerClientId = generateClientId(mqttClientOptions.clientId)
@@ -270,7 +265,8 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
                     return
                 }
                 
-                let resolveEvent = self.eventFactory.ResolveEvent.with(object: associatedDevice)
+                let factory = ResolveEventFactory<Family>(self.identity)
+                let resolveEvent = factory.with(object: associatedDevice)
                 event.resolve(resolveEvent: resolveEvent)
             }).disposed(by: self.disposeBag)
     }
@@ -287,7 +283,8 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
                     || (event.data.isDiscoveringObjectId() && event.data.objectId == self.identity?.objectId)
             })
             .subscribe(onNext: { event in
-                let resolveEvent = self.eventFactory.ResolveEvent.with( object: self.identity!)
+                let factory = ResolveEventFactory<Family>(self.identity!)
+                let resolveEvent = factory.with(object: self.identity)
                 
                 event.resolve(resolveEvent: resolveEvent)
             }).disposed(by: self.disposeBag)

@@ -18,6 +18,7 @@ public class Container<Family: ObjectFamily> {
     
     private (set) public var runtime: Runtime?
     private (set) public var communicationManager: CommunicationManager<Family>?
+    private (set) public var eventFactory: EventFactory<Family>?
     private var controllers = [String: Controller<Family>]()
     private var isShutdown = false
     private var operatingState: Observable<OperatingState>?
@@ -165,6 +166,7 @@ public class Container<Family: ObjectFamily> {
         // Create CommunicationManager.
         let communicationManager = CommunicationManager<Family>(communicationOptions: configuration.communication)
         self.communicationManager = communicationManager
+        self.eventFactory = EventFactory(self.communicationManager!.identity)
         
         self.operatingState = communicationManager.operatingState.asObservable()
         self.communicationState = communicationManager.communicationState.asObservable()

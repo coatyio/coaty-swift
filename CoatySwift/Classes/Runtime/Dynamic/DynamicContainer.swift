@@ -163,13 +163,12 @@ public class DynamicContainer {
         
         // Create CommunicationManager.
         let communicationManager = DynamicCommunicationManager(communicationOptions: configuration.communication)
+        self.communicationManager = communicationManager
         
         // Create EventFactory.
         let eventFactory = EventFactory<CoatyObjectFamily>(communicationManager.identity)
         self.eventFactory = eventFactory
-        communicationManager.eventFactory = eventFactory
-        
-        self.communicationManager = communicationManager
+
         self.operatingState = communicationManager.operatingState.asObservable()
         self.communicationState = communicationManager.communicationState.asObservable()
         
