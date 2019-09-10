@@ -9,23 +9,34 @@ import Foundation
 import CocoaMQTT
 import RxSwift
 
-
-public class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
+/// Default MQTT client for networking.
+internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
     
     // MARK: - Logger.
     
     internal let log = LogManager.log
     
-    var rawMQTTMessages: PublishSubject<(String, [UInt8])> = PublishSubject<(String, [UInt8])>()
-    var messages: PublishSubject<(String, String)> = PublishSubject<(String, String)>()
-    var communicationState: BehaviorSubject<CommunicationState> = BehaviorSubject(value: .offline)
-    // var discovery
+    // MARK: - Protocol fields.
     
-    internal var mqtt: CocoaMQTT
+    var rawMQTTMessages = PublishSubject<(String, [UInt8])>()
+    var messages = PublishSubject<(String, String)>()
+    var communicationState = BehaviorSubject(value: CommunicationState.offline)
+
+    /// CocoaMQTT MQTT client.
+    internal var mqtt: CocoaMQTT!
+    
+    // MARK: - Initializer.
     
     init(communicationOptions: CommunicationOptions) {
         let mqttClientOptions = communicationOptions.mqttClientOptions!
+        configure(mqttClientOptions)
         
+        // TODO: Missing mDNS discovery.
+    }
+    
+    // MARK: - Helper methods.
+    
+    private func configure(_ mqttClientOptions: MQTTClientOptions) {
         // Setup client Id.
         let clientId = "COATY-\(mqttClientOptions.clientId)"
         
@@ -46,30 +57,16 @@ public class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
         mqtt.delegate = self
     }
     
-    func setWill(_ topic: String, message: String) {
-        mqtt.willMessage = CocoaMQTTWill(topic: topic, message: message)
-    }
+    // MARK: - Communication client methods.
     
-    
-    // MARK: - Broker methods.
-    
-    internal func connect() {
+    func connect() {
         mqtt.connect()
     }
     
-    internal func disconnect() {
+    func disconnect() {
         mqtt.disconnect()
     }
     
-    // MARK: - State management methods.
-    
-    func updateCommunicationState(_ state: CommunicationState) {
-        communicationState.onNext(state)
-    }
-    
-    func unsubscribe(_ topic: String) {
-        mqtt.unsubscribe(topic)
-    }
     
     func publish(_ topic: String, message: String) {
         mqtt.publish(topic, withString: message)
@@ -79,7 +76,19 @@ public class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
         mqtt.subscribe(topic)
     }
     
+    func unsubscribe(_ topic: String) {
+        mqtt.unsubscribe(topic)
+    }
     
+    func setWill(_ topic: String, message: String) {
+        mqtt.willMessage = CocoaMQTTWill(topic: topic, message: message)
+    }
+    
+    // MARK: - State management methods.
+    
+    func updateCommunicationState(_ state: CommunicationState) {
+        communicationState.onNext(state)
+    }
     
     // MARK: - CocoaMQTT Delegate methods.
     
@@ -127,8 +136,4 @@ public class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
         log.error("Did disconnect with error. \(err?.localizedDescription ?? "")")
         updateCommunicationState(.offline)
     }
-    
-    
-    
-    
 }
