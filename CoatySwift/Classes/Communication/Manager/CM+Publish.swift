@@ -116,7 +116,7 @@ extension CommunicationManager {
         subscribe(topic: completeTopic)
         publish(topic: topic, message: event.json)
         
-        let observable = rawMessages.map(convertToTupleFormat)
+        let observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != event.sourceId
             })
@@ -185,7 +185,7 @@ extension CommunicationManager {
         subscribe(topic: resolveTopic)
         publish(topic: topic, message: event.json)
         
-        let observable = rawMessages.map(convertToTupleFormat)
+        let observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != event.sourceId
             })
@@ -246,7 +246,7 @@ extension CommunicationManager {
         subscribe(topic: retrieveTopic)
         publish(topic: topic, message: event.json)
         
-        let observable = rawMessages.map(convertToTupleFormat)
+        let observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != event.sourceId
             })
@@ -344,7 +344,7 @@ extension CommunicationManager {
         subscribe(topic: returnTopic)
         publish(topic: topic, message: event.json)
         
-        let observable = rawMessages.map(convertToTupleFormat)
+        let observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != event.sourceId
             })

@@ -14,7 +14,7 @@ import RxSwift
 /// of MQTT messaging.
 /// - Note: Because overriding declarations in extensions is not supported yet, we have to have all
 /// observe and publish methods inside this class.
-public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
+public class CommunicationManager<Family: ObjectFamily> {
     
     // MARK: - Logger.
     
@@ -22,8 +22,6 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     
     // MARK: - Variables.
     
-    internal var mqtt: CocoaMQTT?
-    private var brokerClientId: String?
     /// Dispose bag for all RxSwift subscriptions.
     private var disposeBag = DisposeBag()
     private let protocolVersion = 1
@@ -33,11 +31,6 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     private var isDisposed = false
     private var communicationOptions: CommunicationOptions
     
-    // MARK: - State management observables.
-    
-    let operatingState: BehaviorSubject<OperatingState> = BehaviorSubject(value: .initial)
-    let communicationState: BehaviorSubject<CommunicationState> = BehaviorSubject(value: .offline)
-
     /// Holds deferred subscriptions while the communication manager is offline.
     private var deferredSubscriptions = Set<String>()
     
@@ -47,54 +40,40 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     /// Ids of all advertised components that should be deadvertised when the client ends.
     internal var deadvertiseIds = [CoatyUUID]()
     
-    /// Observable emitting (topic, payload) values.
-    let rawMessages: PublishSubject<(String, String)> = PublishSubject<(String, String)>()
-    
-    /// Observable emitting *raw* (topic, payload) mqtt messages.
-    let rawMQTTMessages: PublishSubject<(String, [UInt8])> = PublishSubject<(String, [UInt8])>()
-    
     /// A dispatchqueue that handles synchronisation issues when accessing
     /// deferred publications and subscriptions.
     private var queue = DispatchQueue(label: "com.siemens.coatyswift.comQueue")
     
+    // TODO: comment me.
+    internal var client: CommunicationClient
+    
+    var operatingState: BehaviorSubject<OperatingState> = BehaviorSubject(value: .initial)
+    var communicationState: BehaviorSubject<CommunicationState> {
+        return self.client.communicationState
+    }
+    
+    func updateOperatingState(_ state: OperatingState) {
+        operatingState.onNext(state)
+    }
+    
     // MARK: - Initializers.
     
-    public init(communicationOptions: CommunicationOptions) {
-        self.communicationOptions = communicationOptions
-        let mqttClientOptions = communicationOptions.mqttClientOptions!
-        
-        initIdentity()
-        
-        // Setup client Id.
-        let brokerClientId = generateClientId(mqttClientOptions.clientId)
-        self.brokerClientId = brokerClientId
-        
-        // Configure mqtt client.
-        mqtt = CocoaMQTT(clientID: brokerClientId,
-                         host: mqttClientOptions.host,
-                         port: UInt16(mqttClientOptions.port))
-        mqtt?.keepAlive = mqttClientOptions.keepAlive
-        
-        // TODO: Make this configurable.
-        mqtt?.allowUntrustCACertificate = true
-        mqtt?.enableSSL = mqttClientOptions.enableSSL
-        mqtt?.autoReconnect = mqttClientOptions.autoReconnect
-        
-        // TODO: Make this configurable.
-        mqtt?.autoReconnectTimeInterval = 3 // seconds.
-        mqtt?.delegate = self
-        
+    // TODO: Move me
+    private func logOperatingState() {
         operatingState.subscribe(onNext: { (state) in
             self.log.debug("Operating State: \(String(describing: state))")
         }).disposed(by: disposeBag)
-        
-        communicationState.subscribe(onNext: { (state) in
+    }
+    
+    private func logCommunicationState() {
+        client.communicationState.subscribe(onNext: { (state) in
             self.log.debug("Comm. State: \(String(describing: state))")
         }).disposed(by: disposeBag)
-        
-        
+    }
+    
+    private func onConnect() {
         // TODO: opt-out: shouldAdvertiseIdentity from configuration.
-        communicationState
+        client.communicationState
             .filter { $0 == .online }
             .subscribe { (event) in
                 
@@ -104,20 +83,31 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
                 // Publish possible deferred subscriptions and publications.
                 _ = self.queue.sync {
                     self.deferredSubscriptions.forEach { (topic) in
-                        self.mqtt?.subscribe(topic)
+                        self.client.subscribe(topic)
                     }
                     
                     // FIXME: This MAY be a race condition between the subscriptions and the publications.
                     self.deferredPublications.forEach { (publication) in
                         let topic = publication.0
                         let payload = publication.1
-                        self.mqtt?.publish(topic, withString: payload)
+                        self.client.publish(topic, message: payload)
                     }
                     
                     self.deferredPublications = []
                 }
                 
             }.disposed(by: disposeBag)
+    }
+    
+    public init(communicationOptions: CommunicationOptions) {
+        self.client = CocoaMQTTClient(communicationOptions: communicationOptions)
+        self.communicationOptions = communicationOptions
+        
+        initIdentity()
+
+        logOperatingState()
+        logCommunicationState()
+        onConnect()
     }
     
     public func initIdentity() {
@@ -153,33 +143,8 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
             return
         }
         
-        mqtt?.willMessage = CocoaMQTTWill(topic: lastWillTopic, message: deadvertiseEvent.json)
-    }
-    
-    /// Generates Coaty client Id.
-    /// - TODO: Adjust to MQTT specification (maximum length is currently ignored).
-    func generateClientId(_ clientId: String) -> String {
-        return "COATY-\(clientId)"
-    }
-    
-    // MARK: - Broker methods.
-    
-    private func connect() {
-        mqtt?.connect()
-    }
-    
-    private func disconnect() {
-        mqtt?.disconnect()
-    }
-    
-    // MARK: - State management methods.
-    
-    func updateOperatingState(_ state: OperatingState) {
-        operatingState.onNext(state)
-    }
-    
-    func updateCommunicationState(_ state: CommunicationState) {
-        communicationState.onNext(state)
+        client.setWill(lastWillTopic, message: deadvertiseEvent.json)
+        
     }
     
     // MARK: - Client lifecycle methods.
@@ -211,7 +176,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
         observeDiscoverDevice()
         observeDiscoverIdentity()
         
-        connect()
+        client.connect()
         updateOperatingState(.started)
     }
     
@@ -235,7 +200,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
         // NOTE: This does not change or adjust the last will.
         try deadvertiseIdentityOrDevice()
         
-        disconnect()
+        client.disconnect()
         self.deferredSubscriptions = Set<String>()
         updateOperatingState(.stopped)
     }
@@ -306,7 +271,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
                 
                 // Subscribe if the client is online.
                 if state == .online {
-                    self.mqtt?.subscribe(topic)
+                    self.client.subscribe(topic)
                     // Do NOT delete deferredSubscriptions since we may need them for reconnects.
                 }
             })
@@ -317,7 +282,7 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
     ///   the deferredSubscriptions. Coaty-js handles this via its hashtable structure.
     func unsubscribe(topic: String) {
         _ = queue.sync {
-            self.mqtt?.unsubscribe(topic)
+            client.unsubscribe(topic)
         }
     }
     
@@ -337,57 +302,8 @@ public class CommunicationManager<Family: ObjectFamily>: CocoaMQTTDelegate {
             
             // Attempt to publish regardless of the connection status. If we are offline, this will
             // fail silently.
-            self.mqtt?.publish(topic, withString: message)
+            client.publish(topic, message: message)
         }
-    }
-    
-    // MARK: - CocoaMQTTDelegate methods.
-    // These had to be moved here because of some objc incompatibility with extensions and
-    // generics.
-    
-    public func mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck) {
-        updateCommunicationState(.online)
-    }
-    
-    public func mqtt(_ mqtt: CocoaMQTT, didPublishMessage message: CocoaMQTTMessage, id: UInt16) {
-        /// FIXME: Not implemented yet.
-    }
-    
-    public func mqtt(_ mqtt: CocoaMQTT, didPublishAck id: UInt16) {
-        /// FIXME: Not implemented yet.
-    }
-    
-    public func mqtt(_ mqtt: CocoaMQTT, didReceiveMessage message: CocoaMQTTMessage, id: UInt16) {
-        rawMQTTMessages.onNext((message.topic, message.payload))
-        
-        if let payloadString = message.string {
-            rawMessages.onNext((message.topic, payloadString))
-        }
-    }
-    
-    public func mqtt(_ mqtt: CocoaMQTT, didReceive trust: SecTrust, completionHandler: @escaping (Bool) -> Void) {
-        completionHandler(true)
-    }
-    
-    public func mqtt(_ mqtt: CocoaMQTT, didSubscribeTopic topic: String) {
-        log.debug("Subscribed to topic \(topic).")
-    }
-    
-    public func mqtt(_ mqtt: CocoaMQTT, didUnsubscribeTopic topic: String) {
-        log.debug("Unsubscribed from topic \(topic).")
-    }
-    
-    public func mqttDidPing(_ mqtt: CocoaMQTT) {
-        /// FIXME: Not implemented yet.
-    }
-    
-    public func mqttDidReceivePong(_ mqtt: CocoaMQTT) {
-        /// FIXME: Not implemented yet.
-    }
-    
-    public func mqttDidDisconnect(_ mqtt: CocoaMQTT, withError err: Error?) {
-        log.error("Did disconnect with error. \(err?.localizedDescription ?? "")")
-        updateCommunicationState(.offline)
     }
     
 }
