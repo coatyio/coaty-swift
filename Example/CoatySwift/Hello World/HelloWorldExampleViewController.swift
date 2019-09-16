@@ -13,7 +13,7 @@ import CoatySwift
 class HelloWorldExampleViewController: UIViewController {
     
     let enableSSL = false
-    let brokerIp = "192.168.1.161"
+    let brokerIp = "192.168.1.120"
     let brokerPort = 1883
     
     override func viewDidLoad() {

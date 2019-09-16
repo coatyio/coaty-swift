@@ -62,17 +62,19 @@ extension CommunicationManager {
     }
     
     /// Advertises the identity of a CommunicationManager.
+    /// - TODO: Implement advertise for device.
+    /// - TODO: opt-out: shouldAdvertiseIdentity (or device) from configuration.
     public func advertiseIdentityOrDevice(eventTarget: Component) throws {
         guard let identity = self.identity else {
             log.error("CommunicationManager identity not set.")
             return
         }
         
-        let advertiseIdentityEvent = AdvertiseEvent<CoatyObjectFamily>.withObject(eventSource: identity,
+        let event = AdvertiseEvent<CoatyObjectFamily>.withObject(eventSource: identity,
                                                                object: identity,
                                                                privateData: nil)
         
-        try publishAdvertise(advertiseEvent: advertiseIdentityEvent, eventTarget: identity)
+        try publishAdvertise(advertiseEvent: event, eventTarget: identity)
     }
     
     /// Notify subscribers that an advertised object has been deadvertised.
@@ -116,7 +118,7 @@ extension CommunicationManager {
         subscribe(topic: completeTopic)
         publish(topic: topic, message: event.json)
         
-        let observable = rawMessages.map(convertToTupleFormat)
+        let observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != event.sourceId
             })
@@ -185,7 +187,7 @@ extension CommunicationManager {
         subscribe(topic: resolveTopic)
         publish(topic: topic, message: event.json)
         
-        let observable = rawMessages.map(convertToTupleFormat)
+        let observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != event.sourceId
             })
@@ -246,7 +248,7 @@ extension CommunicationManager {
         subscribe(topic: retrieveTopic)
         publish(topic: topic, message: event.json)
         
-        let observable = rawMessages.map(convertToTupleFormat)
+        let observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != event.sourceId
             })
@@ -344,7 +346,7 @@ extension CommunicationManager {
         subscribe(topic: returnTopic)
         publish(topic: topic, message: event.json)
         
-        let observable = rawMessages.map(convertToTupleFormat)
+        let observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != event.sourceId
             })

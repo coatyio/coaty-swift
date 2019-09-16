@@ -18,7 +18,7 @@ extension CommunicationManager {
     public func observeRaw(eventTarget: CoatyObject, topicFilter: String) -> Observable<(String, [UInt8])>{
         self.subscribe(topic: topicFilter)
         
-        return rawMQTTMessages.filter { (topic, payload) -> Bool in
+        return client.rawMQTTMessages.filter { (topic, payload) -> Bool in
             self.isMQTTTopicMatch(topic: topic, topicFilter: topicFilter)
         }
     }
@@ -49,7 +49,7 @@ extension CommunicationManager {
         // TODO: Subscribe only if not already subscribed.
         self.subscribe(topic: topic)
         
-        let observable = rawMessages.map(convertToTupleFormat)
+        let observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != eventTarget.objectId
             })
@@ -148,7 +148,7 @@ extension CommunicationManager {
         // TODO: Make sure to only subscribe to topic once...
         self.subscribe(topic: channelTopic)
 
-        let observable =  rawMessages.map(convertToTupleFormat)
+        let observable =  client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != eventTarget.objectId
             })
@@ -187,7 +187,7 @@ extension CommunicationManager {
         
         self.subscribe(topic: deadvertiseTopic)
         
-        let observable =  rawMessages.map(convertToTupleFormat)
+        let observable =  client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != eventTarget.objectId
             })
@@ -225,7 +225,7 @@ extension CommunicationManager {
         let updateTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Update)
         self.subscribe(topic: updateTopic)
 
-        let observable = rawMessages.map(convertToTupleFormat)
+        let observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != eventTarget.objectId
             })
@@ -269,7 +269,7 @@ extension CommunicationManager {
         let discoverTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Discover)
         self.subscribe(topic: discoverTopic)
 
-        let observable = rawMessages.map(convertToTupleFormat)
+        let observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != eventTarget.objectId
             })
@@ -307,7 +307,7 @@ extension CommunicationManager {
         
         self.subscribe(topic: callTopic)
 
-        let observable = rawMessages.map(convertToTupleFormat)
+        let observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != eventTarget.objectId
             })

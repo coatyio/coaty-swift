@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         // let vc = SwitchLightViewController()
         let vc = DynamicHelloWorldExampleViewController()
+        // let vc = HelloWorldExampleViewController()
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
         
