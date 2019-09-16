@@ -383,6 +383,10 @@
 		BCAF1EA8231E67AB00C7B707 /* DynamicAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF1EA7231E67AB00C7B707 /* DynamicAliases.swift */; };
 		BCB1E9D02327A95300C6D6E7 /* CommunicationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB1E9CF2327A95300C6D6E7 /* CommunicationClient.swift */; };
 		BCB1E9D22327A9EA00C6D6E7 /* CocoaMQTTClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB1E9D12327A9EA00C6D6E7 /* CocoaMQTTClient.swift */; };
+		BCB1E9DF2327C99400C6D6E7 /* BonjourConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB1E9DD2327C99300C6D6E7 /* BonjourConfiguration.swift */; };
+		BCB1E9E02327C99400C6D6E7 /* BonjourResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB1E9DE2327C99300C6D6E7 /* BonjourResolver.swift */; };
+		BCCE092D232F882F003A4907 /* BonjourResolverDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE092C232F882F003A4907 /* BonjourResolverDelegate.swift */; };
+		BCCE092F232F89C5003A4907 /* Startable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE092E232F89C5003A4907 /* Startable.swift */; };
 		BCD4124A3E389C994A4FA971AE0575B2 /* RxScrollViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404AA8D776808E7EA5C4DD46363B2EBD /* RxScrollViewDelegateProxy.swift */; };
 		BD3A9E1A170CB9A362B3CFB82A2471D4 /* UIControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = A909E8192DB987B78F539ADF043FE879 /* UIControl+Rx.swift */; };
 		BEA17DD3CA0502E2654095FC74E6B793 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936F97ABAA64FB01C5928749E3A3BC60 /* XCGLogger.framework */; };
@@ -1177,6 +1181,10 @@
 		BCAF1EA7231E67AB00C7B707 /* DynamicAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicAliases.swift; sourceTree = "<group>"; };
 		BCB1E9CF2327A95300C6D6E7 /* CommunicationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationClient.swift; sourceTree = "<group>"; };
 		BCB1E9D12327A9EA00C6D6E7 /* CocoaMQTTClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaMQTTClient.swift; sourceTree = "<group>"; };
+		BCB1E9DD2327C99300C6D6E7 /* BonjourConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BonjourConfiguration.swift; sourceTree = "<group>"; };
+		BCB1E9DE2327C99300C6D6E7 /* BonjourResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BonjourResolver.swift; sourceTree = "<group>"; };
+		BCCE092C232F882F003A4907 /* BonjourResolverDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourResolverDelegate.swift; sourceTree = "<group>"; };
+		BCCE092E232F89C5003A4907 /* Startable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Startable.swift; sourceTree = "<group>"; };
 		BCF907305726D9401AFDC19E36450FA1 /* Configuration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Configuration.swift; path = Sources/Quick/Configuration/Configuration.swift; sourceTree = "<group>"; };
 		BD9FAE29F513499EE0AEECACE2B0AAD7 /* CurrentThreadScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CurrentThreadScheduler.swift; path = RxSwift/Schedulers/CurrentThreadScheduler.swift; sourceTree = "<group>"; };
 		BDF3C8D14E08253C2ACC37B0BC047783 /* ObserverType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObserverType.swift; path = RxSwift/ObserverType.swift; sourceTree = "<group>"; };
@@ -2218,8 +2226,12 @@
 		BCB1E9D32327AAA200C6D6E7 /* Client */ = {
 			isa = PBXGroup;
 			children = (
+				BCB1E9DD2327C99300C6D6E7 /* BonjourConfiguration.swift */,
+				BCB1E9DE2327C99300C6D6E7 /* BonjourResolver.swift */,
+				BCCE092C232F882F003A4907 /* BonjourResolverDelegate.swift */,
 				BCB1E9CF2327A95300C6D6E7 /* CommunicationClient.swift */,
 				BCB1E9D12327A9EA00C6D6E7 /* CocoaMQTTClient.swift */,
+				BCCE092E232F89C5003A4907 /* Startable.swift */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -3539,7 +3551,10 @@
 				9F4C2030854DFDE1FBF4007FDE8A3C89 /* PayloadCoder.swift in Sources */,
 				2898423F8FD16142140652D133685339 /* QueryEvent.swift in Sources */,
 				3E5BF0F4E36C6112287900048312B490 /* Resolve.swift in Sources */,
+				BCB1E9DF2327C99400C6D6E7 /* BonjourConfiguration.swift in Sources */,
 				2A67E801231EB52D001AF747 /* ControllerCommunicationManager.swift in Sources */,
+				BCCE092D232F882F003A4907 /* BonjourResolverDelegate.swift in Sources */,
+				BCB1E9E02327C99400C6D6E7 /* BonjourResolver.swift in Sources */,
 				30B9A4411170859F38A9A80353031E9E /* ResolveEvent.swift in Sources */,
 				F5AF8B8002F95E0B20FD4E6090D3BF81 /* RetrieveEvent.swift in Sources */,
 				BC64F1EB231D57160012BAD4 /* DynamicController.swift in Sources */,
@@ -3549,6 +3564,7 @@
 				410E58AF344E262FEDBDC427CDF75C0E /* Task.swift in Sources */,
 				B7B91D3FBF182FA9A62AF9B9B87FB1AE /* Topic.swift in Sources */,
 				053EEC35AB331C454D8DC8D458359CA2 /* UpdateEvent.swift in Sources */,
+				BCCE092F232F89C5003A4907 /* Startable.swift in Sources */,
 				96C7B0ABEE9ACCDFE99E767637A31801 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

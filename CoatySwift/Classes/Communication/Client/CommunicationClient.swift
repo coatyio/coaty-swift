@@ -20,6 +20,10 @@ protocol CommunicationClient {
     /// Observable emitting (topic, payload) values.
     var messages: PublishSubject<(String, String)> { get }
     
+    /// Delegate necessary to start the communication manager
+    /// when discovering the broker over mDNS.
+    var delegate: Startable? { get set }
+    
     /// MARK: - State management.
     
     /// Emits the online or offline state depending on the connection

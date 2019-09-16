@@ -249,6 +249,7 @@ public class DatabaseOptions {
 public class MQTTClientOptions {
     public var host: String
     public var port: UInt16
+    public var shouldTryMDNSDiscovery: Bool
     public var clientId: String
     public var username: String?
     public var password: String?
@@ -264,6 +265,7 @@ public class MQTTClientOptions {
          port: UInt16,
          clientId: String,
          enableSSL: Bool,
+         shouldTryMDNSDiscovery: Bool = false,
          username: String? = nil,
          password: String? = nil,
          cleanSession: Bool = true,
@@ -272,6 +274,7 @@ public class MQTTClientOptions {
         self.host = host
         self.port = port
         self.enableSSL = enableSSL
+        self.shouldTryMDNSDiscovery = shouldTryMDNSDiscovery
         self.clientId = clientId
         self.username = username
         self.password = password

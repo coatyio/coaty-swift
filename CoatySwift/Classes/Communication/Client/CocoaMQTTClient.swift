@@ -14,24 +14,32 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
     
     // MARK: - Logger.
     
-    internal let log = LogManager.log
+    private let log = LogManager.log
     
     // MARK: - Protocol fields.
     
     var rawMQTTMessages = PublishSubject<(String, [UInt8])>()
     var messages = PublishSubject<(String, String)>()
     var communicationState = BehaviorSubject(value: CommunicationState.offline)
+    var delegate: Startable?
+    var brokerCandidates = [String]()
+    var brokerPort: UInt16 = 1883
 
     /// CocoaMQTT MQTT client.
-    internal var mqtt: CocoaMQTT!
+    private var mqtt: CocoaMQTT!
+    private var discovery: BonjourResolver?
     
     // MARK: - Initializer.
     
     init(communicationOptions: CommunicationOptions) {
         let mqttClientOptions = communicationOptions.mqttClientOptions!
-        configure(mqttClientOptions)
+        if mqttClientOptions.shouldTryMDNSDiscovery {
+            discovery = BonjourResolver()
+            discovery?.delegate = self
+            discovery?.startDiscovery()
+        }
         
-        // TODO: Missing mDNS discovery.
+        configure(mqttClientOptions)
     }
     
     // MARK: - Helper methods.
@@ -60,7 +68,9 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
     // MARK: - Communication client methods.
     
     func connect() {
-        mqtt.connect()
+        if (mqtt.connState != .connected && mqtt.connState != .connecting ) {
+            mqtt.connect()
+        }
     }
     
     func disconnect() {
@@ -94,6 +104,8 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
     
     public func mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck) {
         updateCommunicationState(.online)
+        discovery?.stopDiscovery()
+        delegate?.didReceiveStart()
     }
     
     public func mqtt(_ mqtt: CocoaMQTT, didPublishMessage message: CocoaMQTTMessage, id: UInt16) {
@@ -135,5 +147,26 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
     public func mqttDidDisconnect(_ mqtt: CocoaMQTT, withError err: Error?) {
         log.error("Did disconnect with error. \(err?.localizedDescription ?? "")")
         updateCommunicationState(.offline)
+        
+        if !brokerCandidates.isEmpty {
+            
+            mqtt.host = brokerCandidates.removeFirst()
+            mqtt.port = brokerPort
+            
+            connect()
+        }
+    }
+}
+
+extension CocoaMQTTClient: BonjourResolverDelegate {
+    
+    func didReceiveService(addresses: [String], port: Int) {
+        brokerCandidates.append(contentsOf: addresses)
+        brokerPort = UInt16(port)
+        
+        mqtt.host = brokerCandidates.removeFirst()
+        mqtt.port = brokerPort
+        
+        connect()
     }
 }

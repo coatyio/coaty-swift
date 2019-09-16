@@ -59,8 +59,10 @@ public class CommunicationManager<Family: ObjectFamily> {
     // MARK: - Initializers.
 
     public init(communicationOptions: CommunicationOptions) {
-        client = CocoaMQTTClient(communicationOptions: communicationOptions)
         self.communicationOptions = communicationOptions
+        
+        client = CocoaMQTTClient(communicationOptions: communicationOptions)
+        client.delegate = self
 
         initializeIdentity()
 
@@ -311,5 +313,22 @@ public class CommunicationManager<Family: ObjectFamily> {
     /// Convenience setter for the operating state.
     func updateOperatingState(_ state: OperatingState) {
         operatingState.onNext(state)
+    }
+}
+
+extension CommunicationManager: Startable {
+    func didReceiveStart() {
+        self.mDNSStart()
+    }
+    
+    /// Starts the client after mDNS discovery.
+    private func mDNSStart() {
+        updateOperatingState(.starting)
+        
+        // Listen to discover events.
+        observeDiscoverDevice()
+        observeDiscoverIdentity()
+        
+        updateOperatingState(.started)
     }
 }
