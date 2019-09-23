@@ -9,7 +9,8 @@ import Foundation
 
 /// The base type of all objects in the Coaty object model. Application-specific object types
 /// extend either CoatyObject directly or any of its derived core types.
-open class CoatyObject: Codable {
+@objcMembers
+open class CoatyObject: NSObject, Codable {
     
     // MARK: - Required attributes.
     

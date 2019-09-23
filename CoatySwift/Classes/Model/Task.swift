@@ -7,28 +7,29 @@
 import Foundation
 
 /// Predefined status values of Task objects.
+@objc
 public enum TaskStatus: Int, Codable {
     
     /// Initial state of a new task.
     case pending = 0
     
     /// Task is in progress.
-    case inProgress
+    case inProgress = 1
     
     /// Task is completed.
-    case done
+    case done = 2
     
     /// Task is blocked, e.g. because of a problem.
-    case blocked
+    case blocked = 3
     
     /// Task is cancelled.
-    case cancelled
+    case cancelled = 4
     
     /// Task Request.
-    case request
+    case request = 5
     
     /// Task Request Cancelled.
-    case requestCancelled
+    case requestCancelled = 6
 }
 
 /// Represents a task or task request.
@@ -64,7 +65,7 @@ open class Task: CoatyObject {
     open var duration: Double?
     
     /// Status of task.
-    open var status: TaskStatus
+    dynamic open var status: TaskStatus
     
     /// Required competencies / roles needed for this task (optional).
     /// The requirements specified are combined by logical AND, i.e. all
@@ -72,7 +73,7 @@ open class Task: CoatyObject {
     open var requirements: [String]?
     
     /// Description of the task (optional)
-    open var description: [String]?
+    open var desc: [String]?
     
     /// Associated workflow Id (optional)
     open var workflowId: CoatyUUID?
@@ -98,7 +99,7 @@ open class Task: CoatyObject {
         self.dueTimestamp = dueTimestamp
         self.doneTimestamp = doneTimestamp
         self.requirements = requirements
-        self.description = description
+        self.desc = description
         self.workflowId = workflowId
         super.init(coreType: .Task, objectType: objectType, objectId: objectId, name: name)
     }
@@ -126,7 +127,7 @@ open class Task: CoatyObject {
         self.dueTimestamp = try container.decodeIfPresent(Double.self, forKey: .dueTimestamp)
         self.doneTimestamp = try container.decodeIfPresent(Double.self, forKey: .doneTimestamp)
         self.requirements = try container.decodeIfPresent([String].self, forKey: .requirements)
-        self.description = try container.decodeIfPresent([String].self, forKey: .description)
+        self.desc = try container.decodeIfPresent([String].self, forKey: .description)
         self.workflowId = try container.decodeIfPresent(CoatyUUID.self, forKey: .workflowId)
         try super.init(from: decoder)
     }
@@ -141,7 +142,7 @@ open class Task: CoatyObject {
         try container.encodeIfPresent(dueTimestamp, forKey: .dueTimestamp)
         try container.encodeIfPresent(doneTimestamp, forKey: .doneTimestamp)
         try container.encodeIfPresent(requirements, forKey: .requirements)
-        try container.encodeIfPresent(description, forKey: .description)
+        try container.encodeIfPresent(desc, forKey: .description)
         try container.encodeIfPresent(workflowId, forKey: .workflowId)
     }
 }
