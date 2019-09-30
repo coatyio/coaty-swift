@@ -31,11 +31,19 @@ class HelloWorldTask: Task {
                 description: [String]? = nil,
                 workflowId: CoatyUUID? = nil) {
         self.urgency = urgency
-        super.init(objectType: objectType, objectId: objectId, name: name,
-                   creatorId: creatorId, creationTimestamp: creationTimestamp,
-                   status: status, lastModificationTimestamp: lastModificationTimestamp,
-                   dueTimestamp: dueTimestamp, doneTimestamp: doneTimestamp,
-                   requirements: requirements, description:description, workflowId:workflowId)
+        super.init(creatorId: creatorId,
+                   creationTimestamp: creationTimestamp,
+                   status: status,
+                   name: name,
+                   objectType: objectType,
+                   objectId: objectId,
+                   lastModificationTimestamp: lastModificationTimestamp,
+                   dueTimestamp: dueTimestamp,
+                   doneTimestamp: doneTimestamp,
+                   requirements: requirements,
+                   description: description,
+                   workflowId: workflowId)
+        
     }
     
     required init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {

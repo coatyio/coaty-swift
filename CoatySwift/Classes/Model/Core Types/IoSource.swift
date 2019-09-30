@@ -1,0 +1,97 @@
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//
+//  IoSource.swift
+//  CoatySwift
+//
+//
+
+import Foundation
+
+/// Defines meta information of an IO source.
+public class IoSource: IoPoint {
+    
+    // MARK: - Attributes.
+
+    /// The semantic, application-specific data type of values to be represented
+    /// by the IO source, such as Temperature, Notification, Task, etc.
+    /// In order to be associated with an IO actor their value types must match.
+    ///
+    /// The property value must be a non-empty string. You should choose
+    /// canonical names for value types to avoid naming collisions. For example,
+    /// by following the naming convention for Java packages, such as
+    /// `com.mydomain.myapp.Temperature`.
+    ///
+    /// Note that this value type is different from the underlying data format
+    /// used by the IO source to publish IO data values. For example, an IO source
+    /// for a temperature sensor could emit values as numbers or as a Value1D
+    /// object with specific properties.
+    public var valueType: String
+
+    /// The backpressure strategy for publishing IO values (optional).
+    public var updateStrategy: IoSourceBackpressureStrategy?
+    
+    // MARK: - Initializers.
+    
+    init(valueType: String,
+         updateStrategy: IoSourceBackpressureStrategy? = nil,
+         updateRate: Double? = nil,
+         externalTopic: String? = nil,
+         name: String = "IoSourceObject",
+         objectType: String = "\(COATY_PREFIX)\(CoreType.IoSource)",
+        objectId: CoatyUUID = .init()) {
+        self.valueType = valueType
+        self.updateStrategy = updateStrategy
+        super.init(coreType: .IoSource,
+                   objectType: objectType,
+                   objectId: objectId,
+                   name: name,
+                   updateRate: updateRate,
+                   externalTopic: externalTopic)
+    }
+    
+    // MARK: - Codable methods.
+
+    enum IoSourceKeys: String, CodingKey {
+        case valueType
+        case updateStrategy
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: IoSourceKeys.self)
+        self.valueType = try container.decode(String.self, forKey: .valueType)
+        self.updateStrategy = try container.decodeIfPresent(IoSourceBackpressureStrategy.self, forKey: .updateStrategy)
+        try super.init(from: decoder)
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: IoSourceKeys.self)
+        try container.encode(valueType, forKey: .valueType)
+        try container.encodeIfPresent(updateStrategy, forKey: .updateStrategy)
+    }
+}
+
+/// Defines strategies for coping with IO sources that produce IO values more
+/// rapidly than specified in their currently recommended update rate.
+public enum IoSourceBackpressureStrategy: Int, Codable {
+
+    /// Use a default strategy for publishing values: If no recommended
+    /// update rate is assigned to the IO source, use the `None` strategy;
+    /// otherwise use the `Sample` strategy.
+    case Default
+
+    /// Publish all values immediately. Note that this strategy ignores
+    /// the recommended update rate assigned to the IO source.
+    case None
+
+    /// Publish the most recent values within periodic time intervals
+    /// according to the recommended update rate assigned to the IO source.
+    /// If no update rate is given, fall back to the `None` strategy.
+    case Sample
+
+    /// Only publish a value if a particular timespan has
+    /// passed without it publishing another value. The timespan is
+    /// determined by the recommended update rate assigned to the IO source.
+    /// If no update rate is given, fall back to the `None` strategy.
+    case Throttle
+}

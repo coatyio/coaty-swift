@@ -6,32 +6,6 @@
 
 import Foundation
 
-/// Predefined status values of Task objects.
-@objc
-public enum TaskStatus: Int, Codable {
-    
-    /// Initial state of a new task.
-    case pending = 0
-    
-    /// Task is in progress.
-    case inProgress = 1
-    
-    /// Task is completed.
-    case done = 2
-    
-    /// Task is blocked, e.g. because of a problem.
-    case blocked = 3
-    
-    /// Task is cancelled.
-    case cancelled = 4
-    
-    /// Task Request.
-    case request = 5
-    
-    /// Task Request Cancelled.
-    case requestCancelled = 6
-}
-
 /// Represents a task or task request.
 open class Task: CoatyObject {
     
@@ -80,12 +54,12 @@ open class Task: CoatyObject {
 
     // MARK: - Initializers.
 
-    public init(objectType: String,
-                objectId: CoatyUUID,
-                name: String,
-                creatorId: CoatyUUID,
+    public init(creatorId: CoatyUUID,
                 creationTimestamp: Double,
                 status: TaskStatus,
+                name: String = "TaskObject",
+                objectType: String = "\(COATY_PREFIX)\(CoreType.Task)",
+                objectId: CoatyUUID = .init(),
                 lastModificationTimestamp: Double? = nil,
                 dueTimestamp: Double? = nil,
                 doneTimestamp: Double? = nil,
@@ -145,4 +119,30 @@ open class Task: CoatyObject {
         try container.encodeIfPresent(desc, forKey: .description)
         try container.encodeIfPresent(workflowId, forKey: .workflowId)
     }
+}
+
+/// Predefined status values of Task objects.
+@objc
+public enum TaskStatus: Int, Codable {
+    
+    /// Initial state of a new task.
+    case pending = 0
+    
+    /// Task is in progress.
+    case inProgress = 1
+    
+    /// Task is completed.
+    case done = 2
+    
+    /// Task is blocked, e.g. because of a problem.
+    case blocked = 3
+    
+    /// Task is cancelled.
+    case cancelled = 4
+    
+    /// Task Request.
+    case request = 5
+    
+    /// Task Request Cancelled.
+    case requestCancelled = 6
 }
