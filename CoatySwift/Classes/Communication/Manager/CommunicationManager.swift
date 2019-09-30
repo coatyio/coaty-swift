@@ -28,6 +28,7 @@ public class CommunicationManager<Family: ObjectFamily> {
     private var associatedDevice: Device?
     private var isDisposed = false
     private var communicationOptions: CommunicationOptions
+    private var subscriptions = [String: Int]()
 
     /// Coaty identity object of the communication manager. Initialized through initializeIdentity().
     var identity: Component!
@@ -276,6 +277,12 @@ public class CommunicationManager<Family: ObjectFamily> {
                     if state == .online {
                         self.client.subscribe(topic)
                         // Do NOT delete deferredSubscriptions since we may need them for reconnects.
+                        // Save into subscription count map.
+                        if let count = self.subscriptions[topic] {
+                            self.subscriptions[topic] = count + 1
+                        } else {
+                            self.subscriptions[topic] = 1
+                        }
                     }
                 })
         }
@@ -285,7 +292,15 @@ public class CommunicationManager<Family: ObjectFamily> {
     ///   the deferredSubscriptions. Coaty-js handles this via its hashtable structure.
     func unsubscribe(topic: String) {
         _ = queue.sync {
-            client.unsubscribe(topic)
+            
+            if let count = self.subscriptions[topic] {
+                if count == 1 {
+                    client.unsubscribe(topic)
+                    self.subscriptions.removeValue(forKey: topic)
+                } else {
+                    self.subscriptions[topic] = count - 1
+                }
+            }
         }
     }
 
@@ -322,12 +337,15 @@ extension CommunicationManager: Startable {
     
     /// Starts the client after mDNS discovery.
     private func mDNSStart() {
-        updateOperatingState(.starting)
-        
-        // Listen to discover events.
-        observeDiscoverDevice()
-        observeDiscoverIdentity()
-        
-        updateOperatingState(.started)
+        if (communicationOptions.mqttClientOptions!.shouldTryMDNSDiscovery) {
+            
+            updateOperatingState(.starting)
+            
+            // Listen to discover events.
+            observeDiscoverDevice()
+            observeDiscoverIdentity()
+            
+            updateOperatingState(.started)
+        }
     }
 }
