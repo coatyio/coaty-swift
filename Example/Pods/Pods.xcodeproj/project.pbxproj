@@ -82,6 +82,12 @@
 		283B8287FC8DC74D50B6865B94A28DC1 /* QuickSpecBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AA778EC5F71DA64F3DE213AD26203F4 /* QuickSpecBase.m */; };
 		2898423F8FD16142140652D133685339 /* QueryEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688FFE96E124C3D34A46DB2E9FB64CE2 /* QueryEvent.swift */; };
 		2A67E801231EB52D001AF747 /* ControllerCommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A67E800231EB52D001AF747 /* ControllerCommunicationManager.swift */; };
+		2ACB561F23422D64003F21E4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACB561E23422D64003F21E4 /* Location.swift */; };
+		2ACB562223423035003F21E4 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACB562123423035003F21E4 /* Log.swift */; };
+		2ACB56242342306B003F21E4 /* Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACB56232342306B003F21E4 /* Annotation.swift */; };
+		2ACB56262342309E003F21E4 /* IoActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACB56252342309E003F21E4 /* IoActor.swift */; };
+		2ACB5628234230AC003F21E4 /* IoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACB5627234230AC003F21E4 /* IoSource.swift */; };
+		2ACB562A2342312C003F21E4 /* IoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACB56292342312C003F21E4 /* IoPoint.swift */; };
 		2BC5A87CEC3D4418132A44C26BE56CBE /* KeyPathBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33A2B063C845B60A940B068A5B44318 /* KeyPathBinder.swift */; };
 		2BF404416D566F6CC76EC1A4A6E7255A /* RefCountDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D715D33DD2DD9F435D06FC3C977BFA8E /* RefCountDisposable.swift */; };
 		2CD50E14AABEDAF0E3B32FCC94B5C3A6 /* SkipUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39386FA33B4A5FAFDD6D2956F1E4628E /* SkipUntil.swift */; };
@@ -805,6 +811,12 @@
 		2A50B7420399B9DF9F8BD8CE5878278A /* Cancelable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Cancelable.swift; path = RxSwift/Cancelable.swift; sourceTree = "<group>"; };
 		2A67E800231EB52D001AF747 /* ControllerCommunicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerCommunicationManager.swift; sourceTree = "<group>"; };
 		2AA778EC5F71DA64F3DE213AD26203F4 /* QuickSpecBase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QuickSpecBase.m; path = Sources/QuickSpecBase/QuickSpecBase.m; sourceTree = "<group>"; };
+		2ACB561E23422D64003F21E4 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		2ACB562123423035003F21E4 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		2ACB56232342306B003F21E4 /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
+		2ACB56252342309E003F21E4 /* IoActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IoActor.swift; sourceTree = "<group>"; };
+		2ACB5627234230AC003F21E4 /* IoSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IoSource.swift; sourceTree = "<group>"; };
+		2ACB56292342312C003F21E4 /* IoPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IoPoint.swift; sourceTree = "<group>"; };
 		2B086162B3A96F934AC51AB6E45D69E1 /* CommunicationState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CommunicationState.swift; sourceTree = "<group>"; };
 		2B48C016D53DE06C9F5FDB15DFBC0630 /* ObserveOn.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObserveOn.swift; path = RxSwift/Observables/ObserveOn.swift; sourceTree = "<group>"; };
 		2BA73AF98166F17D79DA42BAB44BC231 /* RxRelay-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "RxRelay-Info.plist"; sourceTree = "<group>"; };
@@ -1580,6 +1592,26 @@
 			path = Events;
 			sourceTree = "<group>";
 		};
+		2ACB562023422D6E003F21E4 /* Core Types */ = {
+			isa = PBXGroup;
+			children = (
+				AF4A8535823140DC1EBDB05AF0278062 /* CoreType.swift */,
+				6DD4E23F09CB0C57AFE62C3BEDA50D53 /* CoatyObject.swift */,
+				2ACB561E23422D64003F21E4 /* Location.swift */,
+				EAEA67488B2C81A8A82FBF5BEBF37DBE /* Snapshot.swift */,
+				95C3CAD09F646AFE1A429078D573AC13 /* Task.swift */,
+				E5E7BCF9C6A08845E0B06124910858AF /* Component.swift */,
+				D4AFF88361018DF108DAFC22FF36F043 /* Device.swift */,
+				71D6BF9A1AD7772E9C14BF491F6F3670 /* User.swift */,
+				2ACB562123423035003F21E4 /* Log.swift */,
+				2ACB56232342306B003F21E4 /* Annotation.swift */,
+				2ACB56252342309E003F21E4 /* IoActor.swift */,
+				2ACB5627234230AC003F21E4 /* IoSource.swift */,
+				2ACB56292342312C003F21E4 /* IoPoint.swift */,
+			);
+			path = "Core Types";
+			sourceTree = "<group>";
+		};
 		2E92388EAC8EB36A2EBFACAAFCB81E50 /* CocoaMQTT */ = {
 			isa = PBXGroup;
 			children = (
@@ -2008,15 +2040,9 @@
 		A64ADB9578F4472AE619974F3A2ADC10 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6DD4E23F09CB0C57AFE62C3BEDA50D53 /* CoatyObject.swift */,
-				E5E7BCF9C6A08845E0B06124910858AF /* Component.swift */,
-				AF4A8535823140DC1EBDB05AF0278062 /* CoreType.swift */,
-				D4AFF88361018DF108DAFC22FF36F043 /* Device.swift */,
+				2ACB562023422D6E003F21E4 /* Core Types */,
 				4754F7FD664C03FBAA3D23E5486C1F18 /* ObjectFilter.swift */,
 				6FEE3386AB82E313A442F2865C5D2EF8 /* ObjectJoinCondition.swift */,
-				EAEA67488B2C81A8A82FBF5BEBF37DBE /* Snapshot.swift */,
-				95C3CAD09F646AFE1A429078D573AC13 /* Task.swift */,
-				71D6BF9A1AD7772E9C14BF491F6F3670 /* User.swift */,
 				BCAF1EA7231E67AB00C7B707 /* DynamicAliases.swift */,
 				6F55F38A9A3F7FCF212625C38297072C /* One Way */,
 				A6E0685229FD741C84EF067CD749F93F /* Two Way */,
@@ -3512,6 +3538,7 @@
 				0867CD1E6410C7360D6C5C205DF2DA67 /* AdvertiseEvent.swift in Sources */,
 				85ED30265B5FB7B1B98AE112351B58D4 /* AgentInfo.swift in Sources */,
 				B2D77F9663E7D2325C3CEACF46CA2621 /* AnyCodable.swift in Sources */,
+				2ACB562A2342312C003F21E4 /* IoPoint.swift in Sources */,
 				6DBEE72AC8CE2AC34AC1EB590F723BAD /* AnyDecodable.swift in Sources */,
 				7A2034992D808358E2768C01ED907E3C /* AnyEncodable.swift in Sources */,
 				21CD8270C3E124C7841A3AB6A04503A9 /* CallEvent.swift in Sources */,
@@ -3526,7 +3553,9 @@
 				1B3DC9A049D5AED8CD168E14A8BD92D7 /* CommunicationConstants.swift in Sources */,
 				97FAF0409701E00A6FBF61CC1B7E1095 /* CommunicationEvent.swift in Sources */,
 				EBD40544EF6F6580D65AA7A447662861 /* CommunicationEventType.swift in Sources */,
+				2ACB56262342309E003F21E4 /* IoActor.swift in Sources */,
 				F917752A77FAC6142F4C9BCF9CA8E9BB /* CM+Observe.swift in Sources */,
+				2ACB56242342306B003F21E4 /* Annotation.swift in Sources */,
 				6119DF957164E6842F72932369102E22 /* CM+Publish.swift in Sources */,
 				828617D6AEBF902DE7EDE29C0ACE2435 /* CM+Util.swift in Sources */,
 				7FBDB307DE1DBC7F0D87D70467B2B014 /* CommunicationManager.swift in Sources */,
@@ -3543,6 +3572,7 @@
 				D5D822C46A08C31C2132E92F7868CA7E /* Deadvertise.swift in Sources */,
 				D2B30231D098C382B26F46692EA1A30E /* DeadvertiseEvent.swift in Sources */,
 				2DE6AD19A7A35E5417541C17B52E4F39 /* Device.swift in Sources */,
+				2ACB561F23422D64003F21E4 /* Location.swift in Sources */,
 				6615CAE3CCECDD837F7AF5878108B465 /* Discover.swift in Sources */,
 				2EF21FCC9CF48EBA965B3BD9FBF8787F /* DiscoverEvent.swift in Sources */,
 				44D56E494590A6E201B73605106CC371 /* EventFactory.swift in Sources */,
@@ -3560,6 +3590,7 @@
 				3E5BF0F4E36C6112287900048312B490 /* Resolve.swift in Sources */,
 				BCB1E9DF2327C99400C6D6E7 /* BonjourConfiguration.swift in Sources */,
 				2A67E801231EB52D001AF747 /* ControllerCommunicationManager.swift in Sources */,
+				2ACB5628234230AC003F21E4 /* IoSource.swift in Sources */,
 				BCCE092D232F882F003A4907 /* BonjourResolverDelegate.swift in Sources */,
 				BCD26D572342124B006A9F1F /* Components.swift in Sources */,
 				BCB1E9E02327C99400C6D6E7 /* BonjourResolver.swift in Sources */,
@@ -3567,6 +3598,7 @@
 				F5AF8B8002F95E0B20FD4E6090D3BF81 /* RetrieveEvent.swift in Sources */,
 				BC64F1EB231D57160012BAD4 /* DynamicController.swift in Sources */,
 				5502E30BF7B1609E74FC8ED06EFB20F3 /* ReturnEvent.swift in Sources */,
+				2ACB562223423035003F21E4 /* Log.swift in Sources */,
 				4A63BEC0805A841C9E61BAF671876521 /* Runtime.swift in Sources */,
 				38156C1F39C43E36C4B55F4579042DF8 /* Snapshot.swift in Sources */,
 				410E58AF344E262FEDBDC427CDF75C0E /* Task.swift in Sources */,

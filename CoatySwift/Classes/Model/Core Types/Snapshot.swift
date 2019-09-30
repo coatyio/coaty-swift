@@ -32,14 +32,15 @@ open class Snapshot<Family: ObjectFamily>: CoatyObject {
          creatorId: CoatyUUID,
          tags: [String]? = nil,
          object: CoatyObject,
-         objectId: CoatyUUID = .init(),
-         name: String = "SnapshotObject") {
+         name: String = "SnapshotObject",
+         objectType: String = "\(COATY_PREFIX)\(CoreType.Snapshot)",
+         objectId: CoatyUUID = .init()) {
         self.creationTimestamp = creationTimestamp
         self.creatorId = creatorId
         self.tags = tags
         self.object = object
         super.init(coreType: .Snapshot,
-                   objectType: CoatyObjectFamily.snapshot.rawValue,
+                   objectType: objectType,
                    objectId: objectId,
                    name: name)
     }

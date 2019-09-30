@@ -20,7 +20,10 @@ public class Device: CoatyObject {
     
     // MARK: - Initializers.
     
-    public init(objectType: String, objectId: CoatyUUID, name: String, displayType: DisplayType) {
+    public init(displayType: DisplayType,
+                name: String = "DeviceObject",
+                objectType: String = "\(COATY_PREFIX)\(CoreType.Device)",
+                objectId: CoatyUUID = .init()) {
         self.displayType = displayType
         super.init(coreType: .Device, objectType: objectType, objectId: objectId, name: name)
     }
