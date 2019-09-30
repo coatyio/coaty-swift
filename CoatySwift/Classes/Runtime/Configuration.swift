@@ -254,6 +254,8 @@ public class MQTTClientOptions {
     public var username: String?
     public var password: String?
     public var cleanSession: Bool
+    public var allowUntrustCACertificate: Bool
+    public var autoReconnectTimeInterval: Int
     
     /// Do not set keepAlive under 10 seconds. Otherwise it might happen that you will reconnect
     /// unnecessarily because of latency issues, especially if you are using a public broker.
@@ -270,7 +272,9 @@ public class MQTTClientOptions {
          password: String? = nil,
          cleanSession: Bool = true,
          keepAlive: UInt16 = 60,
-         autoReconnect: Bool = true) {
+         autoReconnect: Bool = true,
+         allowUntrustCACertificate: Bool = false,
+         autoReconnectTimeInterval: Int = 3) {
         self.host = host
         self.port = port
         self.enableSSL = enableSSL
@@ -281,6 +285,8 @@ public class MQTTClientOptions {
         self.cleanSession = cleanSession
         self.keepAlive = keepAlive
         self.autoReconnect = autoReconnect
+        self.allowUntrustCACertificate = allowUntrustCACertificate
+        self.autoReconnectTimeInterval = autoReconnectTimeInterval
     }
 }
 

@@ -54,14 +54,10 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
                          port: UInt16(mqttClientOptions.port))
         
         mqtt.keepAlive = mqttClientOptions.keepAlive
-        
-        // TODO: Make this configurable.
-        mqtt.allowUntrustCACertificate = true
+        mqtt.allowUntrustCACertificate = mqttClientOptions.allowUntrustCACertificate
         mqtt.enableSSL = mqttClientOptions.enableSSL
         mqtt.autoReconnect = mqttClientOptions.autoReconnect
-        
-        // TODO: Make this configurable.
-        mqtt.autoReconnectTimeInterval = 3 // seconds.
+        mqtt.autoReconnectTimeInterval = UInt16(mqttClientOptions.autoReconnectTimeInterval)
         mqtt.delegate = self
     }
     

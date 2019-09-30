@@ -26,7 +26,7 @@ public class CompleteEventFactory<Family: ObjectFamily>: EventFactoryInit {
 /// Note that this class should preferably initialized via its withObject() method.
 public class CompleteEvent<Family: ObjectFamily>: CommunicationEvent<CompleteEventData<Family>> {
     
-    /// TODO: This method should never be called directly by application programmers.
+    /// - NOTE: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
     override init(eventSource: Component, eventData: CompleteEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
