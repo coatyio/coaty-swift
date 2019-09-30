@@ -46,8 +46,11 @@ public class CoatyUUID: NSObject, Codable {
     
     // MARK: - Equatable methods.
     
-    public static func == (lhs: CoatyUUID, rhs: CoatyUUID) -> Bool {
-        return lhs.uuid == rhs.uuid
+    public override func isEqual(_ object: Any?) -> Bool {
+        if let other = object as? CoatyUUID {
+            return self.uuid == other.uuid
+        }
+        return false
     }
     
     // MARK: - String Convertible.
@@ -55,12 +58,4 @@ public class CoatyUUID: NSObject, Codable {
     override public var description: String {
         return self.string
     }
-    
-    // MARK: - Hashable methods.
-    
-    /*override public func hash(into hasher: inout Hasher) {
-        hasher.combine(uuid)
-    }*/
-
-    
 }
