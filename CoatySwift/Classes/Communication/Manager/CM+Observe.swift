@@ -136,11 +136,11 @@ extension CommunicationManager {
         }
         
         // TODO: Unsure about associatedUserId parameters. Is it really assigneeUserId?
-        let channelTopic = try CommunicationTopic.createTopicStringByLevelsForChannel(channelId: channelId,
-                                                                         associatedUserId: eventTarget
-                                                                            .assigneeUserId?.string,
-                                                                         sourceObject: nil,
-                                                                         messageToken: nil)
+        let channelTopic = try CommunicationTopic.createTopicStringByLevelsForChannel(
+            channelId: channelId, associatedUserId: nil,
+            sourceObject: nil,
+            messageToken: nil)
+        
         self.subscribe(topic: channelTopic)
 
         let observable =  client.messages.map(convertToTupleFormat)
