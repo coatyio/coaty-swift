@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"
+        integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="css/custom.css">
+
+    <link rel="stylesheet" href="css/code-theme.css">
+
+
+    <title>CoatySwift Tutorial v0.1</title>
+
+    <script>
+        // TODO: Move this to js script.
+        hljs.initHighlightingOnLoad();
+    </script>
+
+</head>
+
+<body>
+    <div class="container-fluid" id="content">
+        <!-- Introduction -->
+        <div class="row">
+            <div class="col">
+
+                <h1>CoatySwift</h1>
+
+                <br>
+
+                <p class="text-secondary">
+                    This example will show you how to setup a minimal Coaty application. Please note that this example
+                    is focused on setting up the base structure needed to get Coaty up and running, with little to no
+                    focus on actual application logic.
+                </p>
+
+                <br>
+
+                <div class="alert alert-secondary" role="alert">
+
+                    <p><small><b>Note</b>
+                            <br>
+                            Unfortunately there is no sequential way (where everything compiles after each step) to
+                            set up a Coaty container until you added all of the required components beforehand.
+                            Do not worry if you are getting errors, if you have followed all steps in this tutorial
+                            correctly, your project will compile successfully.
+
+                        </small></p>
+
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+
+        <!--Section 0 -->
+        <h5>Prerequisite</h5>
+        <h2>Start a Broker</h2>
+
+        <div class="row">
+            <div class="col">
+                <p class="text-secondary">
+                    CoatySwift needs a broker in order to run. We recommend checking out the following brokers:
+
+                    <ul>
+                        <li><a href="https://mosquitto.org/">Mosquitto</a>
+                        <li><a href="https://www.hivemq.com/">HiveMQ</a>
+                        <li><a href="https://vernemq.com/">VerneMQ</a>
+                    </ul>
+                </p>
+            </div>
+
+            <div class="col"></div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-5">
+
+                <div class="alert alert-step" role="alert">
+
+                    <p><small><b>Step 1</b>
+                            <br>
+                            Decide on a Message Broker and start it.
+                            <br>Its IP address and port are important for Step 3a.
+                        </small></p>
+
+                </div>
+
+
+
+            </div>
+
+            <div class="col-7">
+
+            </div>
+        </div>
+
+
+        <!-- Section 1 -->
+
+        <h5>Section 1</h5>
+        <h2>Create a New Project and
+            <br>Integrate CoatySwift</h2>
+
+        <div class="row">
+            <div class="col">
+                <p class="text-secondary">
+                    First, create a new project <code>HelloCoaty</code> and integrate CoatySwift.
+                    CoatySwift is available as a CocoaPod.
+                </p>
+            </div>
+
+            <div class="col"></div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-5">
+
+                <div class="alert alert-step" role="alert">
+
+                    <p><small><b>Step 1</b>
+                            <br>
+                            Integrate CoatySwift in your <code>Podfile</code> and install it via
+                            <code>pod install</code>.
+                        </small></p>
+
+                </div>
+
+
+
+            </div>
+
+            <div class="col-7">
+
+                <div class="card card-default">
+                    <div class="card-header"><code>Podfile</code></div>
+
+                    <div class="card-body">
+                        <pre><code class="ruby">
+target 'HelloCoaty' do
+    use_frameworks!
+
+    # Pods for CoatySwift
+    pod 'CoatySwift', :path => '../coaty-swift'
+
+end            </code></pre>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Section 2 -->
+
+        <h5>Section 2</h5>
+        <h2>Create a new CoatySwift ObjectFamily</h2>
+
+        <div class="row">
+            <div class="col">
+                <p class="text-secondary">
+                    If you want to use custom objects with your Coaty application, you will have to define each of
+                    them,
+                    and integrate them in a <code>ObjectFamily</code>. We will now create such an example object and
+                    integrate it accordingly.
+                </p>
+            </div>
+
+            <div class="col"></div>
+        </div>
+
+
+        <!-- Section 2 Step 1-->
+
+        <div class="row">
+
+            <div class="col-5">
+
+                <div class="alert alert-step" role="alert">
+
+                    <p><small><b>Step 1</b>
+                            <br>
+                            Add custom objects by creating classes that extend from <code>CoatyObject</code>.
+                            Also make sure that the object implements the <a
+                                href="https://developer.apple.com/documentation/swift/codable"><code>Codable</code></a>
+                            interface, and implement the methods <code>required init(from decoder: Decoder)</code>
+                            and
+                            <code>override func encode(to encoder: Encoder)</code>.
+
+
+                        </small></p>
+
+                </div>
+            </div>
+
+            <div class="col-7">
+
+                <div class="card card-default">
+                    <div class="card-header"><code>ExampleObject.swift</code></div>
+
+                    <div class="card-body">
+                        <pre><code class="swift">
+import Foundation
+import CoatySwift
+
+class ExampleObject: CoatyObject {
+    
+    let myValue: String
+    
+    init(myValue: String) {
+        self.myValue = myValue
+        super.init(coreType: .CoatyObject,
+                    objectType: ExampleObjectFamily.exampleObject.rawValue,
+                    objectId: .init(),
+                    name: "ExampleObject Name :)")
+    }
+    
+    // MARK: Codable methods.
+    
+    enum CodingKeys: String, CodingKey {
+        case myValue
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.myValue = try container.decode(String.self, forKey: .myValue)
+        try super.init(from: decoder)
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.myValue, forKey: .myValue)
+    }
+    
+}
+    </code></pre>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--Section 2 Step 2-->
+
+        <div class="row">
+
+            <div class="col-5">
+
+                <div class="alert alert-step" role="alert">
+
+                    <p><small><b>Step 2</b>
+                            <br>
+                            Create a new file <code>ExampleObjectFamily.swift</code>. Add the object type and class
+                            mapping to the file.
+                            <hr>
+                            After we have implemented all of our (custom) objects, you will have to add the
+                            corresponding object type case and its mapping to your custom object class. This is
+                            necessary in order to properly parse objects when they are sent over the wire.
+
+                        </small></p>
+
+                </div>
+            </div>
+
+            <div class="col-7">
+
+                <div class="card card-default">
+                    <div class="card-header"><code>ExampleObjectFamily.swift</code></div>
+
+                    <div class="card-body">
+                        <pre><code class="swift">
+enum ExampleObjectFamily: String, ObjectFamily {
+    case exampleObject = "io.coaty.hello-coaty.example-object"
+    
+    func getType() -> AnyObject.Type {
+        switch self {
+        case .exampleObject:
+            return ExampleObject.self
+        }
+    }
+}
+</code></pre>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3 Step 1 -->
+
+        <h5>Section 3</h5>
+        <h2>Setting up the Structure</h2>
+
+        <div class="row">
+
+            <div class="col-5">
+
+                <div class="alert alert-step" role="alert">
+
+                    <p><small><b>Step 1</b>
+                            <br>
+                            Create a global variable <code>coatyContainer</code>.
+                            <hr>
+                            This will hold a reference to our Coaty container.
+                            It is needed because otherwise all of our references go out of scope and for example
+                            then
+                            the MQTT connection is simply terminated.
+
+                        </small></p>
+
+                </div>
+
+
+
+
+            </div>
+            <div class="col-7">
+
+                <div class="card card-default">
+                    <div class="card-header"><code>AppDelegate.swift</code></div>
+
+                    <div class="card-body">
+                        <pre><code class="swift">
+import UIKit
+import CoatySwift
+
+/// Save a reference of your container in the app delegate to
+/// make sure it stays alive during the entire life-time of the app.
+var coatyContainer: Container&lt;ExampleObjectFamily&gt;?
+
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    ...
+}
+                        </code></pre>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3 Step 2-->
+        <div class="row">
+
+            <div class="col-5">
+
+                <div class="alert alert-step" role="alert">
+
+                    <p><small><b>Step 2a</b>
+                            <br>
+                            Create a new function in your <code>AppDelegate.swift</code> called
+                            <code>launchContainer()</code>. Make sure to call this method in your
+                            <code>application(_ application:, didFinishLaunchingWithOptions:)</code>
+                            method.
+                            <hr>
+                            This will be our main method for setting up the Coaty
+                            application.
+
+                        </small></p>
+
+                </div>
+
+                <div class="alert alert-step" role="alert">
+
+                    <p><small><b>Step 2b</b>
+                            <br>
+                            Instantiate the <code>controllers</code> in the <code>launchContainer()</code> me.
+                            <hr>
+                            Here, you define which controllers you want to use for your application. Note that the
+                            keys
+                            (such as <code>ExampleController</code>) do <b>not</b> have to have the exact name of
+                            their
+                            controller class. Feel free to give them any names you want. The <i>mapping</i> is the
+                            important thing, so
+                            which name maps to what controller class.
+
+                        </small></p>
+
+                </div>
+            </div>
+            <div class="col-7">
+
+                <div class="card card-default">
+                    <div class="card-header"><code>AppDelegate.swift</code></div>
+
+                    <div class="card-body">
+                        <pre><code class="swift">
+// MARK: - Coaty Container setup methods.
+
+/// This method sets up the Coaty container necessary to run our application.
+private func launchContainer() {
+    
+    // Instantiate controllers.
+    let components = Components(controllers: [
+        "ExampleControllerPublish": ExampleController&lt;ExampleObjectFamily&gt;.self, 
+        "ExampleControllerObserve": ExampleController&lt;ExampleObjectFamily&gt;.self
+        ])
+    ...
+}
+                                    </code></pre>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Section 3 Step 3a -->
+        <div class="row">
+
+            <div class="col-5">
+
+                <div class="alert alert-step" role="alert">
+
+                    <p><small><b>Step 3a</b>
+                            <br>
+                            Create a new method called <code>createExampleConfiguration()</code>.
+                            <hr>
+                            Note the <code>brokerOptions</code> variable in particular. These define your broker's
+                            address and ports.
+
+                        </small></p>
+
+                </div>
+
+
+
+
+            </div>
+            <div class="col-7">
+
+                <div class="card card-default">
+                    <div class="card-header"><code>AppDelegate.swift</code></div>
+
+                    <div class="card-body">
+                        <pre><code class="swift">
+/// This method creates an exemplary Coaty configuration. You can use it as a basis for your
+/// application.
+private func createExampleConfiguration() -> Configuration? {
+    return try? .build { config in
+        
+        // This part defines the associated user (aka the identity associated with this client).
+        config.common = CommonOptions()
+        
+        // Adjusts the logging level of CoatySwift messages, which is especially
+        // helpful when you want to debug applications.
+        config.common?.logLevel = .info
+        
+        // You can also add extra information to your configuration in the form of a
+        // [String: String] dictionary.
+        config.common?.extra = ["ContainerVersion": "0.0.1"]
+        
+        // Define the communication-related options, such as the Ip address of your broker and
+        // the port it exposes, and your own mqtt client Id. Also, make sure
+        // to immediately connect with the broker, indicated by `shouldAutoStart: true`.
+        let mqttClientOptions = MQTTClientOptions(host: brokerIp,
+                                            port: UInt16(brokerPort),
+                                            clientId: "\(CoatyUUID())",
+                                            enableSSL: false)
+        
+        config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,
+                                                    shouldAutoStart: true)
+        
+        // The communicationManager will advertise its identity upon connection to the
+        // mqtt broker.
+        config.communication?.shouldAdvertiseIdentity = true
+    }
+}
+                    </code></pre>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3 Step 3b -->
+        <div class="row">
+
+            <div class="col-5">
+
+                <div class="alert alert-step" role="alert">
+
+                    <p><small><b>Step 3b</b>
+                            <br>
+                            Go back to your <code>launchContainer()</code> method and load the configuration from
+                            the
+                            <code>createExampleConfiguration()</code> method.
+                        </small></p>
+
+                </div>
+
+
+
+
+            </div>
+            <div class="col-7">
+
+                <div class="card card-default">
+                    <div class="card-header"><code>AppDelegate.swift</code></div>
+
+                    <div class="card-body">
+                        <pre><code class="swift">
+// MARK: - Coaty Container setup methods.
+
+/// This method sets up the Coaty container necessary to run our application.
+private func launchContainer() {
+    
+    ...
+
+    // Create a configuration.
+    guard let configuration = createExampleConfiguration() else {
+        print("Invalid configuration! Please check your options.")
+        return
+    }
+
+    ...
+}
+                        </code></pre>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Section 3 Step 4 -->
+        <div class="row">
+
+            <div class="col-5">
+
+                <div class="alert alert-step" role="alert">
+
+                    <p><small><b>Step 4</b>
+                            <br>
+                            Resolve everything and assign the variable <code>coatyContainer</code> with the return
+                            value of
+                            <code>container.resolve(...)</code>, while passing in
+                            our previously defined <code>components</code>, <code>configuration</code> and our
+                            <code>ExampleObjectFamily.self</code>.
+                        </small></p>
+
+                </div>
+
+
+
+
+            </div>
+            <div class="col-7">
+
+                <div class="card card-default">
+                    <div class="card-header"><code>AppDelegate.swift</code></div>
+
+                    <div class="card-body">
+                        <pre><code class="swift">
+// MARK: - Coaty Container setup methods.
+
+/// This method sets up the Coaty container necessary to run our application.
+private func launchContainer() {
+    
+    ...
+
+    // Resolve everything!
+    coatyContainer = Container.resolve(components: components,
+                                       configuration: configuration,
+                                       objectFamily: ExampleObjectFamily.self)
+
+}
+                                    </code></pre>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Section 4 -->
+        <h5>Section 4</h5>
+        <h2>Create a new Controller</h2>
+
+        <div class="row">
+            <div class="col">
+
+                <p class="text-secondary">
+                    To be able to add your own business logic for a CoatySwift application you
+                    need to define one or
+                    multiple controllers. All controllers are created and managed by CoatySwift through life-cycle
+                    methods.
+                    <br><br>
+
+                    For the example, we will create two controllers: the <code>ExampleControllerPublish</code>
+                    and the <code>ExampleControllerObserve</code>. The <code>ExampleControllerPublish</code>
+                    will periodically publish an advertise event for an <code>ExampleObject</code> that will
+                    be received and printed by the <code>ExampleControllerObserve</code>.
+                    <br>
+                </p>
+                <div class="alert alert-secondary" role="alert">
+
+                    <p>
+                        <small>
+                            <b>Note</b><br>
+                            A Coaty <code>Controller</code> will never receive its own publications!
+                        </small>
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="col"></div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-5">
+
+                <div class="alert alert-step" role="alert">
+
+                    <p>
+                        <small>
+                            <b>Step 4a</b>
+                            <br>
+
+                            To create the <code>ExampleControllerPublish</code>, extend the <code>Controller</code>
+                            class.
+                            In the <code>onCommunicationManagerStarting()</code> method, we set up a timer that
+                            periodically executes the <code>publishAdvertise()</code> method below.
+
+                            <hr>
+
+                            The <code>publishAdvertise()</code> method implements a basic pattern for
+                            Coaty applications. We create an <code>ExampleObject</code>, add it to a new
+                            <code>AdvertiseEvent</code> that is created via the <code>EventFactory</code>
+                            and publish it using the <code>publishAdvertise()</code> method of the
+                            <code>CommunicationManager</code>.
+
+                        </small> </p>
+                </div>
+            </div>
+            <div class="col-7">
+
+                <div class="card card-default">
+                    <div class="card-header"><code>ExampleControllerPublish.swift</code>
+                    </div>
+
+                    <div class="card-body">
+                        <pre><code class="swift">
+class ExampleControllerPublish<Family: ObjectFamily>: Controller<Family> {
+
+    private var timer: Timer?
+    
+    override func onCommunicationManagerStarting() {
+        self.timer = Timer.scheduledTimer(timeInterval: 5.0,
+                                            target: self,
+                                            selector: #selector(publishAdvertise),
+                                            userInfo: nil,
+                                            repeats: true)
+    }
+    
+    @objc func publishAdvertise() {
+        // Create the object.
+        let object = ExampleObject(myValue: "Hello Coaty!")
+        
+        // Create an event by using the event factory.
+        let event = self.eventFactory.AdvertiseEvent
+            .withObject(eventSource: self.identity, object: object)
+        
+        // Publish the event by using the communication manager.
+        try? self.communicationManager.publishAdvertise(advertiseEvent: event,
+                                                        eventTarget: self.identity)
+        
+        print("[ExampleControllerPublish] published advertise event:\t\(object.myValue)")
+    }
+}                                          
+                            </code></pre>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4 Step 2 -->
+        <div class="row">
+
+            <div class="col-5">
+
+                <div class="alert alert-step" role="alert">
+
+                    <p>
+                        <small>
+                            <b>Step 4b</b>
+                            <br>
+
+                            We add a second controller called the <code>ExampleControllerObserve</code>
+                            and observe advertise events for objects of a certain object type. Again,
+                            we use the <code>CommunicationManager</code> and call the
+                            <code>observeAdvertiseWithObjectType()</code>
+                            method. The method returns a <code>Observable<CoatyObject></code>.
+                            <hr>
+                            We subscribe to <code>onNext</code> events that are emitted by the
+                            observable and cast the <code>CoatyObject</code> as an <code>ExampleObject</code>.
+                            Finally, we receive the <code>ExampleObject</code> as a normal Swift object
+                            an can print a message with the <code>myValue</code> attribute.
+
+                        </small> </p>
+                </div>
+            </div>
+            <div class="col-7">
+
+                <div class="card card-default">
+                    <div class="card-header"><code>ExampleControllerObserve.swift</code>
+                    </div>
+
+                    <div class="card-body">
+                        <pre><code class="swift">
+class ExampleControllerObserve&lt;Family: ObjectFamily&gt;: Controller<Family> {
+
+    override func onCommunicationManagerStarting() {
+        self.setupObserveAdvertise()
+    }
+    
+    private func setupObserveAdvertise() {
+        _ = try? self.communicationManager
+            .observeAdvertiseWithObjectType(eventTarget: self.identity,
+                                            objectType: "io.coaty.hello-coaty.example-object")
+            .subscribe(onNext: { (event) in
+                guard let object = event.data.object as? ExampleObject else {
+                    return
+                }
+                
+                print("[ExampleControllerObserve] received advertise event:\t\(object.myValue)")
+            })
+    }
+}                                                               
+                            </code></pre>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div> <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

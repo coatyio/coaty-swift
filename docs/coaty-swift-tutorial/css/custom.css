@@ -1,0 +1,31 @@
+
+.container-fluid {
+    background: white;
+    padding-left: 100px !important;
+    padding-right: 100px !important;
+}
+
+.row {
+    padding-top: 25px !important;
+    padding-bottom: 25px !important;
+}
+
+.card-body {
+    background: #2b2b2b !important;
+}
+
+.card-header {
+    background:  #2b2b2b !important;
+}
+
+.card-header code {
+    color: #ffffff !important;
+}
+
+.row {
+    margin-top: 20px;
+}
+
+.alert.alert-step {
+    background: rgba(216, 216, 216, 0.295) !important;
+}
