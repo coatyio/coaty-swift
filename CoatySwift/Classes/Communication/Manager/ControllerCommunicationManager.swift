@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  ControllerCommunicationManager.swift
 //  CoatySwift
@@ -55,13 +55,13 @@ public class ControllerCommunicationManager<Family: ObjectFamily> {
     /// Observe Channel events for the given target and the given
     /// channel identifier emitted by the hot observable returned.
     ///
-    /// - TODO: The channel identifier must be a non-empty string that does not contain
+    /// - MISSING: The channel identifier must be a non-empty string that does not contain
     /// the following characters: `NULL (U+0000)`, `# (U+0023)`, `+ (U+002B)`,
     /// `/ (U+002F)`.
     ///
-    /// - TODO: Channel events that originate from the given event target, i.e.
+    /// Channel events that originate from the given event target, i.e.
     /// that have been published by specifying the given event target as
-    //// event source, will not be emitted by the observable returned.
+    /// event source, will not be emitted by the observable returned.
     ///
     /// - Parameters:
     ///   - channelId: a channel identifier
@@ -105,8 +105,27 @@ public class ControllerCommunicationManager<Family: ObjectFamily> {
     public func observeDiscover<T: DiscoverEvent<Family>>() throws -> Observable<T> {
         return try cm.observeDiscover(eventTarget: self.controllerIdentity)
     }
-    
-    /// - TODO: Missing documentation!
+
+    /// Observe Call events for the given target and the given
+    /// operation name and context object, emitted by the hot observable returned.
+    ///
+    /// The operation name must be a non-empty string that does not contain
+    /// the following characters: `NULL (U+0000)`, `# (U+0023)`, `+ (U+002B)`,
+    /// `/ (U+002F)`.
+    ///
+    /// The given context object is matched against the context filter specified
+    /// in incoming Call event data to determine whether the Call event should be
+    /// emitted or skipped by the observable. A Call event is skipped if and only
+    /// if a context filter and a context object are *both* specified and they do not
+    /// match (checked by using `ObjectMatcher.matchesFilter`). In all other cases,
+    /// the Call event is emitted.
+    ///
+    /// Call events that originate from the given event target, i.e.
+    /// that have been published by specifying the given event target as
+    /// event source, will not be emitted by the observable returned.
+    ///
+    /// - Parameter operationId: the name of the operation to be invoked.
+    /// - Returns: a hot observable emitting incoming Call events whose context filter matches the given context
     public func observeCall<T: CallEvent<Family>>(operationId: String) throws -> Observable<T> {
         return try cm.observeCall(eventTarget: self.controllerIdentity, operationId: operationId)
     }
@@ -125,7 +144,7 @@ public class ControllerCommunicationManager<Family: ObjectFamily> {
     /// Publish a value on the given topic. Used to interoperate
     /// with external MQTT clients that subscribe on the given topic.
     ///
-    /// - TODO: The topic is an MQTT publication topic, i.e. a non-empty string
+    /// - MISSING: Checking that the topic is an MQTT publication topic, i.e. a non-empty string
     /// that must not contain the following characters: `NULL (U+0000)`,
     /// `# (U+0023)`, `+ (U+002B)`.
     ///

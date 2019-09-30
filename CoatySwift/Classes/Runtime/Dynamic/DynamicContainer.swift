@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  DynamicContainer.swift
 //  CoatySwift
@@ -8,7 +8,7 @@ import Foundation
 import RxSwift
 import XCGLogger
 
-/// __Experimental__: An IoC container that uses constructor dependency injection to
+/// - __Experimental__: An IoC container that uses constructor dependency injection to
 /// create container components and to resolve dependencies for __dynamic Coaty__.
 /// This container defines the entry and exit points for any Coaty application
 /// providing lifecycle management for its components.
@@ -33,20 +33,7 @@ public class DynamicContainer {
     // HOWEVER: IT SHOULD BE OPERATING STATE BASED.
     private var communicationState: Observable<CommunicationState>?
     
-    /// Creates and bootstraps a Coaty container by registering and resolving
-    /// the given components and configuration options.
-    ///
-    /// - NOTE: Currently we do not rely on this initializer. It may be possible to remove it.
-    /// - Parameters:
-    ///     - components the components to set up within this container
-    ///     - configuration the configuration options for the components
-    /*private init(comManager: CommunicationManager? = nil, isShutdown: Bool) {
-     self.comManager = comManager
-     self.isShutdown = isShutdown
-     self.operatingState = ((comManager?.operatingState)?.asObservable())!
-     }*/
-    
-    // TODO: Missing config transformer dependency.
+    // - MISSING: config transformer dependency.
     public static func resolve(components: DynamicComponents,
                                configuration: Configuration
         /* configTransformer: */)  -> DynamicContainer {
@@ -224,25 +211,5 @@ public class DynamicContainer {
         default:
             ()
         }
-    }
-}
-
-/// Defines the application-specific container components to be registered
-/// with a Coaty Container.
-///
-/// - TODO: Move to separate file.
-/// The configuration options for the container component classes
-/// are specified in the `controllers` options of a Configuration object.
-public class DynamicComponents {
-    
-    /// Application-specific controller classes to be registered
-    /// with the runtime container. The configuration options for a
-    /// controller class listed here are specified in the controller
-    /// configuration under a key that matches the given name of the
-    /// controller class.
-    public var controllers: [String: DynamicController.Type]?
-    
-    public init(controllers: [String: DynamicController.Type]) {
-        self.controllers = controllers
     }
 }

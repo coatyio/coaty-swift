@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  HelloWorldExampleViewController.swift
 //  CoatySwift_Example
@@ -13,7 +13,7 @@ import CoatySwift
 class HelloWorldExampleViewController: UIViewController {
     
     let enableSSL = false
-    let brokerIp = "192.168.1.120"
+    let brokerIp = "192.168.1.161"
     let brokerPort = 1883
     
     override func viewDidLoad() {

@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  CallEvent.swift
 //  CoatySwift
@@ -89,7 +89,7 @@ public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<F
     /// Inside the framework, calling is ok.
     fileprivate init(eventSource: Component, eventData: CallEventData<Family>, operation: String) {
         
-        if !Topic.isValidEventTypeFilter(filter: operation) {
+        if !CommunicationTopic.isValidEventTypeFilter(filter: operation) {
             LogManager.log.warning("\(operation) is not a valid operation name.")
         }
         
