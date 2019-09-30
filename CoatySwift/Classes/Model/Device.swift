@@ -26,22 +26,28 @@ public class Device: CoatyObject {
     }
     
     // MARK: - Codable methods.
+    
+    enum DeviceKeys: String, CodingKey {
+        case displayType
+    }
 
     public required init(from decoder: Decoder) throws {
-        // TODO: add Decodable conformance.
-        fatalError("Codable is not implemented for Device.")
+        let container = try decoder.container(keyedBy: DeviceKeys.self)
+        self.displayType = try container.decode(DisplayType.self, forKey: .displayType)
+        try super.init(from: decoder)
     }
     
     public override func encode(to encoder: Encoder) throws {
-        // TODO: add Encodable conformance.
-        fatalError("Codable is not implemented for Device.")
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: DeviceKeys.self)
+        try container.encode(displayType, forKey: .displayType)
     }
 }
 
 // MARK: - DisplayType.
 
 /// Defines display types for Coaty interaction devices.
-public enum DisplayType {
+public enum DisplayType: Int, Codable {
     
     /// A headless device representing a field device or a
     /// backend/service component.

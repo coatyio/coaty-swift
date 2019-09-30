@@ -86,11 +86,11 @@ public class CommonOptions {
     public var extra = [String: Any]()
     
     /// Setting for the level of the CoatySwift Logger.
-    public var logLevel = LogLevel.error
+    public var logLevel = CoatySwiftLogLevel.error
     
     public init(associatedUser: User? = nil, associatedDevice: Device? = nil,
          agentInfo: AgentInfo? = nil, extra: [String: Any]? = nil,
-         logLevel: LogLevel? = nil) {
+         logLevel: CoatySwiftLogLevel? = nil) {
         self.associatedUser = associatedUser
         self.associatedDevice = associatedDevice
         self.agentInfo = agentInfo

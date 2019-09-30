@@ -11,7 +11,7 @@ import Foundation
 ///
 /// Agent information is generated when the agent project is build
 /// and can be used at run time, e.g. for logging, display, or configuration.
-public class AgentInfo {
+public class AgentInfo: Codable {
     
     // MARK: - Attributes.
     
@@ -28,10 +28,32 @@ public class AgentInfo {
         self.buildInfo = buildInfo
         self.configInfo = configInfo
     }
+    
+    // MARK: Codable methods.
+    
+    enum AgentInfoKeys: String, CodingKey {
+        case packageInfo
+        case buildInfo
+        case configInfo
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: AgentInfoKeys.self)
+        self.packageInfo = try container.decode(AgentPackageInfo.self, forKey: .packageInfo)
+        self.buildInfo = try container.decode(AgentBuildInfo.self, forKey: .buildInfo)
+        self.configInfo = try container.decode(AgentConfigInfo.self, forKey: .configInfo)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: AgentInfoKeys.self)
+        try container.encode(packageInfo, forKey: .packageInfo)
+        try container.encode(buildInfo, forKey: .buildInfo)
+        try container.encode(configInfo, forKey: .configInfo)
+    }
 }
 
 /// Represents information about the agent's package (usually npm).
-public class AgentPackageInfo {
+public class AgentPackageInfo: Codable {
     
     // MARK: - Attributes.
     
@@ -54,17 +76,38 @@ public class AgentPackageInfo {
         }
     }
     
+    // MARK: - Codable methods.
+    
+    enum AgentPackageInfoKeys: String, CodingKey {
+        case name
+        case version
+        case extra
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: AgentPackageInfoKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.version = try container.decode(String.self, forKey: .version)
+        self.extra = try container.decode([String: Any].self, forKey: .extra)
+    }
+       
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: AgentPackageInfoKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(version, forKey: .version)
+        try container.encode(extra, forKey: .extra)
+    }
+    
 }
 
 /// Represents information about agent build.
-public class AgentBuildInfo {
+public class AgentBuildInfo: Codable {
     
     // MARK: - Attributes.
     
     /// The build date of the agent project.
     ///
-    /// The value is in ISO 8601 format and parsable by `new Date(<isoString>)`
-    /// or `Date.parse(<isoString>)`.
+    /// The value should be formatted accordind to ISO 8601.
     public var buildDate: String
     
     /// The build mode of the agent project. Determines whether the agent
@@ -89,10 +132,31 @@ public class AgentBuildInfo {
         }
     }
     
+    // MARK: - Codable methods.
+    
+    enum AgentBuildInfoKeys: String, CodingKey {
+        case buildDate
+        case buildMode
+        case extra
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: AgentBuildInfoKeys.self)
+        self.buildMode = try container.decode(String.self, forKey: .buildMode)
+        self.buildDate = try container.decode(String.self, forKey: .buildDate)
+        self.extra = try container.decode([String: Any].self, forKey: .extra)
+    }
+       
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: AgentBuildInfoKeys.self)
+        try container.encode(buildMode, forKey: .buildMode)
+        try container.encode(buildDate, forKey: .buildDate)
+        try container.encode(extra, forKey: .extra)
+    }
 }
 
 /// Represents information about agent configuration.
-public class AgentConfigInfo {
+public class AgentConfigInfo: Codable {
     
     // MARK: - Attributes,
     
@@ -113,5 +177,24 @@ public class AgentConfigInfo {
         if let extra = extra {
             self.extra = extra
         }
+    }
+    
+    // MARK: - Codable methods.
+    
+    enum AgentConfigInfoKeys: String, CodingKey {
+        case serviceHost
+        case extra
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: AgentConfigInfoKeys.self)
+        self.serviceHost = try container.decode(String.self, forKey: .serviceHost)
+        self.extra = try container.decode([String: Any].self, forKey: .extra)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: AgentConfigInfoKeys.self)
+        try container.encode(serviceHost, forKey: .serviceHost)
+        try container.encode(extra, forKey: .extra)
     }
 }

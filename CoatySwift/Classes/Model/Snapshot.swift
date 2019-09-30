@@ -33,7 +33,7 @@ open class Snapshot<Family: ObjectFamily>: CoatyObject {
          tags: [String]? = nil,
          object: CoatyObject,
          objectId: CoatyUUID = .init(),
-         name: String) {
+         name: String = "SnapshotObject") {
         self.creationTimestamp = creationTimestamp
         self.creatorId = creatorId
         self.tags = tags

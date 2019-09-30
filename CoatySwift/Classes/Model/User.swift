@@ -32,15 +32,78 @@ public class User: CoatyObject {
     
     // MARK: - Codable methods.
     
+    enum UserKeys: String, CodingKey {
+        case names
+        case displayName
+        case nickName
+        case title
+        case userType
+        case preferredLanguage
+        case locale
+        case timezone
+        case active
+        case phoneNumbers
+        case password
+        case emails
+        case ims
+        case photos
+        case addresses
+        case groups
+        case entitlements
+        case roles
+        case x509Certificates
+    }
+    
     public required init(from decoder: Decoder) throws {
-        // TODO: add Decodable conformance.
-        fatalError("Codable is not implemented for User.")
+        let container = try decoder.container(keyedBy: UserKeys.self)
+        self.names = try container.decode(ScimUserNames.self, forKey: .names)
+        self.displayName = try container.decodeIfPresent(String.self, forKey: .displayName)
+        self.nickName = try container.decodeIfPresent(String.self, forKey: .nickName)
+        self.title = try container.decodeIfPresent(String.self, forKey: .title)
+        self.userType = try container.decodeIfPresent(String.self, forKey: .userType)
+        self.preferredLanguage = try container.decodeIfPresent(String.self, forKey: .preferredLanguage)
+        self.locale = try container.decodeIfPresent(String.self, forKey: .locale)
+        self.timezone = try container.decodeIfPresent(String.self, forKey: .timezone)
+        self.active = try container.decodeIfPresent(Bool.self, forKey: .active)
+        self.password = try container.decodeIfPresent(String.self, forKey: .password)
+        self.emails = try container.decodeIfPresent([ScimMultiValuedAttribute].self, forKey: .emails)
+        self.phoneNumbers = try container.decodeIfPresent([ScimMultiValuedAttribute].self, forKey: .phoneNumbers)
+        self.ims = try container.decodeIfPresent([ScimMultiValuedAttribute].self, forKey: .ims)
+        self.photos = try container.decodeIfPresent([ScimMultiValuedAttribute].self, forKey: .photos)
+        self.addresses = try container.decodeIfPresent([ScimAddress].self, forKey: .addresses)
+        self.groups = try container.decodeIfPresent([ScimMultiValuedAttribute].self, forKey: .groups)
+        self.entitlements = try container.decodeIfPresent(AnyCodable.self, forKey: .entitlements)
+        self.roles = try container.decodeIfPresent([String].self, forKey: .roles)
+        self.x509Certificates = try container.decodeIfPresent([String].self, forKey: .x509Certificates)
+        
+        try super.init(from: decoder)
     }
     
     public override func encode(to encoder: Encoder) throws {
-        // TODO: add Encodable conformance.
-        fatalError("Codable is not implemented for User.")
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: UserKeys.self)
+        try container.encodeIfPresent(names, forKey: .names)
+        try container.encodeIfPresent(displayName, forKey: .displayName)
+        try container.encodeIfPresent(nickName, forKey: .displayName)
+        try container.encodeIfPresent(title, forKey: .title)
+        try container.encodeIfPresent(userType, forKey: .title)
+        try container.encodeIfPresent(preferredLanguage, forKey: .preferredLanguage)
+        try container.encodeIfPresent(locale, forKey: .preferredLanguage)
+        try container.encodeIfPresent(timezone, forKey: .timezone)
+        try container.encodeIfPresent(active, forKey: .timezone)
+        try container.encodeIfPresent(phoneNumbers, forKey: .phoneNumbers)
+        try container.encodeIfPresent(password, forKey: .phoneNumbers)
+        try container.encodeIfPresent(emails, forKey: .emails)
+        try container.encodeIfPresent(ims, forKey: .emails)
+        try container.encodeIfPresent(photos, forKey: .photos)
+        try container.encodeIfPresent(addresses, forKey: .addresses)
+        try container.encodeIfPresent(groups, forKey: .groups)
+        try container.encodeIfPresent(entitlements, forKey: .groups)
+        try container.encodeIfPresent(roles, forKey: .roles)
+        try container.encodeIfPresent(x509Certificates, forKey: .roles)
     }
+    
+    // MARK: Attributes.
     
     /// SCIM userName property: A service provider's unique identifier for the user, typically
     /// used by the user to directly authenticate to the service provider.
@@ -223,7 +286,7 @@ public class User: CoatyObject {
     /// determine what the user has access to.  This value has no
     /// canonical types, although a type may be useful as a means to scope
     /// entitlements.
-    public var entitlements: AnyCodable = []
+    public var entitlements: AnyCodable? = []
     
     /// A list of roles for the user that collectively represent who the
     /// user is, e.g., "Student", "Faculty".  No vocabulary or syntax is
@@ -250,7 +313,7 @@ public class User: CoatyObject {
 /// both. If both variants are returned, they SHOULD be describing
 /// the same name, with the formatted name indicating how the
 /// component attributes should be combined.
-public class ScimUserNames {
+public class ScimUserNames: Codable {
     
     /// The full name, including all middle names, titles, and
     /// suffixes as appropriate, formatted for display (e.g.,
@@ -297,15 +360,9 @@ public class ScimUserNames {
     
 }
 
-/// - TODO: Implement Codable.
-public class ScimMultiValuedAttribute {
+public class ScimMultiValuedAttribute: Codable {
     
-    public init(type: String, value: String, primary: Bool? = nil, display: String? = nil) {
-        self.type = type
-        self.value = value
-        self.primary = primary
-        self.display = display
-    }
+    // MARK: Attributes.
     
     /// A label indicating the attribute's function, e.g., "work" or
     /// "home".
@@ -326,9 +383,42 @@ public class ScimMultiValuedAttribute {
     /// having a mutability of "immutable".
     public var display: String?
     
+    // MARK: Initializers.
+    
+    public init(type: String, value: String, primary: Bool? = nil, display: String? = nil) {
+        self.type = type
+        self.value = value
+        self.primary = primary
+        self.display = display
+    }
+    
+    // MARK: - Codable methods.
+    
+    enum ScimMultiValuedAttributeKeys: String, CodingKey {
+        case type
+        case value
+        case primary
+        case display
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: ScimMultiValuedAttributeKeys.self)
+        self.type = try container.decode(String.self, forKey: .type)
+        self.value = try container.decode(String.self, forKey: .value)
+        self.primary = try container.decodeIfPresent(Bool.self, forKey: .primary)
+        self.display = try container.decodeIfPresent(String.self, forKey: .display)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: ScimMultiValuedAttributeKeys.self)
+        try container.encodeIfPresent(type, forKey: .type)
+        try container.encodeIfPresent(value, forKey: .value)
+        try container.encodeIfPresent(primary, forKey: .primary)
+        try container.encodeIfPresent(display, forKey: .display)
+    }
+    
 }
 
-/// - TODO: Implement Codable.
 public class ScimAddress: ScimMultiValuedAttribute {
     
     /// The full mailing address, formatted for display or use
@@ -355,4 +445,36 @@ public class ScimAddress: ScimMultiValuedAttribute {
     /// the United States and Sweden are "US" and "SE", respectively.
     public var country: String?
     
+    // MARK: - Codable methods.
+    
+    enum ScimAddressKeys: String, CodingKey {
+        case formatted
+        case streetAddress
+        case locality
+        case region
+        case postalCode
+        case country
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: ScimAddressKeys.self)
+        self.formatted = try container.decodeIfPresent(String.self, forKey: .formatted)
+        self.streetAddress = try container.decodeIfPresent(String.self, forKey: .streetAddress)
+        self.locality = try container.decodeIfPresent(String.self, forKey: .locality)
+        self.region = try container.decodeIfPresent(String.self, forKey: .region)
+        self.postalCode = try container.decodeIfPresent(String.self, forKey: .postalCode)
+        self.country = try container.decodeIfPresent(String.self, forKey: .country)
+        try super.init(from: decoder)
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: ScimAddressKeys.self)
+        try container.encodeIfPresent(formatted, forKey: .formatted)
+        try container.encodeIfPresent(streetAddress, forKey: .streetAddress)
+        try container.encodeIfPresent(locality, forKey: .locality)
+        try container.encodeIfPresent(region, forKey: .region)
+        try container.encodeIfPresent(postalCode, forKey: .postalCode)
+        try container.encodeIfPresent(country, forKey: .country)
+    }
 }

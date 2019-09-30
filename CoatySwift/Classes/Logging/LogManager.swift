@@ -33,7 +33,7 @@ class LogManager {
         return log
     }()
     
-    static internal func getLogLevel(logLevel: LogLevel) -> XCGLogger.Level {
+    static internal func getLogLevel(logLevel: CoatySwiftLogLevel) -> XCGLogger.Level {
         switch logLevel {
         case .debug:
             return XCGLogger.Level.debug
@@ -47,7 +47,7 @@ class LogManager {
     }
 }
 
-public enum LogLevel {
+public enum CoatySwiftLogLevel {
     case debug
     case info
     case warning

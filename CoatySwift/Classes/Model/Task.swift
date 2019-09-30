@@ -80,9 +80,9 @@ open class Task: CoatyObject {
 
     // MARK: - Initializers.
 
-    public init(objectType: String,
-                objectId: CoatyUUID,
-                name: String,
+    public init(objectType: String = "\(COATY_PREFIX)\(CoreType.Task)",
+                objectId: CoatyUUID = .init(),
+                name: String = "TaskObject",
                 creatorId: CoatyUUID,
                 creationTimestamp: Double,
                 status: TaskStatus,

@@ -8,8 +8,6 @@
 import Foundation
 
 /// CoatyObjectFamily defines the objectType to Class mapping for all Coaty default objects.
-/// - TODO: Add remaining cases for the mapping.
-/// - TODO: Make me private? Maybe it is required to stay public.
 public enum CoatyObjectFamily: String, ObjectFamily {
     case coatyObject = "coaty.CoatyObject"
     case user = "coaty.User"
@@ -18,6 +16,8 @@ public enum CoatyObjectFamily: String, ObjectFamily {
     case task = "coaty.Task"
     case ioSource = "coaty.IoSource"
     case ioActor = "coaty.IoActor"
+    
+    /// Config is unspported for CoatySwift.
     case config = "coaty.Config"
     case log = "coaty.Log"
     case location = "coaty.Location"
@@ -40,6 +40,22 @@ public enum CoatyObjectFamily: String, ObjectFamily {
             // TODO: This does _not_ work. For now we decided to let the application programmer
             // implement the mapping. We might decide to drop the CoatyObjectFamily entirely.
             return Snapshot<CoatyObjectFamily>.self
+        case .user:
+            return User.self
+        case .device:
+            return Device.self
+        case .annotation:
+            return Annotation.self
+        case .ioSource:
+            return IoSource.self
+        case .ioActor:
+            return IoActor.self
+        case .location:
+            return Location.self
+        case .task:
+            return Task.self
+        case .log:
+            return Log.self
         
         // Core type matching for dynamic coaty applications.
         case .core_Task:
@@ -48,8 +64,8 @@ public enum CoatyObjectFamily: String, ObjectFamily {
             return CoatyObject.self
         case .core_Snapshot:
             return Snapshot<CoatyObjectFamily>.self
+    
         default:
-            // TODO: Add remaining cases.
             return CoatyObject.self
         }
     }

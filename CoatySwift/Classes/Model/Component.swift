@@ -9,7 +9,9 @@ import Foundation
 /// Represents a Coaty container component, i.e. a controller or the communication manager.
 public class Component: CoatyObject {
     
-    public init(name: String, objectType: String = "\(COATY_PREFIX)\(CoreType.Component)", objectId: CoatyUUID = .init()) {
+    public init(name: String = "ComponentObject",
+                objectType: String = "\(COATY_PREFIX)\(CoreType.Component)",
+                objectId: CoatyUUID = .init()) {
         super.init(coreType: .Component, objectType: objectType, objectId: objectId, name: name)
     }
     
