@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  ObjectFilter.swift
 //  CoatySwift
@@ -341,7 +341,7 @@ public class ObjectFilterCondition: Codable {
         try closure(builder)
         
         guard let expression = builder.expression, let property = builder.property else {
-            throw CoatySwiftError.InvalidArgument("TODO ABSC")
+            throw CoatySwiftError.InvalidArgument("The object filter condition could not be built!")
         }
         
         return ObjectFilterCondition(property: property, expression: expression)

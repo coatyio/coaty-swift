@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  DeadvertiseEvent.swift
 //  CoatySwift
@@ -22,7 +22,7 @@ public class DeadvertiseEventFactory<Family: ObjectFamily>: EventFactoryInit {
 /// Note that this class should preferably initialized via its withObject() method.
 public class DeadvertiseEvent: CommunicationEvent<DeadvertiseEventData> {
     
-    /// TODO: This method should never be called directly by application programmers.
+    /// - NOTE: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
     override init(eventSource: Component, eventData: DeadvertiseEventData) {
         super.init(eventSource: eventSource, eventData: eventData)

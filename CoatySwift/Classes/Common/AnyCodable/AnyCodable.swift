@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 // Source: https://github.com/Flight-School/AnyCodable/tree/master/Sources/AnyCodable
 
 import Foundation

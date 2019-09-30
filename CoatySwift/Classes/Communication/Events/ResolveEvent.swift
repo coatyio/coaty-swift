@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  ResolveEvent.swift
 //  CoatySwift
@@ -50,7 +50,7 @@ public class ResolveEvent<Family: ObjectFamily>: CommunicationEvent<ResolveEvent
     
     // MARK: - Initializers.
     
-    /// TODO: This method should never be called directly by application programmers.
+    /// - NOTE: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
     override init(eventSource: Component, eventData: ResolveEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)

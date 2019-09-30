@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  DbConnectionInfo.swift
 //  CoatySwift
@@ -22,8 +22,7 @@ public class DbConnectionInfo {
     public var adapter: String
     
     /// Adapter-specific configuration options (optional).
-    /// - TODO: This should not be an any.
-    public var adapterOptions: Any?
+    public var adapterOptions: [String: Any]?
     
     /// An adapter-specific connection string or Url containing connection
     /// details (optional).
@@ -36,7 +35,7 @@ public class DbConnectionInfo {
     
     // MARK: - Initializers.
     
-    public init(adapter: String, adapterOptions: Any? = nil,
+    public init(adapter: String, adapterOptions: [String: Any]? = nil,
          connectionString: String? = nil, connectionOptions: Any? = nil) {
         self.adapter = adapter
         self.adapterOptions = adapterOptions

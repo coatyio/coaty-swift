@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  CommunicationManager+Publish.swift
 //  CoatySwift
@@ -14,9 +14,9 @@ extension CommunicationManager {
     /// Publish a value on the given topic. Used to interoperate
     /// with external MQTT clients that subscribe on the given topic.
     ///
-    /// - TODO: The topic is an MQTT publication topic, i.e. a non-empty string
-    /// that must not contain the following characters: `NULL (U+0000)`,
-    /// `# (U+0023)`, `+ (U+002B)`.
+    /// - MISSING: Check that the topic is an MQTT publication topic,
+    /// i.e. a non-empty string that must not contain the following
+    /// characters: `NULL (U+0000)`, `# (U+0023)`, `+ (U+002B)`.
     ///
     /// - Parameters:
     ///   - topic: the topic on which to publish the given payload
@@ -32,14 +32,14 @@ extension CommunicationManager {
     public func publishAdvertise<Family: ObjectFamily,T: AdvertiseEvent<Family>>(advertiseEvent: T,
                                                                                  eventTarget: Component) throws {
         
-        let topicForObjectType = try Topic
+        let topicForObjectType = try CommunicationTopic
             .createTopicStringByLevelsForPublish( eventType: .Advertise,
                                                   eventTypeFilter:advertiseEvent.data.object.objectType,
                                                   associatedUserId: "-",
                                                   sourceObject: advertiseEvent.source,
                                                   messageToken: CoatyUUID().string)
         
-        let topicForCoreType = try Topic
+        let topicForCoreType = try CommunicationTopic
             .createTopicStringByLevelsForPublish(eventType: .Advertise,
                                                  eventTypeFilter: advertiseEvent.data.object.coreType.rawValue,
                                                  associatedUserId: "-",
@@ -81,7 +81,7 @@ extension CommunicationManager {
     ///
     /// - Parameter deadvertiseEvent: the Deadvertise event to be published
     public func publishDeadvertise(deadvertiseEvent: DeadvertiseEvent) throws {
-        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Deadvertise,
+        let topic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Deadvertise,
                                                                   eventTypeFilter: nil,
                                                                   associatedUserId: deadvertiseEvent.userId
                                                                     ?? EMPTY_ASSOCIATED_USER_ID,
@@ -102,13 +102,13 @@ extension CommunicationManager {
     /// - Returns: a hot observable on which associated Resolve events are emitted.
     public func publishUpdate<V: CompleteEvent<Family>>(event: UpdateEvent<Family>) throws -> Observable<V> {
         let updateMessageToken = UUID.init().uuidString.lowercased()
-        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Update,
+        let topic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Update,
                                                                   eventTypeFilter: nil,
                                                                   associatedUserId: EMPTY_ASSOCIATED_USER_ID,
                                                                   sourceObject: event.source,
                                                                   messageToken: updateMessageToken)
   
-        let completeTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Complete,
+        let completeTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Complete,
                                                                             eventTypeFilter: nil,
                                                                             associatedUserId: nil,
                                                                             sourceObject: nil,
@@ -154,7 +154,7 @@ extension CommunicationManager {
             throw CoatySwiftError.InvalidArgument("Could not publish because ChannelID missing.")
         }
         
-        let publishTopic = try Topic.createTopicStringByLevelsForPublish(eventType: .Channel,
+        let publishTopic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Channel,
                                                                          eventTypeFilter: channelId,
                                                                          associatedUserId: EMPTY_ASSOCIATED_USER_ID,
                                                                          sourceObject: event.source,
@@ -173,13 +173,13 @@ extension CommunicationManager {
     /// - Returns: a hot observable on which associated Resolve events are emitted.
     public func publishDiscover<V: ResolveEvent<Family>>(event: DiscoverEvent<Family>) throws -> Observable<V> {
         let discoverMessageToken = UUID.init().uuidString
-        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Discover,
+        let topic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Discover,
                                                                   eventTypeFilter: nil,
                                                                   associatedUserId: EMPTY_ASSOCIATED_USER_ID,
                                                                   sourceObject: event.source,
                                                                   messageToken: discoverMessageToken)
         
-        let resolveTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Resolve,
+        let resolveTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Resolve,
                                                                            eventTypeFilter: nil,
                                                                            associatedUserId: nil,
                                                                            sourceObject: nil,
@@ -232,13 +232,13 @@ extension CommunicationManager {
     /// - Returns: a hot observable on which associated Retrieve events are emitted.
     public func publishQuery<V: RetrieveEvent<Family>>(event: QueryEvent<Family>) throws -> Observable<V> {
         let queryMessageToken = UUID.init().uuidString
-        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Query,
+        let topic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Query,
                                                                   eventTypeFilter: nil,
                                                                   associatedUserId: EMPTY_ASSOCIATED_USER_ID,
                                                                   sourceObject: event.source,
                                                                   messageToken: queryMessageToken)
         
-        let retrieveTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Retrieve,
+        let retrieveTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Retrieve,
                                                                            eventTypeFilter: nil,
                                                                            associatedUserId: nil,
                                                                            sourceObject: nil,
@@ -287,7 +287,7 @@ extension CommunicationManager {
                                                   event: CompleteEvent<Family>,
                                                   messageToken: String) throws {
         
-        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Complete,
+        let topic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Complete,
                                                               eventTypeFilter: nil,
                                                               associatedUserId: EMPTY_ASSOCIATED_USER_ID,
                                                               sourceObject: identity,
@@ -306,7 +306,7 @@ extension CommunicationManager {
                                                        event: ResolveEvent<Family>,
                                                        messageToken: String) throws {
         
-        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Resolve,
+        let topic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Resolve,
                                                                   eventTypeFilter: nil,
                                                                   associatedUserId: EMPTY_ASSOCIATED_USER_ID,
                                                                   sourceObject: identity,
@@ -332,12 +332,12 @@ extension CommunicationManager {
     public func publishCall<V: ReturnEvent<Family>>(event: CallEvent<Family>) throws -> Observable<V> {
         
         let publishMessageToken = CoatyUUID().string
-        let topic = try Topic.createTopicStringByLevelsForCall(operationId: event.operation,
+        let topic = try CommunicationTopic.createTopicStringByLevelsForCall(operationId: event.operation,
                                                                associatedUserId: EMPTY_ASSOCIATED_USER_ID,
                                                                sourceObject: event.source,
                                                                messageToken: publishMessageToken)
         
-        let returnTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Return,
+        let returnTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Return,
                                                                             eventTypeFilter: nil,
                                                                             associatedUserId: nil,
                                                                             sourceObject: nil,
@@ -376,7 +376,7 @@ extension CommunicationManager {
                                                        event: ReturnEvent<Family>,
                                                        messageToken: String) throws {
         
-        let topic = try Topic.createTopicStringByLevelsForPublish(eventType: .Return,
+        let topic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Return,
                                                                   eventTypeFilter: nil,
                                                                   associatedUserId: EMPTY_ASSOCIATED_USER_ID,
                                                                   sourceObject: identity,
