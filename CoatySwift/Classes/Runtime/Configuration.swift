@@ -285,4 +285,8 @@ public class MQTTClientOptions {
 }
 
 
-// TODO: - Missing: function mergeConfigurations()
+// - MISSING: function mergeConfigurations()
+func mergeConfigurations() throws -> Never  {
+    fatalError("Merging configurations not supported yet.")
+}
+

@@ -12,7 +12,6 @@ public class ChannelEventFactory<Family: ObjectFamily>: EventFactoryInit {
     
     /// Create a ChannelEvent instance for delivering the given object.
     ///
-    /// - TODO: Missing documentation.
     /// - Parameters:
     ///   - channelId: channel identifier string.
     ///   - object: the object to be channelized.
@@ -27,7 +26,6 @@ public class ChannelEventFactory<Family: ObjectFamily>: EventFactoryInit {
     
     /// Create a ChannelEvent instance for delivering the given objects.
     ///
-    /// - TODO: Missing documentation.
     /// - Parameters:
     ///   - channelId: channel identifier string.
     ///   - objects: the objects to be channelized
@@ -65,7 +63,7 @@ public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEvent
     /// extra parameter channelId.
     internal init(eventSource: Component, eventData: ChannelEventData<Family>, channelId: String) {
         
-        if !Topic.isValidEventTypeFilter(filter: channelId) {
+        if !CommunicationTopic.isValidEventTypeFilter(filter: channelId) {
             LogManager.log.warning("\(channelId) is not a valid channel identifier.")
         }
         

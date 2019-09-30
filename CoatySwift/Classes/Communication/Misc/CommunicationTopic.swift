@@ -9,10 +9,8 @@ import Foundation
 
 /// Topic represents a Coaty topic as defined in the
 /// [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-structure)
-///
-/// - TODO: Rename to CommunicationTopic to match Coaty-js implementation.
 /// - TODO: Ability to generate readable topics.
-class Topic {
+class CommunicationTopic {
     
     // MARK: - Public Attributes.
     
@@ -57,16 +55,16 @@ class Topic {
         
         // Initialize event fields.
         self.event = event
-        let eventType = try Topic.extractEventType(event)
+        let eventType = try CommunicationTopic.extractEventType(event)
         self.eventType = eventType
-        let objectType = Topic.extractObjectType(event)
-        let coreType = Topic.extractCoreType(event)
-        let channelId = Topic.extractChannelId(event)
-        let callOperationId = Topic.extractCallOperationId(event)
+        let objectType = CommunicationTopic.extractObjectType(event)
+        let coreType = CommunicationTopic.extractCoreType(event)
+        let channelId = CommunicationTopic.extractChannelId(event)
+        let callOperationId = CommunicationTopic.extractCallOperationId(event)
 
         // Check if coreType or objectType have been set correctly.
         // TODO: Extract this and implement behavior for topic string convenience methods.
-        if Topic.isEventTypeFilterRequired(forEvent: eventType) {
+        if CommunicationTopic.isEventTypeFilterRequired(forEvent: eventType) {
             if eventType == .Channel && channelId == nil {
                  throw CoatySwiftError.InvalidArgument("\(eventType.rawValue) requires a set channelId.")
             } else if eventType == .Call && callOperationId == nil {
@@ -87,14 +85,14 @@ class Topic {
         
         // Try to parse a associatedUserId, if none is set, the topic will contain "-" here and the
         // initializer will fail and return nil.
-        guard let sanitizedAssociatedUserId = Topic.extractIdFromReadableString(associatedUserId) else {
+        guard let sanitizedAssociatedUserId = CommunicationTopic.extractIdFromReadableString(associatedUserId) else {
             throw CoatySwiftError.InvalidArgument("Could not sanitize associatedUserId")
         }
         
         self.associatedUserId = CoatyUUID(uuidString: sanitizedAssociatedUserId)
         
         // Parse sourceObjectId.
-        guard let sanitizedSourceObjectId = Topic.extractIdFromReadableString(sourceObjectId) else {
+        guard let sanitizedSourceObjectId = CommunicationTopic.extractIdFromReadableString(sourceObjectId) else {
             throw CoatySwiftError.InvalidArgument("Could not sanitize sourceObjectId.")
         }
         

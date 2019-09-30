@@ -21,52 +21,52 @@ extension CommunicationManager {
     
     // MARK: - Filtering methods.
     
-    func convertToTupleFormat(rawMessage: (String, String)) throws -> (Topic, String) {
+    func convertToTupleFormat(rawMessage: (String, String)) throws -> (CommunicationTopic, String) {
         let (topic, payload) = rawMessage
-        return try (Topic(topic), payload)
+        return try (CommunicationTopic(topic), payload)
     }
     
-    func isAdvertise(rawMessage: (Topic, String)) -> Bool {
+    func isAdvertise(rawMessage: (CommunicationTopic, String)) -> Bool {
         let (topic, _) = rawMessage
         return topic.eventType == CommunicationEventType.Advertise
     }
     
-    func isResolve(rawMessage: (Topic, String)) -> Bool {
+    func isResolve(rawMessage: (CommunicationTopic, String)) -> Bool {
         let (topic, _) = rawMessage
         return topic.eventType == CommunicationEventType.Resolve
     }
     
-    func isUpdate(rawMessage: (Topic, String)) -> Bool {
+    func isUpdate(rawMessage: (CommunicationTopic, String)) -> Bool {
         let (topic, _) = rawMessage
         return topic.eventType == CommunicationEventType.Update
     }
     
-    func isComplete(rawMessage: (Topic, String)) -> Bool {
+    func isComplete(rawMessage: (CommunicationTopic, String)) -> Bool {
         let (topic, _) = rawMessage
         return topic.eventType == CommunicationEventType.Complete
     }
     
-    func isChannel(rawMessageWithTopic: (Topic, String)) -> Bool {
+    func isChannel(rawMessageWithTopic: (CommunicationTopic, String)) -> Bool {
         let (topic, _) = rawMessageWithTopic
         return topic.eventType == .Channel
     }
     
-    func isDiscover(rawMessageWithTopic: (Topic, String)) -> Bool {
+    func isDiscover(rawMessageWithTopic: (CommunicationTopic, String)) -> Bool {
         let (topic, _) = rawMessageWithTopic
         return topic.eventType == .Discover
     }
     
-    func isRetrieve(rawMessageWithTopic: (Topic, String)) -> Bool {
+    func isRetrieve(rawMessageWithTopic: (CommunicationTopic, String)) -> Bool {
         let (topic, _) = rawMessageWithTopic
         return topic.eventType == .Retrieve
     }
     
-    func isCall(rawMessageWithTopic: (Topic, String)) -> Bool {
+    func isCall(rawMessageWithTopic: (CommunicationTopic, String)) -> Bool {
         let (topic, _) = rawMessageWithTopic
         return topic.eventType == .Call
     }
     
-    func isReturn(rawMessageWithTopic: (Topic, String)) -> Bool {
+    func isReturn(rawMessageWithTopic: (CommunicationTopic, String)) -> Bool {
         let (topic, _) = rawMessageWithTopic
         return topic.eventType == .Return
     }

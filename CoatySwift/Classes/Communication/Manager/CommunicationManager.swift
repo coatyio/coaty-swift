@@ -127,7 +127,7 @@ public class CommunicationManager<Family: ObjectFamily> {
     /// - NOTE: the willMessage is only sent out at the beginning of the connection and cannot
     /// be changed afterwards, unless you reconnect.
     func setLastWill() {
-        guard let lastWillTopic = try? Topic.createTopicStringByLevelsForPublish(eventType: .Deadvertise,
+        guard let lastWillTopic = try? CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Deadvertise,
                                                                                  eventTypeFilter: nil,
                                                                                  associatedUserId: nil,
                                                                                  sourceObject: identity,
@@ -146,11 +146,10 @@ public class CommunicationManager<Family: ObjectFamily> {
         client.setWill(lastWillTopic, message: deadvertiseEvent.json)
     }
 
+    /// MISSING: - Not implemented.
     private func initOptions(options _: CommunicationOptions) {
         // Capture state of associated user and device in case it might change
         // while the communication manager is being online.
-
-        // TODO: Missing implementation!
 
         /*
          this._associatedUser = CoreTypes.clone<User>(this.runtime.options.associatedUser);
@@ -161,7 +160,7 @@ public class CommunicationManager<Family: ObjectFamily> {
 
     // MARK: - Client lifecycle methods.
 
-    /// - TODO: Missing dependency with initOptions.
+    /// - MISSING: Missing dependency with initOptions.
     public func start() {
         // initOptions(options: )
         startClient()

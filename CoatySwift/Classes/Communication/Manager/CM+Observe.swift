@@ -46,7 +46,6 @@ extension CommunicationManager {
             throw CoatySwiftError.InvalidArgument("Either coreType or objectType must be specified")
         }
         
-        // TODO: Subscribe only if not already subscribed.
         self.subscribe(topic: topic)
         
         let observable = client.messages.map(convertToTupleFormat)
@@ -90,7 +89,7 @@ extension CommunicationManager {
     /// - Returns: An observable emitting the advertise events, that have the wanted coreType.
     public func observeAdvertiseWithCoreType<T: AdvertiseEvent<Family>>(eventTarget: Component,
                               coreType: CoreType) throws -> Observable<T> {
-        let topic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise,
+        let topic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Advertise,
                                                                     eventTypeFilter: coreType.rawValue)
         let observable: Observable<T> = try observeAdvertise(topic: topic,
                                                              eventTarget: eventTarget,
@@ -107,7 +106,7 @@ extension CommunicationManager {
     /// - Returns: An observable emitting the advertise events, that have the wanted objectType.
     public func observeAdvertiseWithObjectType<T: AdvertiseEvent<Family>>(eventTarget: Component,
                               objectType: String) throws -> Observable<T> {
-        let topic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: objectType)
+        let topic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: objectType)
         let observable: Observable<T> = try observeAdvertise(topic: topic,
                                               eventTarget: eventTarget,
                                               coreType: nil,
@@ -120,13 +119,10 @@ extension CommunicationManager {
     /// Observe Channel events for the given target and the given
     /// channel identifier emitted by the hot observable returned.
     ///
-    /// - TODO: The channel identifier must be a non-empty string that does not contain
+    /// - MISSING: Check that the channel identifier must be a non-empty
+    /// string that does not contain
     /// the following characters: `NULL (U+0000)`, `# (U+0023)`, `+ (U+002B)`,
     /// `/ (U+002F)`.
-    ///
-    /// - TODO: Channel events that originate from the given event target, i.e.
-    /// that have been published by specifying the given event target as
-    //// event source, will not be emitted by the observable returned.
     ///
     /// - Parameters:
     ///   - eventTarget: target for which Channel events should be emitted
@@ -135,17 +131,16 @@ extension CommunicationManager {
     public func observeChannel<T: ChannelEvent<Family>>(eventTarget: Component,
                                                         channelId: String) throws -> Observable<T> {
         
-        if !Topic.isValidEventTypeFilter(filter: channelId) {
+        if !CommunicationTopic.isValidEventTypeFilter(filter: channelId) {
             throw CoatySwiftError.InvalidArgument("\(channelId) is not a valid channel Id.")
         }
         
         // TODO: Unsure about associatedUserId parameters. Is it really assigneeUserId?
-        let channelTopic = try Topic.createTopicStringByLevelsForChannel(channelId: channelId,
+        let channelTopic = try CommunicationTopic.createTopicStringByLevelsForChannel(channelId: channelId,
                                                                          associatedUserId: eventTarget
                                                                             .assigneeUserId?.string,
                                                                          sourceObject: nil,
                                                                          messageToken: nil)
-        // TODO: Make sure to only subscribe to topic once...
         self.subscribe(topic: channelTopic)
 
         let observable =  client.messages.map(convertToTupleFormat)
@@ -183,7 +178,7 @@ extension CommunicationManager {
     ///     - eventTarget: target for which Deadvertise events should be emitted
     /// - Returns:  a hot observable emitting incoming Deadvertise events
     public func observeDeadvertise(eventTarget: Component) throws -> Observable<DeadvertiseEvent> {
-        let deadvertiseTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Deadvertise)
+        let deadvertiseTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Deadvertise)
         
         self.subscribe(topic: deadvertiseTopic)
         
@@ -222,7 +217,7 @@ extension CommunicationManager {
     public func observeUpdate<T: UpdateEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
         
         // FIXME: Prevent duplicated subscriptions.
-        let updateTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Update)
+        let updateTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Update)
         self.subscribe(topic: updateTopic)
 
         let observable = client.messages.map(convertToTupleFormat)
@@ -266,7 +261,7 @@ extension CommunicationManager {
     public func observeDiscover<T: DiscoverEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
         
         // FIXME: Prevent duplicated subscriptions.
-        let discoverTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Discover)
+        let discoverTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Discover)
         self.subscribe(topic: discoverTopic)
 
         let observable = client.messages.map(convertToTupleFormat)
@@ -292,17 +287,41 @@ extension CommunicationManager {
         return createSelfCleaningObservable(observable: observable, topic: discoverTopic)
     }
     
-    /// - TODO: Missing documentation!
+    /// Observe Call events for the given target and the given
+    /// operation name and context object, emitted by the hot observable returned.
+    ///
+    /// The operation name must be a non-empty string that does not contain
+    /// the following characters: `NULL (U+0000)`, `# (U+0023)`, `+ (U+002B)`,
+    /// `/ (U+002F)`.
+    ///
+    /// The given context object is matched against the context filter specified
+    /// in incoming Call event data to determine whether the Call event should be
+    /// emitted or skipped by the observable. A Call event is skipped if and only
+    /// if a context filter and a context object are *both* specified and they do not
+    /// match (checked by using `ObjectMatcher.matchesFilter`). In all other cases,
+    /// the Call event is emitted.
+    ///
+    /// Call events that originate from the given event target, i.e.
+    /// that have been published by specifying the given event target as
+    /// event source, will not be emitted by the observable returned.
+    ///
+    /// - MISSING: We are missing the optional context parameter.
+    ///
+    /// - Parameters:
+    ///   - eventTarget: target for which Call events should be emitted
+    ///   - operationId: the name of the operation to be invoked
+    /// - Returns: a hot observable emitting incoming Call events
+    /// whose context filter matches the given context
     public func observeCall<T: CallEvent<Family>>(eventTarget: Component, operationId: String) throws -> Observable<T> {
         
         // FIXME: Prevent duplicated subscriptions.
         // FIXME: A convenience method that explicitly uses the operationId as parameter would be nice.
         
-        if !Topic.isValidEventTypeFilter(filter: operationId) {
+        if !CommunicationTopic.isValidEventTypeFilter(filter: operationId) {
             throw CoatySwiftError.InvalidArgument("\(operationId) is not a valid parameter name.")
         }
         
-        let callTopic = try Topic.createTopicStringByLevelsForSubscribe(eventType: .Call,
+        let callTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Call,
                                                                         eventTypeFilter: operationId)
         
         self.subscribe(topic: callTopic)

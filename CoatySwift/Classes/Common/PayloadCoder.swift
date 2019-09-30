@@ -24,7 +24,6 @@ public class PayloadCoder {
     ///
     /// - NOTE: The JSON encoding is based on the Codable protocol from the Swift standard library.
     /// Please make sure to implement it in all classes that implement the CoatyObject protocol.
-    /// - TODO: Remove force unwrap.
     public static func encode<T: Codable>(_ event: T) -> String {
         let jsonData = try! JSONEncoder().encode(event)
         let jsonString = String(data: jsonData, encoding: .utf8)!
