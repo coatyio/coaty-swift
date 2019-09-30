@@ -13,7 +13,7 @@ import CoatySwift
 class DynamicHelloWorldExampleViewController: UIViewController {
     
     let enableSSL = false
-    let brokerIp = "192.168.1.101"
+    let brokerIp = "192.168.1.161"
     let brokerPort = 1883
     
     override func viewDidLoad() {
@@ -72,9 +72,9 @@ class DynamicHelloWorldExampleViewController: UIViewController {
                                                       port: UInt16(brokerPort),
                                                       clientId: "\(UUID.init())",
                                                       enableSSL: enableSSL,
-                                                      shouldTryMDNSDiscovery: true)
+                                                      shouldTryMDNSDiscovery: false)
             config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,
-                                                        shouldAutoStart: false)
+                                                        shouldAutoStart: true)
             
             // The communicationManager will also advertise its identity upon connection to the
             // mqtt broker.

@@ -46,7 +46,7 @@ CoatySwift source code is licensed under the [MIT License](https://opensource.or
 Attach a license and copyright notice to the top of each created source files as follows:
 
 ```swift
-// ! Copyright (c) <year> <contributor>. Licensed under the MIT License.
+// Copyright (c) <year> <contributor>. Licensed under the MIT License.
 ```
 
 `<year>` specifies the year of *first* publication and must *not* be changed
@@ -93,19 +93,37 @@ source code and the included comments. The generated documentation
 is written to the `docs/swiftdoc/` folder and accessible using a web browser and the `index.html` file.
 The Jazzy configuration is located in the `.jazzy.yaml` file in the repository root.
 
+Another example jazzy command could look like the following: 
+```sh
+jazzy  --output docs/swiftdoc --xcodebuild-arguments -workspace,Example/CoatySwift.xcworkspace/,-scheme,CoatySwift --min-acl=internal
+```
+This outputs the jazzy documentation to the `swiftdoc` folder.
+
+
 ## Test Coaty framework
 
-```
-    TODO
-```
+Currently there is no testbench for CoatySwift.
 
 ## Release Coaty framework
 
+In order to update CoatySwift on CocoaPods, you have do the following steps:
+
+1. Update the pod version in the `CoatySwift.podspec` file located in `/Podspec Metadata`.
+2. Push all your changes to the master branch.
+3. Create a `git` tag for the new Pod version and push it. Make sure that `[version]` matches the version number from step 1.
+```sh
+git tag [version]
+git push origin --tags
+
 ```
-    TODO
-    - Prepare a release
-    - Push a release
-    - Publish a release
+4. You now need to check whether the pod passes verification. Run the following command:
+```sh
+pod spec lint CoatySwift.podspec
+```
+
+5. If the previous step was successful, make sure to push the new version.
+```sh
+pod trunk push CoatySwift.podspec
 ```
 
 ---

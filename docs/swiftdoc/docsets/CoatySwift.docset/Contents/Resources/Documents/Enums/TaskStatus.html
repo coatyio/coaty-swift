@@ -568,7 +568,8 @@
             <h1>TaskStatus</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">TaskStatus</span> <span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="kt">Codable</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">enum</span> <span class="kt">TaskStatus</span> <span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="kt">Codable</span></code></pre>
 
                 </div>
               </div>
@@ -581,9 +582,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10CoatySwift10TaskStatusO7pendingyA2CmF"></a>
+                    <a name="/c:@M@CoatySwift@E@TaskStatus@TaskStatusPending"></a>
                     <a name="//apple_ref/swift/Element/pending" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift10TaskStatusO7pendingyA2CmF">pending</a>
+                    <a class="token" href="#/c:@M@CoatySwift@E@TaskStatus@TaskStatusPending">pending</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -608,9 +609,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10CoatySwift10TaskStatusO10inProgressyA2CmF"></a>
+                    <a name="/c:@M@CoatySwift@E@TaskStatus@TaskStatusInProgress"></a>
                     <a name="//apple_ref/swift/Element/inProgress" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift10TaskStatusO10inProgressyA2CmF">inProgress</a>
+                    <a class="token" href="#/c:@M@CoatySwift@E@TaskStatus@TaskStatusInProgress">inProgress</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -625,7 +626,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">inProgress</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">inProgress</span> <span class="o">=</span> <span class="mi">1</span></code></pre>
 
                         </div>
                       </div>
@@ -635,9 +636,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10CoatySwift10TaskStatusO4doneyA2CmF"></a>
+                    <a name="/c:@M@CoatySwift@E@TaskStatus@TaskStatusDone"></a>
                     <a name="//apple_ref/swift/Element/done" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift10TaskStatusO4doneyA2CmF">done</a>
+                    <a class="token" href="#/c:@M@CoatySwift@E@TaskStatus@TaskStatusDone">done</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -652,7 +653,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">done</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">done</span> <span class="o">=</span> <span class="mi">2</span></code></pre>
 
                         </div>
                       </div>
@@ -662,9 +663,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10CoatySwift10TaskStatusO7blockedyA2CmF"></a>
+                    <a name="/c:@M@CoatySwift@E@TaskStatus@TaskStatusBlocked"></a>
                     <a name="//apple_ref/swift/Element/blocked" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift10TaskStatusO7blockedyA2CmF">blocked</a>
+                    <a class="token" href="#/c:@M@CoatySwift@E@TaskStatus@TaskStatusBlocked">blocked</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -679,7 +680,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">blocked</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">blocked</span> <span class="o">=</span> <span class="mi">3</span></code></pre>
 
                         </div>
                       </div>
@@ -689,9 +690,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10CoatySwift10TaskStatusO9cancelledyA2CmF"></a>
+                    <a name="/c:@M@CoatySwift@E@TaskStatus@TaskStatusCancelled"></a>
                     <a name="//apple_ref/swift/Element/cancelled" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift10TaskStatusO9cancelledyA2CmF">cancelled</a>
+                    <a class="token" href="#/c:@M@CoatySwift@E@TaskStatus@TaskStatusCancelled">cancelled</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -706,7 +707,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">cancelled</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">cancelled</span> <span class="o">=</span> <span class="mi">4</span></code></pre>
 
                         </div>
                       </div>
@@ -716,9 +717,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10CoatySwift10TaskStatusO7requestyA2CmF"></a>
+                    <a name="/c:@M@CoatySwift@E@TaskStatus@TaskStatusRequest"></a>
                     <a name="//apple_ref/swift/Element/request" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift10TaskStatusO7requestyA2CmF">request</a>
+                    <a class="token" href="#/c:@M@CoatySwift@E@TaskStatus@TaskStatusRequest">request</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -733,7 +734,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">request</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">request</span> <span class="o">=</span> <span class="mi">5</span></code></pre>
 
                         </div>
                       </div>
@@ -743,9 +744,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10CoatySwift10TaskStatusO16requestCancelledyA2CmF"></a>
+                    <a name="/c:@M@CoatySwift@E@TaskStatus@TaskStatusRequestCancelled"></a>
                     <a name="//apple_ref/swift/Element/requestCancelled" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift10TaskStatusO16requestCancelledyA2CmF">requestCancelled</a>
+                    <a class="token" href="#/c:@M@CoatySwift@E@TaskStatus@TaskStatusRequestCancelled">requestCancelled</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -760,7 +761,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">requestCancelled</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">requestCancelled</span> <span class="o">=</span> <span class="mi">6</span></code></pre>
 
                         </div>
                       </div>
@@ -772,7 +773,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://coaty.io" target="_blank" rel="external">Siemens AG</a>. All rights reserved. (Last updated: 2019-09-16)</p>
+          <p>&copy; 2019 <a class="link" href="https://coaty.io" target="_blank" rel="external">Siemens AG</a>. All rights reserved. (Last updated: 2019-09-30)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
