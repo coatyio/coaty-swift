@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  CommunicationManager.swift
 //  CoatySwift
@@ -51,7 +51,7 @@ public class CommunicationManager<Family: ObjectFamily> {
 
     /// A dispatchqueue that handles synchronisation issues when accessing
     /// deferred publications and subscriptions.
-    private var queue = DispatchQueue(label: "com.siemens.coatyswift.comQueue")
+    private var queue = DispatchQueue(label: "com.coatyswift.comQueue")
 
     /// The communication client that offers the required publisher-subscriber API.
     internal var client: CommunicationClient

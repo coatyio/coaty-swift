@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  LightController.swift
 //  CoatySwift_Example
@@ -28,7 +28,7 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
     
     /// This is a DispatchQueue for this particular controller that handles
     /// asynchronous workloads, such as when we wait for the delay of the `switchTime`
-    private var lightControllerQueue = DispatchQueue(label: "com.siemens.lightSwitch.lightControllerQueue")
+    private var lightControllerQueue = DispatchQueue(label: "com.mycompany.lightSwitch.lightControllerQueue")
     private var light: Light!
     private var lightStatus: LightStatus!
     private var lightContext: LightContext!

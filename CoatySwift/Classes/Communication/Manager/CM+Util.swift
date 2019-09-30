@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  Communication+Util.swift
 //  CoatySwift
@@ -118,7 +118,7 @@ class ObservableWrapper {
     private var subscriberCount = 0
 
     /// Queue to synchronize `subscriberCount` access.
-    private var queue = DispatchQueue(label: "com.siemens.coatyswift.observableWrapperQueue")
+    private var queue = DispatchQueue(label: "com.coatyswift.observableWrapperQueue")
     
     /// Convenience creation of a wrapper observable for observing state changes in
     /// subscribers and unsubscribers.

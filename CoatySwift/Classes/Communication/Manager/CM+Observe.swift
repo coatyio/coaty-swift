@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  CommunicationManager+Observe.swift
 //  CoatySwift

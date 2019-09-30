@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  TaskController.swift
 //  CoatySwift_Example
@@ -15,7 +15,7 @@ class TaskController<Family: ObjectFamily>: Controller<Family> {
     
     /// This is a DispatchQueue for this particular controller that handles
     /// asynchronous workloads, such as when we wait for a reply on our task offer.
-    private var taskControllerQueue = DispatchQueue(label: "com.siemens.helloWorld.taskControllerQueue")
+    private var taskControllerQueue = DispatchQueue(label: "com.mycompany.helloWorld.taskControllerQueue")
     
     // MARK: - Thread safety measures for working on tasks.
     
@@ -197,7 +197,7 @@ class TaskController<Family: ObjectFamily>: Controller<Family> {
                 .timeout(Double(self.queryTimeout),
                          scheduler: SerialDispatchQueueScheduler(
                             queue: self.taskControllerQueue,
-                            internalSerialQueueName: "com.siemens.coaty.internalQueryQueue"))
+                            internalSerialQueueName: "com.mycompany.coaty.internalQueryQueue"))
                 .subscribe(
                     
                     // Handle incoming snapshots.

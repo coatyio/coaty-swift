@@ -1,4 +1,4 @@
-// ! Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
+//  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
 //  DynamicTaskController.swift
 //  CoatySwift_Example
@@ -14,7 +14,7 @@ class DynamicTaskController: DynamicController {
     
     /// This is a DispatchQueue for this particular controller that handles
     /// asynchronous workloads, such as when we wait for a reply on our task offer.
-    private var taskControllerQueue = DispatchQueue(label: "com.siemens.helloWorld.dynamicTaskControllerQueue")
+    private var taskControllerQueue = DispatchQueue(label: "com.mycompany.helloWorld.dynamicTaskControllerQueue")
     
     // MARK: - Thread safety measures for working on tasks.
     
@@ -204,7 +204,7 @@ class DynamicTaskController: DynamicController {
                 .timeout(Double(self.queryTimeout),
                          scheduler: SerialDispatchQueueScheduler(
                             queue: self.taskControllerQueue,
-                            internalSerialQueueName: "com.siemens.coaty.internalQueryQueue")
+                            internalSerialQueueName: "com.mycompany.coaty.internalQueryQueue")
                 )
                 .subscribe(
                     
