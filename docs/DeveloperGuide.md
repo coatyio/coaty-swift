@@ -478,15 +478,21 @@ class ViewController: UIViewController {
 
 
 ```
-___
 
-## Managing Subscriptions
+
+### Managing Subscriptions
 
 There are two ways how to manage subscriptions:
 
 1. You can start and stop the Communication Manager manually by calling `communicationManager.startClient()` and `communicationManager.endClient()`. Remember that your previous subscriptions will become inactive if you call `communicationManager.endClient()`. It is therefore recommended to set up all the subscriptions anew in the `.onCommunicationManagerStarting()` methods in each controller.
 
 2. Subscriptions can be disposed manually as well. You can do this by manually calling `.dispose()` on an active subscription.
+
+
+### Terminology
+
+It is important to remember that a CoatySwift `Controller` has nothing to do with the regular `UIViewController`, and likewise, the `container` variable used in the `decode` and `encode` methods is not related in any way to the Coaty `Container` object.
+
 
 ___
 ## Additional resources
