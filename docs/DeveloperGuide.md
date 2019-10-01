@@ -2,12 +2,24 @@
 
 This document covers everything a developer needs to know about using the CoatySwift framework to implement collaborative IoT applications targeting iOS or macOS. We assume you know nothing about CoatySwift before reading this guide.
 
-> __NOTE__: We would like to note that more information about the internals and basics of the __Coaty__ framework can be found in [Coaty Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/). The [Coaty JS Developer Guide](https://coatyio.github.io/coaty-js/man/developer-guide/), even though written for TypeScript, shares many similarities with CoatySwift and we recommend checking out this guide as well if you would like to dig deeper, as it is documented in a more detailed way and provides more extensive features.
+> __NOTE__: 
+>
+> We would like to note that more information about the internals and basics of the __Coaty__ framework can be found in [Coaty Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/). The [Coaty JS Developer Guide](https://coatyio.github.io/coaty-js/man/developer-guide/), even though written for TypeScript, shares many similarities with CoatySwift and we recommend checking out this guide as well if you would like to dig deeper, as it is documented in a more detailed way and provides more extensive features.
 
 ___
 ## Table of Contents
 
 [TOC]
+
+
+___
+
+## Getting Started
+
+If you want a short, concise look into CoatySwift, feel free to check out the [Coaty Tutorial](coaty-swift-tutorial/index.html) with a step-by-step guide how to set up a basic CoatySwift application.
+You can also also check out the examples located in the `Example for CoatySwift` folder in the Xcode project folder. 
+
+You will find three projects there, the `Hello World`, `Switch Light` and `Dynamic` project. Note that `Hello World` and `Switch Light` are the blueprint examples for how to design CoatySwift applications. The `Dynamic` example shows how a less static and type safe version of CoatySwift could look like. This feature is still highly experimental and not stable, and we recommend not using it as of now (October, 2019).
 
 ___
 
@@ -28,7 +40,7 @@ ___
 
 - Every container holds exactly one __communication manager__. A communication manager lets you publish and subscribe to messages, basically handling all types of communication flow.
 
-- Every container has a __configuration__: Defines options for the container, as well as the controllers. There are many options available. You can check out example configs in the sections below, as well as in the examples located in __TODO: WRONG LINK__ [Examples](aaa).
+- Every container has a __configuration__: Defines options for the container, as well as the controllers. There are many options available. You can check out example configs in the sections below, or the configs found in the `Example for CoatySwift` folder in the Xcode project.
 
 
 > __TL;DR Terminology__
@@ -46,7 +58,7 @@ ___
 - To build and run Coaty agents with the CoatySwift technology stack you need [XCode](https://developer.apple.com/xcode/) 10.2 or higher.
 
 - __Set up a MQTT Broker__: All messages that are exchanged between agents are sent over a broker - so remember to set up and have a MQTT Broker running. We recommend checking out the following brokers:
-    - [Mosquitto](Mosquitto)
+    - [Mosquitto](https://mosquitto.org/)
     - [HiveMQ](https://www.hivemq.com/)
     - [VerneMQ](https://vernemq.com/)
 
@@ -58,10 +70,12 @@ pod 'CoatySwift'
 
 ### mDNS Broker Discovery Support
 
-CoatySwift gives you the possibility to discover broker services dynamically. If you want to discover brokers via mDNS, add the following lines to your `Configuration` object:
+CoatySwift gives you the possibility to discover broker services dynamically via mDNS. You will need a mDNS-supporting broker for this, which you can find [here](https://coatyio.github.io/coaty-js/man/developer-guide/#coaty-broker-for-development). For the client, add the following lines to your `Configuration` object:
 
 ```swift
-
+// - IMPORTANT:
+// shouldTryMDNSDiscovery has to bet set to `true`, 
+// while shouldAutoStart has to be set to `false`.
 let mqttClientOptions = MQTTClientOptions(host: brokerIp,
                                           port: UInt16(brokerPort),
                                           clientId: "\(UUID.init())",
@@ -73,16 +87,13 @@ config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions
 
 ```
 
-Keep in mind that __shouldTryMDNSDiscovery__ has to set to `true`, while __shouldAutoStart__ has to be set to `false`.
-
-
 > __NOTE__: 
->
+> 
 > Even if you discover the broker via mDNS, you are  still required to specify a fallback host address and corresponding port.
 ___
 
 ## Communication Patterns
-> Citing the [Coaty Protocol Documentation](https://coatyio.github.io/coaty-js/man/communication-protocol/#events-and-event-patterns):
+Citing the [Coaty Protocol Documentation](https://coatyio.github.io/coaty-js/man/communication-protocol/#events-and-event-patterns):
 
 The framework uses a minimum set of predefined events and event patterns to discover, distribute, and share object information in a decentralized application:
 
@@ -102,7 +113,9 @@ The framework uses a minimum set of predefined events and event patterns to disc
 
 - __Call - Return__: Request execution of a remote operation and receive results by Return events.
 
-> __NOTE__: Although Coaty itself also specifices __IoValue__ and __Associate__ events, these are **not** included in the CoatySwift versions and therefore are left out of the documentation.
+> __NOTE__: 
+> 
+> Although Coaty itself also specifices __IoValue__ and __Associate__ events, these are **not** included in the CoatySwift versions and therefore are left out of the documentation.
 
 We differentiate between __one-way__ and __two-way__ events. Advertise, Deadvertise and Channel are one-way events. Discover-Resolve, Query-Retrieve, Update-Complete and Call-Return are two-way events. 
 
@@ -198,13 +211,16 @@ try? self.communicationManager
     })
     .disposed(by: disposeBag)
 ```
+___
 
 ## Bootstrapping a Coaty Container
 
 In order to get your Coaty application running, you will have to set up the Coaty container and all its corresponding controllers, as well as data-related classes such as object families. We will provide a step by step explanation of how you can create a container with an exemplary controller.
 
 
-> __NOTE__: Unfortunately there is no sequential way (where everything compiles after each step) to set up a container until you added all of the required components. It is probably the easiest to add an empty `ObjectFamily` and at least one `Controller` before you start to resolve your `Container`. We suggest taking a look at the `Hello World` example to see how the final result looks like. 
+> __NOTE__: 
+> 
+> Unfortunately there is no sequential way (where everything compiles after each step) to set up a container until you added all of the required components. It is probably the easiest to add an empty `ObjectFamily` and at least one `Controller` before you start to resolve your `Container`. We suggest taking a look at the `Hello World` example to see how the final result looks like. 
 
 We suggest setting up the main structure of the container as part of the `AppDelegate.swift`.
 
@@ -305,10 +321,6 @@ coatyContainer = Container.resolve(components: components,
 
 
 
----
-
-
-
 > __TL;DR Container Bootstrapping__
 > 1. Create a global variable that holds a reference to the `coatyContainer`. 
 > 2. Specify all controllers that you want to use.
@@ -316,6 +328,7 @@ coatyContainer = Container.resolve(components: components,
 > 4. Simply call `container.resolve(…)` and assign its return value to the `coatyContainer` global variable from step 1. 
 > 
 
+___
 
 
 ## Creating Controllers
@@ -364,7 +377,9 @@ class ExampleController<Family: ObjectFamily>: Controller<Family> {
 
 In the next steps, you could add publish and subscribe handler, as previously mentioned in section [Communication Patterns]() **MISSING LINK**.
 
-## Custom Data Types - Object Family
+___
+
+## Object Family and Custom Data Types
 
 To use custom objects or datatypes with Coaty you may extend the preexisting core types. Use standard Swift classes that extend the base implementation, e.g. define your custom object that inherits from `CoatyObject` as in the following example:
 
@@ -404,8 +419,9 @@ class ExampleObject: CoatyObject {
 
 ```
 
-> __NOTE:__ You need to implement the conformance to the `Codable` protocol for your custom objects.  
-> Please make sure to call the super implementations for the `init(from:)`initializer as well as the `encode(to:)` method.
+> __NOTE:__ 
+> 
+> You need to implement the conformance to the `Codable` protocol for your custom objects. Also, make sure to call the super implementations for the `init(from:)`initializer as well as the `encode(to:)` method.
 
 To let the framework know about the new custom type you need to define a so called `ObjectFamily`. The `ObjectFamily` provides a mapping from a type name that is encoded by the `objectType` attribute of each `CoatyObject` to a Swift class that is used to instantiate an actual Swift object from the JSON representation that is being sent over the wire. A minimal `ObjectFamily` for the `ExampleObject` that was defined above looks like this:
 
@@ -425,17 +441,16 @@ enum ExampleObjectFamily: String, ObjectFamily {
 
 The `ObjectFamily` is one of the parameters that are required for the configuration of your CoatySwift application. After setting an `ObjectFamily` during the bootstrapping of a container you will have full type safety and do not need to worry about manual unmarshalling.
 
----
 
 > __TL;DR Custom Data Types__
 > 1. Create a new Swift object that inherits from `CoatyObject` or another core type.
 > 2. Implement conformance to the [Codable](https://developer.apple.com/documentation/swift/codable) protocol. Make sure to call the super implementations of the initializer and the encode method.
 > 3. Create one `ObjectFamily` per CoatySwift application. Add your object type to the enum and assign the correct Swift type.
-
+___
 
 ## FAQ
 
-### How to interact with CoatyControllers?
+### Interacting with CoatyControllers
 
 A best practice to pass information from `CoatyControllers` to `UIViewControllers` or other application components can be achieved by implementing the delegate pattern. Assuming you configured your container and made it available globally in your application via a variable named `coatyContainer` you can load a controller to set a delegate as follows:
 
@@ -463,12 +478,12 @@ class ViewController: UIViewController {
 
 
 ```
-
+___
 ## Additional resources
 
-We would like to point you to additional resources if you want to dig deeper into CoatySwift and Coaty itself. 
+We would like to point you to additional resources if you want to dig deeper into CoatySwift and Coaty itself.
 
-* [Source Code Documentation]() **TODO: missing links** - This auto generated source code documentation provides you 
+* [Source Code Documentation](../swiftdoc/index.html) - The auto generated source code documentation. You can auto generate it as well, check out the [Contributing](CONTRIBUTING.md) document for more information.
 * [Xcode Quick Help](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/SymbolDocumentation.html) - When you are directly writing the code and wondering what a certain function does.
 
 The following resources are part of Coaty JS, but the CoatySwift API aims to be as close as possible to the reference implementation. Therefore, we suggest checking out these resources as well:
