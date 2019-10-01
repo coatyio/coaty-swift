@@ -9,7 +9,7 @@ import Foundation
 
 /// Topic represents a Coaty topic as defined in the
 /// [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-structure)
-/// - TODO: Ability to generate readable topics.
+/// - MISSING: Ability to generate readable topics.
 class CommunicationTopic {
     
     // MARK: - Public Attributes.
@@ -63,7 +63,6 @@ class CommunicationTopic {
         let callOperationId = CommunicationTopic.extractCallOperationId(event)
 
         // Check if coreType or objectType have been set correctly.
-        // TODO: Extract this and implement behavior for topic string convenience methods.
         if CommunicationTopic.isEventTypeFilterRequired(forEvent: eventType) {
             if eventType == .Channel && channelId == nil {
                  throw CoatySwiftError.InvalidArgument("\(eventType.rawValue) requires a set channelId.")
@@ -288,7 +287,6 @@ class CommunicationTopic {
     /// - Returns: whether the eventTypeFilter field has to be set or not.
     private static func isEventTypeFilterRequired(forEvent event: CommunicationEventType) -> Bool {
         // Events that require an eventTypeFilter to be set.
-        // TODO: Are these all events?
         let events: [CommunicationEventType] = [.Advertise, .Channel, .Call]
         return events.contains(event)
     }

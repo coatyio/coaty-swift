@@ -7,7 +7,6 @@
 import Foundation
 import CoatySwift
 
-/// TODO: Update documentation.
 /// If you wish to receive CommunicationEvents that hold your personal, customized CoatyObjects
 /// (e.g. objects that extend the basic CoatyObject class, such as the `HelloWorldTask` you have
 /// to create your own class family that holds references to these custom objectTypes.
@@ -29,6 +28,9 @@ enum HelloWorldObjectFamily: String, ObjectFamily {
         case .helloWorldTask:
             return HelloWorldTask.self
         case .snapshot:
+            // A snapshot object may contain different objects. Therefore, we have to make sure to
+            // customize the snapshots with the ObjectFamily for our application. The default fallback
+            // only supports the core types.
             return Snapshot<HelloWorldObjectFamily>.self
         }
     }

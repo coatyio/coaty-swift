@@ -110,7 +110,6 @@ public class ObjectFilter: Codable {
         try closure(builder)
         
         guard let condition = builder.condition else {
-            // TODO: Throw when multiple conditions are set.
             throw CoatySwiftError.InvalidArgument("Condition is not set.")
         }
         

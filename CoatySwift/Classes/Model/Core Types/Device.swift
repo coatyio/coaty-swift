@@ -13,7 +13,7 @@ public class Device: CoatyObject {
     
     /// The IO source and actors associated with this system component.
     /// - TODO: Missing device capabilities.
-    /// ioCapabilities?: Array<IoSource | IoActor>;
+    public var ioCapabilities: [IoPoint]?
     
     /// Display type of the interaction device.
     public var displayType: DisplayType
@@ -21,10 +21,12 @@ public class Device: CoatyObject {
     // MARK: - Initializers.
     
     public init(displayType: DisplayType,
+                ioCapabilities: [IoPoint]? = nil,
                 name: String = "DeviceObject",
                 objectType: String = "\(COATY_PREFIX)\(CoreType.Device)",
                 objectId: CoatyUUID = .init()) {
         self.displayType = displayType
+        self.ioCapabilities = ioCapabilities
         super.init(coreType: .Device, objectType: objectType, objectId: objectId, name: name)
     }
     
@@ -32,11 +34,13 @@ public class Device: CoatyObject {
     
     enum DeviceKeys: String, CodingKey {
         case displayType
+        case ioCapabilities
     }
 
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: DeviceKeys.self)
         self.displayType = try container.decode(DisplayType.self, forKey: .displayType)
+        self.ioCapabilities = try container.decodeIfPresent([IoPoint].self, forKey: .ioCapabilities)
         try super.init(from: decoder)
     }
     
@@ -44,6 +48,7 @@ public class Device: CoatyObject {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: DeviceKeys.self)
         try container.encode(displayType, forKey: .displayType)
+        try container.encodeIfPresent(ioCapabilities, forKey: .ioCapabilities)
     }
 }
 

@@ -168,11 +168,10 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Factory methods.
     
-    /// TODO: Comment.
     public static func createFrom(objectTypes: [String],
                            objectFilter: ObjectFilter? = nil,
                            objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEventData {
-        // TODO: Double check this.
+
         if objectJoinConditions?.count == 1 {
             return .init(objectTypes: objectTypes,
                          coreTypes: nil,
@@ -188,11 +187,10 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
             }
     }
     
-    /// TODO: Comment.
     public static func createFrom(coreTypes: [CoreType],
                                   objectFilter: ObjectFilter? = nil,
                                   objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEventData {
-        // TODO: Double check this.
+
         if objectJoinConditions?.count == 1 {
             return .init(objectTypes: nil,
                          coreTypes: coreTypes,

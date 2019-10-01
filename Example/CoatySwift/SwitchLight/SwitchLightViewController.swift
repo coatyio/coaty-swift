@@ -207,6 +207,6 @@ extension SwitchLightViewController: LightControlDelegate {
                                  alpha: CGFloat(color.a))
         light.backgroundColor = lightColor
         
-        // TODO: Luminosity is currently ignored.
+        // NOTE: Luminosity is currently ignored.
     }
 }

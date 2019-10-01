@@ -61,7 +61,8 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
         try? self.communicationManager.observeCall(operationId: lightSwitchOperation)
             .subscribe(onNext: { callEvent in
                 
-                // TODO: Add real context matching.
+                // TODO: Add real context matching. Currently, the example accepts all contexts and
+                // reacts accordingly.
                 guard let _ = callEvent.data.filter else {
                     print("ContextFilter not found.")
                     return
@@ -124,11 +125,10 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
     
     // MARK: Utility methods.
     
-    /// - TODO: Handle the dangerous force unwrap.
     private func createColorRGBA(_ color: [Any]) -> ColorRGBA {
-        let red = color[0] as! Int
-        let green = color[1] as! Int
-        let blue = color[2] as! Int
+        let red = color[0] as? Int ?? 0
+        let green = color[1] as? Int ?? 0
+        let blue = color[2] as? Int ?? 0
         let alpha = toDouble(color[3])
         return ColorRGBA(r: red, g: green, b: blue, a: alpha)
     }
@@ -155,7 +155,8 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
             return false
         }
         
-        // TODO: Add more validation logic here.
+        // NOTE: Here more advanced validation logic should occur in order to make sure that
+        // valid parameters were received.
         
         // For testing purposes, yield an error if color is black.
         if colorRGBA.r == 0 && colorRGBA.g == 0 && colorRGBA.b == 0 {

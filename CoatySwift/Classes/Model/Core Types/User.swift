@@ -10,7 +10,6 @@ import Foundation
 /// Object model representing users as defined by the SCIM 2 standard
 /// according to RFC7643.
 ///
-/// - TODO: Implement Codable.
 /// Note that the SCIM `userName` property is represented in the
 /// `name` property of the base CoatyObject type.
 public class User: CoatyObject {

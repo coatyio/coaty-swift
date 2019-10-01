@@ -63,7 +63,7 @@ public class DeadvertiseEventData: CommunicationEventData {
     
     init(object: Deadvertise) {
         self.object = object
-        // TODO: hasValidParameters() ?
+        // TODO: hasValidParameters()
         super.init()
     }
     

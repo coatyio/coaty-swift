@@ -14,14 +14,25 @@ class ColorRGBA: Codable {
     private(set) public var b = 0
     private(set) public var a = 0.0
     
-    /// - TODO: Validation. Each color value needs to be 0 <= value <= 255
+    /// Each color value needs to be 0 <= value <= 255.
+    /// Alpha value 0 <= value <= 1.
     init(r: Int, g: Int, b: Int, a: Double) {
-        self.r = r
-        self.g = g
-        self.b = b
+        if 0 <= r && r <= 255 {
+            self.r = r
+            
+        }
         
-        // Alpha between 0..1
-        self.a = a
+        if 0 <= g && g <= 255 {
+            self.b = b
+        }
+        
+        if 0 <= b && b <= 255 {
+            self.b = b
+        }
+        
+        if 0 <= a && a <= 1 {
+            self.a = a
+        }
     }
     
     // MARK: Codable methods.

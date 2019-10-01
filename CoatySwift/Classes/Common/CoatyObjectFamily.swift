@@ -25,10 +25,18 @@ public enum CoatyObjectFamily: String, ObjectFamily {
     case component = "coaty.Component"
     
     // Core type matching for dynamic coaty applications.
-    // TODO: Add missing core types.
     case core_CoatyObject = "CoatyObject"
     case core_Task = "Task"
     case core_Snapshot = "Snapshot"
+    case core_User = "User"
+    case core_Device = "Device"
+    case core_Annotation = "Annotation"
+    case core_IoSource = "IoSource"
+    case core_IoActor = "IoActor"
+    case core_Config = "Config"
+    case core_Component = "Component"
+    case core_Log = "Log"
+    case core_Location = "Location"
     
     public func getType() -> AnyObject.Type {
         switch self {
@@ -37,8 +45,8 @@ public enum CoatyObjectFamily: String, ObjectFamily {
         case .component:
             return Component.self
         case .snapshot:
-            // TODO: This does _not_ work. For now we decided to let the application programmer
-            // implement the mapping. We might decide to drop the CoatyObjectFamily entirely.
+            // This does _not always_ work properly. Snapshot objects need to be parametrized with the
+            // object family of the snapshotted objects. The base implementation only allows core objects.
             return Snapshot<CoatyObjectFamily>.self
         case .user:
             return User.self
