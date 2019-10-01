@@ -4,10 +4,12 @@ This document covers everything a developer needs to know about using the CoatyS
 
 > __NOTE__: We would like to note that more information about the internals and basics of the __Coaty__ framework can be found in [Coaty Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/). The [Coaty JS Developer Guide](https://coatyio.github.io/coaty-js/man/developer-guide/), even though written for TypeScript, shares many similarities with CoatySwift and we recommend checking out this guide as well if you would like to dig deeper, as it is documented in a more detailed way and provides more extensive features.
 
-
+___
 ## Table of Contents
 
 [TOC]
+
+___
 
 ## Necessary Background Knowledge
 
@@ -15,6 +17,7 @@ In order to be able to use CoatySwift the way it is intended to, we assume you a
 
 - [ReactiveX](http://reactivex.io/) - Describes the basics on how incoming asynchronous messages are handled in the CoatySwift framework. In particular, CoatySwift is using [RxSwift](https://github.com/ReactiveX/RxSwift), the Swift version of ReactiveX.
 
+___
 ## Coaty(Swift) Terminology
 
 - In Coaty, every device that communicates with other devices is called an __agent__. So simply speaking, we consider an iOS application or a macOS application to be exactly one agent.
@@ -28,9 +31,6 @@ In order to be able to use CoatySwift the way it is intended to, we assume you a
 - Every container has a __configuration__: Defines options for the container, as well as the controllers. There are many options available. You can check out example configs in the sections below, as well as in the examples located in __TODO: WRONG LINK__ [Examples](aaa).
 
 
-
----
-
 > __TL;DR Terminology__
 > - Every iOS/macOS app is a Coaty __agent__
 > - Every Coaty agent has one __container__
@@ -39,6 +39,7 @@ In order to be able to use CoatySwift the way it is intended to, we assume you a
 >     -    1 __configuration__ 
 >     -    1 __communication manager__
 
+___
 
 ## Setup Instructions and Requirements
 
@@ -49,12 +50,36 @@ In order to be able to use CoatySwift the way it is intended to, we assume you a
     - [HiveMQ](https://www.hivemq.com/)
     - [VerneMQ](https://vernemq.com/)
 
-- __Integrate CoatySwift in your project__: CoatySwift is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile, and run `pod install` or `pod update`afterwards:
+- __Integrate CoatySwift in your project__: CoatySwift is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile, and run `pod install` or `pod update` afterwards:
 
 ```ruby
 pod 'CoatySwift'
 ```
 
+### mDNS Broker Discovery Support
+
+CoatySwift gives you the possibility to discover broker services dynamically. If you want to discover brokers via mDNS, add the following lines to your `Configuration` object:
+
+```swift
+
+let mqttClientOptions = MQTTClientOptions(host: brokerIp,
+                                          port: UInt16(brokerPort),
+                                          clientId: "\(UUID.init())",
+                                          enableSSL: enableSSL,
+                                          shouldTryMDNSDiscovery: true)
+
+config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,
+                                            shouldAutoStart: false)
+
+```
+
+Keep in mind that __shouldTryMDNSDiscovery__ has to set to `true`, while __shouldAutoStart__ has to be set to `false`.
+
+
+> __NOTE__: 
+>
+> Even if you discover the broker via mDNS, you are  still required to specify a fallback host address and corresponding port.
+___
 
 ## Communication Patterns
 > Citing the [Coaty Protocol Documentation](https://coatyio.github.io/coaty-js/man/communication-protocol/#events-and-event-patterns):
