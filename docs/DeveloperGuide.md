@@ -246,7 +246,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // ...
 ```
 
-3. We will now go on to instantiate our controllers. Here, we assume that you have already created a `ExampleController` as well as a `ExampleObjectFamily`. Feel free to read up on controllers and object families in section **TODO: Missing section reference**. 
+3. We will now go on to instantiate our controllers. Here, we assume that you have already created a `ExampleController` as well as a `ExampleObjectFamily`. Feel free to read up on controllers and object families in section __Object Family and Custom Data Types__.
 The key note of this step is to indicate which key maps to which controller, in order to be able to access these controllers later after the container has been bootstrapped.  
 
 ```swift
@@ -375,7 +375,7 @@ class ExampleController<Family: ObjectFamily>: Controller<Family> {
 
 ```
 
-In the next steps, you could add publish and subscribe handler, as previously mentioned in section [Communication Patterns]() **MISSING LINK**.
+In the next steps, you could add publish and subscribe handler, as previously mentioned in section __Communication Patterns__.
 
 ___
 
@@ -478,6 +478,16 @@ class ViewController: UIViewController {
 
 
 ```
+___
+
+## Managing Subscriptions
+
+There are two ways how to manage subscriptions:
+
+1. You can start and stop the Communication Manager manually by calling `communicationManager.startClient()` and `communicationManager.endClient()`. Remember that your previous subscriptions will become inactive if you call `communicationManager.endClient()`. It is therefore recommended to set up all the subscriptions anew in the `.onCommunicationManagerStarting()` methods in each controller.
+
+2. Subscriptions can be disposed manually as well. You can do this by manually calling `.dispose()` on an active subscription.
+
 ___
 ## Additional resources
 
