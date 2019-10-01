@@ -71,8 +71,8 @@ extension CommunicationManager {
         }
         
         let event = AdvertiseEvent<CoatyObjectFamily>.withObject(eventSource: identity,
-                                                               object: identity,
-                                                               privateData: nil)
+                                                                 object: identity,
+                                                                 privateData: nil)
         
         try publishAdvertise(advertiseEvent: event, eventTarget: identity)
     }
@@ -218,8 +218,7 @@ extension CommunicationManager {
     /// Find queryable objects and receive Retrieve events for them
     /// emitted by the hot observable returned.
     ///
-    /// - TODO: Note that the Query event is lazily published when the
-    /// first observer subscribes to the observable.
+    /// - TODO: Implement the lazy behavior.
     ///
     /// Since the observable never emits a completed or error event,
     /// a subscriber should unsubscribe when the observable is no longer needed
