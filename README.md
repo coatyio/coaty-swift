@@ -46,7 +46,7 @@ out the following resources:
 
 * __[Developer Guide](docs/DeveloperGuide.md)__ - This guide explains how to
   build a Coaty application with CoatySwift.
-* __Source Code Documentation__ - This is the generated sourcecode documentation
+* __[Source Code Documentation](docs/swiftdoc/index.html)__ - This is the generated sourcecode documentation
   of the most important functions.
 * __[Design Decisions and Rationale](docs/CoatySwiftInternals.md)__ - in case
   you want to know why certain things have been implemented in a particular way
