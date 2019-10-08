@@ -123,7 +123,7 @@ open class Task: CoatyObject {
 
 /// Predefined status values of Task objects.
 @objc
-public enum TaskStatus: Int, Codable {
+public enum TaskStatus: Int, Codable, CaseIterable {
     
     /// Initial state of a new task.
     case pending = 0
@@ -145,4 +145,46 @@ public enum TaskStatus: Int, Codable {
     
     /// Task Request Cancelled.
     case requestCancelled = 6
+    
+    public init?(stringValue: String) {
+        switch stringValue {
+        case "pending":
+            self = .pending
+        case "inProgress":
+            self = .inProgress
+        case "done":
+            self = .done
+        case "blocked":
+            self = .blocked
+        case "request":
+            self = .request
+        case "requestCancelled":
+            self = .requestCancelled
+        case "cancelled":
+            self = .cancelled
+        default:
+            return nil
+        }
+    }
+}
+
+extension TaskStatus: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .pending:
+            return "pending"
+        case .inProgress:
+            return "inProgress"
+        case .done:
+            return "done"
+        case .blocked:
+            return "blocked"
+        case .request:
+            return "request"
+        case .requestCancelled:
+            return "requestCancelled"
+        case .cancelled:
+            return "cancelled"
+        }
+    }
 }
