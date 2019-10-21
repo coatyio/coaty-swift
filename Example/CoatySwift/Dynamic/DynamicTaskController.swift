@@ -188,8 +188,8 @@ class DynamicTaskController: DynamicController {
             // Send out query to get all available snapshots of the task object.
             
             self.logConsole(message: "Snapshot by parentObjectId: \(task.name)",
-                eventName: "QUERY",
-                eventDirection: .Out)
+                            eventName: "QUERY",
+                            eventDirection: .Out)
             
             // Note that the queried snapshots may or may not include the latest
             // task snapshot with task status "Done", because the task snaphot
@@ -211,8 +211,8 @@ class DynamicTaskController: DynamicController {
                     // Handle incoming snapshots.
                     onNext: { (retrieveEvent) in
                         self.logConsole(message: "Snapshots by parentObjectId: \(task.name)",
-                            eventName: "RETRIEVE",
-                            eventDirection: .In)
+                                        eventName: "RETRIEVE",
+                                        eventDirection: .In)
                         
                         let objects = retrieveEvent.data.objects
                         let snapshots = objects.map { (coatyObject) -> DynamicSnapshot in
@@ -220,7 +220,7 @@ class DynamicTaskController: DynamicController {
                         }
                         
                         self.logHistorian(snapshots)
-                },
+                    },
                     
                     // Handle possible errors.
                     onError: { _ in

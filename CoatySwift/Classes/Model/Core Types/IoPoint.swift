@@ -13,9 +13,12 @@ import Foundation
  /// For instantiation use one of the concrete subtypes `IoSource` or `IoActor`.
  open class IoPoint: CoatyObject {
 
+     // MARK: - Attributes.
+
     /// The update rate (in milliseconds) for publishing IoValue events:
-    /// - desired rate for IO actors
-    /// - maximum possible drain rate for IO sources
+    /// * desired rate for IO actors
+    /// * maximum possible drain rate for IO sources
+    ///
     /// The IO router specifies the recommended update rate in Associate event data.
     /// If undefined, there is no limit on the rate of published events.
     public var updateRate: Double?

@@ -10,15 +10,17 @@ import Foundation
 /// set of Coaty objects. Used in combination with Query events
 /// and database operations, as well as the `ObjectMatcher` functionality.
 public class ObjectFilter: Codable {
-    
-    /// A single condition for filtering objects (optional).
-    public var conditions: ObjectFilterConditions?
+
+    // MARK: - Attributes.
     
     /// A set of conditions for filtering objects (optional).
+    public var conditions: ObjectFilterConditions?
+    
+    /// A single condition for filtering objects (optional).
     public var condition: ObjectFilterCondition?
     
     /// Determines the ordering of result objects by an array of
-    /// OrderByProperty objects.
+    /// `OrderByProperty` objects.
     public var orderByProperties: [OrderByProperty]?
     
     /// If a take count is given, no more than that many objects will be returned
@@ -44,7 +46,15 @@ public class ObjectFilter: Codable {
         self.take = take
         self.skip = skip
     }
+
+    // MARK: - Initializers.
     
+    /// Create an instance of ObjectFilter based on a single condition.
+    /// - Parameters:
+    ///     - condition: A single condition for filtering objects.
+    ///     - orderByProperties: Determines the ordering of result objects.
+    ///     - take: take at most the given count of hits
+    ///     - skip: skip the given count of hits
     public convenience init(condition: ObjectFilterCondition,
                             orderByProperties: [OrderByProperty]? = nil,
                             take: Int? = nil,
@@ -52,6 +62,12 @@ public class ObjectFilter: Codable {
         self.init(nil, condition, orderByProperties, take, skip)
     }
     
+    /// Create an instance of ObjectFilter based on a set of conditions.
+    /// - Parameters:
+    ///     - condition: A single condition for filtering objects.
+    ///     - orderByProperties: Determines the ordering of result objects.
+    ///     - take: take at most the given count of hits
+    ///     - skip: skip the given count of hits
     public convenience init(conditions: ObjectFilterConditions,
                             orderByProperties: [OrderByProperty]? = nil,
                             take: Int? = nil,
@@ -139,8 +155,8 @@ public class ObjectFilter: Codable {
     }
 }
 
-/// Determines the ordering of result objects by an array of (property name
-/// - sort order) tuples. The results are ordered by the first tuple, then
+/// Determines the ordering of result objects by an array of (property name,
+/// sort order) tuples. The results are ordered by the first tuple, then
 /// by the second tuple, etc.
 public class OrderByProperty: Codable {
     
@@ -150,14 +166,14 @@ public class OrderByProperty: Codable {
     
     /// Create an OrderByProperty instance.
     /// - Parameters:
-    ///     -properties: The object property used for ordering can be specified either in dot
-    /// notation or array notation. In dot notation, the name of the object
-    /// property is specified as a string (e.g. `"objectId"`). It may include
-    /// dots (`.`) to access nested properties of subobjects (e.g.
-    /// `"message.name"`). If a single property name contains dots itself, you
-    /// obviously cannot use dot notation. Instead, specify the property or
-    /// nested properties as an array of strings (e.g. `["property.with.dots",
-    /// "subproperty.with.dots"]`).
+    ///     - properties: The object property used for ordering can be specified either in dot
+    ///       notation or array notation. In dot notation, the name of the object
+    ///       property is specified as a string (e.g. `"objectId"`). It may include
+    ///       dots (`.`) to access nested properties of subobjects (e.g.
+    ///       `"message.name"`). If a single property name contains dots itself, you
+    ///       obviously cannot use dot notation. Instead, specify the property or
+    ///       nested properties as an array of strings (e.g. `["property.with.dots",
+    ///       "subproperty.with.dots"]`).
     ///     -sortingOrder: Ascending or descending sort order.
     public init(properties: ObjectFilterProperty,
                 sortingOrder: SortingOrder) {
@@ -199,17 +215,17 @@ public class ObjectFilterProperty: Codable {
     }
     
     /// Create an instance of ObjectFilterProperty.
-    /// - Parameters objectFilterProperty: Specifies filter property in dot notation
-    /// (`"property.subproperty.subsubproperty"`). Note that dot notation cannot
-    /// be used if one of the properties contains a dot (.) in its name. In such
-    /// cases, array notation (see `objectFilterProperties`) must be used.
+    /// - Parameter objectFilterProperty: Specifies filter property in dot notation
+    ///   (`"property.subproperty.subsubproperty"`). Note that dot notation cannot
+    ///   be used if one of the properties contains a dot (.) in its name. In such
+    ///   cases, array notation (see `objectFilterProperties`) must be used.
     public convenience init(_ objectFilterProperty: String) {
         self.init(objectFilterProperty: objectFilterProperty, objectFilterProperties: nil)
     }
     
     /// Create an instance of ObjectFilterProperty.
     /// - Parameter objectFilterProperties: Specifies filter property in 
-    /// array notation (`["property", "subproperty", "subsubproperty"]`).
+    ///   array notation (`["property", "subproperty", "subsubproperty"]`).
     public convenience init(_ objectFilterProperties: [String]) {
         self.init(objectFilterProperty: nil, objectFilterProperties: objectFilterProperties)
     }
@@ -261,8 +277,6 @@ public class ObjectFilterConditions: Codable {
     }
     
     /// Create an instance of ObjectFilterConditions.
-    /// - Parameter and: Multiple filter conditions combined by logical AND. Specify either the
-    /// `and` or the `or` property, or none, but *never* both.
     ///
     /// An object filter condition is defined by the name of an object property
     /// and a filter expression. The filter expression must evaluate to true
@@ -281,13 +295,14 @@ public class ObjectFilterConditions: Codable {
     /// operator-specific number of filter operands (at most two). You should
     /// use one of the typesafe `FilterOperations` functions to specify a filter
     /// expression.
+    ///
+    /// - Parameter and: Multiple filter conditions combined by logical AND.
+    ///   Specify either the `and` or the `or` property, or none, but *never* both.
     public convenience init(and: [ObjectFilterCondition]) {
         self.init(and, nil)
     }
     
     /// Create an instance of ObjectFilterConditions.
-    /// - Parameter or: Multiple filter conditions combined by logical OR. Specify either the
-    /// `and` or the `or` property, or none, but *never* both.
     ///
     /// An object filter condition is defined by the name of an object property
     /// and a filter expression. The filter expression must evaluate to true
@@ -306,6 +321,9 @@ public class ObjectFilterConditions: Codable {
     /// operator-specific number of filter operands (at most two). You should
     /// use one of the typesafe `FilterOperations` functions to specify a filter
     /// expression.
+    ///
+    /// - Parameter or: Multiple filter conditions combined by logical OR.
+    ///   Specify either the `and` or the `or` property, or none, but *never* both.
     public convenience init(or: [ObjectFilterCondition]) {
         self.init(nil, or)
     }
@@ -393,10 +411,10 @@ public class ObjectFilterCondition: Codable {
     // MARK: - Initializers.
     
     /// Creates an instance of ObjectFilterCondition.
-    /// -Parameters:
-    ///     -property: Defines the format of nested properties used in an ObjectFilterCondition.
-    ///     -expression: A filter expression consists of a filter operator and an
-    ///  operator-specific number of filter operands (at most two).
+    /// - Parameters:
+    ///     - property: Defines the format of nested properties used in an ObjectFilterCondition.
+    ///     - expression: A filter expression consists of a filter operator and an
+    ///       operator-specific number of filter operands (at most two).
     public init(property: ObjectFilterProperty, expression: ObjectFilterExpression) {
         self.property = property
         self.expression = expression
@@ -435,7 +453,6 @@ public class ObjectFilterCondition: Codable {
     }
 }
 
-
 /// A filter expression consists of a filter operator and an operator-specific
 /// number of filter operands (at most two).
 ///
@@ -445,19 +462,22 @@ public class ObjectFilterExpression: Codable {
     
     // MARK: - Attributes.
     
+    /// The filter operator constant.
     var filterOperator: ObjectFilterOperator
 
+    /// The first operand of the filter expression (optional).
     var firstOperand: AnyCodable?
 
+    /// The second operand of the filter expression (optional).
     var secondOperand: AnyCodable?
     
     // MARK: - Initializers.
     
     /// Creates an instance of ObjectFilterExpression.
-    /// -Parameters:
-    ///     -filterOperator: The filter operator constant.
-    ///     -op1: The first operand of the filter expression (optional).
-    ///     -op2: The second operand of the filter expression (optional).
+    /// - Parameters:
+    ///     - filterOperator: The filter operator constant.
+    ///     - op1: The first operand of the filter expression (optional).
+    ///     - op2: The second operand of the filter expression (optional).
     public init(filterOperator: ObjectFilterOperator,
                 op1: AnyCodable? = nil,
                 op2: AnyCodable? = nil) {
@@ -469,21 +489,18 @@ public class ObjectFilterExpression: Codable {
     // MARK: - Codable methods.
     
     public func encode(to encoder: Encoder) throws {
+        // JSON encoding format is: [filterOperator, firstOperand, secondOperand]
         var container = encoder.unkeyedContainer()
         try container.encode(filterOperator.rawValue)
         
-        // One operand is encoded as a single value
-        if let firstOperand = self.firstOperand, secondOperand == nil {
+        // First operand is encoded as a single value.
+        if let firstOperand = self.firstOperand {
             try container.encode(firstOperand)
-            return
         }
-        
-        // Two operands are embedded into an array.
-        
-        var operands = container.nestedUnkeyedContainer()
-        if let firstOperand = firstOperand, let secondOperand = secondOperand {
-            try operands.encode(firstOperand)
-            try operands.encode(secondOperand)
+
+        // Second operand is encoded as a single value.
+        if let secondOperand = self.secondOperand, firstOperand != nil {
+            try container.encode(secondOperand)
         }
     }
     
@@ -491,13 +508,10 @@ public class ObjectFilterExpression: Codable {
         var container = try decoder.unkeyedContainer()
         let filterOperatorInt = try container.decode(Int.self)
         filterOperator = ObjectFilterOperator(rawValue: filterOperatorInt)!
-        
-        // TODO: This might not handle operands correctly if they are wrapped in additional []?
         firstOperand = try container.decodeIfPresent(AnyCodable.self)
         secondOperand = try container.decodeIfPresent(AnyCodable.self)
     }
 }
-
 
 /// Defines filter operator functions that yield object filter expressions.
 public class FilterOperations {

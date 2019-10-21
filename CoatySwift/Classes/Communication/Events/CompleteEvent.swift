@@ -22,7 +22,7 @@ public class CompleteEventFactory<Family: ObjectFamily>: EventFactoryInit {
 }
 
 
-/// CompleteEvent provides a generic implementation for all CompleteEvents.
+/// CompleteEvent provides a generic implementation for responding to an `UpdateEvent`.
 /// Note that this class should preferably be initialized via its withObject() method.
 public class CompleteEvent<Family: ObjectFamily>: CommunicationEvent<CompleteEventData<Family>> {
     
@@ -43,13 +43,17 @@ public class CompleteEvent<Family: ObjectFamily>: CommunicationEvent<CompleteEve
     }
 }
 
-/// CompleteEventData provides a wrapper object that stores the entire message payload data
-/// for a CompleteEvent including the object itself as well as the associated private data.
+/// CompleteEventData provides the entire message payload data for a
+/// `CompleteEvent` including the object itself as well as associated private
+/// data.
 public class CompleteEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
+    /// The updated object.
     public var object: CoatyObject?
+
+    /// Application-specific options (optional).
     public var privateData: [String: Any]?
     
     // MARK: - Initializers.

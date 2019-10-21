@@ -58,11 +58,11 @@ public class CallEventFactory<Family: ObjectFamily>: EventFactoryInit {
 /// events, and with the `ObjectMatcher` functionality.
 public typealias ContextFilter = ObjectFilter
 
-
+/// Defines a filter condition for filtering Coaty objects. Used in combination
+/// with Call events, and with the `ObjectMatcher` functionality.
 public typealias ContextFilterCondition = ObjectFilterCondition
 
-
-/// CallEvent provides a generic implementation for all Call Events.
+/// CallEvent provides a generic implementation for invoking remote operations.
 public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<Family>> {
     
     // MARK: - Internal attributes.
@@ -71,6 +71,8 @@ public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<F
     
     /// Provides a Return handler for reacting to Call events.
     internal var returnHandler: ((ReturnEvent<Family>) -> Void)?
+
+    // MARK: - Initializers.
     
     /// Respond to an observed Call event by sending the given Return event.
     ///
@@ -80,8 +82,6 @@ public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<F
             returnHandler(returnEvent)
         }
     }
-    
-    // MARK: - Initializers.
     
     /// - NOTE: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
@@ -114,8 +114,7 @@ public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<F
 
 
 
-/// CallEventData provides a wrapper object that stores the entire message payload data
-/// for a CallEvent.
+/// CallEventData provides the entire message payload data for a `CallEvent`.
 public class CallEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.

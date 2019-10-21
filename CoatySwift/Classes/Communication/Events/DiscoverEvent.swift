@@ -81,7 +81,7 @@ public class DiscoverEventFactory<Family: ObjectFamily>: EventFactoryInit {
     }
 }
 
-/// DiscoverEvent provides a generic implementation for all DiscoverEvents.
+/// DiscoverEvent provides a generic implementation for discovering CoatyObjects.
 /// Note that this class should preferably be initialized via its withObject() method.
 /// - NOTE: DiscoverEvents also need an object family. This is because Discover-Resolve
 /// includes both sending a discover and receiving a family of resolves, as well as
@@ -159,36 +159,38 @@ public class DiscoverEvent<Family: ObjectFamily>: CommunicationEvent<DiscoverEve
 }
 
 
-/// DiscoverEventData provides a wrapper object that stores the entire message payload data
-/// for a DiscoverEventData.
+/// DiscoverEventData provides the entire message payload data of a
+/// `DiscoverEvent`.
 public class DiscoverEventData: CommunicationEventData {
     
     // MARK: - Attributes.
     
+    /// The external ID of the object(s) to be discovered or nil.
+    ///
+    /// - NOTE: externalId can be used exclusively or in combination with objectId property.
+    /// Only if used exclusively it can be combined with objectTypes or coreTypes properties.
     public var externalId: String?
+
+    /// The object UUID of the object to be discovered or nil.
+    ///
+    /// - NOTE: objectId can be used exclusively or in combination with externalId property.
+    ///  Must not be used in combination with objectTypes or coreTypes properties.
     public var objectId: CoatyUUID?
+
+    /// Restrict objects by object types (logical OR).
+    ///
+    /// - NOTE: objectTypes must not be used with objectId property.
+    /// Should not be used in combination with coreTypes.
     public var objectTypes: [String]?
+
+    /// Restrict objects by core types (logical OR).
+    ///
+    /// - NOTE: coreTypes must not be used with objectId property.
+    /// Should not be used in combination with objectTypes.
     public var coreTypes: [CoreType]?
 
     // MARK: - Initializers.
     
-    /// Create a Discover instance for the given IDs or types.
-    ///
-    /// The following combinations of parameters are valid (use undefined for unused parameters):
-    /// - externalId can be used exclusively or in combination with objectId property.
-    ///  Only if used exclusively it can be combined with objectTypes or coreTypes properties.
-    /// - objectId can be used exclusively or in combination with externalId property.
-    ///  Must not be used in combination with objectTypes or coreTypes properties.
-    /// - objectTypes must not be used with objectId property.
-    ///  Should not be used in combination with coreTypes.
-    /// - coreTypes must not be used with objectId property.
-    /// Should not be used in combination with objectTypes.
-    ///
-    /// - Parameters:
-    ///     - externalId: The external ID of the object(s) to be discovered or undefined.
-    ///     - objectId: The internal UUID of the object to be discovered or undefined.
-    ///     - objectTypes: Restrict objects by object types (logical OR).
-    ///     - coreTypes: Restrict objects by core types (logical OR).
     private init(externalId: String?, objectId: CoatyUUID?, objectTypes: [String]?, coreTypes: [CoreType]?) {
         self.externalId = externalId
         self.objectId = objectId

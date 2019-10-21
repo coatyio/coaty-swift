@@ -41,7 +41,7 @@ public class ResolveEventFactory<Family: ObjectFamily>: EventFactoryInit {
     }
 }
 
-/// ResolveEvent provides a generic implementation for all ResolveEvents.
+/// ResolveEvent provides a generic implementation for responding to a `DiscoverEvent`.
 /// Note that this class should preferably be initialized via its withObject() method.
 /// - NOTE: ResolveEvents also need an object family. This is because Discover-Resolve
 /// includes both sending a discover and receiving a family of resolves, as well as
@@ -67,14 +67,22 @@ public class ResolveEvent<Family: ObjectFamily>: CommunicationEvent<ResolveEvent
     }
 }
 
-/// ResolveEventData provides a wrapper object that stores the entire message payload data
-/// for a ResolveEvent including the object itself as well as the associated private data.
+/// ResolveEventData provides the entire message payload data for a
+/// `ResolveEvent` including the object itself as well as associated private
+/// data.
 public class ResolveEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
+    /// The object to be resolved (may be nil if `relatedObjects` property is
+    /// defined).
     public var object: CoatyObject?
+
+    /// Related objects, i.e. child objects to be resolved (may be nil if
+    /// `object` property is defined).
     public var relatedObjects: [CoatyObject]?
+
+    ///Application-specific options (optional).
     public var privateData: [String: Any]?
     
     // MARK: - Initializers.

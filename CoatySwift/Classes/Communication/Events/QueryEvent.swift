@@ -46,7 +46,7 @@ public class QueryEventFactory<Family: ObjectFamily>: EventFactoryInit {
 
 }
 
-/// QueryEvent provides a generic implementation for all Query Events.
+/// QueryEvent provides a generic implementation for querying CoatyObjects.
 public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData<Family>> {
     
     // MARK: - Internal attributes.
@@ -116,8 +116,7 @@ public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData
 }
 
 
-/// QueryEventData provides a wrapper object that stores the entire message payload data
-/// for a QueryEvent.
+/// QueryEventData provides the entire message payload data for a `QueryEvent`.
 public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.

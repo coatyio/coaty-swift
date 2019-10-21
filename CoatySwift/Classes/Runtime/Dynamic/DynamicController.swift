@@ -7,7 +7,7 @@
 import Foundation
 import RxSwift
 
-/// __Experimental__: An IoC container that uses constructor dependency injection to
+/// - Experiment: An IoC container that uses constructor dependency injection to
 /// create container components and to resolve dependencies for __dynamic Coaty__.
 /// This container defines the entry and exit points for any Coaty application
 /// providing lifecycle management for its components.

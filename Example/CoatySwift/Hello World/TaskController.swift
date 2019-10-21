@@ -184,39 +184,40 @@ class TaskController<Family: ObjectFamily>: Controller<Family> {
                             eventName: "QUERY",
                             eventDirection: .Out)
             
-            let queryEvent = self.createSnapshotQuery(forTask: task)
-            
             // Note that the queried snapshots may or may not include the latest
             // task snapshot with task status "Done", because the task snaphot
             // of the completed task may or may not have been stored in the
             // database before the query is executed. A proper implementation
             // should use an Update-Complete event to advertise task status
             // changes and await the response before querying snapshots.
+            let queryEvent = self.createSnapshotQuery(forTask: task)
+            
             try? self.communicationManager.publishQuery(queryEvent)
                 .take(1)
                 .timeout(Double(self.queryTimeout),
                          scheduler: SerialDispatchQueueScheduler(
                             queue: self.taskControllerQueue,
-                            internalSerialQueueName: "com.mycompany.coaty.internalQueryQueue"))
+                            internalSerialQueueName: "com.mycompany.coaty.internalQueryQueue")
+                )
                 .subscribe(
                     
                     // Handle incoming snapshots.
                     onNext: { (retrieveEvent) in
-                    self.logConsole(message: "Snapshots by parentObjectId: \(task.name)",
-                                    eventName: "RETRIEVE",
-                                    eventDirection: .In)
+                        self.logConsole(message: "Snapshots by parentObjectId: \(task.name)",
+                                        eventName: "RETRIEVE",
+                                        eventDirection: .In)
                     
-                    let objects = retrieveEvent.data.objects
-                    let snapshots = objects.map { (coatyObject) -> Snapshot<HelloWorldObjectFamily> in
+                        let objects = retrieveEvent.data.objects
+                        let snapshots = objects.map { (coatyObject) -> Snapshot<HelloWorldObjectFamily> in
                             coatyObject as! Snapshot<HelloWorldObjectFamily>
                         }
                         
-                    self.logHistorian(snapshots)
+                        self.logHistorian(snapshots)
                     },
                     
                     // Handle possible errors.
                     onError: { _ in
-                                print("Failed to retrieve snapshot objects.")
+                        print("Failed to retrieve snapshot objects.")
                     })
                 .disposed(by: self.disposeBag)
             

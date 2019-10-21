@@ -20,7 +20,7 @@ public class AdvertiseEventFactory<Family: ObjectFamily>: EventFactoryInit {
     }
 }
 
-/// AdvertiseEvent provides a generic implementation for all AdvertiseEvents.
+/// AdvertiseEvent provides a generic implementation for advertising CoatyObjects.
 /// Note that this class should preferably be initialized via its withObject() method.
 public class AdvertiseEvent<Family: ObjectFamily>: CommunicationEvent<AdvertiseEventData<Family>> {
     
@@ -53,13 +53,17 @@ public class AdvertiseEvent<Family: ObjectFamily>: CommunicationEvent<AdvertiseE
 }
 
 
-/// AdvertiseEventData provides a wrapper object that stores the entire message payload data
-/// for an AdvertiseEvent including the object itself as well as the associated private data.
+/// AdvertiseEventData provides the entire message payload data of an
+/// `AdvertiseEvent` including the object itself as well as associated
+/// private data.
 public class AdvertiseEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
+    /// The object to be advertised.
     public var object: CoatyObject
+
+    /// Associated private data to be published (optional).
     public var privateData: [String: Any]?
     
     // MARK: - Initializers.

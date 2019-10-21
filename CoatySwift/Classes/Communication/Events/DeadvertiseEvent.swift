@@ -16,7 +16,7 @@ public class DeadvertiseEventFactory<Family: ObjectFamily>: EventFactoryInit {
     }
 }
 
-/// DeadvertiseEvent provides a generic implementation for all DeadvertiseEvents.
+/// DeadvertiseEvent provides a generic implementation for deadvertising CoatyObjects.
 /// Note that this class should preferably be initialized via its withObjectIds() method.
 public class DeadvertiseEvent<Family: ObjectFamily>: CommunicationEvent<DeadvertiseEventData<Family>> {
     
@@ -48,12 +48,13 @@ public class DeadvertiseEvent<Family: ObjectFamily>: CommunicationEvent<Deadvert
 }
 
 
-/// DeadvertiseEventData provides a wrapper object that stores the entire message payload data
-/// for a DeadvertiseEvent.
+/// DeadvertiseEventData provides the entire message payload data for a
+/// `DeadvertiseEvent`.
 public class DeadvertiseEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
+    /// The objectIds of the objects to be deadvertised.
     var objectIds: [CoatyUUID]
     
     // MARK: - Initializers.

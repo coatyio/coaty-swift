@@ -6,7 +6,7 @@
 
 import Foundation
 
-/// - __Experimental__: Defines the application-specific container components to be registered
+/// - Experiment: Defines the application-specific container components to be registered
 /// with a dynamic Coaty Container.
 ///
 /// The configuration options for the container component classes

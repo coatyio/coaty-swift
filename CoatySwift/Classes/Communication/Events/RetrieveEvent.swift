@@ -23,7 +23,7 @@ public class RetrieveEventFactory<Family: ObjectFamily>: EventFactoryInit {
     
 }
 
-/// RetrieveEvent provides a generic implementation for all RetrieveEvents.
+/// RetrieveEvent provides a generic implementation for responding to a `QueryEvent`.
 ///
 /// The class requires the definition of a `ObjectFamily`, e.g. `CoatyObjectFamily` or a
 /// custom implementation of a `ObjectFamily` to support custom object types.
@@ -49,13 +49,17 @@ public class RetrieveEvent<Family: ObjectFamily>: CommunicationEvent<RetrieveEve
     }
 }
 
-/// RetrieveEventData provides a wrapper object that stores the entire message payload data
-/// for a RetrieveEvent including the object itself as well as the associated private data.
+/// RetrieveEventData provides the entire message payload data for a
+/// `RetrieveEvent` including the object itself as well as associated private
+/// data.
 public class RetrieveEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
+    /// An array of objects to be retrieved (array may be empty).
     public var objects: [CoatyObject]
+
+    /// Application-specific options (optional).
     public var privateData: [String: Any]?
     
     // MARK: - Initializers.

@@ -40,7 +40,7 @@ public class ChannelEventFactory<Family: ObjectFamily>: EventFactoryInit {
     
 }
 
-/// ChannelEvent provides a generic implementation for all ChannelEvents.
+/// ChannelEvent provides a generic implementation for broadcasting objects through a channel.
 ///
 /// The class requires the definition of an `ObjectFamily`, e.g. `CoatyObjectFamily` or a
 /// custom implementation of an `ObjectFamily` to support custom object types.
@@ -82,14 +82,20 @@ public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEvent
     }
 }
 
-/// ChannelEventData provides a wrapper object that stores the entire message payload data
-/// for a ChannelEvent including the object itself as well as the associated private data.
+/// ChannelEventData provides the entire message payload data for a
+/// `ChannelEvent` including the object itself as well as associated private
+/// data.
 public class ChannelEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
+    /// The object to be channelized.
     public var object: CoatyObject?
+    
+    /// The objects to be channelized.
     public var objects: [CoatyObject]?
+    
+    /// Application-specific options (optional).
     public var privateData: [String: Any]?
     
     // MARK: - Initializers.

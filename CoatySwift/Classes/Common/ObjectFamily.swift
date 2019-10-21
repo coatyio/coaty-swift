@@ -17,7 +17,7 @@ public protocol ObjectFamily: Decodable {
 
 /// Discriminator key enum that is used to determine the field that discriminates between the different object types. For CoatyObjects this is "objectType".
 ///
-/// __Experimental__: Dynamic Coaty supports matching on coreTypes.
+/// - Experiment: Dynamic Coaty supports matching on coreTypes.
 enum Discriminator: String, CodingKey {
     case objectType = "objectType"
     case coreType = "coreType"

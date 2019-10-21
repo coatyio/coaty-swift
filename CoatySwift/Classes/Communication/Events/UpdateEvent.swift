@@ -31,7 +31,7 @@ public class UpdateEventFactory<Family: ObjectFamily>: EventFactoryInit {
     }
 }
 
-/// UpdateEvent provides a generic implementation for all Update Events.
+/// UpdateEvent provides a generic implementation for updating a CoatyObject.
 ///
 /// - NOTE: This class should preferably be initialized via its withPartial() or withFull() method.
 public class UpdateEvent<Family: ObjectFamily>: CommunicationEvent<UpdateEventData<Family>> {
@@ -90,20 +90,29 @@ public class UpdateEvent<Family: ObjectFamily>: CommunicationEvent<UpdateEventDa
     }
 }
 
-/// UpdateEventData provides a wrapper object that stores the entire message payload data
-/// for a UpdateEvent including the object itself as well as the associated private data.
+/// UpdateEventData provides the entire message payload data for an
+/// `UpdateEvent` including the object itself as well as associated private
+/// data.
 public class UpdateEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
+    /// The object to be updated (for full updates only).
     public var object: CoatyObject?
+
+    /// The UUID of the object to be updated (for partial updates only).
     public var objectId: CoatyUUID?
+
+    /// Key value pairs for properties that have changed or should be changed
+    /// (accessible by indexer). For partial updates only.
     public var changedValues: [String: Any]?
     
+    /// Determines wheher this event data defines a partial update.
     public var isPartialUpdate: Bool {
         return objectId != nil
     }
     
+    /// Determines wheher this event data defines a full update.
     public var isFullUpdate: Bool {
         return object != nil
     }

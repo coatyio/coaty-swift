@@ -48,7 +48,7 @@ open class CoatyObject: NSObject, Codable {
     /// default to false.
     public var isDeactivated: Bool?
     
-    /// __Experimental__: Parameter that encodes all custom fields. Needed for
+    /// - Experiment: Parameter that encodes all custom fields. Needed for
     /// dynamic Coaty.
     public var custom: [String: Any]
     
