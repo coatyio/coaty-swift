@@ -7,12 +7,11 @@
 import Foundation
 
 /// Represents an interaction device associated with a Coaty user.
-public class Device: CoatyObject {
+open class Device: CoatyObject {
     
     // MARK: - Attributes.
     
     /// The IO source and actors associated with this system component.
-    /// - TODO: Missing device capabilities.
     public var ioCapabilities: [IoPoint]?
     
     /// Display type of the interaction device.
@@ -44,7 +43,7 @@ public class Device: CoatyObject {
         try super.init(from: decoder)
     }
     
-    public override func encode(to encoder: Encoder) throws {
+    open override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: DeviceKeys.self)
         try container.encode(displayType, forKey: .displayType)

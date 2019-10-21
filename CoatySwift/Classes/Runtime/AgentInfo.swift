@@ -107,16 +107,12 @@ public class AgentBuildInfo: Codable {
     
     /// The build date of the agent project.
     ///
-    /// The value should be formatted accordind to ISO 8601.
+    /// The value should be formatted according to ISO 8601.
     public var buildDate: String
     
-    /// The build mode of the agent project. Determines whether the agent
-    /// is built for a production, development, staging, or any other custom
-    /// build environment.
-    ///
-    /// The value is acquired from environment variable setting `NODE_ENV`.
-    /// - NOTE: predefined values from coaty-js are:
-    /// "production" | "development" | "staging" | "testing" | string
+    /// The build mode of the agent project. Determines whether the agent is
+    /// built for a production, development, staging, testing, or any other
+    /// custom build environment.
     public var buildMode: String
     
     /// Any other build-specific properties accessible by indexer

@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CoatySwift'
-  s.version          = '0.1.0'
-  s.summary          = 'Collaborative IoT framework in Swift for iOS and macOS.'
+  s.version          = '1.0.0'
+  s.summary          = 'CoatySwift is a Swift implementation of the Coaty Collaborative IoT framework for iOS, iPadOS, and macOS.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,14 +18,14 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-The Coaty framework enables realization of collaborative IoT applications and scenarios in a distributed, decentralized fashion. A Coaty application consists of Coaty agents that act independently and communicate with each other to achieve common goals. Coaty agents can run on IoT devices, mobile devices, in microservices, cloud or backend services.
+  Using the Coaty [koʊti] framework as a middleware, you can build distributed applications out of decentrally organized application components, so called Coaty agents, which are loosely coupled and communicate with each other in (soft) real-time. The main focus is on IoT prosumer scenarios where smart agents act in an autonomous, collaborative, and ad-hoc fashion. CoatySwift agents can run on iOS, iPadOS, and macOS.
                        DESC
 
   s.homepage         = 'https://coaty.io'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Siemens AG' => 'coaty.team@gmail.com' }
-  s.source           = { :git => 'https://code.siemens.com/collaborative-iot/coaty/coaty-swift.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/coatyio/coaty-swift.git', :tag => s.version.to_s }
+  s.documentation_url = 'https://coatyio.github.io/coaty-swift/swiftdoc/index.html'
 
   s.ios.deployment_target = '8.0'
   s.macos.deployment_target = '10.14'
@@ -38,7 +38,6 @@ The Coaty framework enables realization of collaborative IoT applications and sc
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
   s.dependency 'CocoaMQTT', '~> 1.1.3'
   s.dependency 'RxSwift', '~> 5'
   s.dependency 'RxCocoa', '~> 5'

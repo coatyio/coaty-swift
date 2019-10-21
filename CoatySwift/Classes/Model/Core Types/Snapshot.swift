@@ -12,9 +12,8 @@ public typealias DynamicSnapshot = Snapshot<CoatyObjectFamily>
 /// Represents a snapshot in time of the state of any Coaty object.
 open class Snapshot<Family: ObjectFamily>: CoatyObject {
     
-    /// Timestamp when snapshot was issued/created.
-    /// Value represents the number of milliseconds since the epoc in UTC
-    /// Date()).
+    /// Coaty compatible timestamp when snapshot was issued/created.
+    /// (see `CoatyTimestamp.nowMillis()` or `CoatyTimestamp.dateMillis()`)
     public var creationTimestamp: Double
     
     /// UUID of controller which created this snapshot.
@@ -71,7 +70,7 @@ open class Snapshot<Family: ObjectFamily>: CoatyObject {
         try super.init(from: decoder)
     }
     
-    override open func encode(to encoder: Encoder) throws {
+    open override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(creatorId.string, forKey: .creatorId)

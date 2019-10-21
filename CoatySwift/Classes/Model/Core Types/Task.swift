@@ -12,45 +12,41 @@ open class Task: CoatyObject {
     // MARK: - Attributes.
     
     /// Object ID of user who created the task
-    open var creatorId: CoatyUUID
+    public var creatorId: CoatyUUID
     
-    /// Timestamp when task was issued/created.
-    /// Value represents the number of milliseconds since the epoc in UTC.
-    /// (see Date.getTime(), Date.now())
-    open var creationTimestamp: Double
+    /// Coaty compatible timestamp when task was issued/created.
+    /// (see `CoatyTimestamp.nowMillis()` or `CoatyTimestamp.dateMillis()`)
+    public var creationTimestamp: Double
     
-    /// Timestamp when task has been changed (optional).
-    /// Value represents the number of milliseconds since the epoc in UTC.
-    /// (see Date.getTime(), Date.now())
-    open var lastModificationTimestamp: Double?
+    /// Coaty compatible timestamp when task has been changed (optional).
+    /// (see `CoatyTimestamp.nowMillis()` or `CoatyTimestamp.dateMillis()`)
+    public var lastModificationTimestamp: Double?
     
-    /// Timestamp when task should be due (optional).
-    /// Value represents the number of milliseconds since the epoc in UTC.
-    /// (see Date.getTime(), Date.now())
-    open var dueTimestamp: Double?
+    /// Coaty compatible timestamp when task should be due (optional).
+    /// (see `CoatyTimestamp.nowMillis()` or `CoatyTimestamp.dateMillis()`)
+    public var dueTimestamp: Double?
     
-    /// Timestamp when task has been done (optional).
-    /// Value represents the number of milliseconds since the epoc in UTC.
-    /// (see Date.getTime(), Date.now())
-    open var doneTimestamp: Double?
+    /// Coaty compatible timestamp when task has been done (optional).
+    /// (see `CoatyTimestamp.nowMillis()` or `CoatyTimestamp.dateMillis()`)
+    public var doneTimestamp: Double?
     
     /// The amount of time (in milliseconds) the task will
     /// take or should took to complete (optional).
-    open var duration: Double?
+    public var duration: Double?
     
     /// Status of task.
-    dynamic open var status: TaskStatus
+    public var status: TaskStatus
     
     /// Required competencies / roles needed for this task (optional).
     /// The requirements specified are combined by logical AND, i.e. all
     /// requirements must be fullfilled.
-    open var requirements: [String]?
+    public var requirements: [String]?
     
     /// Description of the task (optional)
-    open var desc: [String]?
+    public var desc: String?
     
     /// Associated workflow Id (optional)
-    open var workflowId: CoatyUUID?
+    public var workflowId: CoatyUUID?
 
     // MARK: - Initializers.
 
@@ -64,7 +60,7 @@ open class Task: CoatyObject {
                 dueTimestamp: Double? = nil,
                 doneTimestamp: Double? = nil,
                 requirements: [String]? = nil,
-                description: [String]? = nil,
+                description: String? = nil,
                 workflowId: CoatyUUID? = nil) {
         self.creatorId = creatorId
         self.creationTimestamp = creationTimestamp
@@ -101,7 +97,7 @@ open class Task: CoatyObject {
         self.dueTimestamp = try container.decodeIfPresent(Double.self, forKey: .dueTimestamp)
         self.doneTimestamp = try container.decodeIfPresent(Double.self, forKey: .doneTimestamp)
         self.requirements = try container.decodeIfPresent([String].self, forKey: .requirements)
-        self.desc = try container.decodeIfPresent([String].self, forKey: .description)
+        self.desc = try container.decodeIfPresent(String.self, forKey: .description)
         self.workflowId = try container.decodeIfPresent(CoatyUUID.self, forKey: .workflowId)
         try super.init(from: decoder)
     }
@@ -122,7 +118,6 @@ open class Task: CoatyObject {
 }
 
 /// Predefined status values of Task objects.
-@objc
 public enum TaskStatus: Int, Codable {
     
     /// Initial state of a new task.

@@ -54,7 +54,11 @@ public class CallEventFactory<Family: ObjectFamily>: EventFactoryInit {
 
 }
 
+/// Defines criteria for filtering Coaty objects. Used in combination with Call
+/// events, and with the `ObjectMatcher` functionality.
 public typealias ContextFilter = ObjectFilter
+
+
 public typealias ContextFilterCondition = ObjectFilterCondition
 
 
@@ -151,7 +155,8 @@ public class CallEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Access methods.
     
-    /// - TODO: The current implementation is unable to handle Decodable directly.
+    /// Returns the value of the keyword parameter with the given name. Returns `nil`,
+    /// if the given name is missing or if no keyword parameters have been specified.
     public func getParameterByName(name: String) -> Any? {
         guard let parameter = parameterDictionary?[name] else {
             return nil
@@ -160,7 +165,8 @@ public class CallEventData<Family: ObjectFamily>: CommunicationEventData {
         return parameter.value
     }
     
-    /// - TODO: The current implementation is unable to handle Decodable directly.
+    /// Returns the value of the positional parameter with the given index. Returns `nil`,
+    /// if the given index is out of range or if no index parameters have been specified.
     public func getParameterByIndex(index: Int) -> Any? {
         guard let parameterArray = parameterArray, index >= 0, index < parameterArray.count else {
             return nil

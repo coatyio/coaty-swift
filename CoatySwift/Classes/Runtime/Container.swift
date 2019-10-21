@@ -28,16 +28,11 @@ public class Container<Family: ObjectFamily> {
     /// A queue ID needed to guarantee each container gets one dedicated queue __only__.
     private var queueID = "coatyswift.containerQueue." + UUID().uuidString
 
-    // FIXME: Currently we're using our communication state observable to find out whether
-    // we can subscribe / publish or not.
-    // HOWEVER: IT SHOULD BE OPERATING STATE BASED.
     private var communicationState: Observable<CommunicationState>?
-    
-    /// - MISSING: config transformer dependency.
+
     public static func resolve(components: Components<Family>,
                                configuration: Configuration,
-                               objectFamily: Family.Type
-                               /* configTransformer: */)  -> Container {
+                               objectFamily: Family.Type)  -> Container {
         
         // Adjust logging level for CoatySwift.
         LogManager.logLevel = LogManager.getLogLevel(logLevel: configuration.common.logLevel)
@@ -151,7 +146,7 @@ public class Container<Family: ObjectFamily> {
         self.runtime = runtime
         
         // Create CommunicationManager.
-        let communicationManager = CommunicationManager<Family>(communicationOptions: configuration.communication)
+        let communicationManager = CommunicationManager<Family>(runtime: runtime, communicationOptions: configuration.communication)
         self.communicationManager = communicationManager
         self.eventFactory = EventFactory(self.communicationManager!.identity)
         

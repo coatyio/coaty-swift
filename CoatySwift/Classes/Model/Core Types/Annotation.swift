@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents an annotation
-public class Annotation: CoatyObject {
+open class Annotation: CoatyObject {
     
     // MARK: Attributes.
     
@@ -68,7 +68,7 @@ public class Annotation: CoatyObject {
         try super.init(from: decoder)
     }
     
-    public override func encode(to encoder: Encoder) throws {
+    open override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: AnnotationKeys.self)
         try container.encode(type, forKey: .type)

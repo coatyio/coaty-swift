@@ -8,7 +8,7 @@
 import Foundation
 
 /// Defines meta information of an IO actor.
-public class IoActor: IoPoint {
+open class IoActor: IoPoint {
     
     // MARK: - Attributes.
 
@@ -65,7 +65,7 @@ public class IoActor: IoPoint {
         try super.init(from: decoder)
     }
     
-    public override func encode(to encoder: Encoder) throws {
+    open override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: IoActorKeys.self)
         try container.encode(valueType, forKey: .valueType)

@@ -61,12 +61,12 @@ class DynamicTaskController: DynamicController {
     
     // MARK: Application logic.
     
-    /// Observe Advertises with the objectType of `OBJECT_TYPE_HELLO_WORLD_TASK`.
+    /// Observe Advertises with the objectType of `HelloWorldTask`.
     /// When a Task Advertise was received, handle it via the `handleRequests`
     /// method.
     private func observeAdvertiseRequests() throws {
         try communicationManager
-            .observeAdvertise(withObjectType: ModelObjectTypes.HELLO_WORLD_TASK.rawValue)
+            .observeAdvertise(withObjectType: HelloWorldObjectFamily.helloWorldTask.rawValue)
             .compactMap { (advertiseEvent) -> Task? in
                 advertiseEvent.data.object as? Task
             }
@@ -143,7 +143,7 @@ class DynamicTaskController: DynamicController {
                     } else {
                         // We were not chosen to carry out the task.
                         self.setBusy(false)
-                        self.logConsole(message: "Offer rejected for request: \(task.name) - \(task.assigneeUserId):\(self.identity.assigneeUserId)",
+                        self.logConsole(message: "Offer rejected for request: \(task.name) - \(String(describing: task.assigneeUserId)):\(String(describing: self.identity.assigneeUserId))",
                             eventName: "COMPLETE",
                             eventDirection: .In)
                     }
@@ -158,7 +158,7 @@ class DynamicTaskController: DynamicController {
         
         // Update the task status and the modification timestamp.
         task.status = .inProgress
-        task.lastModificationTimestamp = Date().timeIntervalSince1970
+        task.lastModificationTimestamp = CoatyTimestamp.nowMillis()
         
         print("Carrying out task: \(task.name)")
         
@@ -173,8 +173,8 @@ class DynamicTaskController: DynamicController {
             
             // Update the task object to set its status to "done".
             task.status = .done
-            task.doneTimestamp = Double(Date().timeIntervalSince1970 * 1000)
-            task.lastModificationTimestamp = Double(Date().timeIntervalSince1970 * 1000)
+            task.doneTimestamp = CoatyTimestamp.nowMillis()
+            task.lastModificationTimestamp = task.doneTimestamp
             
             self.logConsole(message: "Completed task: \(task.name)",
                 eventName: "ADVERTISE",
@@ -240,10 +240,10 @@ class DynamicTaskController: DynamicController {
     /// - Parameter request: the task request we want to make an offer to.
     /// - Returns: an update event that updates the dueTimeStamp and the assigneeUserId.
     private func createTaskOfferEvent(_ request: Task) -> DynamicUpdateEvent {
-        let dueTimeStamp = Int(Date().timeIntervalSince1970 * 1000)
+        let dueTimeStamp = CoatyTimestamp.nowMillis()
         let assigneeUserId = self.identity.assigneeUserId
         let changedValues: [String: Any] = ["dueTimestamp": dueTimeStamp,
-                                            "assigneeUserId": assigneeUserId?.string]
+                                            "assigneeUserId": assigneeUserId?.string as Any]
         
         return eventFactory.UpdateEvent.withPartial(objectId: request.objectId,
                                                     changedValues: changedValues)

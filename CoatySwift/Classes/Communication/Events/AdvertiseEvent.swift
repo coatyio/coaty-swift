@@ -21,7 +21,7 @@ public class AdvertiseEventFactory<Family: ObjectFamily>: EventFactoryInit {
 }
 
 /// AdvertiseEvent provides a generic implementation for all AdvertiseEvents.
-/// Note that this class should preferably initialized via its withObject() method.
+/// Note that this class should preferably be initialized via its withObject() method.
 public class AdvertiseEvent<Family: ObjectFamily>: CommunicationEvent<AdvertiseEventData<Family>> {
     
     /// - NOTE: This method should never be called directly by application programmers.
@@ -30,10 +30,9 @@ public class AdvertiseEvent<Family: ObjectFamily>: CommunicationEvent<AdvertiseE
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
-    /// Convenience factory method that configures an instance of and AdvertiseEvent with
+    /// Convenience factory method that configures an instance of an AdvertiseEvent with
     /// an object and privateData. Note that the event source should be the controller that
     /// creates the AdvertiseEvent.
-    /// FIXME: Replace CoatyObject with Component object.
     internal static func withObject(eventSource: Component,
                            object: CoatyObject,
                            privateData: [String: Any]? = nil) -> AdvertiseEvent {
@@ -82,7 +81,7 @@ public class AdvertiseEventData<Family: ObjectFamily>: CommunicationEventData {
         case privateData
     }
     
-    required public init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard let object = try container.decode(ClassWrapper<Family, CoatyObject>.self, forKey: .object).object else {
             throw CoatySwiftError.DecodingFailure("No object found while decoding an Advertise Event.")

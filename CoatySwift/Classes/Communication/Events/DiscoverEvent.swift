@@ -82,7 +82,7 @@ public class DiscoverEventFactory<Family: ObjectFamily>: EventFactoryInit {
 }
 
 /// DiscoverEvent provides a generic implementation for all DiscoverEvents.
-/// Note that this class should preferably initialized via its withObject() method.
+/// Note that this class should preferably be initialized via its withObject() method.
 /// - NOTE: DiscoverEvents also need an object family. This is because Discover-Resolve
 /// includes both sending a discover and receiving a family of resolves, as well as
 /// reacting to a family of discovers and sending out particular resolves.
@@ -269,6 +269,12 @@ public class DiscoverEventData: CommunicationEventData {
     public func isDiscoveringObjectId() -> Bool {
         return externalId == nil && objectId != nil
     }
+
+    /// Determines whether this event data discovers an object based on an external ID 
+    /// but not an object ID.
+    public func isDiscoveringExternalId() -> Bool {
+        return self.externalId != nil && self.objectId == nil
+    }
     
     /// Determines whether this event data discovers an object based on both
     /// external ID and object ID.
@@ -278,7 +284,7 @@ public class DiscoverEventData: CommunicationEventData {
     
     /// Determines whether this event data discovers an object based
     /// on types only.
-    func isDiscoveringTypes() -> Bool {
+    public func isDiscoveringTypes() -> Bool {
         return self.externalId == nil && self.objectId == nil
     }
     

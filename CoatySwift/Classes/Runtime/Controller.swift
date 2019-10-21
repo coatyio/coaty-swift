@@ -37,12 +37,12 @@ open class Controller<Family: ObjectFamily> {
         self.controllerType = controllerType
         
         // Create default identity.
-        self.identity = Component(name: self.controllerType,
-                                  objectType: "\(COATY_PREFIX)\(CoreType.Component.rawValue)",
-                                  objectId: .init())
-        
-        identity.parentObjectId = communicationManager.identity.objectId
+        self.identity = Component(name: self.controllerType)
+
         self.initializeIdentity(identity: identity)
+        self.initializeIdentityFromOptions()
+        identity.parentObjectId = communicationManager.identity.objectId
+        
         self.eventFactory = EventFactory<Family>(identity)
         
         self.communicationManager = ControllerCommunicationManager(identity: self.identity,
@@ -113,11 +113,39 @@ open class Controller<Family: ObjectFamily> {
     ///
     /// @param identity the default identity object for a controller instance
     open func initializeIdentity(identity: Component) {}
+
+    private func initializeIdentityFromOptions() {
+        // Merge property values from ControllerOptions.identity option.
+        if self.options?.identity != nil {
+            for (key, value) in self.options!.identity! {
+                switch key {
+                    case "name":
+                        identity.name = value as! String
+                    case "objectId":
+                        identity.objectId = value as! CoatyUUID
+                    case "objectType":
+                        identity.objectType = value as! String
+                    case "externalId":
+                        identity.externalId = value as? String
+                    case "parentObjectId":
+                        // Ignore parentObjectId, it is always set to the CommunicationManager's identity.
+                        break
+                    case "assigneeUserId":
+                        identity.assigneeUserId = value as? CoatyUUID
+                    case "locationId":
+                        identity.locationId = value as? CoatyUUID
+                    case "isDeactivated":
+                        identity.isDeactivated = value as? Bool
+                    default:
+                        break
+                }
+            }
+        }
+    }
     
     private func advertiseIdentity() {
         let event = AdvertiseEvent<CoatyObjectFamily>.withObject(eventSource: self.identity,
-                                              object: self.identity)
- 
+                                                                 object: self.identity)
         try? self.communicationManager.publishAdvertise(event)
         
     }
@@ -134,8 +162,8 @@ open class Controller<Family: ObjectFamily> {
         try? self.communicationManager
             .observeDiscover()
             .filter { event -> Bool in
-                event.data.isCoreTypeCompatible(.Component)
-                    || (event.data.isDiscoveringObjectId() && event.data.objectId == self.identity.objectId)
+                (event.data.isDiscoveringTypes() && event.data.isCoreTypeCompatible(.Component)) ||
+                (event.data.isDiscoveringObjectId() && event.data.objectId == self.identity.objectId)
             }.subscribe(onNext: { event in
                 let resolveEvent = self.eventFactory.ResolveEvent.with(object: self.identity)
                 event.resolve(resolveEvent: resolveEvent)

@@ -16,7 +16,7 @@ public class ChannelEventFactory<Family: ObjectFamily>: EventFactoryInit {
     ///   - channelId: channel identifier string.
     ///   - object: the object to be channelized.
     ///   - privateData: application-specific options (optional).
-    /// - Returns: a channel event that emits CoatyObjects that are part of the `ClassFamily`.
+    /// - Returns: a channel event that emits CoatyObjects that are part of a defined `ObjectFamily`.
     public func with(object: CoatyObject,
                      channelId: String,
                      privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
@@ -30,7 +30,7 @@ public class ChannelEventFactory<Family: ObjectFamily>: EventFactoryInit {
     ///   - channelId: channel identifier string.
     ///   - objects: the objects to be channelized
     ///   - privateData: application-specific options (optional)
-    /// - Returns: a channel event that emits CoatyObjects that are part of the `ClassFamily`.
+    /// - Returns: a channel event that emits CoatyObjects that are part of a defined `ObjectFamily`.
     public func with(objects: [CoatyObject],
                      channelId: String,
                      privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
@@ -42,9 +42,9 @@ public class ChannelEventFactory<Family: ObjectFamily>: EventFactoryInit {
 
 /// ChannelEvent provides a generic implementation for all ChannelEvents.
 ///
-/// The class requires the definition of a `ClassFamily`, e.g. `CoatyObjectFamily` or a
-/// custom implementation of a `ClassFamily` to support custom object types.
-/// - NOTE: This class should preferably initialized via its withObject() method.
+/// The class requires the definition of an `ObjectFamily`, e.g. `CoatyObjectFamily` or a
+/// custom implementation of an `ObjectFamily` to support custom object types.
+/// - NOTE: This class should preferably be initialized via its withObject() method.
 public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEventData<Family>> {
     
     var channelId: String?

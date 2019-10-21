@@ -9,11 +9,12 @@ import UIKit
 import RxSwift
 import CoatySwift
 
-/// This example view controller shows how you can set up a basic CoatySwift bootstrap application.
+/// This example view controller shows how you can set up a basic CoatySwift
+/// bootstrap application using a DynamicController.
 class DynamicHelloWorldExampleViewController: UIViewController {
     
     let enableSSL = false
-    let brokerIp = "192.168.1.161"
+    let brokerIp = "127.0.0.1"
     let brokerPort = 1883
     
     override func viewDidLoad() {
@@ -70,7 +71,6 @@ class DynamicHelloWorldExampleViewController: UIViewController {
             
             let mqttClientOptions = MQTTClientOptions(host: brokerIp,
                                                       port: UInt16(brokerPort),
-                                                      clientId: "\(UUID.init())",
                                                       enableSSL: enableSSL,
                                                       shouldTryMDNSDiscovery: false)
             config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,

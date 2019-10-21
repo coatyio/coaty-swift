@@ -24,9 +24,10 @@ public class CommunicationManager<Family: ObjectFamily> {
     /// Dispose bag for all RxSwift subscriptions.
     private var disposeBag = DisposeBag()
     private let protocolVersion = 1
-    private var associatedUser: User?
-    private var associatedDevice: Device?
+    internal var associatedUser: User?
+    internal var associatedDevice: Device?
     private var isDisposed = false
+    private var runtime: Runtime
     private var communicationOptions: CommunicationOptions
     private var subscriptions = [String: Int]()
 
@@ -55,17 +56,22 @@ public class CommunicationManager<Family: ObjectFamily> {
     private var queue = DispatchQueue(label: "com.coatyswift.comQueue")
 
     /// The communication client that offers the required publisher-subscriber API.
-    internal var client: CommunicationClient
+    internal var client: CommunicationClient!
 
     // MARK: - Initializers.
 
-    public init(communicationOptions: CommunicationOptions) {
+    public init(runtime: Runtime, communicationOptions: CommunicationOptions) {
+        self.runtime = runtime
         self.communicationOptions = communicationOptions
-        
-        client = CocoaMQTTClient(communicationOptions: communicationOptions)
-        client.delegate = self
+        initOptions()
 
         initializeIdentity()
+
+        let mqttClientOptions = communicationOptions.mqttClientOptions!
+        initializeMQTTClientId(mqttClientOptions)
+
+        client = CocoaMQTTClient(mqttClientOptions: mqttClientOptions)
+        client.delegate = self
 
         setupOperatingStateLogging()
         setupCommunicationStateLogging()
@@ -75,15 +81,54 @@ public class CommunicationManager<Family: ObjectFamily> {
     // MARK: - Setup methods.
 
     public func initializeIdentity() {
-        let objectType = COATY_PREFIX + CoreType.Component.rawValue
-        identity = Component(coreType: .Component,
-                             objectType: objectType,
-                             objectId: .init(), name: "CommunicationManager")
+        identity = Component(name: "CommunicationManager")
+
+        // Merge property values from CommunicationOptions.identity option.
+        if self.communicationOptions.identity != nil {
+            for (key, value) in self.communicationOptions.identity! {
+                switch key {
+                    case "name":
+                        identity.name = value as! String
+                    case "objectId":
+                        identity.objectId = value as! CoatyUUID
+                    case "objectType":
+                        identity.objectType = value as! String
+                    case "externalId":
+                        identity.externalId = value as? String
+                    case "parentObjectId":
+                        identity.parentObjectId = value as? CoatyUUID
+                    case "assigneeUserId":
+                        identity.assigneeUserId = value as? CoatyUUID
+                    case "locationId":
+                        identity.locationId = value as? CoatyUUID
+                    case "isDeactivated":
+                        identity.isDeactivated = value as? Bool
+                    default:
+                        break
+                }
+            }
+        }
 
         // Make sure the identity is added to the deadvertiseIds array in order to
         // send out a correct last will message.
-        deadvertiseIds.append(identity!.objectId)
+        deadvertiseIds.append(identity.objectId)
     }
+
+    private func initializeMQTTClientId(_ mqttClientOptions: MQTTClientOptions) {
+        // Assign a valid client id according to MQTT Spec 3.1:
+        // The Server MUST allow ClientIds which are between 1 and 23 UTF-8 encoded 
+        // bytes in length, and that contain only the characters
+        // "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".
+        // The Server MAY allow ClientId’s that contain more than 23 encoded bytes.
+        // The Server MAY allow ClientId’s that contain characters not included in the list given above. 
+        let id = identity.objectId.string;
+        if communicationOptions.useProtocolCompliantClientId == false {
+            mqttClientOptions.clientId = "COATY\(id)"
+            return
+        }
+        mqttClientOptions.clientId = "COATY" + String(id.replacingOccurrences(of: "-", with: "").prefix(19))
+    }
+
 
     /// Setup for the handler method that is invoked when the communication state of the client changes to online.
     private func setupOnConnectHandler() {
@@ -91,7 +136,7 @@ public class CommunicationManager<Family: ObjectFamily> {
             .filter { $0 == .online }
             .subscribe { _ in
 
-                try? self.advertiseIdentityOrDevice(eventTarget: self.identity)
+                try? self.advertiseIdentityOrDevice()
 
                 // Publish possible deferred subscriptions and publications.
                 _ = self.queue.sync {
@@ -99,7 +144,6 @@ public class CommunicationManager<Family: ObjectFamily> {
                         self.client.subscribe(topic)
                     }
 
-                    // FIXME: This MAY be a race condition between the subscriptions and the publications.
                     self.deferredPublications.forEach { publication in
                         let topic = publication.0
                         let payload = publication.1
@@ -125,21 +169,19 @@ public class CommunicationManager<Family: ObjectFamily> {
     }
 
     /// Sets last will for the communication manager in broker.
-    /// - NOTE: the willMessage is only sent out at the beginning of the connection and cannot
-    /// be changed afterwards, unless you reconnect.
+    /// - NOTE: the willMessage is only sent out at the beginning of the
+    ///   connection and cannot be changed afterwards, unless you reconnect.
     func setLastWill() {
         guard let lastWillTopic = try? CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Deadvertise,
-                                                                                 eventTypeFilter: nil,
-                                                                                 associatedUserId: nil,
+                                                                                 associatedUserId: associatedUser?.objectId.string,
                                                                                  sourceObject: identity,
                                                                                  messageToken: CoatyUUID().string) else {
             log.error("Could not create topic string for last will.")
             return
         }
 
-        let deadvertise = Deadvertise(objectIds: deadvertiseIds)
-        guard let deadvertiseEvent = try? DeadvertiseEvent.withObject(eventSource: identity,
-                                                                      object: deadvertise) else {
+        guard let deadvertiseEvent = try? DeadvertiseEvent<Family>.withObjectIds(eventSource: identity,
+                                                                         objectIds: deadvertiseIds) else {
             log.error("Could not create DeadvertiseEvent.")
             return
         }
@@ -147,23 +189,17 @@ public class CommunicationManager<Family: ObjectFamily> {
         client.setWill(lastWillTopic, message: deadvertiseEvent.json)
     }
 
-    /// MISSING: - Not implemented.
-    private func initOptions(options _: CommunicationOptions) {
-        // Capture state of associated user and device in case it might change
-        // while the communication manager is being online.
-
-        /*
-         this._associatedUser = CoreTypes.clone<User>(this.runtime.options.associatedUser);
-         this._associatedDevice = CoreTypes.clone<Device>(this.runtime.options.associatedDevice);
-         this._useReadableTopics = !!this.options.useReadableTopics;
-         */
+    private func initOptions() {
+        self.associatedUser = self.runtime.commonOptions?.associatedUser;
+        self.associatedDevice = self.runtime.commonOptions?.associatedDevice;
     }
 
     // MARK: - Client lifecycle methods.
 
-    /// - MISSING: Missing dependency with initOptions.
     public func start() {
-        // initOptions(options: )
+        // Capture state of associated user and device in case it might change
+        // while the communication manager is being started.
+        initOptions()
         startClient()
     }
 
@@ -175,6 +211,7 @@ public class CommunicationManager<Family: ObjectFamily> {
         observeDiscoverDevice()
         observeDiscoverIdentity()
 
+        setLastWill();
         client.connect()
         updateOperatingState(.started)
     }
@@ -186,7 +223,6 @@ public class CommunicationManager<Family: ObjectFamily> {
         }
 
         isDisposed = true
-        deferredSubscriptions = Set<String>()
 
         do {
             try endClient()
@@ -206,30 +242,57 @@ public class CommunicationManager<Family: ObjectFamily> {
 
         client.disconnect()
         deferredSubscriptions = Set<String>()
+        deferredPublications = []
+        deadvertiseIds = []
+        subscriptions = [:]
         updateOperatingState(.stopped)
     }
 
     // MARK: - Coaty management methods.
 
-    /// Deadvertises all identities that were registered over the communication manager, including
-    /// its own identity.
+    /// Advertises the identity and/or associated device of a
+    /// CommunicationManager.
+    private func advertiseIdentityOrDevice() throws {
+         // Advertise associated device once if existing.
+        // (cp. CommunicationManager.observeDiscoverDevice)
+        if communicationOptions.shouldAdvertiseDevice != false &&
+           associatedDevice != nil {
+            let event = AdvertiseEvent<CoatyObjectFamily>.withObject(eventSource: identity,
+                                                                     object: associatedDevice!)
+            // TODO: Republish only once on failed reconnection attempts.
+            try publishAdvertise(advertiseEvent: event)
+        }
+
+        // Advertise identity once if required.
+        // (cp. CommunicationManager.observeDiscoverIdentity)
+        if communicationOptions.shouldAdvertiseIdentity == false {
+            return
+        }
+        
+        let event = AdvertiseEvent<CoatyObjectFamily>.withObject(eventSource: identity,
+                                                                 object: identity) 
+        // TODO: Republish only once on failed reconnection attempts.
+        try publishAdvertise(advertiseEvent: event)
+    }
+
+    /// Deadvertises all components that were registered with the communication
+    /// manager, including its own identity.
     private func deadvertiseIdentityOrDevice() throws {
-        let deadvertise = Deadvertise(objectIds: deadvertiseIds)
-        let deadvertiseEventData = DeadvertiseEventData.createFrom(eventData: deadvertise)
-        let deadvertiseEvent = DeadvertiseEvent(eventSource: identity!, eventData: deadvertiseEventData)
+        let deadvertiseEvent = try DeadvertiseEvent<Family>.withObjectIds(eventSource: identity, objectIds: deadvertiseIds)
 
         try publishDeadvertise(deadvertiseEvent: deadvertiseEvent)
     }
 
     private func observeDiscoverDevice() {
-        if communicationOptions.shouldAdvertiseDevice == false || associatedDevice == nil {
+        if communicationOptions.shouldAdvertiseDevice == false ||
+           associatedDevice == nil {
             return
         }
 
-        try? observeDiscover(eventTarget: identity!)
+        try? observeDiscover(eventTarget: identity)
             .filter { (event) -> Bool in
-                event.data.isDiscoveringTypes() && event.data.isCoreTypeCompatible(.Device)
-                    || (event.data.isDiscoveringObjectId() && event.data.objectId == self.associatedDevice?.objectId)
+                (event.data.isDiscoveringTypes() && event.data.isCoreTypeCompatible(.Device)) ||
+                (event.data.isDiscoveringObjectId() && event.data.objectId == self.associatedDevice?.objectId)
             }
             .subscribe(onNext: { event in
                 guard let associatedDevice = self.associatedDevice else {
@@ -247,13 +310,13 @@ public class CommunicationManager<Family: ObjectFamily> {
             return
         }
 
-        try? observeDiscover(eventTarget: identity!)
+        try? observeDiscover(eventTarget: identity)
             .filter({ (event) -> Bool in
-                (event.data.isDiscoveringTypes() && event.data.isCoreTypeCompatible(.Component))
-                    || (event.data.isDiscoveringObjectId() && event.data.objectId == self.identity?.objectId)
+                (event.data.isDiscoveringTypes() && event.data.isCoreTypeCompatible(.Component)) ||
+                (event.data.isDiscoveringObjectId() && event.data.objectId == self.identity.objectId)
             })
             .subscribe(onNext: { event in
-                let factory = ResolveEventFactory<Family>(self.identity!)
+                let factory = ResolveEventFactory<Family>(self.identity)
                 let resolveEvent = factory.with(object: self.identity)
 
                 event.resolve(resolveEvent: resolveEvent)
@@ -275,21 +338,22 @@ public class CommunicationManager<Family: ObjectFamily> {
 
                     // Subscribe if the client is online.
                     if state == .online {
-                        self.client.subscribe(topic)
-                        // Do NOT delete deferredSubscriptions since we may need them for reconnects.
-                        // Save into subscription count map.
+                        // Do NOT clean up deferredSubscriptions since we may
+                        // need them for reconnects. Update subscription count
+                        // map. Do NOT subscribe the same topic filter multiple
+                        // times to avoid receiving multiple events on this
+                        // topic.
                         if let count = self.subscriptions[topic] {
                             self.subscriptions[topic] = count + 1
                         } else {
                             self.subscriptions[topic] = 1
+                            self.client.subscribe(topic) 
                         }
                     }
                 })
         }
     }
 
-    /// - TODO: We currently do not handle unsubscribe events with respect to removing topics from
-    ///   the deferredSubscriptions. Coaty-js handles this via its hashtable structure.
     func unsubscribe(topic: String) {
         _ = queue.sync {
             
@@ -297,6 +361,7 @@ public class CommunicationManager<Family: ObjectFamily> {
                 if count == 1 {
                     client.unsubscribe(topic)
                     self.subscriptions.removeValue(forKey: topic)
+                    self.deferredSubscriptions.remove(topic)
                 } else {
                     self.subscriptions[topic] = count - 1
                 }

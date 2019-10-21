@@ -9,7 +9,6 @@ import Foundation
 
 /// Topic represents a Coaty topic as defined in the
 /// [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-structure)
-/// - MISSING: Ability to generate readable topics.
 class CommunicationTopic {
     
     // MARK: - Public Attributes.
@@ -42,13 +41,12 @@ class CommunicationTopic {
     // MARK: - Initializers.
     
     /// This initializer checks all required conditions to return a valid Coaty Topic.
-    /// Note that it also accepts arguments taken from readable topics.
     init(protocolVersion: Int, event: String, associatedUserId: String, sourceObjectId: String,
          messageToken: String) throws {
         
         // Check if protocol version is compatible.
         if protocolVersion != PROTOCOL_VERSION {
-            throw CoatySwiftError.InvalidArgument("Unsupported protocol version.")
+            throw CoatySwiftError.InvalidArgument("Unsupported protocol version \(protocolVersion).")
         }
         
         self.protocolVersion = protocolVersion
@@ -82,12 +80,13 @@ class CommunicationTopic {
         self.coreType = coreType
         self.objectType = objectType
         
-        // Try to parse a associatedUserId, if none is set, the topic will contain "-" here and the
-        // initializer will fail and return nil.
+        // Try to parse an associatedUserId, if none is set (i.e. "-") the
+        // CoatyUUID() initializer will return nil.
         guard let sanitizedAssociatedUserId = CommunicationTopic.extractIdFromReadableString(associatedUserId) else {
             throw CoatySwiftError.InvalidArgument("Could not sanitize associatedUserId")
         }
         
+        // Parse associatedUserId.
         self.associatedUserId = CoatyUUID(uuidString: sanitizedAssociatedUserId)
         
         // Parse sourceObjectId.
@@ -95,18 +94,11 @@ class CommunicationTopic {
             throw CoatySwiftError.InvalidArgument("Could not sanitize sourceObjectId.")
         }
         
-        // Parse associatedUserId.
         guard let sourceObjectIdAsUUID = CoatyUUID(uuidString: sanitizedSourceObjectId) else {
             throw CoatySwiftError.InvalidArgument("Invalid sourceObjectId.")
         }
         
         self.sourceObjectId = sourceObjectIdAsUUID
-        
-        // FIXME: Parse messageToken. The documentation is unclear about the format of a message token.
-        // Is it a UUID? How about readable versions?
-        // guard let messageTokenAsUUID = UUID.init(uuidString: messageToken) else {
-        //     throw CoatySwiftError.InvalidArgument("Invalid messageToken.")
-        // }
         
         self.messageToken = messageToken
     }
@@ -149,21 +141,20 @@ class CommunicationTopic {
     
     // MARK: - Helper methods.
     
-    /// Helper method that creates a topic string with wildcards.
-    /// See [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-filters)
+    /// Helper method that creates a topic string with or without wildcards for subscribing or publishing.
+    /// See [Communication Protocol - Topic Filters](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-filter)
+    /// See [Communication Protocol - Topic Structure](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-structure)
     /// - Parameters:
-    ///   - coatyVersion: the current Coaty version.
     ///   - eventType: CommunicationEventType (e.g. Advertise)
     ///   - eventTypeFilter: may either be a core type (e.g. Component) or an object type
     ///     (e.g. org.example.object)
-    ///   - associatedUserId: an optional UUID String, if the parameter is ommitted it is replaced
+    ///   - associatedUserId: an optional UUID String, if the parameter is omitted it is replaced
     ///     with a wildcard.
-    ///   - sourceObject: the Coaty object that issued the method call, if the parameter is ommitted
+    ///   - sourceObject: the Coaty object that issued the method call, if the parameter is omitted
     ///     it is replaced with a wildcard.
-    ///   - messageToken: if ommitted it is replaced with a wildcard.
+    ///   - messageToken: if omitted it is replaced with a wildcard.
     /// - Returns: A topic string with correct wildcards.
-    private static func createTopicStringByLevels(coatyVersion: Int?,
-                                                  eventType: CommunicationEventType,
+    private static func createTopicStringByLevels(eventType: CommunicationEventType,
                                                   eventTypeFilter: String? = nil,
                                                   associatedUserId: String? = nil,
                                                   sourceObject: CoatyObject? = nil,
@@ -186,14 +177,8 @@ class CommunicationTopic {
             }
         }
         
-        // Build correct version string.
-        var versionString = WILDCARD_TOPIC
-        if let version = coatyVersion {
-            versionString = "\(version)"
-        }
-        
         return "\(TOPIC_SEPARATOR)\(COATY)"
-            + "\(TOPIC_SEPARATOR)\(versionString)"
+            + "\(TOPIC_SEPARATOR)\(PROTOCOL_VERSION)"
             + "\(TOPIC_SEPARATOR)\(event)"
             + "\(TOPIC_SEPARATOR)\(associatedUserId ?? WILDCARD_TOPIC)"
             + "\(TOPIC_SEPARATOR)\(sourceObject?.objectId.string ?? WILDCARD_TOPIC)"
@@ -202,29 +187,27 @@ class CommunicationTopic {
     }
     
     /// Convenience Method to create a topic string that can be used for publications.
-    /// See [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-filters)
+    /// See [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-structure)
     /// - Parameters:
     ///   - eventType: CommunicationEventType (e.g. Advertise)
     ///   - eventTypeFilter: may either be a core type (e.g. Component) or an object type
     ///     (e.g. org.example.object)
-    ///   - associatedUserId: an optional UUID String, if the parameter is ommitted it is replaced
-    ///     with a wildcard.
-    ///   - sourceObject: the Coaty object that issued the method call, if the parameter is ommitted
-    ///     it is replaced with a wildcard.
-    ///   - messageToken: if ommitted it is replaced with a wildcard.
+    ///   - associatedUserId: an optional UUID String, if the parameter is omitted it is replaced
+    ///     with "-".
+    ///   - sourceObject: the Coaty object that issued the method call
+    ///   - messageToken: a UUID string that identifies the message
     /// - Returns: A topic string that can be used for publications.
     static func createTopicStringByLevelsForPublish(eventType: CommunicationEventType,
                                                     eventTypeFilter: String? = nil,
-                                                    associatedUserId: String? = nil,
-                                                    sourceObject: CoatyObject? = nil,
-                                                    messageToken: String? = nil) throws -> String {
+                                                    associatedUserId: String? = EMPTY_ASSOCIATED_USER_ID,
+                                                    sourceObject: CoatyObject,
+                                                    messageToken: String) throws -> String {
         
-        return try createTopicStringByLevels(coatyVersion: PROTOCOL_VERSION,
-                                         eventType: eventType,
-                                         eventTypeFilter: eventTypeFilter,
-                                         associatedUserId: associatedUserId,
-                                         sourceObject: sourceObject,
-                                         messageToken: messageToken)
+        return try createTopicStringByLevels(eventType: eventType,
+                                             eventTypeFilter: eventTypeFilter,
+                                             associatedUserId: associatedUserId,
+                                             sourceObject: sourceObject,
+                                             messageToken: messageToken)
     }
     
     /// Convenience Method to create a topic string that can be used for subscriptions.
@@ -233,49 +216,19 @@ class CommunicationTopic {
     ///   - eventType: CommunicationEventType (e.g. Advertise)
     ///   - eventTypeFilter: may either be a core type (e.g. Component) or an object type
     ///     (e.g. org.example.object)
-    ///   - associatedUserId: an optional UUID String, if the parameter is ommitted it is replaced
+    ///   - associatedUserId: an optional UUID String, if the parameter is omitted it is replaced
     ///     with a wildcard.
-    ///   - sourceObject: the Coaty object that issued the method call, if the parameter is ommitted
-    ///     it is replaced with a wildcard.
-    ///   - messageToken: if ommitted it is replaced with a wildcard.
+    ///   - messageToken: if omitted it is replaced with a wildcard.
     /// - Returns: A topic string that can be used for subscriptions.
     static func createTopicStringByLevelsForSubscribe(eventType: CommunicationEventType,
                                                       eventTypeFilter: String? = nil,
                                                       associatedUserId: String? = nil,
-                                                      sourceObject: CoatyObject? = nil,
                                                       messageToken: String? = nil) throws -> String {
         
-        return try createTopicStringByLevels(coatyVersion: nil,
-                                         eventType: eventType,
-                                         eventTypeFilter: eventTypeFilter,
-                                         associatedUserId: associatedUserId,
-                                         sourceObject: sourceObject,
-                                         messageToken: messageToken)
-    }
-    
-    static func createTopicStringByLevelsForChannel(channelId: String? = nil,
-                                                    associatedUserId: String? = nil,
-                                                    sourceObject: CoatyObject? = nil,
-                                                    messageToken: String? = nil) throws -> String {
-        
-        return try createTopicStringByLevels(coatyVersion: nil,
-                                         eventType: .Channel,
-                                         eventTypeFilter: channelId,
-                                         associatedUserId: associatedUserId,
-                                         sourceObject: sourceObject,
-                                         messageToken: messageToken)
-    }
-    
-    static func createTopicStringByLevelsForCall(operationId: String? = nil,
-                                                    associatedUserId: String? = nil,
-                                                    sourceObject: CoatyObject? = nil,
-                                                    messageToken: String? = nil) throws -> String {
-        
-        return try createTopicStringByLevels(coatyVersion: PROTOCOL_VERSION,
-                                             eventType: .Call,
-                                             eventTypeFilter: operationId,
+        return try createTopicStringByLevels(eventType: eventType,
+                                             eventTypeFilter: eventTypeFilter,
                                              associatedUserId: associatedUserId,
-                                             sourceObject: sourceObject,
+                                             sourceObject: nil,
                                              messageToken: messageToken)
     }
     

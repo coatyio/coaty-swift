@@ -16,7 +16,7 @@ public class UpdateEventFactory<Family: ObjectFamily>: EventFactoryInit {
     ///   - changedValues: Object hash for properties that have changed or should
     ///     be changed (partial update)
     public func withPartial(objectId: CoatyUUID,
-                                   changedValues: [String: Any]) -> UpdateEvent<Family> {
+                            changedValues: [String: Any]) -> UpdateEvent<Family> {
         let updateEventData = UpdateEventData<Family>(objectId: objectId, changedValues: changedValues)
         return .init(eventSource: self.identity, eventData: updateEventData)
     }
@@ -33,7 +33,7 @@ public class UpdateEventFactory<Family: ObjectFamily>: EventFactoryInit {
 
 /// UpdateEvent provides a generic implementation for all Update Events.
 ///
-/// - NOTE: This class should preferably initialized via its withPartial() or withFull() method.
+/// - NOTE: This class should preferably be initialized via its withPartial() or withFull() method.
 public class UpdateEvent<Family: ObjectFamily>: CommunicationEvent<UpdateEventData<Family>> {
     
     // MARK: - Internal attributes.

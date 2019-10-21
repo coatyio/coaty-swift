@@ -8,7 +8,7 @@
 import Foundation
 
 /// Defines meta information of an IO source.
-public class IoSource: IoPoint {
+open class IoSource: IoPoint {
     
     // MARK: - Attributes.
 
@@ -63,7 +63,7 @@ public class IoSource: IoPoint {
         try super.init(from: decoder)
     }
     
-    public override func encode(to encoder: Encoder) throws {
+    open override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: IoSourceKeys.self)
         try container.encode(valueType, forKey: .valueType)

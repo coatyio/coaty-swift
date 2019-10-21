@@ -30,6 +30,11 @@ extension CommunicationManager {
         let (topic, _) = rawMessage
         return topic.eventType == CommunicationEventType.Advertise
     }
+
+    func isDeadvertise(rawMessage: (CommunicationTopic, String)) -> Bool {
+        let (topic, _) = rawMessage
+        return topic.eventType == CommunicationEventType.Deadvertise
+    }
     
     func isResolve(rawMessage: (CommunicationTopic, String)) -> Bool {
         let (topic, _) = rawMessage

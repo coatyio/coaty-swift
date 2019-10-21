@@ -13,7 +13,7 @@ import Foundation
 /// This interface can be extended to allow additional attributes
 /// that provide other information about this position (e.g. street address,
 /// shop floor number, etc.).
-public class Location: CoatyObject {
+open class Location: CoatyObject {
     
     // MARK: - Attributes.
     
@@ -43,7 +43,7 @@ public class Location: CoatyObject {
         try super.init(from: decoder)
     }
 
-    public override func encode(to encoder: Encoder) throws {
+    open override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: LocationKeys.self)
         try container.encode(geoLocation, forKey: .geoLocation)
@@ -72,7 +72,7 @@ public class GeoLocation: Codable {
     
     // MARK: - Initializers.
 
-    public init(coords: GeoCoordinates, timestamp: Double = Date().timeIntervalSince1970) {
+    public init(coords: GeoCoordinates, timestamp: Double = CoatyTimestamp.nowMillis()) {
         self.coords = coords
         self.timestamp = timestamp
     }

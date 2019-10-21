@@ -139,13 +139,26 @@ public class ObjectFilter: Codable {
     }
 }
 
+/// Determines the ordering of result objects by an array of (property name
+/// - sort order) tuples. The results are ordered by the first tuple, then
+/// by the second tuple, etc.
 public class OrderByProperty: Codable {
     
+    /// The object property used for ordering can be specified either in dot
+    /// notation or array notation. In dot notation, the name of the object
+    /// property is specified as a string (e.g. `"objectId"`). It may include
+    /// dots (`.`) to access nested properties of subobjects (e.g.
+    /// `"message.name"`). If a single property name contains dots itself, you
+    /// obviously cannot use dot notation. Instead, specify the property or
+    /// nested properties as an array of strings (e.g. `["property.with.dots",
+    /// "subproperty.with.dots"]`).
     var objectFilterProperties: ObjectFilterProperty
+
+    /// Ascending or descending sort order.
     var sortingOrder: SortingOrder
     
     public init(properties: ObjectFilterProperty,
-                 sortingOrder: SortingOrder) {
+                sortingOrder: SortingOrder) {
         self.objectFilterProperties = properties
         self.sortingOrder = sortingOrder
     }
@@ -159,17 +172,28 @@ public class OrderByProperty: Codable {
     public required init(from decoder: Decoder) throws {
         var container = try decoder.unkeyedContainer()
         objectFilterProperties = try container.decode(ObjectFilterProperty.self)
-        
-        // TODO: Check enum decoding.
         let sortingOrderString = try container.decode(String.self)
         sortingOrder = SortingOrder(rawValue: sortingOrderString)!
     }
     
 }
 
+/// Defines the format of nested properties used in ObjectFilter `conditions`
+/// and `orderByProperties` clauses. Both dot notation
+/// (`"property.subproperty.subsubproperty"`) and array notation (`["property",
+/// "subproperty", "subsubproperty"]`) are supported for naming nested
+/// properties. Note that dot notation cannot be used if one of the properties
+/// contains a dot (.) in its name. In such cases, array notation must be used.
 public class ObjectFilterProperty: Codable {
 
+    /// Specifies filter property in dot notation
+    /// (`"property.subproperty.subsubproperty"`). Note that dot notation cannot
+    /// be used if one of the properties contains a dot (.) in its name. In such
+    /// cases, array notation (see `objectFilterProperties`) must be used.
     var objectFilterProperty: String?
+
+    /// Specifies filter property in array notation (`["property",
+    /// "subproperty", "subsubproperty"]`).
     var objectFilterProperties: [String]?
     
     private init(objectFilterProperty: String? = nil,
@@ -205,16 +229,64 @@ public class ObjectFilterProperty: Codable {
     }
 }
 
+/// Defines the sort order for an OrderbyProperty.
 public enum SortingOrder: String {
+
+    /// Ascending ordering.
     case Asc
+
+    /// Descending ordering.
     case Desc
 }
 
+/// Defines a set of conditions for filtering objects. Filter conditions can be
+/// combined by logical AND or OR.
 public class ObjectFilterConditions: Codable {
     
     // MARK: - Attributes.
     
+    /// Multiple filter conditions combined by logical AND. Specify either the
+    /// `and` or the `or` property, or none, but *never* both.
+    ///
+    /// An object filter condition is defined by the name of an object property
+    /// and a filter expression. The filter expression must evaluate to true
+    /// when applied to the property's value for the condition to become true.
+    ///
+    /// The object property to be applied for filtering is specified either in
+    /// dot notation or array notation. In dot notation, the name of the object
+    /// property is specified as a string (e.g. `"objectId"`). It may include
+    /// dots (`.`) to access nested properties of subobjects (e.g.
+    /// `"message.name"`). If a single property name contains dots itself, you
+    /// obviously cannot use dot notation. Instead, specify the property or
+    /// nested properties as an array of strings (e.g. `["property.with.dots",
+    /// "subproperty.with.dots"]`).
+    ///
+    /// A filter expression consists of a filter operator and an
+    /// operator-specific number of filter operands (at most two). You should
+    /// use one of the typesafe `FilterOperations` functions to specify a filter
+    /// expression.
     var and: [ObjectFilterCondition]?
+
+    /// Multiple filter conditions combined by logical OR. Specify either the
+    /// `and` or the `or` property, or none, but *never* both.
+    ///
+    /// An object filter condition is defined by the name of an object property
+    /// and a filter expression. The filter expression must evaluate to true
+    /// when applied to the property's value for the condition to become true.
+    ///
+    /// The object property to be applied for filtering is specified either in
+    /// dot notation or array notation. In dot notation, the name of the object
+    /// property is specified as a string (e.g. `"objectId"`). It may include
+    /// dots (`.`) to access nested properties of subobjects (e.g.
+    /// `"message.name"`). If a single property name contains dots itself, you
+    /// obviously cannot use dot notation. Instead, specify the property or
+    /// nested properties as an array of strings (e.g. `["property.with.dots",
+    /// "subproperty.with.dots"]`).
+    ///
+    /// A filter expression consists of a filter operator and an
+    /// operator-specific number of filter operands (at most two). You should
+    /// use one of the typesafe `FilterOperations` functions to specify a filter
+    /// expression.
     var or: [ObjectFilterCondition]?
     
     // MARK: - Initializers.
@@ -300,11 +372,19 @@ public class ObjectFilterConditions: Codable {
     }
 }
 
+
+ /// An object filter condition is defined by an object property name - object
+ /// filter expression pair. The filter expression must evaluate to true when
+ /// applied to the object property's value for the condition to become true.
 public class ObjectFilterCondition: Codable {
 
     // MARK: - Attributes.
     
+    /// Defines the format of nested properties used in an ObjectFilterCondition.
     var property: ObjectFilterProperty
+
+    ///  A filter expression consists of a filter operator and an
+    ///  operator-specific number of filter operands (at most two).
     var expression: ObjectFilterExpression
     
     // MARK: - Initializers.
@@ -347,12 +427,23 @@ public class ObjectFilterCondition: Codable {
     }
 }
 
+
+/// A filter expression consists of a filter operator and an operator-specific
+/// number of filter operands (at most two).
+///
+/// Tip: use one of the typesafe `FilterOperations` functions to specify a
+/// filter expression.
 public class ObjectFilterExpression: Codable {
     
     // MARK: - Attributes.
     
+    /// The filter operator constant.
     var filterOperator: ObjectFilterOperator
+
+    /// The first operand of the filter expression (optional).
     var firstOperand: AnyCodable?
+
+    /// The second operand of the filter expression (optional).
     var secondOperand: AnyCodable?
     
     // MARK: - Initializers.
@@ -388,13 +479,10 @@ public class ObjectFilterExpression: Codable {
     
     public required init(from decoder: Decoder) throws {
         var container = try decoder.unkeyedContainer()
-        
-        // FIXME: enum decoding.
         let filterOperatorInt = try container.decode(Int.self)
         filterOperator = ObjectFilterOperator(rawValue: filterOperatorInt)!
         
-        // WARNING:
-        // TODO: This might not handle operands correctly if they are wrapped in addtional []?
+        // TODO: This might not handle operands correctly if they are wrapped in additional []?
         firstOperand = try container.decodeIfPresent(AnyCodable.self)
         secondOperand = try container.decodeIfPresent(AnyCodable.self)
     }
@@ -404,115 +492,389 @@ public class ObjectFilterExpression: Codable {
 /// Defines filter operator functions that yield object filter expressions.
 public class FilterOperations {
     
+    /// Checks if the filter property is less than the given value. Note: Do not
+    /// compare a number with a string, as the result is not defined.
     static func lessThan(value: Double) -> (ObjectFilterOperator, Double) {
         return (ObjectFilterOperator.LessThan, value)
     }
     
+    /// Checks if the filter property is less than the given value. For string
+    /// comparison, a default lexical ordering is used. Note: Do not compare a
+    /// number with a string, as the result is not defined.
     static func lessThan(value: String) -> (ObjectFilterOperator, String) {
         return (ObjectFilterOperator.LessThan, value)
     }
     
+    /// Checks if the filter property is less than or equal to the given value.
+    /// Note: Do not compare a number with a string, as the result is not
+    /// defined.
     static func lessThanOrEqual(value: Double) -> (ObjectFilterOperator, Double) {
         return (ObjectFilterOperator.LessThanOrEqual, value)
     }
     
+    /// Checks if the filter property is less than or equal to the given value.
+    /// For string comparison, a default lexical ordering is used.
+    /// Note: Do not compare a number with a string, as the result is not defined.
     static func lessThanOrEqual(value: String) -> (ObjectFilterOperator, String) {
         return (ObjectFilterOperator.LessThanOrEqual, value)
     }
-    
+
+    /// Checks if the filter property is greater than the given value. Note: Do
+    /// not compare a number with a string, as the result is not defined.   
     static func greaterThan(value: Double) -> (ObjectFilterOperator, Double) {
         return (ObjectFilterOperator.GreaterThan, value)
     }
     
+    /// Checks if the filter property is greater than the given value. For
+    /// string comparison, a default lexical ordering is used. Note: Do not
+    /// compare a number with a string, as the result is not defined.
     static func greaterThan(value: String) -> (ObjectFilterOperator, String) {
         return (ObjectFilterOperator.GreaterThan, value)
     }
     
+    /// Checks if the filter property is greater than or equal to the given
+    /// value. Note: Do not compare a number with a string, as the result is not
+    /// defined.
     static func greaterThanOrEqual(value: Double) -> (ObjectFilterOperator, Double) {
         return (ObjectFilterOperator.LessThanOrEqual, value)
     }
     
+    /// Checks if the filter property is greater than or equal to the given
+    /// value. For string comparison, a default lexical ordering is used. Note:
+    /// Do not compare a number with a string, as the result is not defined.
     static func greaterThanOrEqual(value: String) -> (ObjectFilterOperator, String) {
         return (ObjectFilterOperator.LessThanOrEqual, value)
     }
     
+    /// Checks if the filter property is between the given values, i.e. prop >=
+    /// value1 AND prop <= value2. If the first argument `value1` is not less
+    /// than or equal to the second argument `value2`, those two arguments are
+    /// automatically swapped. Do not compare a number with a string, as the
+    /// result is not defined.
     static func between(value1: Double, value2: Double) ->  (ObjectFilterOperator, Double, Double) {
         return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
     }
     
+    /// Checks if the filter property is between the given values, i.e. prop >=
+    /// value1 AND prop <= value2. If the first argument `value1` is not less
+    /// than or equal to the second argument `value2`, those two arguments are
+    /// automatically swapped. For string comparison, a default lexical ordering
+    /// is used. Do not compare a number with a string, as the result is not
+    /// defined.
     static func between(value1: String, value2: String) ->  (ObjectFilterOperator, String, String) {
         return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
     }
     
+    /// Checks if the filter property is not between the given values, i.e. prop
+    /// < value1 OR prop > value2. If the first argument `value1` is not less
+    /// than or equal to the second argument `value2`, those two arguments are
+    /// automatically swapped. Note: Do not compare a number with a string, as
+    /// the result is not defined.
     static func notBetween(value1: Double, value2: Double) ->  (ObjectFilterOperator, Double, Double) {
         return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
     }
     
+    /// Checks if the filter property is not between the given values, i.e. prop
+    /// < value1 OR prop > value2. If the first argument `value1` is not less
+    /// than or equal to the second argument `value2`, those two arguments are
+    /// automatically swapped. For string comparison, a default lexical ordering
+    /// is used. Note: Do not compare a number with a string, as the result is
+    /// not defined.
     static func notBetween(value1: String, value2: String) ->  (ObjectFilterOperator, String, String) {
         return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
     }
-    
+
+    /// Checks if the filter property string matches the given pattern. If
+    /// pattern does not contain percent signs or underscores, then the pattern
+    /// only represents the string itself; in that case LIKE acts like the
+    /// equals operator (but less performant). An underscore (_) in pattern
+    /// stands for (matches) any single character; a percent sign (%) matches
+    /// any sequence of zero or more characters.
+    ///
+    /// LIKE pattern matching always covers the entire string. Therefore, if
+    /// it's desired to match a sequence anywhere within a string, the pattern
+    /// must start and end with a percent sign.
+    ///
+    /// To match a literal underscore or percent sign without matching other
+    /// characters, the respective character in pattern must be preceded by the
+    /// escape character. The default escape character is the backslash. To
+    /// match the escape character itself, write two escape characters.
+    ///
+    /// For example, the pattern string `%a_c\\d\_` matches `abc\d_` in `hello
+    /// abc\d_` and `acc\d_` in `acc\d_`, but nothing in `hello abc\d_world`.
+    /// Note that in programming languages like JavaScript, Java, or C#, where
+    /// the backslash character is used as escape character for certain special
+    /// characters you have to double backslashes in literal string constants.
+    /// Thus, for the example above the pattern string literal would look like
+    /// `"%a_c\\\\d\\_"`.
     static func like(pattern: String) -> (ObjectFilterOperator, String) {
         return (ObjectFilterOperator.Like, pattern)
     }
     
+    /// Checks if the filter property exists.
     static func exists() -> (ObjectFilterOperator) {
         return ObjectFilterOperator.Exists
     }
     
+    /// Checks if the filter property doesn't exist.
     static func notExists() -> (ObjectFilterOperator) {
         return ObjectFilterOperator.NotExists
     }
     
-    static func equals(value: Double) -> (ObjectFilterOperator, Double) {
+    /// Checks if the filter property is deep equal to the given value according
+    /// to a recursive equality algorithm.
+    static func equals(value: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
         return (ObjectFilterOperator.Equals, value)
     }
     
-    static func equals(value: String) -> (ObjectFilterOperator, String) {
-        return (ObjectFilterOperator.Equals, value)
-    }
-    
-    static func notEquals(value: Double) -> (ObjectFilterOperator, Double) {
+    /// Checks if the filter property is not deep equal to the given value
+    /// according to a recursive equality algorithm.
+    static func notEquals(value: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
         return (ObjectFilterOperator.NotEquals, value)
     }
     
-    static func notEquals(value: String) -> (ObjectFilterOperator, String) {
-        return (ObjectFilterOperator.NotEquals, value)
-    }
-    
+    /// Checks if the filter property value (usually an object or array)
+    /// contains the given values. Primitive value types (number, string,
+    /// boolean, null) contain only the identical value. Object properties match
+    /// if all the key-value pairs of the specified object are contained in
+    /// them. Array properties match if all the specified array elements are
+    /// contained in them.
+    ///
+    /// The general principle is that the contained object must match the
+    /// containing object as to structure and data contents recursively on all
+    /// levels, possibly after discarding some non-matching array elements or
+    /// object key/value pairs from the containing object. But remember that the
+    /// order of array elements is not significant when doing a containment
+    /// match, and duplicate array elements are effectively considered only
+    /// once.
+    ///
+    /// As a special exception to the general principle that the structures must
+    /// match, an array on *toplevel* may contain a primitive value:
+    ///
+    /// ```
+    /// contains([1, 2, 3], [3]) => true
+    /// contains([1, 2, 3], 3) => true
+    /// ```
     static func contains(values: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
         return (ObjectFilterOperator.Contains, values)
     }
     
+    /// Checks if the filter property value (usually an object or array) does
+    /// not contain the given values. Primitive value types (number, string,
+    /// boolean, null) contain only the identical value. Object properties match
+    /// if all the key-value pairs of the specified object are not contained in
+    /// them. Array properties match if all the specified array elements are not
+    /// contained in them.
+    ///
+    /// The general principle is that the contained object must match the
+    /// containing object as to structure and data contents recursively on all
+    /// levels, possibly after discarding some non-matching array elements or
+    /// object key/value pairs from the containing object. But remember that the
+    /// order of array elements is not significant when doing a containment
+    /// match, and duplicate array elements are effectively considered only
+    /// once.
+    ///
+    /// As a special exception to the general principle that the structures must
+    /// match, an array on *toplevel* may contain a primitive value
+    ///
+    /// ```
+    /// notContains([1, 2, 3], [4]) => true
+    /// notContains([1, 2, 3], 4) => true
+    /// ```
     static func notContains(values: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
         return (ObjectFilterOperator.NotContains, values)
     }
     
-    static func valuesIn(values: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
+    /// Checks if the filter property value is included on toplevel in the given
+    /// operand array of values which may be primitive types (number, string,
+    /// boolean, null) or object types compared using the deep equality
+    /// operator.
+    ///
+    /// For example:
+    ///
+    /// ```
+    /// in(47, [1, 46, 47, "foo"]) => true
+    /// in(47, [1, 46, "47", "foo"]) => false
+    /// in({ "foo": 47 }, [1, 46, { "foo": 47 }, "foo"]) => true
+    /// in({ "foo": 47 }, [1, 46, { "foo": 47, "bar": 42 }, "foo"]) => false
+    /// ```
+    static func valuesIn(values: [AnyCodable]) -> (ObjectFilterOperator, [AnyCodable]) {
         return (ObjectFilterOperator.In, values)
     }
-    
-    static func valuesNotIn(values: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
+
+    /// Checks if the filter property value is not included on toplevel in the
+    /// given operand array of values which may be primitive types (number,
+    /// string, boolean, null) or object types compared using the deep equality
+    /// operator.
+    ///
+    /// For example:
+    ///
+    /// ```
+    /// notIn(47, [1, 46, 47, "foo"]) => false
+    /// notIn(47, [1, 46, "47", "foo"]) => true
+    /// notIn({ "foo": 47 }, [1, 46, { "foo": 47 }, "foo"]) => false
+    /// notIn({ "foo": 47 }, [1, 46, { "foo": 47, "bar": 42 }, "foo"]) => true
+    /// ```
+    static func valuesNotIn(values: [AnyCodable]) -> (ObjectFilterOperator, [AnyCodable]) {
         return (ObjectFilterOperator.NotIn, values)
     }
   
 }
 
+
+/// Defines filter operator constants for object filter conditions.
 public enum ObjectFilterOperator: Int {
+
+    /// Checks if the filter property is less than the given value. For string
+    /// comparison, a default lexical ordering is used. Note: Do not compare a
+    /// number with a string, as the result is not defined.
     case LessThan
+
+    /// Checks if the filter property is less than or equal to the given value.
+    /// For string comparison, a default lexical ordering is used. Note: Do not
+    /// compare a number with a string, as the result is not defined.
     case LessThanOrEqual
+
+    /// Checks if the filter property is greater than the given value. For
+    /// string comparison, a default lexical ordering is used. Note: Do not
+    /// compare a number with a string, as the result is not defined.
     case GreaterThan
+    
+    /// Checks if the filter property is greater than or equal to the given value.
+    /// For string comparison, a default lexical ordering is used.
+    /// Note: Do not compare a number with a string, as the result is not defined.
     case GreaterThanOrEqual
+
+    /// Checks if the filter property is between the two given operands, i.e.
+    /// prop >= operand AND prop <= operand2. If the first operand is not less
+    /// than or equal to the second operand, those two arguments are
+    /// automatically swapped. For string comparison, a default lexical ordering
+    /// is used. Note: Do not compare a number with a string, as the result is
+    /// not defined.
     case Between
+
+    /// Checks if the filter property is not between the given operands, i.e.
+    /// prop < operand1 OR prop > operand2. If the first operand is not less
+    /// than or equal to the second operand, those two arguments are
+    /// automatically swapped. For string comparison, a default lexical ordering
+    /// is used. Note: Do not compare a number with a string, as the result is
+    /// not defined.
     case NotBetween
+
+    /// Checks if the filter property string matches the given pattern. If
+    /// pattern does not contain percent signs or underscores, then the pattern
+    /// only represents the string itself; in that case LIKE acts like the
+    /// equals operator (but less performant). An underscore (_) in pattern
+    /// stands for (matches) any single character; a percent sign (%) matches
+    /// any sequence of zero or more characters.
+    ///
+    /// LIKE pattern matching always covers the entire string. Therefore, if
+    /// it's desired to match a sequence anywhere within a string, the pattern
+    /// must start and end with a percent sign.
+    ///
+    /// To match a literal underscore or percent sign without matching other
+    /// characters, the respective character in pattern must be preceded by the
+    /// escape character. The default escape character is the backslash. To
+    /// match the escape character itself, write two escape characters.
+    ///
+    /// For example, the pattern string `%a_c\\d\_` matches `abc\d_` in `hello
+    /// abc\d_` and `acc\d_` in `acc\d_`, but nothing in `hello abc\d_world`.
+    /// Note that in programming languages like JavaScript, Java, or C#, where
+    /// the backslash character is used as escape character for certain special
+    /// characters you have to double backslashes in literal string constants.
+    /// Thus, for the example above the pattern string literal would look like
+    /// `"%a_c\\\\d\\_"`.
     case Like
+
+    /// Checks if the filter property is deep equal to the given value according
+    /// to a recursive equality algorithm.
     case Equals
+
+    /// Checks if the filter property is not deep equal to the given value
+    /// according to a recursive equality algorithm.
     case NotEquals
+
+    /// Checks if the filter property exists.
     case Exists
+
+    /// Checks if the filter property doesn't exist.
     case NotExists
+
+    /// Checks if the filter property value (usually an object or array)
+    /// contains the given values. Primitive value types (number, string,
+    /// boolean, null) contain only the identical value. Object properties match
+    /// if all the key-value pairs of the specified object are contained in
+    /// them. Array properties match if all the specified array elements are
+    /// contained in them.
+    ///
+    /// The general principle is that the contained object must match the
+    /// containing object as to structure and data contents recursively on all
+    /// levels, possibly after discarding some non-matching array elements or
+    /// object key/value pairs from the containing object. But remember that the
+    /// order of array elements is not significant when doing a containment
+    /// match, and duplicate array elements are effectively considered only
+    /// once.
+    ///
+    /// As a special exception to the general principle that the structures must
+    /// match, an array on *toplevel* may contain a primitive value:
+    ///
+    /// ```
+    /// Contains([1, 2, 3], [3]) => true
+    /// Contains([1, 2, 3], 3) => true
+    /// ```
     case Contains
+
+    /// Checks if the filter property value (usually an object or array) does
+    /// not contain the given values. Primitive value types (number, string,
+    /// boolean, null) contain only the identical value. Object properties match
+    /// if all the key-value pairs of the specified object are not contained in
+    /// them. Array properties match if all the specified array elements are not
+    /// contained in them.
+    ///
+    /// The general principle is that the contained object must match the
+    /// containing object as to structure and data contents recursively on all
+    /// levels, possibly after discarding some non-matching array elements or
+    /// object key/value pairs from the containing object. But remember that the
+    /// order of array elements is not significant when doing a containment
+    /// match, and duplicate array elements are effectively considered only
+    /// once.
+    ///
+    /// As a special exception to the general principle that the structures must
+    /// match, an array on///toplevel* may contain a primitive value:
+    ///
+    /// ```
+    /// NotContains([1, 2, 3], [4]) => true
+    /// NotContains([1, 2, 3], 4) => true
+    /// ```
     case NotContains
+
+    /// Checks if the filter property value is included on toplevel in the given
+    /// operand array of values which may be primitive types (number, string,
+    /// boolean, null) or object types compared using the deep equality
+    /// operator.
+    ///
+    /// For example:
+    ///
+    /// ```
+    /// In(47, [1, 46, 47, "foo"]) => true
+    /// In(47, [1, 46, "47", "foo"]) => false
+    /// In({ "foo": 47 }, [1, 46, { "foo": 47 }, "foo"]) => true
+    /// In({ "foo": 47 }, [1, 46, { "foo": 47, "bar": 42 }, "foo"]) => false
+    /// ```
     case In
+
+    /// Checks if the filter property value is not included on toplevel in the given
+    /// operand array of values which may be primitive types (number, string, boolean, null)
+    /// or object types compared using the deep equality operator.
+    ///
+    /// For example:
+    ///
+    /// ```
+    /// NotIn(47, [1, 46, 47, "foo"]) => false
+    /// NotIn(47, [1, 46, "47", "foo"]) => true
+    /// NotIn({ "foo": 47 }, [1, 46, { "foo": 47 }, "foo"]) => false
+    /// NotIn({ "foo": 47 }, [1, 46, { "foo": 47, "bar": 42 }, "foo"]) => true
+    /// ```
     case NotIn
 }
 

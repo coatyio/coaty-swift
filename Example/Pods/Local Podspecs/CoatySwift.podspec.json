@@ -1,8 +1,8 @@
 {
   "name": "CoatySwift",
-  "version": "0.1.0",
-  "summary": "Collaborative IoT framework in Swift for iOS and macOS.",
-  "description": "The Coaty framework enables realization of collaborative IoT applications and scenarios in a distributed, decentralized fashion. A Coaty application consists of Coaty agents that act independently and communicate with each other to achieve common goals. Coaty agents can run on IoT devices, mobile devices, in microservices, cloud or backend services.",
+  "version": "1.0.0",
+  "summary": "CoatySwift is a Swift implementation of the Coaty Collaborative IoT framework for iOS, iPadOS, and macOS.",
+  "description": "Using the Coaty [koʊti] framework as a middleware, you can build distributed applications out of decentrally organized application components, so called Coaty agents, which are loosely coupled and communicate with each other in (soft) real-time. The main focus is on IoT prosumer scenarios where smart agents act in an autonomous, collaborative, and ad-hoc fashion. CoatySwift agents can run on iOS, iPadOS, and macOS.",
   "homepage": "https://coaty.io",
   "license": {
     "type": "MIT",
@@ -12,9 +12,10 @@
     "Siemens AG": "coaty.team@gmail.com"
   },
   "source": {
-    "git": "https://code.siemens.com/collaborative-iot/coaty/coaty-swift.git",
-    "tag": "0.1.0"
+    "git": "https://github.com/coatyio/coaty-sift.git",
+    "tag": "1.0.0"
   },
+  "documentation_url": "https://coatyio.github.io/coaty-swift/swiftdoc/index.html",
   "platforms": {
     "ios": "8.0",
     "osx": "10.14"

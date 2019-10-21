@@ -62,7 +62,7 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
             .subscribe(onNext: { callEvent in
                 
                 // TODO: Add real context matching. Currently, the example accepts all contexts and
-                // reacts accordingly.
+                // reacts accordingly (ObjectMatcher not yet implemented).
                 guard let _ = callEvent.data.filter else {
                     print("ContextFilter not found.")
                     return
@@ -82,7 +82,7 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
                     // Validation failed, reply with error.
                     let error = ReturnError(code: .invalidParameters, message: .invalidParameters)
                     let executionInfo: ExecutionInfo = ["lightId": self.light.objectId,
-                                                        "triggerTime": self.now()]
+                                                        "triggerTime": CoatyTimestamp.nowMillis()]
                     let event = self.eventFactory.ReturnEvent.with(error: error, executionInfo: executionInfo)
                     
                     logConsole(message: "Invalid parameters.", eventName: "Return", eventDirection: .Out)
@@ -94,7 +94,7 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
                 if self.light.isDefect {
                     let error = ReturnError(code: 1, message: "Light is defect")
                     let executionInfo: ExecutionInfo = ["lightId": self.light.objectId,
-                                                        "triggerTime": self.now()]
+                                                        "triggerTime": CoatyTimestamp.nowMillis()]
                     let event = self.eventFactory.ReturnEvent.with(error: error, executionInfo: executionInfo)
                     callEvent.returned(returnEvent: event)
                     logConsole(message: "Light is defect.", eventName: "Return", eventDirection: .Out)
@@ -113,7 +113,7 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
                     // Return successful result to the caller.
                     let result: ReturnResult = .init(self.lightStatus!.on)
                     let executionInfo: ExecutionInfo = ["lightId": self.light.objectId,
-                                                        "triggerTime": self.now()]
+                                                        "triggerTime": CoatyTimestamp.nowMillis()]
                     let event = self.eventFactory.ReturnEvent.with(result: result,
                                                                    executionInfo: executionInfo)
                     
@@ -171,12 +171,5 @@ class LightController<Family: ObjectFamily>: Controller<Family> {
         self.lightStatus.color = color
         self.lightStatus.luminosity = luminosity
     }
-    
-    
-    /// Convenience method to get the current in coaty-js compatible timestamp.
-    ///
-    /// - Returns: a timestamp in ms since 1970.
-    private func now() -> Double {
-        return (Date().timeIntervalSince1970 * 1000).rounded()
-    }
+
 }

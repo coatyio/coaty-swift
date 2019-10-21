@@ -12,7 +12,7 @@ import Foundation
 ///
 /// Note that the SCIM `userName` property is represented in the
 /// `name` property of the base CoatyObject type.
-public class User: CoatyObject {
+open class User: CoatyObject {
     
     // MARK: - Initializer.
     
@@ -78,7 +78,7 @@ public class User: CoatyObject {
         try super.init(from: decoder)
     }
     
-    public override func encode(to encoder: Encoder) throws {
+    open override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: UserKeys.self)
         try container.encodeIfPresent(names, forKey: .names)
@@ -121,7 +121,14 @@ public class User: CoatyObject {
         }
     }
     
-    /// The components of the user's name.
+    /// The components of the SCIM user's name.
+    /// Service providers MAY return
+    /// just the full name as a single string in the formatted
+    /// sub-attribute, or they MAY return just the individual component
+    /// attributes using the other sub-attributes, or they MAY return
+    /// both. If both variants are returned, they SHOULD be describing
+    /// the same name, with the formatted name indicating how the
+    /// component attributes should be combined.
     public var names: ScimUserNames
     
     /// The name of the user, suitable for display to end-users.Each

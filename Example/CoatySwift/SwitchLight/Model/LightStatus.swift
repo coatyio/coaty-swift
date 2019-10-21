@@ -11,7 +11,7 @@ import CoatySwift
 /// Models the current status of a light including on-off, color-change and
 /// luminosity-adjust features as a Coaty object type. Its `parentObjectId`
 /// property refers to the associated `Light` object.
-class LightStatus: CoatyObject {
+final class LightStatus: CoatyObject {
     
     /// Determines whether the light is currently switched on or off.
     var on: Bool;

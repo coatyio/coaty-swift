@@ -12,7 +12,7 @@ class SwitchLightViewController: UIViewController {
     
     // MARK: Configurable options.
     
-    let brokerIp = "192.168.1.161"
+    let brokerIp = "127.0.0.1"
     let brokerPort = 1883
     
     // MARK: - Private attributes.
@@ -173,7 +173,6 @@ class SwitchLightViewController: UIViewController {
             // to immediately connect with the broker.
             let mqttClientOptions = MQTTClientOptions(host: brokerIp,
                                               port: UInt16(brokerPort),
-                                              clientId: CoatyUUID().string,
                                               enableSSL: false)
             config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,
                                                         shouldAutoStart: true)

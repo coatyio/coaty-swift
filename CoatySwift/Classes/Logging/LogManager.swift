@@ -8,7 +8,8 @@
 import Foundation
 import XCGLogger
 
-/// Provides a global logger for the CoatySwift framework.
+/// Provides a global logger for the CoatySwift framework. Its implementation is
+/// based on the `XCGLogger`.
 class LogManager {
     
     internal static var logLevel = XCGLogger.Level.error
@@ -47,10 +48,18 @@ class LogManager {
     }
 }
 
+/// The `CoatySwiftLogLevel` enum defines the verbositiy of the internal CoatySwift logger.
 public enum CoatySwiftLogLevel {
+    
+    /// Logs information about underlying MQTT topic subscriptions (e.g. subscribe() and unsubscribe() operations).
     case debug
+    
+    /// Logs events such as onCommunicationManagerStarting() or onContainerResolved().
     case info
+    
+    /// Logs warnings that indicate partial failures which may indicate larger issues.
     case warning
+    
+    /// Logs fatal errors such as decoding failures.
     case error
 }
-

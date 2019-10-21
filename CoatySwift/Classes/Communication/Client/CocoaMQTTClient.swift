@@ -31,8 +31,7 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
     
     // MARK: - Initializer.
     
-    init(communicationOptions: CommunicationOptions) {
-        let mqttClientOptions = communicationOptions.mqttClientOptions!
+    init(mqttClientOptions: MQTTClientOptions) {
         if mqttClientOptions.shouldTryMDNSDiscovery {
             discovery = BonjourResolver()
             discovery?.delegate = self
@@ -45,11 +44,8 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
     // MARK: - Helper methods.
     
     private func configure(_ mqttClientOptions: MQTTClientOptions) {
-        // Setup client Id.
-        let clientId = "COATY-\(mqttClientOptions.clientId)"
-        
         // Configure mqtt client.
-        mqtt = CocoaMQTT(clientID: clientId,
+        mqtt = CocoaMQTT(clientID: mqttClientOptions.clientId!,
                          host: mqttClientOptions.host,
                          port: UInt16(mqttClientOptions.port))
         
@@ -105,11 +101,9 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
     }
     
     public func mqtt(_ mqtt: CocoaMQTT, didPublishMessage message: CocoaMQTTMessage, id: UInt16) {
-        /// FIXME: Not implemented yet.
     }
     
     public func mqtt(_ mqtt: CocoaMQTT, didPublishAck id: UInt16) {
-        /// FIXME: Not implemented yet.
     }
     
     public func mqtt(_ mqtt: CocoaMQTT, didReceiveMessage message: CocoaMQTTMessage, id: UInt16) {
@@ -133,11 +127,9 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
     }
     
     public func mqttDidPing(_ mqtt: CocoaMQTT) {
-        /// FIXME: Not implemented yet.
     }
     
     public func mqttDidReceivePong(_ mqtt: CocoaMQTT) {
-        /// FIXME: Not implemented yet.
     }
     
     public func mqttDidDisconnect(_ mqtt: CocoaMQTT, withError err: Error?) {

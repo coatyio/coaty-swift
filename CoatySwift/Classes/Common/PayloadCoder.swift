@@ -7,10 +7,10 @@
 
 import Foundation
 
-/// PayloadCoder provides utility methods to encode and decode CoatyObjects from and to JSON.
+/// PayloadCoder provides utility methods to encode and decode communication events from and to JSON.
 public class PayloadCoder {
     
-    /// Decodes an arbitrary CoatyObject from its JSON representation.
+    /// Decodes a communication event from its JSON representation.
     ///
     /// - NOTE: The JSON decoding is based on the Codable protocol from the Swift standard library.
     /// Please make sure to implement it in all your classes and also call their base implementations.
@@ -20,7 +20,7 @@ public class PayloadCoder {
         return try? decoder.decode(T.self, from: jsonData)
     }
     
-    /// Encodes an arbitrary CoatyObject to its JSON representation.
+    /// Encodes a communication event to its JSON representation.
     ///
     /// - NOTE: The JSON encoding is based on the Codable protocol from the Swift standard library.
     /// Please make sure to implement it in all classes that implement the CoatyObject protocol.

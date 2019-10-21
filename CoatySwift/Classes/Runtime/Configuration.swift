@@ -85,7 +85,8 @@ public class CommonOptions {
     /// Any other custom properties accessible by indexer.
     public var extra = [String: Any]()
     
-    /// Setting for the level of the CoatySwift Logger.
+    /// Determines the log level (default error) for logging CoatySwift internal
+    /// errors, warnings, and informational messages.
     public var logLevel = CoatySwiftLogLevel.error
     
     public init(associatedUser: User? = nil, associatedDevice: Device? = nil,
@@ -124,29 +125,21 @@ public class CommunicationOptions {
     /// Determines whether the communication manager should advertise its
     /// identity automatically when started and deadvertise its identity when
     /// stopped or terminated abnormally (via last will). If not specified or
-    /// undefined, de/advertisements will be done by default.
+    /// nil, de/advertisements will be done by default.
     /// The communication managers's identity is also discoverable (by publishing
     /// a Discover event with core type "Component" or with the object id of a
     /// component) if and only if the identity has also been advertised.
     public var shouldAdvertiseIdentity: Bool?
     
     /// Determines whether the communication manager should advertise the
-    /// associated device (defined in Runtime.options.associatedDevice)
+    /// associated device (defined in CommonOptions.associatedDevice)
     /// automatically when started and deadvertise the device when stopped or
-    /// terminated abnormally (via last will). If not specified or undefined,
+    /// terminated abnormally (via last will). If not specified or nil,
     /// de/advertisements will be done by default.
     /// The associated device is also discoverable (by publishing a Discover
     /// event with core type "Device" or with the object id of a device) if and
     /// only if the device has also been advertised.
     public var shouldAdvertiseDevice: Bool?
-    
-    /// Determines whether the communication manager should publish readable
-    /// messaging topics for optimized testing and debugging. Instead of using
-    /// a UUID alone, a readable name can be part of the topic levels of
-    /// Associated User ID, Source Object ID, and Message Tokens.
-    ///
-    /// If not specified, the value of this option defaults to false.
-    public var useReadableTopics: Bool = false
     
     /// Determines whether the communication manager should provide a protocol
     /// compliant client ID when connecting to the broker/router.
@@ -163,13 +156,11 @@ public class CommunicationOptions {
     /// If you experience issues with a specific broker, specify this option as `true`.
     public var useProtocolCompliantClientId: Bool = false
     
-    
     public init(mqttClientOptions: MQTTClientOptions? = nil,
                 identity: [String: Any]? = nil,
                 shouldAutoStart: Bool? = nil,
                 shouldAdvertiseIdentity: Bool? = true,
                 shouldAdvertiseDevice: Bool? = nil,
-                useReadableTopics: Bool? = nil,
                 useProtocolCompliantClientId: Bool? = nil) {
         self.mqttClientOptions = mqttClientOptions
         self.identity = identity
@@ -178,9 +169,6 @@ public class CommunicationOptions {
         }
         self.shouldAdvertiseIdentity = shouldAdvertiseIdentity
         self.shouldAdvertiseDevice = shouldAdvertiseDevice
-        if let useReadableTopics = useReadableTopics {
-            self.useReadableTopics = useReadableTopics
-        }
         if let useProtocolCompliantClientId = useProtocolCompliantClientId {
             self.useProtocolCompliantClientId = useProtocolCompliantClientId
         }
@@ -209,10 +197,9 @@ public class ControllerOptions {
     /// Determines whether the controller should advertise its identity
     /// automatically when it is instantiated and deadvertise its identity when
     /// the communication manager is stopped or terminated abnormally (via last
-    /// will). If not specified or undefined, the identity is
-    /// advertised/deadvertised by default.
+    /// will). The identity is advertised/deadvertised by default.
     ///
-    /// The communication managers's identity is also discoverable (by publishing
+    /// The controller's identity is also discoverable (by publishing
     /// a Discover event with core type "Component" or with the object id of a
     /// component) if and only if the identity has also been advertised.
     public var shouldAdvertiseIdentity: Bool = true
@@ -245,12 +232,12 @@ public class DatabaseOptions {
     }
 }
 
-/// MQTT client options based on the CocoaMQTT client.
+/// MQTT client options for the CocoaMQTT client.
 public class MQTTClientOptions {
     public var host: String
     public var port: UInt16
+    public var clientId: String?
     public var shouldTryMDNSDiscovery: Bool
-    public var clientId: String
     public var username: String?
     public var password: String?
     public var cleanSession: Bool
@@ -265,8 +252,7 @@ public class MQTTClientOptions {
     
     public init(host: String,
          port: UInt16,
-         clientId: String,
-         enableSSL: Bool,
+         enableSSL: Bool = false,
          shouldTryMDNSDiscovery: Bool = false,
          username: String? = nil,
          password: String? = nil,
@@ -277,9 +263,9 @@ public class MQTTClientOptions {
          autoReconnectTimeInterval: Int = 3) {
         self.host = host
         self.port = port
+        self.clientId = nil
         self.enableSSL = enableSSL
         self.shouldTryMDNSDiscovery = shouldTryMDNSDiscovery
-        self.clientId = clientId
         self.username = username
         self.password = password
         self.cleanSession = cleanSession
@@ -288,11 +274,5 @@ public class MQTTClientOptions {
         self.allowUntrustCACertificate = allowUntrustCACertificate
         self.autoReconnectTimeInterval = autoReconnectTimeInterval
     }
-}
-
-
-// - MISSING: function mergeConfigurations()
-func mergeConfigurations() throws -> Never  {
-    fatalError("Merging configurations not supported yet.")
 }
 

@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents a log object.
-public class Log: CoatyObject {
+open class Log: CoatyObject {
     
     // MARK: - Attributes.
 
@@ -18,8 +18,7 @@ public class Log: CoatyObject {
     /// The message to log.
     public var logMessage: String
 
-    /// Timestamp in ISO 8601 format (with or without timezone offset), as from
-    /// `coaty/util/toLocalIsoString` or `Date.toISOString`.
+    /// Timestamp string in ISO 8601 format (with or without timezone offset).
     public var logDate: String
 
     /// Represents a series of tags assigned to this Log object (optional).
@@ -78,7 +77,7 @@ public class Log: CoatyObject {
         try super.init(from: decoder)
     }
        
-    public override func encode(to encoder: Encoder) throws {
+    open override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: LogHostKeys.self)
         try container.encode(logLevel, forKey: .logLevel)

@@ -1,8 +1,9 @@
 output: docs/swiftdoc
-xcodebuild_arguments: -workspace,Example/CoatySwift.xcworkspace/,-scheme,CoatySwift
+xcodebuild_arguments: -scheme,CoatySwift
 author: Siemens AG
 author_url: https://coaty.io
+github_url: https://github.com/coatyio/coaty-swift
 module: CoatySwift
 podspec: CoatySwift.podspec
-min_acl: internal
+min_acl: public
 use_safe_filenames: true

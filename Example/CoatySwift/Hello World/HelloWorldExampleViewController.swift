@@ -13,7 +13,7 @@ import CoatySwift
 class HelloWorldExampleViewController: UIViewController {
     
     let enableSSL = false
-    let brokerIp = "192.168.1.161"
+    let brokerIp = "127.0.0.1"
     let brokerPort = 1883
     
     override func viewDidLoad() {
@@ -72,9 +72,8 @@ class HelloWorldExampleViewController: UIViewController {
             // the port it exposes, and your own mqtt client Id. Also, make sure
             // to immediately connect with the broker.
             let mqttClientOptions = MQTTClientOptions(host: brokerIp,
-                                              port: UInt16(brokerPort),
-                                              clientId: "\(UUID.init())",
-                                              enableSSL: enableSSL)
+                                                      port: UInt16(brokerPort),
+                                                      enableSSL: enableSSL)
             config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,
                                                         shouldAutoStart: true)
             

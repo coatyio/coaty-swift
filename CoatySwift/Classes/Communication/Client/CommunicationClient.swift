@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 /// This protocol defines the networking methods all of our clients have to
-/// implement, such as the `CocoaMQTTClient` class..
+/// implement, such as the `CocoaMQTTClient` class.
 ///
 /// Note: We expect our clients to work in a MQTT-like fashion.
 protocol CommunicationClient {

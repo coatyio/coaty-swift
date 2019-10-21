@@ -23,7 +23,7 @@ public class CompleteEventFactory<Family: ObjectFamily>: EventFactoryInit {
 
 
 /// CompleteEvent provides a generic implementation for all CompleteEvents.
-/// Note that this class should preferably initialized via its withObject() method.
+/// Note that this class should preferably be initialized via its withObject() method.
 public class CompleteEvent<Family: ObjectFamily>: CommunicationEvent<CompleteEventData<Family>> {
     
     /// - NOTE: This method should never be called directly by application programmers.

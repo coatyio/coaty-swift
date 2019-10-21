@@ -12,7 +12,7 @@ import CoatySwift
 /// light context defines a building number, a floor number, and a room number
 /// indicating where the light is physically located. To control an individual
 /// light, the light's ID is also defined in the context.
-class LightContext: CoatyObject {
+final class LightContext: CoatyObject {
     
     init(lightId: CoatyUUID = .init(), building: Int, floor: Int, room: Int) {
         self.lightId = lightId

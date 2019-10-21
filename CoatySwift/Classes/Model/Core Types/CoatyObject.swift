@@ -105,7 +105,6 @@ open class CoatyObject: NSObject, Codable {
         var container = encoder.container(keyedBy: CoatyObjectKeys.self)
         
         // Encode required attributes.
-        // HACK: Coaty-js currently does not accept uppercase UUIDs.
         try container.encode(objectId, forKey: .objectId)
         try container.encode(coreType, forKey: .coreType)
         try container.encode(objectType, forKey: .objectType)

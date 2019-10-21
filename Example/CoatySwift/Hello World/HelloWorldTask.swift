@@ -9,16 +9,14 @@ import CoatySwift
 
 
 /// Represents a Hello World task or task request.
-class HelloWorldTask: Task {
+final class HelloWorldTask: Task {
     
     // MARK: - Attributes
     
     /// Level of urgency of the HelloWorldTask.
     public var urgency: HelloWorldTaskUrgency
     
-    
-    public init(objectType: String,
-                objectId: CoatyUUID,
+    public init(objectId: CoatyUUID,
                 name: String,
                 creatorId: CoatyUUID,
                 creationTimestamp: Double,
@@ -28,14 +26,14 @@ class HelloWorldTask: Task {
                 dueTimestamp: Double? = nil,
                 doneTimestamp: Double? = nil,
                 requirements: [String]? = nil,
-                description: [String]? = nil,
+                description: String? = nil,
                 workflowId: CoatyUUID? = nil) {
         self.urgency = urgency
         super.init(creatorId: creatorId,
                    creationTimestamp: creationTimestamp,
                    status: status,
                    name: name,
-                   objectType: objectType,
+                   objectType: HelloWorldObjectFamily.helloWorldTask.rawValue,
                    objectId: objectId,
                    lastModificationTimestamp: lastModificationTimestamp,
                    dueTimestamp: dueTimestamp,
@@ -45,11 +43,7 @@ class HelloWorldTask: Task {
                    workflowId: workflowId)
         
     }
-    
-    required init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String) {
-        fatalError("init(coreType:objectType:objectId:name:) has not been implemented")
-    }
-    
+
     // MARK: Codable methods.
     
     enum CodingKeys: String, CodingKey {

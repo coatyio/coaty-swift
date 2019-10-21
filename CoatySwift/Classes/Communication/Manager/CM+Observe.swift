@@ -46,9 +46,7 @@ extension CommunicationManager {
             throw CoatySwiftError.InvalidArgument("Either coreType or objectType must be specified")
         }
         
-        self.subscribe(topic: topic)
-        
-        let observable = client.messages.map(convertToTupleFormat)
+        var observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != eventTarget.objectId
             })
@@ -68,17 +66,24 @@ extension CommunicationManager {
                 return false
             }
             .compactMap { (message) -> T? in
-                let (_, payload) = message
+                let (topic, payload) = message
                 
                 guard let advertiseEvent: T = PayloadCoder.decode(payload) else {
                     LogManager.log.warning("could not parse advertiseEvent")
                     return nil
                 }
+
+                advertiseEvent.sourceId = topic.sourceObjectId;
+                advertiseEvent.userId = topic.associatedUserId;
                 
                 return advertiseEvent
             }
         
-        return createSelfCleaningObservable(observable: observable, topic: topic)
+        observable = createSelfCleaningObservable(observable: observable, topic: topic)
+
+        self.subscribe(topic: topic)
+
+        return observable
     }
     
     /// Observes advertises with a particular coreType.
@@ -86,41 +91,37 @@ extension CommunicationManager {
     /// - Parameters:
     ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
     ///     - coreType: coreType core type of objects to be observed.
-    /// - Returns: An observable emitting the advertise events, that have the wanted coreType.
+    /// - Returns: An observable emitting the advertise events, that have the given coreType.
     public func observeAdvertiseWithCoreType<T: AdvertiseEvent<Family>>(eventTarget: Component,
                               coreType: CoreType) throws -> Observable<T> {
         let topic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Advertise,
-                                                                    eventTypeFilter: coreType.rawValue)
-        let observable: Observable<T> = try observeAdvertise(topic: topic,
-                                                             eventTarget: eventTarget,
-                                                             coreType: coreType,
-                                                             objectType: nil)
-        
-        return createSelfCleaningObservable(observable: observable, topic: topic)
+                                                                                 eventTypeFilter: coreType.rawValue)
+        return try observeAdvertise(topic: topic,
+                                    eventTarget: eventTarget,
+                                    coreType: coreType,
+                                    objectType: nil)
     }
     
     /// Observes advertises with a particular objectType.
     /// - Parameters:
     ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
     ///     - objectType: objectType object type of objects to be observed.
-    /// - Returns: An observable emitting the advertise events, that have the wanted objectType.
+    /// - Returns: An observable emitting the advertise events, that have the given objectType.
     public func observeAdvertiseWithObjectType<T: AdvertiseEvent<Family>>(eventTarget: Component,
                               objectType: String) throws -> Observable<T> {
-        let topic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, eventTypeFilter: objectType)
-        let observable: Observable<T> = try observeAdvertise(topic: topic,
-                                              eventTarget: eventTarget,
-                                              coreType: nil,
-                                              objectType: objectType)
-        
-        return createSelfCleaningObservable(observable: observable, topic: topic)
+        let topic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, 
+                                                                                eventTypeFilter: objectType)
+        return try observeAdvertise(topic: topic,
+                                    eventTarget: eventTarget,
+                                    coreType: nil,
+                                    objectType: objectType)
     }
     
     
     /// Observe Channel events for the given target and the given
     /// channel identifier emitted by the hot observable returned.
     ///
-    /// - MISSING: Check that the channel identifier must be a non-empty
-    /// string that does not contain
+    /// The channel identifier must be a non-empty string that does not contain
     /// the following characters: `NULL (U+0000)`, `# (U+0023)`, `+ (U+002B)`,
     /// `/ (U+002F)`.
     ///
@@ -135,15 +136,10 @@ extension CommunicationManager {
             throw CoatySwiftError.InvalidArgument("\(channelId) is not a valid channel Id.")
         }
         
-        // TODO: Unsure about associatedUserId parameters. Is it really assigneeUserId?
-        let channelTopic = try CommunicationTopic.createTopicStringByLevelsForChannel(
-            channelId: channelId, associatedUserId: nil,
-            sourceObject: nil,
-            messageToken: nil)
-        
-        self.subscribe(topic: channelTopic)
+        let channelTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Channel,
+                                                                                        eventTypeFilter: channelId)
 
-        let observable =  client.messages.map(convertToTupleFormat)
+        var observable =  client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != eventTarget.objectId
             })
@@ -154,17 +150,24 @@ extension CommunicationManager {
                 return topic.channelId == channelId
             })
             .compactMap { message -> T? in
-                let (_, payload) = message
+                let (topic, payload) = message
                 
                 guard let channelEvent: T = PayloadCoder.decode(payload) else {
                     LogManager.log.warning("could not parse channelEvent")
                     return nil
                 }
+
+                channelEvent.sourceId = topic.sourceObjectId;
+                channelEvent.userId = topic.associatedUserId;
                 
                 return channelEvent
             }
         
-        return createSelfCleaningObservable(observable: observable, topic: channelTopic)
+        observable = createSelfCleaningObservable(observable: observable, topic: channelTopic)
+
+        self.subscribe(topic: channelTopic)
+
+        return observable
     }
     
     /// Observe Deadvertise events for the given target emitted by the hot
@@ -177,31 +180,33 @@ extension CommunicationManager {
     /// - Parameters:
     ///     - eventTarget: target for which Deadvertise events should be emitted
     /// - Returns:  a hot observable emitting incoming Deadvertise events
-    public func observeDeadvertise(eventTarget: Component) throws -> Observable<DeadvertiseEvent> {
+    public func observeDeadvertise(eventTarget: Component) throws -> Observable<DeadvertiseEvent<Family>> {
         let deadvertiseTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Deadvertise)
         
-        self.subscribe(topic: deadvertiseTopic)
-        
-        let observable =  client.messages.map(convertToTupleFormat)
+        var observable =  client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != eventTarget.objectId
             })
-            .filter { rawMessageTopic -> Bool in
-                let (topic, _) = rawMessageTopic
-                return topic.eventType == .Deadvertise
-            }
-            .compactMap { message -> DeadvertiseEvent? in
-                let (_, payload) = message
+            .filter(isDeadvertise)
+            .compactMap { message -> DeadvertiseEvent<Family>? in
+                let (topic, payload) = message
                 
-                guard let deadvertiseEvent: DeadvertiseEvent = PayloadCoder.decode(payload) else {
+                guard let deadvertiseEvent: DeadvertiseEvent<Family> = PayloadCoder.decode(payload) else {
                     LogManager.log.warning("could not parse deadvertiseEvent")
                     return nil
                 }
+
+                deadvertiseEvent.sourceId = topic.sourceObjectId;
+                deadvertiseEvent.userId = topic.associatedUserId;
                 
                 return deadvertiseEvent
             }
         
-        return createSelfCleaningObservable(observable: observable, topic: deadvertiseTopic)
+        observable = createSelfCleaningObservable(observable: observable, topic: deadvertiseTopic)
+
+        self.subscribe(topic: deadvertiseTopic)
+
+        return observable
     }
     
     /// Observe Update events for the given target emitted by the hot
@@ -216,36 +221,38 @@ extension CommunicationManager {
     /// - Returns: a hot observable emitting incoming Update events.
     public func observeUpdate<T: UpdateEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
         
-        // FIXME: Prevent duplicated subscriptions.
         let updateTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Update)
-        self.subscribe(topic: updateTopic)
 
-        let observable = client.messages.map(convertToTupleFormat)
-            .filter({ (topic, payload) -> Bool in
-                return topic.sourceObjectId != eventTarget.objectId
-            })
+        var observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != eventTarget.objectId
             })
             .filter(isUpdate)
             .compactMap({ (message) -> T? in
-                let (coatyTopic, payload) = message
+                let (topic, payload) = message
                 
                 guard let updateEvent: T = PayloadCoder.decode(payload) else {
                     LogManager.log.warning("could not parse updateEvent")
                     return nil
                 }
+
+                updateEvent.sourceId = topic.sourceObjectId;
+                updateEvent.userId = topic.associatedUserId;
                 
                 updateEvent.completeHandler = {(completeEvent: CompleteEvent) in
                     try? self.publishComplete(identity: eventTarget,
                                               event: completeEvent,
-                                              messageToken: coatyTopic.messageToken)
+                                              messageToken: topic.messageToken)
                 }
                 
                 return updateEvent
             })
         
-        return createSelfCleaningObservable(observable: observable, topic: updateTopic)
+        observable = createSelfCleaningObservable(observable: observable, topic: updateTopic)
+
+        self.subscribe(topic: updateTopic)
+
+        return observable
     }
     
     /// Observe Discover events for the given target emitted by the hot
@@ -259,32 +266,36 @@ extension CommunicationManager {
     ///     - eventTarget: target for which Discover events should be emitted.
     /// - Returns: a hot observable emitting incoming Discover events.
     public func observeDiscover<T: DiscoverEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
-        
-        // FIXME: Prevent duplicated subscriptions.
         let discoverTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Discover)
-        self.subscribe(topic: discoverTopic)
 
-        let observable = client.messages.map(convertToTupleFormat)
+        var observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != eventTarget.objectId
             })
             .filter(isDiscover)
             .compactMap { (message) -> T? in
-                let (coatyTopic, payload) = message
+                let (topic, payload) = message
                 
                 guard let discoverEvent: T = PayloadCoder.decode(payload) else {
                     LogManager.log.warning("could not parse discoverEvent")
                     return nil
                 }
+
+                discoverEvent.sourceId = topic.sourceObjectId;
+                discoverEvent.userId = topic.associatedUserId;
                 
                 discoverEvent.resolveHandler = {(resolveEvent: ResolveEvent) in
-                    try? self.publishResolve(identity: eventTarget, event: resolveEvent, messageToken: coatyTopic.messageToken)
+                    try? self.publishResolve(identity: eventTarget, event: resolveEvent, messageToken: topic.messageToken)
                 }
                 
                 return discoverEvent
             }
         
-        return createSelfCleaningObservable(observable: observable, topic: discoverTopic)
+        observable = createSelfCleaningObservable(observable: observable, topic: discoverTopic)
+
+        self.subscribe(topic: discoverTopic)
+
+        return observable
     }
     
     /// Observe Call events for the given target and the given
@@ -313,20 +324,14 @@ extension CommunicationManager {
     /// - Returns: a hot observable emitting incoming Call events
     /// whose context filter matches the given context
     public func observeCall<T: CallEvent<Family>>(eventTarget: Component, operationId: String) throws -> Observable<T> {
-        
-        // FIXME: Prevent duplicated subscriptions.
-        // FIXME: A convenience method that explicitly uses the operationId as parameter would be nice.
-        
         if !CommunicationTopic.isValidEventTypeFilter(filter: operationId) {
             throw CoatySwiftError.InvalidArgument("\(operationId) is not a valid parameter name.")
         }
         
         let callTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Call,
-                                                                        eventTypeFilter: operationId)
+                                                                                     eventTypeFilter: operationId)
         
-        self.subscribe(topic: callTopic)
-
-        let observable = client.messages.map(convertToTupleFormat)
+        var observable = client.messages.map(convertToTupleFormat)
             .filter({ (topic, payload) -> Bool in
                 return topic.sourceObjectId != eventTarget.objectId
             })
@@ -336,23 +341,30 @@ extension CommunicationManager {
                 topic.callOperationId == operationId
             }
             .compactMap { message -> T? in
-                let (coatyTopic, payload) = message
+                let (topic, payload) = message
                 
                 guard let callEvent: T = PayloadCoder.decode(payload) else {
                     LogManager.log.warning("could not parse callEvent")
                     return nil
                 }
+
+                callEvent.sourceId = topic.sourceObjectId;
+                callEvent.userId = topic.associatedUserId;
                 
                 callEvent.returnHandler = {(returnEvent: ReturnEvent) in
                     try? self.publishReturn(identity: eventTarget,
                                              event: returnEvent,
-                                             messageToken: coatyTopic.messageToken)
+                                             messageToken: topic.messageToken)
                 }
                 
                 return callEvent
             }
         
-        return createSelfCleaningObservable(observable: observable, topic: callTopic)
+        observable = createSelfCleaningObservable(observable: observable, topic: callTopic)
+
+        self.subscribe(topic: callTopic)
+
+        return observable
     }
     
     /// Observe communication state changes by the hot observable returned.

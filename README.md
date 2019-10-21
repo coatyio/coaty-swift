@@ -1,25 +1,29 @@
 # Coaty Swift
+
 [![Powered by Coaty](https://img.shields.io/badge/Powered%20by-Coaty-FF8C00.svg)](https://coaty.io)
+[![Swift version](https://img.shields.io/badge/swift-5-FF4029.svg)](https://developer.apple.com/swift/)
 [![Version](https://img.shields.io/cocoapods/v/CoatySwift.svg?style=flat)](https://cocoapods.org/pods/CoatySwift)
 [![Platform](https://img.shields.io/cocoapods/p/CoatySwift.svg?style=flat)](https://cocoapods.org/pods/CoatySwift)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-__CoatySwift__ is a [Coaty](https://coaty.io/) implementation written in Swift
-5.0. The CoatySwift package provides the cross-platform implementation targeted
-at __iOS__ (8.0+) and __macOS__ (10.14+) applications running as native
-application code.
+__CoatySwift__ is a [Coaty](https://coaty.io/) implementation written in Swift 5.
+The CoatySwift package provides the cross-platform implementation targeted at
+__iOS__, __iPadOS__, and __macOS__ applications running as native application
+code.
 
-CoatySwift comes with complete source code documentation, a Developer Guide, and best-practice examples.
+CoatySwift comes with complete API documentation, a developer guide, a tutorial,
+and best-practice examples.
 
 ## What is Coaty
 
-The Coaty framework enables realization of collaborative IoT applications and
-scenarios in a distributed, decentralized fashion. A *Coaty application*
-consists of *Coaty agents* that act independently and communicate with each
-other to achieve common goals. Coaty agents can run on IoT devices, mobile
-devices, in microservices, cloud or backend services.
+Using the Coaty [koʊti] framework as a middleware, you can build distributed
+applications out of decentrally organized application components, so called
+*Coaty agents*, which are loosely coupled and communicate with each other in
+(soft) real-time. The main focus is on IoT prosumer scenarios where smart agents
+act in an autonomous, collaborative, and ad-hoc fashion. Coaty agents can run on
+IoT devices, mobile devices, in microservices, cloud or backend services.
 
-It provides a production-ready application and communication layer foundation
+Coaty provides a production-ready application and communication layer foundation
 for building collaborative IoT applications in an easy-to-use yet powerful and
 efficient way. The key properties of the CoatySwift framework include:
 
@@ -32,27 +36,20 @@ efficient way. The key properties of the CoatySwift framework include:
 
 ## Learn how to use
 
-### Requirements
-
-| Deployment Target     | Compatibility     |
-|-------------------    |---------------    |
-| iOS                   | 8.0+              |
-| macOS                 | 10.14+            |
-
-### Documentation
-
 If you are new to CoatySwift and would like to learn more, we recommend checking
 out the following resources:
 
-* __[Developer Guide](docs/DeveloperGuide.md)__ - This guide explains how to
-  build a Coaty application with CoatySwift.
-* __[Source Code Documentation](docs/swiftdoc/index.html)__ - This is the generated sourcecode documentation
-  of the most important functions.
-* __[Design Decisions and Rationale](docs/CoatySwiftInternals.md)__ - in case
+* [Tutorial](https://coatyio.github.io/coaty-swift/tutorial/index.html) - shows
+  how to set up a minimal CoatySwift app.
+* [Developer Guide](https://coatyio.github.io/coaty-swift/man/developer-guide/) - explains
+  how to develop a CoatySwift app.
+* [API Documentation](https://coatyio.github.io/coaty-swift/swiftdoc/index.html) - the
+  source code documentation of public types and members of the CoatySwift framework.
+* [Design Rationale](https://coatyio.github.io/coaty-swift/man/design-rationale/) - in case
   you want to know why certain things have been implemented in a particular way
-  in the CoatySwift implementation. 
+  in the CoatySwift implementation.
 
-### Getting started
+## Getting started
 
 To build and run Coaty agents with the CoatySwift technology stack you need
 XCode 10.2 or higher. CoatySwift is available through
@@ -63,21 +60,32 @@ to your Podfile:
 pod 'CoatySwift'
 ```
 
-### Examples
+CoatySwift is compatible with the the following deployment targets:
 
-To run the example project, clone the repo, and run `pod install` from the
-Example directory first. We provide two additional examples located in the
-`Example for CoatySwift` folder:
+| Deployment Target     | Compatibility     |
+|-------------------    |---------------    |
+| iOS                   | 8.0+              |
+| macOS                 | 10.14+            |
 
-* __`Hello World`__ which is a CoatySwift implementation of the [Hello
-  World](https://github.com/coatyio/coaty-examples/tree/master/hello-world/js)
-  example. This example demonstrates the basic use of communication event
-  patterns to exchange typed data in a distributed Coaty application.
-* __`Switch Light`__ which is a (simplified) CoatySwift implementation of Coaty
-  JS [Remote
-  Operations](https://github.com/coatyio/coaty-examples/tree/master/remote-operations/js).
-* Additional examples can be found in the `swift` section of `coaty-examples`,
-  including a macOS version of the Hello World example.
+## Examples
+
+If you want a short, concise look into CoatySwift, feel free to check out the
+[CoatySwift Tutorial](https://coatyio.github.io/coaty-swift/tutorial/index.html)
+with a step-by-step guide on how to set up a basic CoatySwift application. The
+source code of this tutorial can be found in the
+[Example](https://github.com/coatyio/coaty-swift/tree/master/Example) Xcode
+folder of the CoatySwift repo. Just clone the repo, run `pod install` on the
+Example folder and open the new `xcworkspace` in Xcode.
+
+You can find additional examples in the `swift` sections of the
+[coaty-examples](https://github.com/coatyio/coaty-examples) repo on GitHub. You
+will find three Xcode projects there: the `Hello World`, `Switch Light` and
+`Dynamic` project. They are interoperable with the corresponding Coaty JS
+examples and intended to be used along with them. Note that `Hello World` and
+`Switch Light` are the blueprint examples for how to design CoatySwift
+applications. The `Dynamic` example shows how dynamic components provide a less
+static and less type safe version of CoatySwift to deal with Coaty object types
+that are not yet known at compile time. This feature is currently experimental.
 
 ## Contributing
 
@@ -86,8 +94,9 @@ github](https://github.com/coatyio/coaty-swift). Contributions to the CoatySwift
 framework are welcome and appreciated.
 
 Please follow the recommended practice described in
-[CONTRIBUTING.md](CONTRIBUTING.md). This document also contains detailed
-information on how to build, test, and release the framework.
+[CONTRIBUTING.md](https://github.com/coatyio/coaty-swift/blob/master/CONTRIBUTING.md).
+This document also contains detailed information on how to build, test, and
+release the framework.
 
 ## License
 
@@ -98,13 +107,12 @@ Code is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 Documentation is licensed under a [Creative Commons Attribution-ShareAlike 4.0
 International License](http://creativecommons.org/licenses/by-sa/4.0/).
 
-### Third Party Licenses
+The following list displays all the relevant licenses for third-party software
+CoatySwift depends on:
 
 * RxSwift [MIT License](https://github.com/ReactiveX/RxSwift/blob/master/LICENSE.md)
 * CocoaMQTT [MIT License](https://github.com/emqtt/CocoaMQTT/blob/master/LICENSE)
 * XCGLogger [MIT License](https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt)
-* Quick [Apache License 2.0](https://github.com/Quick/Quick/blob/master/LICENSE)
-* Nimble [Apache License 2.0](https://github.com/Quick/Nimble/blob/master/LICENSE)
 * AnyCodable [MIT License](https://github.com/Flight-School/AnyCodable/blob/master/LICENSE.md)
 
 ## Credits

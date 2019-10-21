@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2A1F564722C0E43400C05881 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1F564622C0E43400C05881 /* Util.swift */; };
-		2A427B0D2232816F0056D67A /* CustomCoatyObjectFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A427B0C2232816F0056D67A /* CustomCoatyObjectFamily.swift */; };
-		2A427B112232826D0056D67A /* Demo+CoatyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A427B102232826D0056D67A /* Demo+CoatyObject.swift */; };
 		2A563791228065AB00252502 /* SwitchLightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A563790228065AB00252502 /* SwitchLightViewController.swift */; };
 		2A563793228065DC00252502 /* LightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A563792228065DC00252502 /* LightController.swift */; };
 		2A56379A228074A200252502 /* LightExecutionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A563794228074A200252502 /* LightExecutionInfo.swift */; };
@@ -32,7 +30,6 @@
 		BCAF1EA0231E500F00C7B707 /* DynamicTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF1E9E231E500F00C7B707 /* DynamicTaskController.swift */; };
 		BCAF1EA4231E594300C7B707 /* DynamicHelloWorldExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF1EA3231E594300C7B707 /* DynamicHelloWorldExampleViewController.swift */; };
 		BCB411C6227720010057DC4C /* HelloWorldExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB411C5227720010057DC4C /* HelloWorldExampleViewController.swift */; };
-		BCCCDB762270708200A780DE /* ModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCDB752270708200A780DE /* ModelTypes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,12 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		06D09241706FE35578B8DCBE /* Pods-CoatySwift_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Example.debug.xcconfig"; path = "Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		0E082A6916A9EE8CD84E196D /* CoatySwift.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = CoatySwift.podspec; path = ../CoatySwift.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		16726F2981BAFC555AC9C041 /* Pods_CoatySwift_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoatySwift_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A1F564622C0E43400C05881 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		2A427B0C2232816F0056D67A /* CustomCoatyObjectFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCoatyObjectFamily.swift; sourceTree = "<group>"; };
-		2A427B102232826D0056D67A /* Demo+CoatyObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Demo+CoatyObject.swift"; sourceTree = "<group>"; };
 		2A563790228065AB00252502 /* SwitchLightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchLightViewController.swift; sourceTree = "<group>"; };
 		2A563792228065DC00252502 /* LightController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightController.swift; sourceTree = "<group>"; };
 		2A563794228074A200252502 /* LightExecutionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightExecutionInfo.swift; path = Model/LightExecutionInfo.swift; sourceTree = "<group>"; };
@@ -64,7 +58,7 @@
 		2AF1EF9D225CEBFF0099E170 /* HelloWorldTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloWorldTask.swift; sourceTree = "<group>"; };
 		2AF1EF9F225CEC140099E170 /* TaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskController.swift; sourceTree = "<group>"; };
 		2AF1EFA1225CED460099E170 /* HelloWorldObjectFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloWorldObjectFamily.swift; sourceTree = "<group>"; };
-		2DEBD46ADBA520DC8C7E6B07 /* Pods-CoatySwift_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Tests.debug.xcconfig"; path = "Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		4AA187DE41C03508E45B1CF7 /* Pods-CoatySwift_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* CoatySwift_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoatySwift_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -74,15 +68,15 @@
 		607FACE51AFB9204008FA782 /* CoatySwift_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoatySwift_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		689B3F746C3C3D7DEDCC8D4F /* Pods-CoatySwift_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Example.release.xcconfig"; path = "Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example.release.xcconfig"; sourceTree = "<group>"; };
+		62A70B5AE8CD7A001099DC2C /* Pods-CoatySwift_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		7AA633FB1F6A099D46D65ABF /* Pods-CoatySwift_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example.release.xcconfig"; sourceTree = "<group>"; };
 		9914431535FD0B653582AF30 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		ADEEFD5354A32F3127D3F18E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		B4018AD735CFA9D4CD944589 /* Pods-CoatySwift_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Tests.release.xcconfig"; path = "Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		B853AE32D06F7E858B9ED4F5 /* Pods_CoatySwift_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoatySwift_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCAF1E9E231E500F00C7B707 /* DynamicTaskController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicTaskController.swift; sourceTree = "<group>"; };
 		BCAF1EA3231E594300C7B707 /* DynamicHelloWorldExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHelloWorldExampleViewController.swift; sourceTree = "<group>"; };
 		BCB411C5227720010057DC4C /* HelloWorldExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloWorldExampleViewController.swift; sourceTree = "<group>"; };
-		BCCCDB752270708200A780DE /* ModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTypes.swift; sourceTree = "<group>"; };
+		E95984D5B53DDE43C4B0F45F /* Pods-CoatySwift_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,20 +123,8 @@
 				2AF1EF9D225CEBFF0099E170 /* HelloWorldTask.swift */,
 				2AF1EF9F225CEC140099E170 /* TaskController.swift */,
 				2AF1EFA1225CED460099E170 /* HelloWorldObjectFamily.swift */,
-				BCCCDB752270708200A780DE /* ModelTypes.swift */,
 			);
 			path = "Hello World";
-			sourceTree = "<group>";
-		};
-		381238D7070AC0F2576D56D0 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				06D09241706FE35578B8DCBE /* Pods-CoatySwift_Example.debug.xcconfig */,
-				689B3F746C3C3D7DEDCC8D4F /* Pods-CoatySwift_Example.release.xcconfig */,
-				2DEBD46ADBA520DC8C7E6B07 /* Pods-CoatySwift_Tests.debug.xcconfig */,
-				B4018AD735CFA9D4CD944589 /* Pods-CoatySwift_Tests.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		607FACC71AFB9204008FA782 = {
@@ -152,8 +134,8 @@
 				607FACD21AFB9204008FA782 /* Example for CoatySwift */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
-				381238D7070AC0F2576D56D0 /* Pods */,
 				66C824FF56F1DF567D655471 /* Frameworks */,
+				6231B0801952CB73BAEEFD0A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -170,7 +152,6 @@
 			isa = PBXGroup;
 			children = (
 				BCAF1EA2231E585F00C7B707 /* Dynamic */,
-				BC6191B622B8D8E4007E4601 /* Model */,
 				2A8EB4A3227F22EE002712E7 /* SwitchLight */,
 				2AF1EF9C225CEBE50099E170 /* Hello World */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
@@ -218,6 +199,17 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		6231B0801952CB73BAEEFD0A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				62A70B5AE8CD7A001099DC2C /* Pods-CoatySwift_Example.debug.xcconfig */,
+				7AA633FB1F6A099D46D65ABF /* Pods-CoatySwift_Example.release.xcconfig */,
+				E95984D5B53DDE43C4B0F45F /* Pods-CoatySwift_Tests.debug.xcconfig */,
+				4AA187DE41C03508E45B1CF7 /* Pods-CoatySwift_Tests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		66C824FF56F1DF567D655471 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,15 +217,6 @@
 				B853AE32D06F7E858B9ED4F5 /* Pods_CoatySwift_Tests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		BC6191B622B8D8E4007E4601 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				2A427B0C2232816F0056D67A /* CustomCoatyObjectFamily.swift */,
-				2A427B102232826D0056D67A /* Demo+CoatyObject.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		BCAF1EA2231E585F00C7B707 /* Dynamic */ = {
@@ -381,7 +364,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CoatySwift/CoatySwift.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaMQTT/CocoaMQTT.framework",
@@ -406,7 +389,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BE8127FBB3114347C165CC25 /* [CP] Embed Pods Frameworks */ = {
@@ -417,7 +400,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 			);
@@ -430,7 +413,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E026E10DD6047780268DEFE8 /* [CP] Check Pods Manifest.lock */ = {
@@ -463,13 +446,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AF1EFA0225CEC140099E170 /* TaskController.swift in Sources */,
-				2A427B112232826D0056D67A /* Demo+CoatyObject.swift in Sources */,
 				2A563793228065DC00252502 /* LightController.swift in Sources */,
 				2AF1EFA2225CED460099E170 /* HelloWorldObjectFamily.swift in Sources */,
 				2AF1EF9E225CEBFF0099E170 /* HelloWorldTask.swift in Sources */,
 				BCB411C6227720010057DC4C /* HelloWorldExampleViewController.swift in Sources */,
 				2A8EB4A5227F2351002712E7 /* ControlController.swift in Sources */,
-				2A427B0D2232816F0056D67A /* CustomCoatyObjectFamily.swift in Sources */,
 				2A56379F228074A200252502 /* LightContext.swift in Sources */,
 				2A56379C228074A200252502 /* LightStatus.swift in Sources */,
 				2A56379B228074A200252502 /* SwitchLightObjectFamily.swift in Sources */,
@@ -477,7 +458,6 @@
 				2A56379A228074A200252502 /* LightExecutionInfo.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				BCAF1EA4231E594300C7B707 /* DynamicHelloWorldExampleViewController.swift in Sources */,
-				BCCCDB762270708200A780DE /* ModelTypes.swift in Sources */,
 				BCAF1EA0231E500F00C7B707 /* DynamicTaskController.swift in Sources */,
 				2A56379E228074A200252502 /* ColorRGBA.swift in Sources */,
 				2A56379D228074A200252502 /* Light.swift in Sources */,
@@ -624,7 +604,7 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 06D09241706FE35578B8DCBE /* Pods-CoatySwift_Example.debug.xcconfig */;
+			baseConfigurationReference = 62A70B5AE8CD7A001099DC2C /* Pods-CoatySwift_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 45E39Y8V9N;
@@ -639,7 +619,7 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 689B3F746C3C3D7DEDCC8D4F /* Pods-CoatySwift_Example.release.xcconfig */;
+			baseConfigurationReference = 7AA633FB1F6A099D46D65ABF /* Pods-CoatySwift_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 45E39Y8V9N;
@@ -654,7 +634,7 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2DEBD46ADBA520DC8C7E6B07 /* Pods-CoatySwift_Tests.debug.xcconfig */;
+			baseConfigurationReference = E95984D5B53DDE43C4B0F45F /* Pods-CoatySwift_Tests.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 45E39Y8V9N;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -676,7 +656,7 @@
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B4018AD735CFA9D4CD944589 /* Pods-CoatySwift_Tests.release.xcconfig */;
+			baseConfigurationReference = 4AA187DE41C03508E45B1CF7 /* Pods-CoatySwift_Tests.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 45E39Y8V9N;
 				FRAMEWORK_SEARCH_PATHS = (

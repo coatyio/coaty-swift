@@ -12,7 +12,7 @@ import CoatySwift
 /// Coaty object type. The light source status is represented by a separate object type
 /// `LightStatus`, which is associated with its light by the `parentObjectId`
 /// relationship.
-class Light: CoatyObject {
+final class Light: CoatyObject {
     
     /// Determines whether the light is currently defect. The default value is `false`.
     var isDefect: Bool

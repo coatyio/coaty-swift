@@ -11,7 +11,7 @@ import Foundation
  ///
  /// This base object has no associated framework base object type.
  /// For instantiation use one of the concrete subtypes `IoSource` or `IoActor`.
- public class IoPoint: CoatyObject {
+ open class IoPoint: CoatyObject {
 
     /// The update rate (in milliseconds) for publishing IoValue events:
     /// - desired rate for IO actors
@@ -53,7 +53,7 @@ import Foundation
         try super.init(from: decoder)
     }
     
-    public override func encode(to encoder: Encoder) throws {
+    open override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: IoPointKeys.self)
         try container.encodeIfPresent(updateRate, forKey: .updateRate)

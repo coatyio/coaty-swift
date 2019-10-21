@@ -27,7 +27,7 @@ public class RetrieveEventFactory<Family: ObjectFamily>: EventFactoryInit {
 ///
 /// The class requires the definition of a `ObjectFamily`, e.g. `CoatyObjectFamily` or a
 /// custom implementation of a `ObjectFamily` to support custom object types.
-/// - NOTE: This class should preferably initialized via its withObject() method.
+/// - NOTE: This class should preferably be initialized via its withObject() method.
 public class RetrieveEvent<Family: ObjectFamily>: CommunicationEvent<RetrieveEventData<Family>> {
     
     // MARK: - Initializers.

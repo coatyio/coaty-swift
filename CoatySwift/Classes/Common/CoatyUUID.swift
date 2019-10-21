@@ -9,7 +9,7 @@ import Foundation
 
 /// Custom implementation of a UUID that actually is compatible with the RFC
 /// specification of sending UUIDs over the network (lowercase in contrast to Apple's
-/// uppercase implementation. )
+/// uppercase implementation).
 @objcMembers
 public class CoatyUUID: NSObject, Codable {
     

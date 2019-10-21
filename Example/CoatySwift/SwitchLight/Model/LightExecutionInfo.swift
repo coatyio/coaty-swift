@@ -14,7 +14,7 @@ class LightExecutionInfo: Codable {
     /// Object Id of the Light object that has been controlled.
     var lightId: CoatyUUID
     
-    /// The timestamp in UTC microseconds when the light control operation has
+    /// The timestamp in UTC milliseconds when the light control operation has
     /// been triggered.
     var triggerTime: Double
     

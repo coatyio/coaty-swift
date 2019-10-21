@@ -9,33 +9,30 @@
 public class DeadvertiseEventFactory<Family: ObjectFamily>: EventFactoryInit {
     
     /// Convenience factory method that configures an instance of and DeadvertiseEvent with
-    /// a Deadvertisement Object. Note that the event source should be the controller that
+    /// object ids to be deadvertised. Note that the event source should be the controller that
     /// creates the DeadvertiseEvent.
-    /// FIXME: Replace CoatyObject with Component object.
-    public func with(object: Deadvertise) throws -> DeadvertiseEvent {
-        
-        return try DeadvertiseEvent.withObject(eventSource: self.identity, object: object)
+    public func with(objectIds: [CoatyUUID]) throws -> DeadvertiseEvent<Family> {
+        return try DeadvertiseEvent.withObjectIds(eventSource: self.identity, objectIds: objectIds)
     }
 }
 
-/// Deadvertise provides a generic implementation for all DeadvertiseEvents.
-/// Note that this class should preferably initialized via its withObject() method.
-public class DeadvertiseEvent: CommunicationEvent<DeadvertiseEventData> {
+/// DeadvertiseEvent provides a generic implementation for all DeadvertiseEvents.
+/// Note that this class should preferably be initialized via its withObjectIds() method.
+public class DeadvertiseEvent<Family: ObjectFamily>: CommunicationEvent<DeadvertiseEventData<Family>> {
     
     /// - NOTE: This method should never be called directly by application programmers.
     /// Inside the framework, calling is ok.
-    override init(eventSource: Component, eventData: DeadvertiseEventData) {
+    override init(eventSource: Component, eventData: DeadvertiseEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
-    /// Convenience factory method that configures an instance of and DeadvertiseEvent with
-    /// a Deadvertisement Object. Note that the event source should be the controller that
+    /// Convenience factory method that configures an instance of a DeadvertiseEvent with
+    /// object ids to be deadvertised. Note that the event source should be the controller that
     /// creates the DeadvertiseEvent.
-    /// FIXME: Replace CoatyObject with Component object.
-    internal static func withObject(eventSource: Component,
-                           object: Deadvertise) throws -> DeadvertiseEvent {
+    internal static func withObjectIds(eventSource: Component,
+                                       objectIds: [CoatyUUID]) throws -> DeadvertiseEvent {
         
-        let deadvertiseEventData = DeadvertiseEventData(object: object)
+        let deadvertiseEventData = DeadvertiseEventData<Family>(objectIds: objectIds)
         return .init(eventSource: eventSource, eventData: deadvertiseEventData)
     }
     
@@ -53,34 +50,40 @@ public class DeadvertiseEvent: CommunicationEvent<DeadvertiseEventData> {
 
 /// DeadvertiseEventData provides a wrapper object that stores the entire message payload data
 /// for a DeadvertiseEvent.
-public class DeadvertiseEventData: CommunicationEventData {
+public class DeadvertiseEventData<Family: ObjectFamily>: CommunicationEventData {
     
     // MARK: - Public attributes.
     
-    var object: Deadvertise
+    var objectIds: [CoatyUUID]
     
     // MARK: - Initializers.
     
-    init(object: Deadvertise) {
-        self.object = object
-        // TODO: hasValidParameters()
+    init(objectIds: [CoatyUUID]) {
+        self.objectIds = objectIds
         super.init()
     }
     
-    static func createFrom(eventData: Deadvertise) -> DeadvertiseEventData {
-        return .init(object: eventData)
+    static func createFrom(eventData: [CoatyUUID]) -> DeadvertiseEventData {
+        return .init(objectIds: eventData)
     }
     
     // MARK: - Codable methods.
+
+    enum CodingKeys: String, CodingKey {
+        case objectIds
+    }
     
     required init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        self.object = try container.decode(Deadvertise.self)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.objectIds = try container.decode([CoatyUUID].self, forKey: .objectIds)
         try super.init(from: decoder)
     }
     
     override public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(self.object)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        let objectIds = self.objectIds.map { (uuid) -> String in
+            return uuid.string
+        }
+        try container.encode(objectIds, forKey: .objectIds)
     }
 }

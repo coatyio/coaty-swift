@@ -7,28 +7,30 @@
 
 import Foundation
 
-/// CommunicationEvent is a generic supertype for AdvertiseEvent, DeadvertiseEvent etc.
+/// CommunicationEvent is a generic supertype for all defined Coaty event types.
 public class CommunicationEvent<T: CommunicationEventData>: Codable {
     
     // MARK: - Public attributes.
     
     public var type: CommunicationEventType?
     
-    /// Event data that conforms for CommunicationEventData, e.g. AdvertiseEventData.
+    /// Event data that conforms to event type specific CommunicationEventData
     public var data: T
 
-    // MARK: - Private attributes.
-    
     public var source: Component?
     public var sourceId: CoatyUUID?
-    public var userId: String? // or UUID?
+
+    /// The associated user id of an inbound event. The value is always nil for
+    /// outbound events. For inbound events, the value is nil if the event
+    /// doesn't provide an associated user id in the topic.
+    internal (set) public var userId: CoatyUUID?
     
     // MARK: - Initializer.
     
     init(eventSource: Component, eventData: T) {
         self.source = eventSource
         self.sourceId = eventSource.objectId
-        self.userId = EMPTY_ASSOCIATED_USER_ID // FIXME: Default value.
+        self.userId = nil
         self.data = eventData
     }
     
@@ -45,7 +47,7 @@ public class CommunicationEvent<T: CommunicationEventData>: Codable {
     }
 }
 
-// MARK: - Extension enable easy access to JSON representation of DemoAdvertise object.
+// MARK: - Extension enable easy access to JSON representation of event data.
 
 extension CommunicationEvent {
     public var json: String {

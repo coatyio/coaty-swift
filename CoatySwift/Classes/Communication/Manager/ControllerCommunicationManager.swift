@@ -38,8 +38,7 @@ public class ControllerCommunicationManager<Family: ObjectFamily> {
     ///     - withCoreType: coreType core type of objects to be observed.
     /// - Returns: An observable emitting the advertise events, that have the wanted coreType.
     public func observeAdvertise<T: AdvertiseEvent<Family>>(withCoreType coreType: CoreType) throws -> Observable<T> {
-        
-        return try cm.observeAdvertiseWithCoreType(eventTarget:self.controllerIdentity, coreType: coreType)
+        return try cm.observeAdvertiseWithCoreType(eventTarget: self.controllerIdentity, coreType: coreType)
         
     }
     
@@ -55,7 +54,7 @@ public class ControllerCommunicationManager<Family: ObjectFamily> {
     /// Observe Channel events for the given target and the given
     /// channel identifier emitted by the hot observable returned.
     ///
-    /// - MISSING: The channel identifier must be a non-empty string that does not contain
+    /// The channel identifier must be a non-empty string that does not contain
     /// the following characters: `NULL (U+0000)`, `# (U+0023)`, `+ (U+002B)`,
     /// `/ (U+002F)`.
     ///
@@ -78,7 +77,7 @@ public class ControllerCommunicationManager<Family: ObjectFamily> {
     /// event source, will not be emitted by the observable returned.
     ///
     /// - Returns:  a hot observable emitting incoming Deadvertise events
-    public func observeDeadvertise() throws -> Observable<DeadvertiseEvent> {
+    public func observeDeadvertise() throws -> Observable<DeadvertiseEvent<Family>> {
         return try cm.observeDeadvertise(eventTarget: self.controllerIdentity)
       }
     
@@ -144,7 +143,7 @@ public class ControllerCommunicationManager<Family: ObjectFamily> {
     /// Publish a value on the given topic. Used to interoperate
     /// with external MQTT clients that subscribe on the given topic.
     ///
-    /// - MISSING: Checking that the topic is an MQTT publication topic, i.e. a non-empty string
+    /// The topic is an MQTT publication topic, i.e. a non-empty string
     /// that must not contain the following characters: `NULL (U+0000)`,
     /// `# (U+0023)`, `+ (U+002B)`.
     ///
@@ -160,18 +159,13 @@ public class ControllerCommunicationManager<Family: ObjectFamily> {
     /// - Parameters:
     ///     - event: The event that should be advertised.
     public func publishAdvertise<Family: ObjectFamily,T: AdvertiseEvent<Family>>(_ event: T) throws {
-        try cm.publishAdvertise(advertiseEvent: event, eventTarget: self.controllerIdentity)
-    }
-    
-    /// Advertises the identity of a CommunicationManager.
-    public func advertiseIdentityOrDevice() throws {
-        try cm.advertiseIdentityOrDevice(eventTarget: self.controllerIdentity)
+        try cm.publishAdvertise(advertiseEvent: event)
     }
     
     /// Notify subscribers that an advertised object has been deadvertised.
     ///
     /// - Parameter event: the Deadvertise event to be published
-    public func publishDeadvertise(_ event: DeadvertiseEvent) throws {
+    public func publishDeadvertise(_ event: DeadvertiseEvent<Family>) throws {
         try cm.publishDeadvertise(deadvertiseEvent: event)
     }
     
@@ -236,7 +230,6 @@ public class ControllerCommunicationManager<Family: ObjectFamily> {
     /// to release system resources and to avoid memory leaks. After all initial
     /// subscribers have unsubscribed no more response events will be emitted
     /// on the observable and an error will be thrown on resubscription.
-    /// - TODO: AssociatedUserId currently not correctly implemented.
     ///
     /// - Parameter event: the Call event to be published.
     /// - Returns: a hot observable of associated Return events.

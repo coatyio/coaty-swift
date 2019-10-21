@@ -134,11 +134,9 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
     public var objectFilter: ObjectFilter?
     
     /// Join related objects by join conditions.
-    /// - TODO: Only one of the two methods should be public.
     public var objectJoinConditions: [ObjectJoinCondition]?
     
     /// Join related objects by join conditions.
-    /// - TODO: Only one of the two methods should be public.
     public var objectJoinCondition: ObjectJoinCondition?
     
     // MARK: - Initializers.
