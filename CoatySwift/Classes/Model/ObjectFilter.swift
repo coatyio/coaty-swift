@@ -144,7 +144,13 @@ public class ObjectFilter: Codable {
 /// by the second tuple, etc.
 public class OrderByProperty: Codable {
     
-    /// The object property used for ordering can be specified either in dot
+    var objectFilterProperties: ObjectFilterProperty
+
+    var sortingOrder: SortingOrder
+    
+    /// Create an OrderByProperty instance.
+    /// - Parameters:
+    ///     -properties: The object property used for ordering can be specified either in dot
     /// notation or array notation. In dot notation, the name of the object
     /// property is specified as a string (e.g. `"objectId"`). It may include
     /// dots (`.`) to access nested properties of subobjects (e.g.
@@ -152,11 +158,7 @@ public class OrderByProperty: Codable {
     /// obviously cannot use dot notation. Instead, specify the property or
     /// nested properties as an array of strings (e.g. `["property.with.dots",
     /// "subproperty.with.dots"]`).
-    var objectFilterProperties: ObjectFilterProperty
-
-    /// Ascending or descending sort order.
-    var sortingOrder: SortingOrder
-    
+    ///     -sortingOrder: Ascending or descending sort order.
     public init(properties: ObjectFilterProperty,
                 sortingOrder: SortingOrder) {
         self.objectFilterProperties = properties
@@ -186,14 +188,8 @@ public class OrderByProperty: Codable {
 /// contains a dot (.) in its name. In such cases, array notation must be used.
 public class ObjectFilterProperty: Codable {
 
-    /// Specifies filter property in dot notation
-    /// (`"property.subproperty.subsubproperty"`). Note that dot notation cannot
-    /// be used if one of the properties contains a dot (.) in its name. In such
-    /// cases, array notation (see `objectFilterProperties`) must be used.
     var objectFilterProperty: String?
 
-    /// Specifies filter property in array notation (`["property",
-    /// "subproperty", "subsubproperty"]`).
     var objectFilterProperties: [String]?
     
     private init(objectFilterProperty: String? = nil,
@@ -202,10 +198,18 @@ public class ObjectFilterProperty: Codable {
         self.objectFilterProperties = objectFilterProperties
     }
     
+    /// Create an instance of ObjectFilterProperty.
+    /// - Parameters objectFilterProperty: Specifies filter property in dot notation
+    /// (`"property.subproperty.subsubproperty"`). Note that dot notation cannot
+    /// be used if one of the properties contains a dot (.) in its name. In such
+    /// cases, array notation (see `objectFilterProperties`) must be used.
     public convenience init(_ objectFilterProperty: String) {
         self.init(objectFilterProperty: objectFilterProperty, objectFilterProperties: nil)
     }
     
+    /// Create an instance of ObjectFilterProperty.
+    /// - Parameter objectFilterProperties: Specifies filter property in 
+    /// array notation (`["property", "subproperty", "subsubproperty"]`).
     public convenience init(_ objectFilterProperties: [String]) {
         self.init(objectFilterProperty: nil, objectFilterProperties: objectFilterProperties)
     }
@@ -245,48 +249,8 @@ public class ObjectFilterConditions: Codable {
     
     // MARK: - Attributes.
     
-    /// Multiple filter conditions combined by logical AND. Specify either the
-    /// `and` or the `or` property, or none, but *never* both.
-    ///
-    /// An object filter condition is defined by the name of an object property
-    /// and a filter expression. The filter expression must evaluate to true
-    /// when applied to the property's value for the condition to become true.
-    ///
-    /// The object property to be applied for filtering is specified either in
-    /// dot notation or array notation. In dot notation, the name of the object
-    /// property is specified as a string (e.g. `"objectId"`). It may include
-    /// dots (`.`) to access nested properties of subobjects (e.g.
-    /// `"message.name"`). If a single property name contains dots itself, you
-    /// obviously cannot use dot notation. Instead, specify the property or
-    /// nested properties as an array of strings (e.g. `["property.with.dots",
-    /// "subproperty.with.dots"]`).
-    ///
-    /// A filter expression consists of a filter operator and an
-    /// operator-specific number of filter operands (at most two). You should
-    /// use one of the typesafe `FilterOperations` functions to specify a filter
-    /// expression.
     var and: [ObjectFilterCondition]?
 
-    /// Multiple filter conditions combined by logical OR. Specify either the
-    /// `and` or the `or` property, or none, but *never* both.
-    ///
-    /// An object filter condition is defined by the name of an object property
-    /// and a filter expression. The filter expression must evaluate to true
-    /// when applied to the property's value for the condition to become true.
-    ///
-    /// The object property to be applied for filtering is specified either in
-    /// dot notation or array notation. In dot notation, the name of the object
-    /// property is specified as a string (e.g. `"objectId"`). It may include
-    /// dots (`.`) to access nested properties of subobjects (e.g.
-    /// `"message.name"`). If a single property name contains dots itself, you
-    /// obviously cannot use dot notation. Instead, specify the property or
-    /// nested properties as an array of strings (e.g. `["property.with.dots",
-    /// "subproperty.with.dots"]`).
-    ///
-    /// A filter expression consists of a filter operator and an
-    /// operator-specific number of filter operands (at most two). You should
-    /// use one of the typesafe `FilterOperations` functions to specify a filter
-    /// expression.
     var or: [ObjectFilterCondition]?
     
     // MARK: - Initializers.
@@ -296,10 +260,52 @@ public class ObjectFilterConditions: Codable {
         self.or = or
     }
     
+    /// Create an instance of ObjectFilterConditions.
+    /// - Parameter and: Multiple filter conditions combined by logical AND. Specify either the
+    /// `and` or the `or` property, or none, but *never* both.
+    ///
+    /// An object filter condition is defined by the name of an object property
+    /// and a filter expression. The filter expression must evaluate to true
+    /// when applied to the property's value for the condition to become true.
+    ///
+    /// The object property to be applied for filtering is specified either in
+    /// dot notation or array notation. In dot notation, the name of the object
+    /// property is specified as a string (e.g. `"objectId"`). It may include
+    /// dots (`.`) to access nested properties of subobjects (e.g.
+    /// `"message.name"`). If a single property name contains dots itself, you
+    /// obviously cannot use dot notation. Instead, specify the property or
+    /// nested properties as an array of strings (e.g. `["property.with.dots",
+    /// "subproperty.with.dots"]`).
+    ///
+    /// A filter expression consists of a filter operator and an
+    /// operator-specific number of filter operands (at most two). You should
+    /// use one of the typesafe `FilterOperations` functions to specify a filter
+    /// expression.
     public convenience init(and: [ObjectFilterCondition]) {
         self.init(and, nil)
     }
     
+    /// Create an instance of ObjectFilterConditions.
+    /// - Parameter or: Multiple filter conditions combined by logical OR. Specify either the
+    /// `and` or the `or` property, or none, but *never* both.
+    ///
+    /// An object filter condition is defined by the name of an object property
+    /// and a filter expression. The filter expression must evaluate to true
+    /// when applied to the property's value for the condition to become true.
+    ///
+    /// The object property to be applied for filtering is specified either in
+    /// dot notation or array notation. In dot notation, the name of the object
+    /// property is specified as a string (e.g. `"objectId"`). It may include
+    /// dots (`.`) to access nested properties of subobjects (e.g.
+    /// `"message.name"`). If a single property name contains dots itself, you
+    /// obviously cannot use dot notation. Instead, specify the property or
+    /// nested properties as an array of strings (e.g. `["property.with.dots",
+    /// "subproperty.with.dots"]`).
+    ///
+    /// A filter expression consists of a filter operator and an
+    /// operator-specific number of filter operands (at most two). You should
+    /// use one of the typesafe `FilterOperations` functions to specify a filter
+    /// expression.
     public convenience init(or: [ObjectFilterCondition]) {
         self.init(nil, or)
     }
@@ -380,15 +386,17 @@ public class ObjectFilterCondition: Codable {
 
     // MARK: - Attributes.
     
-    /// Defines the format of nested properties used in an ObjectFilterCondition.
     var property: ObjectFilterProperty
 
-    ///  A filter expression consists of a filter operator and an
-    ///  operator-specific number of filter operands (at most two).
     var expression: ObjectFilterExpression
     
     // MARK: - Initializers.
     
+    /// Creates an instance of ObjectFilterCondition.
+    /// -Parameters:
+    ///     -property: Defines the format of nested properties used in an ObjectFilterCondition.
+    ///     -expression: A filter expression consists of a filter operator and an
+    ///  operator-specific number of filter operands (at most two).
     public init(property: ObjectFilterProperty, expression: ObjectFilterExpression) {
         self.property = property
         self.expression = expression
@@ -437,17 +445,19 @@ public class ObjectFilterExpression: Codable {
     
     // MARK: - Attributes.
     
-    /// The filter operator constant.
     var filterOperator: ObjectFilterOperator
 
-    /// The first operand of the filter expression (optional).
     var firstOperand: AnyCodable?
 
-    /// The second operand of the filter expression (optional).
     var secondOperand: AnyCodable?
     
     // MARK: - Initializers.
     
+    /// Creates an instance of ObjectFilterExpression.
+    /// -Parameters:
+    ///     -filterOperator: The filter operator constant.
+    ///     -op1: The first operand of the filter expression (optional).
+    ///     -op2: The second operand of the filter expression (optional).
     public init(filterOperator: ObjectFilterOperator,
                 op1: AnyCodable? = nil,
                 op2: AnyCodable? = nil) {
@@ -494,55 +504,55 @@ public class FilterOperations {
     
     /// Checks if the filter property is less than the given value. Note: Do not
     /// compare a number with a string, as the result is not defined.
-    static func lessThan(value: Double) -> (ObjectFilterOperator, Double) {
+    public static func lessThan(value: Double) -> (ObjectFilterOperator, Double) {
         return (ObjectFilterOperator.LessThan, value)
     }
     
     /// Checks if the filter property is less than the given value. For string
     /// comparison, a default lexical ordering is used. Note: Do not compare a
     /// number with a string, as the result is not defined.
-    static func lessThan(value: String) -> (ObjectFilterOperator, String) {
+    public static func lessThan(value: String) -> (ObjectFilterOperator, String) {
         return (ObjectFilterOperator.LessThan, value)
     }
     
     /// Checks if the filter property is less than or equal to the given value.
     /// Note: Do not compare a number with a string, as the result is not
     /// defined.
-    static func lessThanOrEqual(value: Double) -> (ObjectFilterOperator, Double) {
+    public static func lessThanOrEqual(value: Double) -> (ObjectFilterOperator, Double) {
         return (ObjectFilterOperator.LessThanOrEqual, value)
     }
     
     /// Checks if the filter property is less than or equal to the given value.
     /// For string comparison, a default lexical ordering is used.
     /// Note: Do not compare a number with a string, as the result is not defined.
-    static func lessThanOrEqual(value: String) -> (ObjectFilterOperator, String) {
+    public static func lessThanOrEqual(value: String) -> (ObjectFilterOperator, String) {
         return (ObjectFilterOperator.LessThanOrEqual, value)
     }
 
     /// Checks if the filter property is greater than the given value. Note: Do
     /// not compare a number with a string, as the result is not defined.   
-    static func greaterThan(value: Double) -> (ObjectFilterOperator, Double) {
+    public static func greaterThan(value: Double) -> (ObjectFilterOperator, Double) {
         return (ObjectFilterOperator.GreaterThan, value)
     }
     
     /// Checks if the filter property is greater than the given value. For
     /// string comparison, a default lexical ordering is used. Note: Do not
     /// compare a number with a string, as the result is not defined.
-    static func greaterThan(value: String) -> (ObjectFilterOperator, String) {
+    public static func greaterThan(value: String) -> (ObjectFilterOperator, String) {
         return (ObjectFilterOperator.GreaterThan, value)
     }
     
     /// Checks if the filter property is greater than or equal to the given
     /// value. Note: Do not compare a number with a string, as the result is not
     /// defined.
-    static func greaterThanOrEqual(value: Double) -> (ObjectFilterOperator, Double) {
+    public static func greaterThanOrEqual(value: Double) -> (ObjectFilterOperator, Double) {
         return (ObjectFilterOperator.LessThanOrEqual, value)
     }
     
     /// Checks if the filter property is greater than or equal to the given
     /// value. For string comparison, a default lexical ordering is used. Note:
     /// Do not compare a number with a string, as the result is not defined.
-    static func greaterThanOrEqual(value: String) -> (ObjectFilterOperator, String) {
+    public static func greaterThanOrEqual(value: String) -> (ObjectFilterOperator, String) {
         return (ObjectFilterOperator.LessThanOrEqual, value)
     }
     
@@ -551,7 +561,7 @@ public class FilterOperations {
     /// than or equal to the second argument `value2`, those two arguments are
     /// automatically swapped. Do not compare a number with a string, as the
     /// result is not defined.
-    static func between(value1: Double, value2: Double) ->  (ObjectFilterOperator, Double, Double) {
+    public static func between(value1: Double, value2: Double) ->  (ObjectFilterOperator, Double, Double) {
         return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
     }
     
@@ -561,7 +571,7 @@ public class FilterOperations {
     /// automatically swapped. For string comparison, a default lexical ordering
     /// is used. Do not compare a number with a string, as the result is not
     /// defined.
-    static func between(value1: String, value2: String) ->  (ObjectFilterOperator, String, String) {
+    public static func between(value1: String, value2: String) ->  (ObjectFilterOperator, String, String) {
         return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
     }
     
@@ -570,7 +580,7 @@ public class FilterOperations {
     /// than or equal to the second argument `value2`, those two arguments are
     /// automatically swapped. Note: Do not compare a number with a string, as
     /// the result is not defined.
-    static func notBetween(value1: Double, value2: Double) ->  (ObjectFilterOperator, Double, Double) {
+    public static func notBetween(value1: Double, value2: Double) ->  (ObjectFilterOperator, Double, Double) {
         return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
     }
     
@@ -580,7 +590,7 @@ public class FilterOperations {
     /// automatically swapped. For string comparison, a default lexical ordering
     /// is used. Note: Do not compare a number with a string, as the result is
     /// not defined.
-    static func notBetween(value1: String, value2: String) ->  (ObjectFilterOperator, String, String) {
+    public static func notBetween(value1: String, value2: String) ->  (ObjectFilterOperator, String, String) {
         return (ObjectFilterOperator.LessThanOrEqual, value1, value2)
     }
 
@@ -607,29 +617,29 @@ public class FilterOperations {
     /// characters you have to double backslashes in literal string constants.
     /// Thus, for the example above the pattern string literal would look like
     /// `"%a_c\\\\d\\_"`.
-    static func like(pattern: String) -> (ObjectFilterOperator, String) {
+    public static func like(pattern: String) -> (ObjectFilterOperator, String) {
         return (ObjectFilterOperator.Like, pattern)
     }
     
     /// Checks if the filter property exists.
-    static func exists() -> (ObjectFilterOperator) {
-        return ObjectFilterOperator.Exists
+    public static func exists() -> (ObjectFilterOperator) {
+        return (ObjectFilterOperator.Exists)
     }
     
     /// Checks if the filter property doesn't exist.
-    static func notExists() -> (ObjectFilterOperator) {
-        return ObjectFilterOperator.NotExists
+    public static func notExists() -> (ObjectFilterOperator) {
+        return (ObjectFilterOperator.NotExists)
     }
     
     /// Checks if the filter property is deep equal to the given value according
     /// to a recursive equality algorithm.
-    static func equals(value: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
+    public static func equals(value: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
         return (ObjectFilterOperator.Equals, value)
     }
     
     /// Checks if the filter property is not deep equal to the given value
     /// according to a recursive equality algorithm.
-    static func notEquals(value: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
+    public static func notEquals(value: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
         return (ObjectFilterOperator.NotEquals, value)
     }
     
@@ -655,7 +665,7 @@ public class FilterOperations {
     /// contains([1, 2, 3], [3]) => true
     /// contains([1, 2, 3], 3) => true
     /// ```
-    static func contains(values: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
+    public static func contains(values: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
         return (ObjectFilterOperator.Contains, values)
     }
     
@@ -681,7 +691,7 @@ public class FilterOperations {
     /// notContains([1, 2, 3], [4]) => true
     /// notContains([1, 2, 3], 4) => true
     /// ```
-    static func notContains(values: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
+    public static func notContains(values: AnyCodable) -> (ObjectFilterOperator, AnyCodable) {
         return (ObjectFilterOperator.NotContains, values)
     }
     
@@ -698,7 +708,7 @@ public class FilterOperations {
     /// in({ "foo": 47 }, [1, 46, { "foo": 47 }, "foo"]) => true
     /// in({ "foo": 47 }, [1, 46, { "foo": 47, "bar": 42 }, "foo"]) => false
     /// ```
-    static func valuesIn(values: [AnyCodable]) -> (ObjectFilterOperator, [AnyCodable]) {
+    public static func valuesIn(values: [AnyCodable]) -> (ObjectFilterOperator, [AnyCodable]) {
         return (ObjectFilterOperator.In, values)
     }
 
@@ -715,7 +725,7 @@ public class FilterOperations {
     /// notIn({ "foo": 47 }, [1, 46, { "foo": 47 }, "foo"]) => false
     /// notIn({ "foo": 47 }, [1, 46, { "foo": 47, "bar": 42 }, "foo"]) => true
     /// ```
-    static func valuesNotIn(values: [AnyCodable]) -> (ObjectFilterOperator, [AnyCodable]) {
+    public static func valuesNotIn(values: [AnyCodable]) -> (ObjectFilterOperator, [AnyCodable]) {
         return (ObjectFilterOperator.NotIn, values)
     }
   
