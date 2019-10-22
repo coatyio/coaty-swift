@@ -1,6 +1,0 @@
-framework module CoatySwift {
-  umbrella header "CoatySwift-umbrella.h"
-
-  export *
-  module * { export * }
-}

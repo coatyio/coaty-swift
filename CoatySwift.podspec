@@ -32,12 +32,6 @@ Pod::Spec.new do |s|
 
   s.source_files = 'CoatySwift/Classes/**/*'
     
-  # s.resource_bundles = {
-  #   'CoatySwift' => ['CoatySwift/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'CocoaMQTT', '~> 1.1.3'
   s.dependency 'RxSwift', '~> 5'
   s.dependency 'RxCocoa', '~> 5'
