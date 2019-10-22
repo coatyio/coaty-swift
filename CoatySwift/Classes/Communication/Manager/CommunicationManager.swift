@@ -80,7 +80,7 @@ public class CommunicationManager<Family: ObjectFamily> {
 
     // MARK: - Setup methods.
 
-    public func initializeIdentity() {
+    func initializeIdentity() {
         identity = Component(name: "CommunicationManager")
 
         // Merge property values from CommunicationOptions.identity option.
@@ -211,7 +211,7 @@ public class CommunicationManager<Family: ObjectFamily> {
         observeDiscoverDevice()
         observeDiscoverIdentity()
 
-        setLastWill();
+        setLastWill()
         client.connect()
         updateOperatingState(.started)
     }

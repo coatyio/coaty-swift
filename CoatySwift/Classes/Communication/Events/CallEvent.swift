@@ -83,14 +83,10 @@ public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<F
         }
     }
     
-    /// - NOTE: This method should never be called directly by application programmers.
-    /// Inside the framework, calling is ok.
     fileprivate override init(eventSource: Component, eventData: CallEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
-    /// - NOTE: This method should never be called directly by application programmers.
-    /// Inside the framework, calling is ok.
     fileprivate init(eventSource: Component, eventData: CallEventData<Family>, operation: String) {
         
         if !CommunicationTopic.isValidEventTypeFilter(filter: operation) {
@@ -103,7 +99,7 @@ public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<F
     
     // MARK: - Codable methods.
     
-    required init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
     

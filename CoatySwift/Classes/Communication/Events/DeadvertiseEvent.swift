@@ -19,9 +19,7 @@ public class DeadvertiseEventFactory<Family: ObjectFamily>: EventFactoryInit {
 /// DeadvertiseEvent provides a generic implementation for deadvertising CoatyObjects.
 /// Note that this class should preferably be initialized via its withObjectIds() method.
 public class DeadvertiseEvent<Family: ObjectFamily>: CommunicationEvent<DeadvertiseEventData<Family>> {
-    
-    /// - NOTE: This method should never be called directly by application programmers.
-    /// Inside the framework, calling is ok.
+
     override init(eventSource: Component, eventData: DeadvertiseEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
@@ -38,7 +36,7 @@ public class DeadvertiseEvent<Family: ObjectFamily>: CommunicationEvent<Deadvert
     
     // MARK: - Codable methods.
     
-    required init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
     

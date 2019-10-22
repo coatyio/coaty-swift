@@ -670,7 +670,7 @@ private func launchContainer() {
 
                     <div class="card-body">
                         <pre><code class="swift">
-class ExampleControllerPublish<Family: ObjectFamily>: Controller<Family> {
+class ExampleControllerPublish&lt;Family: ObjectFamily&gt;: Controller&lt;Family&gt; {
 
     private var timer: Timer?
     
@@ -736,7 +736,7 @@ class ExampleControllerPublish<Family: ObjectFamily>: Controller<Family> {
 
                     <div class="card-body">
                         <pre><code class="swift">
-class ExampleControllerObserve&lt;Family: ObjectFamily&gt;: Controller<Family> {
+class ExampleControllerObserve&lt;Family: ObjectFamily&gt;: Controller&lt;Family&gt; {
 
     override func onCommunicationManagerStarting() {
         self.observeAdvertiseExampleObjects()

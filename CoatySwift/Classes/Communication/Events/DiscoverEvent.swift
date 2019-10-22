@@ -102,9 +102,7 @@ public class DiscoverEvent<Family: ObjectFamily>: CommunicationEvent<DiscoverEve
             resolveHandler(resolveEvent)
         }
     }
-    
-    /// - NOTE: This method should never be called directly by application programmers.
-    /// Inside the framework, calling is ok.
+
     override init(eventSource: Component, eventData: DiscoverEventData) {
         super.init(eventSource: eventSource, eventData: eventData)
         type = .Discover
@@ -112,7 +110,7 @@ public class DiscoverEvent<Family: ObjectFamily>: CommunicationEvent<DiscoverEve
     
     // MARK: - Codable methods.
     
-    required init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
     

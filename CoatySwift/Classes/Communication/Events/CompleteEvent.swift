@@ -25,16 +25,14 @@ public class CompleteEventFactory<Family: ObjectFamily>: EventFactoryInit {
 /// CompleteEvent provides a generic implementation for responding to an `UpdateEvent`.
 /// Note that this class should preferably be initialized via its withObject() method.
 public class CompleteEvent<Family: ObjectFamily>: CommunicationEvent<CompleteEventData<Family>> {
-    
-    /// - NOTE: This method should never be called directly by application programmers.
-    /// Inside the framework, calling is ok.
+
     override init(eventSource: Component, eventData: CompleteEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
     // MARK: - Codable methods.
     
-    required init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
     

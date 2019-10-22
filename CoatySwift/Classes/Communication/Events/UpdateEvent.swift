@@ -53,15 +53,13 @@ public class UpdateEvent<Family: ObjectFamily>: CommunicationEvent<UpdateEventDa
     
     // MARK: - Initializers.
     
-    /// - NOTE: This method should never be called directly by application programmers.
-    /// Inside the framework, calling is ok.
     fileprivate override init(eventSource: Component, eventData: UpdateEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
     // MARK: - Codable methods.
     
-    required init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
     

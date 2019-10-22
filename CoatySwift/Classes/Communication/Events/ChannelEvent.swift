@@ -51,16 +51,10 @@ public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEvent
     
     // MARK: - Initializers.
     
-    /// - NOTE: This method should never be called directly by application programmers.
-    /// Inside the framework, calling is ok.
     fileprivate override init(eventSource: Component, eventData: ChannelEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
-    
-    /// Main initializer.
-    ///
-    /// - NOTE: Should not be called directly by application programmers. Needed because of
-    /// extra parameter channelId.
+
     internal init(eventSource: Component, eventData: ChannelEventData<Family>, channelId: String) {
         
         if !CommunicationTopic.isValidEventTypeFilter(filter: channelId) {
@@ -73,7 +67,7 @@ public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEvent
     
     // MARK: - Codable methods.
     
-    required init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
     }
     
