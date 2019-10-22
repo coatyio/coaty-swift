@@ -26,9 +26,10 @@ Pod::Spec.new do |s|
   s.author           = { 'Siemens AG' => 'coaty.team@gmail.com' }
   s.source           = { :git => 'https://github.com/coatyio/coaty-swift.git', :tag => s.version.to_s }
   s.documentation_url = 'https://coatyio.github.io/coaty-swift/swiftdoc/index.html'
+  s.swift_version = '5.0'
 
   s.ios.deployment_target = '8.0'
-  s.macos.deployment_target = '10.14'
+# s.osx.deployment_target = '10.14'
 
   s.source_files = 'CoatySwift/Classes/**/*'
     
