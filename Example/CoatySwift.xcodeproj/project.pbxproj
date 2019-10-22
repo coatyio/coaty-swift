@@ -7,76 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2A1F564722C0E43400C05881 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1F564622C0E43400C05881 /* Util.swift */; };
-		2A563791228065AB00252502 /* SwitchLightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A563790228065AB00252502 /* SwitchLightViewController.swift */; };
-		2A563793228065DC00252502 /* LightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A563792228065DC00252502 /* LightController.swift */; };
-		2A56379A228074A200252502 /* LightExecutionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A563794228074A200252502 /* LightExecutionInfo.swift */; };
-		2A56379B228074A200252502 /* SwitchLightObjectFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A563795228074A200252502 /* SwitchLightObjectFamily.swift */; };
-		2A56379C228074A200252502 /* LightStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A563796228074A200252502 /* LightStatus.swift */; };
-		2A56379D228074A200252502 /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A563797228074A200252502 /* Light.swift */; };
-		2A56379E228074A200252502 /* ColorRGBA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A563798228074A200252502 /* ColorRGBA.swift */; };
-		2A56379F228074A200252502 /* LightContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A563799228074A200252502 /* LightContext.swift */; };
-		2A8EB4A5227F2351002712E7 /* ControlController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8EB4A4227F2351002712E7 /* ControlController.swift */; };
-		2AF1EF9E225CEBFF0099E170 /* HelloWorldTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF1EF9D225CEBFF0099E170 /* HelloWorldTask.swift */; };
-		2AF1EFA0225CEC140099E170 /* TaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF1EF9F225CEC140099E170 /* TaskController.swift */; };
-		2AF1EFA2225CED460099E170 /* HelloWorldObjectFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF1EFA1225CED460099E170 /* HelloWorldObjectFamily.swift */; };
+		20785BBFC48BB8F78AB655FF /* Pods_HelloCoaty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93900F9362EFAEE240C8DE63 /* Pods_HelloCoaty.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		733074A5AF4BE7EAC97E3EFC /* Pods_CoatySwift_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16726F2981BAFC555AC9C041 /* Pods_CoatySwift_Example.framework */; };
-		9440768CD1C5BD1F4368A1B2 /* Pods_CoatySwift_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B853AE32D06F7E858B9ED4F5 /* Pods_CoatySwift_Tests.framework */; };
-		BCAF1EA0231E500F00C7B707 /* DynamicTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF1E9E231E500F00C7B707 /* DynamicTaskController.swift */; };
-		BCAF1EA4231E594300C7B707 /* DynamicHelloWorldExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF1EA3231E594300C7B707 /* DynamicHelloWorldExampleViewController.swift */; };
-		BCB411C6227720010057DC4C /* HelloWorldExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB411C5227720010057DC4C /* HelloWorldExampleViewController.swift */; };
+		BCB21F18235F27130062A498 /* ExampleObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB21F17235F27130062A498 /* ExampleObject.swift */; };
+		BCB21F1A235F274F0062A498 /* ExampleObjectFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB21F19235F274F0062A498 /* ExampleObjectFamily.swift */; };
+		BCB21F1C235F28E40062A498 /* ExampleControllerPublish.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB21F1B235F28E40062A498 /* ExampleControllerPublish.swift */; };
+		BCB21F1E235F297D0062A498 /* ExampleControllerObserve.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB21F1D235F297D0062A498 /* ExampleControllerObserve.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		607FACE61AFB9204008FA782 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
-			remoteInfo = CoatySwift;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0E082A6916A9EE8CD84E196D /* CoatySwift.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = CoatySwift.podspec; path = ../CoatySwift.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		16726F2981BAFC555AC9C041 /* Pods_CoatySwift_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoatySwift_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2A1F564622C0E43400C05881 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		2A563790228065AB00252502 /* SwitchLightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchLightViewController.swift; sourceTree = "<group>"; };
-		2A563792228065DC00252502 /* LightController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightController.swift; sourceTree = "<group>"; };
-		2A563794228074A200252502 /* LightExecutionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightExecutionInfo.swift; path = Model/LightExecutionInfo.swift; sourceTree = "<group>"; };
-		2A563795228074A200252502 /* SwitchLightObjectFamily.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwitchLightObjectFamily.swift; path = Model/SwitchLightObjectFamily.swift; sourceTree = "<group>"; };
-		2A563796228074A200252502 /* LightStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightStatus.swift; path = Model/LightStatus.swift; sourceTree = "<group>"; };
-		2A563797228074A200252502 /* Light.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Light.swift; path = Model/Light.swift; sourceTree = "<group>"; };
-		2A563798228074A200252502 /* ColorRGBA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorRGBA.swift; path = Model/ColorRGBA.swift; sourceTree = "<group>"; };
-		2A563799228074A200252502 /* LightContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightContext.swift; path = Model/LightContext.swift; sourceTree = "<group>"; };
-		2A8EB4A4227F2351002712E7 /* ControlController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlController.swift; sourceTree = "<group>"; };
-		2AF1EF9D225CEBFF0099E170 /* HelloWorldTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloWorldTask.swift; sourceTree = "<group>"; };
-		2AF1EF9F225CEC140099E170 /* TaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskController.swift; sourceTree = "<group>"; };
-		2AF1EFA1225CED460099E170 /* HelloWorldObjectFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloWorldObjectFamily.swift; sourceTree = "<group>"; };
-		4AA187DE41C03508E45B1CF7 /* Pods-CoatySwift_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		607FACD01AFB9204008FA782 /* CoatySwift_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoatySwift_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2643A29F9CB57ABE0EED88FC /* Pods-HelloCoaty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HelloCoaty.release.xcconfig"; path = "Target Support Files/Pods-HelloCoaty/Pods-HelloCoaty.release.xcconfig"; sourceTree = "<group>"; };
+		607FACD01AFB9204008FA782 /* HelloCoaty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloCoaty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		607FACE51AFB9204008FA782 /* CoatySwift_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoatySwift_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		62A70B5AE8CD7A001099DC2C /* Pods-CoatySwift_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		7AA633FB1F6A099D46D65ABF /* Pods-CoatySwift_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example.release.xcconfig"; sourceTree = "<group>"; };
+		7732691C1AB86A196DD78F43 /* Pods-HelloCoaty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HelloCoaty.debug.xcconfig"; path = "Target Support Files/Pods-HelloCoaty/Pods-HelloCoaty.debug.xcconfig"; sourceTree = "<group>"; };
+		93900F9362EFAEE240C8DE63 /* Pods_HelloCoaty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HelloCoaty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9914431535FD0B653582AF30 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		ADEEFD5354A32F3127D3F18E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		B853AE32D06F7E858B9ED4F5 /* Pods_CoatySwift_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoatySwift_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BCAF1E9E231E500F00C7B707 /* DynamicTaskController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicTaskController.swift; sourceTree = "<group>"; };
-		BCAF1EA3231E594300C7B707 /* DynamicHelloWorldExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHelloWorldExampleViewController.swift; sourceTree = "<group>"; };
-		BCB411C5227720010057DC4C /* HelloWorldExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloWorldExampleViewController.swift; sourceTree = "<group>"; };
-		E95984D5B53DDE43C4B0F45F /* Pods-CoatySwift_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		BCB21F17235F27130062A498 /* ExampleObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleObject.swift; sourceTree = "<group>"; };
+		BCB21F19235F274F0062A498 /* ExampleObjectFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleObjectFamily.swift; sourceTree = "<group>"; };
+		BCB21F1B235F28E40062A498 /* ExampleControllerPublish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleControllerPublish.swift; sourceTree = "<group>"; };
+		BCB21F1D235F297D0062A498 /* ExampleControllerObserve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleControllerObserve.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,83 +42,46 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				733074A5AF4BE7EAC97E3EFC /* Pods_CoatySwift_Example.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		607FACE21AFB9204008FA782 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9440768CD1C5BD1F4368A1B2 /* Pods_CoatySwift_Tests.framework in Frameworks */,
+				20785BBFC48BB8F78AB655FF /* Pods_HelloCoaty.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2A8EB4A3227F22EE002712E7 /* SwitchLight */ = {
-			isa = PBXGroup;
-			children = (
-				2A563798228074A200252502 /* ColorRGBA.swift */,
-				2A563797228074A200252502 /* Light.swift */,
-				2A563799228074A200252502 /* LightContext.swift */,
-				2A563794228074A200252502 /* LightExecutionInfo.swift */,
-				2A563796228074A200252502 /* LightStatus.swift */,
-				2A563795228074A200252502 /* SwitchLightObjectFamily.swift */,
-				2A8EB4A4227F2351002712E7 /* ControlController.swift */,
-				2A563790228065AB00252502 /* SwitchLightViewController.swift */,
-				2A563792228065DC00252502 /* LightController.swift */,
-				2A1F564622C0E43400C05881 /* Util.swift */,
-			);
-			path = SwitchLight;
-			sourceTree = "<group>";
-		};
-		2AF1EF9C225CEBE50099E170 /* Hello World */ = {
-			isa = PBXGroup;
-			children = (
-				BCB411C5227720010057DC4C /* HelloWorldExampleViewController.swift */,
-				2AF1EF9D225CEBFF0099E170 /* HelloWorldTask.swift */,
-				2AF1EF9F225CEC140099E170 /* TaskController.swift */,
-				2AF1EFA1225CED460099E170 /* HelloWorldObjectFamily.swift */,
-			);
-			path = "Hello World";
-			sourceTree = "<group>";
-		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
-				607FACD21AFB9204008FA782 /* Example for CoatySwift */,
-				607FACE81AFB9204008FA782 /* Tests */,
+				607FACD21AFB9204008FA782 /* HelloCoaty */,
 				607FACD11AFB9204008FA782 /* Products */,
-				66C824FF56F1DF567D655471 /* Frameworks */,
-				6231B0801952CB73BAEEFD0A /* Pods */,
+				A18E0B7BEEEB3BB7E24B2FCF /* Pods */,
+				6F0559F73AD9E25899A75E81 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD01AFB9204008FA782 /* CoatySwift_Example.app */,
-				607FACE51AFB9204008FA782 /* CoatySwift_Tests.xctest */,
+				607FACD01AFB9204008FA782 /* HelloCoaty.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		607FACD21AFB9204008FA782 /* Example for CoatySwift */ = {
+		607FACD21AFB9204008FA782 /* HelloCoaty */ = {
 			isa = PBXGroup;
 			children = (
-				BCAF1EA2231E585F00C7B707 /* Dynamic */,
-				2A8EB4A3227F22EE002712E7 /* SwitchLight */,
-				2AF1EF9C225CEBE50099E170 /* Hello World */,
+				BCB21F17235F27130062A498 /* ExampleObject.swift */,
+				BCB21F19235F274F0062A498 /* ExampleObjectFamily.swift */,
+				BCB21F1B235F28E40062A498 /* ExampleControllerPublish.swift */,
+				BCB21F1D235F297D0062A498 /* ExampleControllerObserve.swift */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
-			name = "Example for CoatySwift";
+			name = HelloCoaty;
 			path = CoatySwift;
 			sourceTree = "<group>";
 		};
@@ -168,23 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				607FACD41AFB9204008FA782 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		607FACE81AFB9204008FA782 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
-				607FACE91AFB9204008FA782 /* Supporting Files */,
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
-		607FACE91AFB9204008FA782 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				607FACEA1AFB9204008FA782 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -199,76 +103,45 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		6231B0801952CB73BAEEFD0A /* Pods */ = {
+		6F0559F73AD9E25899A75E81 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				62A70B5AE8CD7A001099DC2C /* Pods-CoatySwift_Example.debug.xcconfig */,
-				7AA633FB1F6A099D46D65ABF /* Pods-CoatySwift_Example.release.xcconfig */,
-				E95984D5B53DDE43C4B0F45F /* Pods-CoatySwift_Tests.debug.xcconfig */,
-				4AA187DE41C03508E45B1CF7 /* Pods-CoatySwift_Tests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		66C824FF56F1DF567D655471 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				16726F2981BAFC555AC9C041 /* Pods_CoatySwift_Example.framework */,
-				B853AE32D06F7E858B9ED4F5 /* Pods_CoatySwift_Tests.framework */,
+				93900F9362EFAEE240C8DE63 /* Pods_HelloCoaty.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		BCAF1EA2231E585F00C7B707 /* Dynamic */ = {
+		A18E0B7BEEEB3BB7E24B2FCF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				BCAF1E9E231E500F00C7B707 /* DynamicTaskController.swift */,
-				BCAF1EA3231E594300C7B707 /* DynamicHelloWorldExampleViewController.swift */,
+				7732691C1AB86A196DD78F43 /* Pods-HelloCoaty.debug.xcconfig */,
+				2643A29F9CB57ABE0EED88FC /* Pods-HelloCoaty.release.xcconfig */,
 			);
-			path = Dynamic;
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		607FACCF1AFB9204008FA782 /* CoatySwift_Example */ = {
+		607FACCF1AFB9204008FA782 /* HelloCoaty */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "CoatySwift_Example" */;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "HelloCoaty" */;
 			buildPhases = (
-				E026E10DD6047780268DEFE8 /* [CP] Check Pods Manifest.lock */,
+				11161DB3B3C5530C028627CD /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				AD35FB1D9F6CDA642927B93E /* [CP] Embed Pods Frameworks */,
+				D9F00965C1FFF0365E038615 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = CoatySwift_Example;
+			name = HelloCoaty;
 			productName = CoatySwift;
-			productReference = 607FACD01AFB9204008FA782 /* CoatySwift_Example.app */;
+			productReference = 607FACD01AFB9204008FA782 /* HelloCoaty.app */;
 			productType = "com.apple.product-type.application";
-		};
-		607FACE41AFB9204008FA782 /* CoatySwift_Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "CoatySwift_Tests" */;
-			buildPhases = (
-				93211443A7033A34476C2A61 /* [CP] Check Pods Manifest.lock */,
-				607FACE11AFB9204008FA782 /* Sources */,
-				607FACE21AFB9204008FA782 /* Frameworks */,
-				607FACE31AFB9204008FA782 /* Resources */,
-				BE8127FBB3114347C165CC25 /* [CP] Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
-			);
-			name = CoatySwift_Tests;
-			productName = Tests;
-			productReference = 607FACE51AFB9204008FA782 /* CoatySwift_Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -284,12 +157,6 @@
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 45E39Y8V9N;
 						LastSwiftMigration = 1020;
-					};
-					607FACE41AFB9204008FA782 = {
-						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 45E39Y8V9N;
-						LastSwiftMigration = 1020;
-						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
 			};
@@ -307,8 +174,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				607FACCF1AFB9204008FA782 /* CoatySwift_Example */,
-				607FACE41AFB9204008FA782 /* CoatySwift_Tests */,
+				607FACCF1AFB9204008FA782 /* HelloCoaty */,
 			);
 		};
 /* End PBXProject section */
@@ -324,17 +190,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		607FACE31AFB9204008FA782 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		93211443A7033A34476C2A61 /* [CP] Check Pods Manifest.lock */ = {
+		11161DB3B3C5530C028627CD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -349,14 +208,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-CoatySwift_Tests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-HelloCoaty-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AD35FB1D9F6CDA642927B93E /* [CP] Embed Pods Frameworks */ = {
+		D9F00965C1FFF0365E038615 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -364,7 +223,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-HelloCoaty/Pods-HelloCoaty-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CoatySwift/CoatySwift.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaMQTT/CocoaMQTT.framework",
@@ -389,53 +248,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CoatySwift_Example/Pods-CoatySwift_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BE8127FBB3114347C165CC25 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
-				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CoatySwift_Tests/Pods-CoatySwift_Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E026E10DD6047780268DEFE8 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-CoatySwift_Example-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HelloCoaty/Pods-HelloCoaty-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -445,43 +258,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AF1EFA0225CEC140099E170 /* TaskController.swift in Sources */,
-				2A563793228065DC00252502 /* LightController.swift in Sources */,
-				2AF1EFA2225CED460099E170 /* HelloWorldObjectFamily.swift in Sources */,
-				2AF1EF9E225CEBFF0099E170 /* HelloWorldTask.swift in Sources */,
-				BCB411C6227720010057DC4C /* HelloWorldExampleViewController.swift in Sources */,
-				2A8EB4A5227F2351002712E7 /* ControlController.swift in Sources */,
-				2A56379F228074A200252502 /* LightContext.swift in Sources */,
-				2A56379C228074A200252502 /* LightStatus.swift in Sources */,
-				2A56379B228074A200252502 /* SwitchLightObjectFamily.swift in Sources */,
-				2A1F564722C0E43400C05881 /* Util.swift in Sources */,
-				2A56379A228074A200252502 /* LightExecutionInfo.swift in Sources */,
+				BCB21F1C235F28E40062A498 /* ExampleControllerPublish.swift in Sources */,
+				BCB21F1A235F274F0062A498 /* ExampleObjectFamily.swift in Sources */,
+				BCB21F1E235F297D0062A498 /* ExampleControllerObserve.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
-				BCAF1EA4231E594300C7B707 /* DynamicHelloWorldExampleViewController.swift in Sources */,
-				BCAF1EA0231E500F00C7B707 /* DynamicTaskController.swift in Sources */,
-				2A56379E228074A200252502 /* ColorRGBA.swift in Sources */,
-				2A56379D228074A200252502 /* Light.swift in Sources */,
-				2A563791228065AB00252502 /* SwitchLightViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		607FACE11AFB9204008FA782 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				BCB21F18235F27130062A498 /* ExampleObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 607FACCF1AFB9204008FA782 /* CoatySwift_Example */;
-			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
@@ -604,7 +389,7 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 62A70B5AE8CD7A001099DC2C /* Pods-CoatySwift_Example.debug.xcconfig */;
+			baseConfigurationReference = 7732691C1AB86A196DD78F43 /* Pods-HelloCoaty.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 45E39Y8V9N;
@@ -619,7 +404,7 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7AA633FB1F6A099D46D65ABF /* Pods-CoatySwift_Example.release.xcconfig */;
+			baseConfigurationReference = 2643A29F9CB57ABE0EED88FC /* Pods-HelloCoaty.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 45E39Y8V9N;
@@ -629,46 +414,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		607FACF31AFB9204008FA782 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E95984D5B53DDE43C4B0F45F /* Pods-CoatySwift_Tests.debug.xcconfig */;
-			buildSettings = {
-				DEVELOPMENT_TEAM = 45E39Y8V9N;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoatySwift_Example.app/CoatySwift_Example";
-			};
-			name = Debug;
-		};
-		607FACF41AFB9204008FA782 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4AA187DE41C03508E45B1CF7 /* Pods-CoatySwift_Tests.release.xcconfig */;
-			buildSettings = {
-				DEVELOPMENT_TEAM = 45E39Y8V9N;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoatySwift_Example.app/CoatySwift_Example";
 			};
 			name = Release;
 		};
@@ -684,20 +429,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "CoatySwift_Example" */ = {
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "HelloCoaty" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF01AFB9204008FA782 /* Debug */,
 				607FACF11AFB9204008FA782 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "CoatySwift_Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				607FACF31AFB9204008FA782 /* Debug */,
-				607FACF41AFB9204008FA782 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-               BuildableName = "CoatySwift_Example.app"
-               BlueprintName = "CoatySwift_Example"
+               BuildableName = "HelloCoaty.app"
+               BlueprintName = "HelloCoaty"
                ReferencedContainer = "container:CoatySwift.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,7 +42,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B3F069E775C5C661BE0FF98076FF64C9"
+               BlueprintIdentifier = "8C664A9ED0D9FCC7B075BACBCB561F94"
                BuildableName = "CoatySwift.framework"
                BlueprintName = "CoatySwift"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -55,6 +55,15 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
+            BuildableName = "HelloCoaty.app"
+            BlueprintName = "HelloCoaty"
+            ReferencedContainer = "container:CoatySwift.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -67,17 +76,6 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "CoatySwift_Example.app"
-            BlueprintName = "CoatySwift_Example"
-            ReferencedContainer = "container:CoatySwift.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -94,13 +92,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "CoatySwift_Example.app"
-            BlueprintName = "CoatySwift_Example"
+            BuildableName = "HelloCoaty.app"
+            BlueprintName = "HelloCoaty"
             ReferencedContainer = "container:CoatySwift.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -113,8 +109,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "CoatySwift_Example.app"
-            BlueprintName = "CoatySwift_Example"
+            BuildableName = "HelloCoaty.app"
+            BlueprintName = "HelloCoaty"
             ReferencedContainer = "container:CoatySwift.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

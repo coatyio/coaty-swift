@@ -12,7 +12,7 @@
     "Siemens AG": "coaty.team@gmail.com"
   },
   "source": {
-    "git": "https://github.com/coatyio/coaty-sift.git",
+    "git": "https://github.com/coatyio/coaty-swift.git",
     "tag": "1.0.0"
   },
   "documentation_url": "https://coatyio.github.io/coaty-swift/swiftdoc/index.html",

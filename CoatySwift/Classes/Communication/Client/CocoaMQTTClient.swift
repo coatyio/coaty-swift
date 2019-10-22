@@ -71,11 +71,11 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
     
     
     func publish(_ topic: String, message: String) {
-        mqtt.publish(topic, withString: message)
+        mqtt.publish(topic, withString: message, qos: .qos0)
     }
     
     func subscribe(_ topic: String) {
-        mqtt.subscribe(topic)
+        mqtt.subscribe(topic, qos: .qos0)
     }
     
     func unsubscribe(_ topic: String) {
@@ -83,7 +83,9 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
     }
     
     func setWill(_ topic: String, message: String) {
-        mqtt.willMessage = CocoaMQTTWill(topic: topic, message: message)
+        let willMessage = CocoaMQTTWill(topic: topic, message: message)
+        willMessage.qos = .qos0
+        mqtt.willMessage = willMessage
     }
     
     // MARK: - State management methods.

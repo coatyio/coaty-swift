@@ -7,21 +7,23 @@
 
 import UIKit
 import CoatySwift
-var window: UIWindow?
+
+/// Save a reference of your container in the app delegate to
+/// make sure it stays alive during the entire life-time of the app.
+var coatyContainer: Container<ExampleObjectFamily>?
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    let brokerIp = "127.0.0.1"
+    let brokerPort = 1883
+
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
-        // Set starting point for application
-        window = UIWindow(frame: UIScreen.main.bounds)
-        let vc = HelloWorldExampleViewController()
-        window?.rootViewController = vc
-        window?.makeKeyAndVisible()
+        launchContainer()
         
         return true
     }
@@ -46,6 +48,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    // MARK: - Coaty Container setup methods.
+
+    /// This method sets up the Coaty container necessary to run our application.
+    private func launchContainer() {
+        
+        // Instantiate controllers.
+        let components = Components(controllers: [
+            "ExampleControllerPublish": ExampleControllerPublish<ExampleObjectFamily>.self,
+            "ExampleControllerObserve": ExampleControllerObserve<ExampleObjectFamily>.self
+            ])
+        
+        // Create a configuration.
+        guard let configuration = createExampleConfiguration() else {
+            print("Invalid configuration! Please check your options.")
+            return
+        }
+        
+        // Resolve everything!
+        coatyContainer = Container.resolve(components: components,
+                                           configuration: configuration,
+                                           objectFamily: ExampleObjectFamily.self)
+
+    }
+    
+
+    /// This method creates an exemplary Coaty configuration. You can use it as a basis for your
+    /// application.
+    private func createExampleConfiguration() -> Configuration? {
+        return try? .build { config in
+            
+            // This part defines optional common options shared by all container components.
+            config.common = CommonOptions()
+            
+            // Adjusts the logging level of CoatySwift messages, which is especially
+            // helpful when you want to debug applications.
+            config.common?.logLevel = .info
+            
+            // You can also add extra information to your configuration in the form of a
+            // [String: String] dictionary.
+            config.common?.extra = ["ContainerVersion": "0.0.1"]
+            
+            // Define the communication-related options, such as the IP address of your broker and
+            // the port it exposes, and your own MQTT client Id. Also, make sure
+            // to immediately connect with the broker, indicated by `shouldAutoStart: true`.
+            let mqttClientOptions = MQTTClientOptions(host: brokerIp,
+                                                      port: UInt16(brokerPort))
+            
+            config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,                                              identity: ["name": "ExampleClient"],
+                                                        shouldAutoStart: true)
+            
+            // The communicationManager will advertise its identity upon connection to the
+            // MQTT broker.
+            config.communication?.shouldAdvertiseIdentity = true
+        }
     }
     
     

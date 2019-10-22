@@ -1,14 +1,9 @@
 use_frameworks!
 
-target 'CoatySwift_Example' do
-  pod 'CoatySwift', :path => '../'
+target 'HelloCoaty' do
+    use_frameworks!
 
-  target 'CoatySwift_Tests' do
-    inherit! :search_paths
-    
-    # Testing dependencies.
-    pod 'Quick'
-    pod 'Nimble'
-    
-  end
+    # Pods for HelloCoaty
+    pod 'CoatySwift', :path => '../'
+
 end

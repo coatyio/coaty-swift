@@ -44,14 +44,14 @@
                     up and running, with little to no focus on actual
                     application logic. To gain in-depth insights into
                     CoatySwift, take a look at the <a
-                    href="https://coatyio.github.io/coaty-swift/man/developer-guide/">Developer
-                    Guide</a>.
+                        href="https://coatyio.github.io/coaty-swift/man/developer-guide/">Developer
+                        Guide</a>.
                 </p>
 
                 <p class="text-secondary">
-                    The source code of this tutorial can be found in the 
+                    The source code of this tutorial can be found in the
                     <a href="https://github.com/coatyio/coaty-swift/tree/master/Example">Example</a>
-                    folder of the CoatySwift repo. Just clone the repo, run <code>pod install</code> 
+                    folder of the CoatySwift repo. Just clone the repo, run <code>pod install</code>
                     on the Example folder and open the new <code>xcworkspace</code> in Xcode.
                 </p>
 
@@ -84,7 +84,10 @@
                     recommend checking out one of the following brokers:
 
                     <ul>
-                        <li><a href="https://coatyio.github.io/coaty-js/man/developer-guide/#coaty-broker-for-development">Coaty broker</a> (development broker provided by <a href="https://github.com/coatyio/coaty-js">Coaty JS</a>)
+                        <li><a
+                                href="https://coatyio.github.io/coaty-js/man/developer-guide/#coaty-broker-for-development">Coaty
+                                broker</a> (development broker provided by <a
+                                href="https://github.com/coatyio/coaty-js">Coaty JS</a>)
                         <li><a href="https://mosquitto.org/">Mosquitto</a>
                         <li><a href="https://www.hivemq.com/">HiveMQ</a>
                         <li><a href="https://vernemq.com/">VerneMQ</a>
@@ -297,6 +300,9 @@ final class ExampleObject: CoatyObject {
 
                     <div class="card-body">
                         <pre><code class="swift">
+import Foundation
+import CoatySwift
+
 enum ExampleObjectFamily: String, ObjectFamily {
     case exampleObject = "io.coaty.hello-coaty.example-object"
     
@@ -420,8 +426,8 @@ private func launchContainer() {
     
     // Instantiate controllers.
     let components = Components(controllers: [
-        "ExampleControllerPublish": ExampleController&lt;ExampleObjectFamily&gt;.self, 
-        "ExampleControllerObserve": ExampleController&lt;ExampleObjectFamily&gt;.self
+        "ExampleControllerPublish": ExampleControllerPublish&lt;ExampleObjectFamily&gt;.self, 
+        "ExampleControllerObserve": ExampleControllerPublish&lt;ExampleObjectFamily&gt;.self
         ])
     ...
 }
@@ -484,7 +490,8 @@ private func createExampleConfiguration() -> Configuration? {
         let mqttClientOptions = MQTTClientOptions(host: brokerIp,
                                                   port: UInt16(brokerPort))
         
-        config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,
+        config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,                                              
+                                                    identity: ["name": "ExampleClient"],
                                                     shouldAutoStart: true)
         
         // The communicationManager will advertise its identity upon connection to the
@@ -670,6 +677,9 @@ private func launchContainer() {
 
                     <div class="card-body">
                         <pre><code class="swift">
+import Foundation
+import CoatySwift
+
 class ExampleControllerPublish&lt;Family: ObjectFamily&gt;: Controller&lt;Family&gt; {
 
     private var timer: Timer?
@@ -736,6 +746,9 @@ class ExampleControllerPublish&lt;Family: ObjectFamily&gt;: Controller&lt;Family
 
                     <div class="card-body">
                         <pre><code class="swift">
+import Foundation
+import CoatySwift
+
 class ExampleControllerObserve&lt;Family: ObjectFamily&gt;: Controller&lt;Family&gt; {
 
     override func onCommunicationManagerStarting() {
@@ -746,7 +759,7 @@ class ExampleControllerObserve&lt;Family: ObjectFamily&gt;: Controller&lt;Family
         _ = try? self.communicationManager
             .observeAdvertise(withObjectType: "io.coaty.hello-coaty.example-object")
             .subscribe(onNext: { (event) in
-                let object = event.data.object as ExampleObject
+                let object = event.data.object as! ExampleObject
                 
                 print("[ExampleControllerObserve] received advertise event:\t\(object.myValue)")
             })
