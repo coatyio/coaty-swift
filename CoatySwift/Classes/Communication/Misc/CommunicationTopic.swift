@@ -199,13 +199,13 @@ class CommunicationTopic {
     /// - Returns: A topic string that can be used for publications.
     static func createTopicStringByLevelsForPublish(eventType: CommunicationEventType,
                                                     eventTypeFilter: String? = nil,
-                                                    associatedUserId: String? = EMPTY_ASSOCIATED_USER_ID,
+                                                    associatedUserId: String? = nil,
                                                     sourceObject: CoatyObject,
                                                     messageToken: String) throws -> String {
         
         return try createTopicStringByLevels(eventType: eventType,
                                              eventTypeFilter: eventTypeFilter,
-                                             associatedUserId: associatedUserId,
+                                             associatedUserId: associatedUserId ?? EMPTY_ASSOCIATED_USER_ID,
                                              sourceObject: sourceObject,
                                              messageToken: messageToken)
     }
