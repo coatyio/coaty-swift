@@ -12,22 +12,22 @@ extension JSONDecoder {
     /// Decode a heterogeneous list of objects.
     ///
     /// - Parameters:
-    ///     - family: The ClassFamily enum type to decode with.
+    ///     - family: The ObjectFamily enum type to decode with.
     ///     - data: The data to decode.
     /// - Returns: The list of decoded objects.
     func decode<T: ObjectFamily, U: Decodable>(family: T.Type, from data: Data) throws -> [U] {
         return try self.decode([ClassWrapper<T, U>].self, from: data).compactMap { $0.object }
     }
     
-    /// Decode a single object with a type from a ClassFamily.
+    /// Decode a single object with a type from an ObjectFamily.
     ///
     /// - Parameters:
-    ///     - family: The ClassFamily enum type to decode with.
+    ///     - family: The ObjectFamily enum type to decode with.
     ///     - data: The data to decode.
     /// - Returns: The list of decoded objects.
     func decode<T: ObjectFamily, U: Decodable>(family: T.Type, from data: Data) throws -> U {
         guard let object = try self.decode(ClassWrapper<T, U>.self, from: data).object else {
-            let errorMessage = "Could not decode single object with type ClassFamily."
+            let errorMessage = "Could not decode single object with type ObjectFamily."
             LogManager.log.error(errorMessage)
             throw CoatySwiftError.DecodingFailure(errorMessage)
         }
@@ -41,7 +41,7 @@ extension JSONDecoder {
 }
 
 /// ClassWrapper is a private helper class that allows the decoding of an object based
-/// on a ClassFamily.
+/// on an ObjectFamily.
 internal class ClassWrapper<T: ObjectFamily, U: Decodable>: Decodable {
     
     /// The decoded object. Can be any subclass of U.

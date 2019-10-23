@@ -13,7 +13,7 @@ extension KeyedDecodingContainer {
     
     /// Decode a heterogeneous list of objects for a given family.
     /// - Parameters:
-    ///     - family: The ClassFamily enum for the type family.
+    ///     - family: The ObjectFamily enum for the type family.
     ///     - key: The CodingKey to look up the list in the current container.
     /// - Returns: The resulting list of heterogeneousType elements.
     func decode<T : Decodable, U : ObjectFamily>(family: U.Type, forKey key: K) throws -> [T] {
@@ -47,7 +47,7 @@ extension KeyedDecodingContainer {
     /// that returns an optional.
     ///
     /// - Parameters:
-    ///   - family: The ClassFamily enum for the type family.
+    ///   - family: The ObjectFamily enum for the type family.
     ///   - key: The CodingKey to look up the list in the current container.
     /// - Returns: An optional list of heterogeneousType elements.
     func decodeIfPresent<T : Decodable, U : ObjectFamily>(family: U.Type,
