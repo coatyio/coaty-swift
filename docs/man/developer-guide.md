@@ -125,12 +125,15 @@ are familiar with the following programming concepts:
   - [VerneMQ](https://vernemq.com/)
 
 - __Integrate CoatySwift in your project__: CoatySwift is available through
-  [CocoaPods](https://cocoapods.org). To install it, simply add the following
-  line to your Podfile, and run `pod install` or `pod update` afterwards:
+  [CocoaPods](https://cocoapods.org). Ensure you have installed **at least**
+  version `1.8.4` of CocoaPods, i.e. running `pod --version` should yield `1.8.4` or higher.
 
-```ruby
-pod 'CoatySwift'
-```
+  To install CoatySwift, simply add the following line to your Podfile, and run
+  `pod install` or `pod update` afterwards:
+
+   ```ruby
+   pod 'CoatySwift'
+   ```
 
 ### mDNS Broker Discovery Support
 

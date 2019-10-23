@@ -53,8 +53,11 @@ out the following resources:
 
 To build and run Coaty agents with the CoatySwift technology stack you need
 XCode 10.2 or higher. CoatySwift is available through
-[CocoaPods](https://cocoapods.org). To install it, simply add the following line
-to your Podfile:
+[CocoaPods](https://cocoapods.org). Ensure you have installed **at least**
+version `1.8.4` of CocoaPods, i.e. running `pod --version` should yield `1.8.4`
+or higher.
+
+To install the CoatySwift pod, simply add the following line to your Podfile:
 
 ```ruby
 pod 'CoatySwift'
@@ -64,7 +67,7 @@ CoatySwift is compatible with the the following deployment targets:
 
 | Deployment Target     | Compatibility     |
 |-------------------    |---------------    |
-| iOS                   | 8.0+              |
+| iOS                   | 9.0+              |
 | macOS                 | 10.14+            |
 
 ## Examples

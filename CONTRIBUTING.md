@@ -71,6 +71,10 @@ configuration that can also be used in Coaty application projects.
 
 ## Build CoatySwift
 
+You need XCode 10.2 or higher. Ensure you have installed **at least** version
+`1.8.4` of [CocoaPods](https://cocoapods.org), i.e. running `pod --version`
+should yield `1.8.4` or higher.
+
 To build and run the Example application including the CoatySwift framework, run
 `pod install` on the CoatySwift `Example` folder and open the new `xcworkspace`
 in Xcode.
@@ -107,19 +111,20 @@ these steps:
 
 1. Update the pod version in the `CoatySwift.podspec` file located in the
    repository root. Follow [semantic versioning](https://semver.org/).
-2. Generate Coaty framework documentation. Make sure that `[pod version]`
+2. Build the Example application in the `Example` folder with Xcode.
+3. Generate Coaty framework documentation. Make sure that `[pod version]`
    matches the version number from step 1.
 
    ```sh
    jazzy --module-version [pod version]
    ```
 
-3. Manually update `CHANGELOG.md` with release information from the conventional
+4. Manually update `CHANGELOG.md` with release information from the conventional
    commits. Take a look at the Coaty JS
    [CHANGELOG](https://github.com/coatyio/coaty-js/blob/master/CHANGELOG.md) to
    see how the format should look like.
-4. Push all your changes to the master branch.
-5. Create an annotated `git` tag for the new pod version and push it. Make sure
+5. Push all your changes to the master branch.
+6. Create an annotated `git` tag for the new pod version and push it. Make sure
    that `[pod version]` matches the version number from step 1.
 
    ```sh
@@ -127,13 +132,13 @@ these steps:
    git push origin --tags
    ```
 
-6. You now need to check whether the pod passes verification. Run the following command:
+7. You now need to check whether the pod passes verification. Run the following command:
 
    ```sh
    pod spec lint CoatySwift.podspec
    ```
 
-7. If the previous step was successful, deploy the new Podspec to make it
+8. If the previous step was successful, deploy the new Podspec to make it
    publicly available:
 
    ```sh
