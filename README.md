@@ -82,13 +82,10 @@ Example folder and open the new `xcworkspace` in Xcode.
 
 You can find additional examples in the `swift` sections of the
 [coaty-examples](https://github.com/coatyio/coaty-examples) repo on GitHub. You
-will find three Xcode projects there: the `Hello World`, `Switch Light` and
-`Dynamic` project. They are interoperable with the corresponding Coaty JS
-examples and intended to be used along with them. Note that `Hello World` and
-`Switch Light` are the blueprint examples for how to design CoatySwift
-applications. The `Dynamic` example shows how dynamic components provide a less
-static and less type safe version of CoatySwift to deal with Coaty object types
-that are not yet known at compile time. This feature is currently experimental.
+will find the following Xcode projects there: `Hello World` and `Remote
+Operations`. They are interoperable with the corresponding Coaty JS examples and
+intended to be used along with them. These projects can serve as blueprints for
+how to design CoatySwift applications.
 
 ## Contributing
 
