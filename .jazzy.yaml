@@ -1,3 +1,4 @@
+clean: true
 output: docs/swiftdoc
 xcodebuild_arguments: -scheme,CoatySwift
 author: Siemens AG
@@ -6,4 +7,5 @@ github_url: https://github.com/coatyio/coaty-swift
 module: CoatySwift
 podspec: CoatySwift.podspec
 min_acl: public
+include: CoatySwift/Classes/**/*.swift
 use_safe_filenames: true
