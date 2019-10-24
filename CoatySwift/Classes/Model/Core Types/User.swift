@@ -22,7 +22,7 @@ open class User: CoatyObject {
     /// after initializing the object.
     public init(name: String,
                 names: ScimUserNames,
-                objectType: String = "\(COATY_PREFIX)\(CoreType.User)",
+                objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.User)",
                 objectId: CoatyUUID = .init()) {
         
         self.names = names

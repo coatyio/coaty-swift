@@ -45,7 +45,7 @@ open class Log: CoatyObject {
                 logMessage: String,
                 logDate: String,
                 name: String = "LogObject",
-                objectType: String = "\(COATY_PREFIX)\(CoreType.Log)",
+                objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.Log)",
                 objectId: CoatyUUID = .init(),
                 logTags: [String]? = nil,
                 logHost: LogHost? = nil) {

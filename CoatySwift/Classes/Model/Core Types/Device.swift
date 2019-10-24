@@ -22,7 +22,7 @@ open class Device: CoatyObject {
     public init(displayType: DisplayType,
                 ioCapabilities: [IoPoint]? = nil,
                 name: String = "DeviceObject",
-                objectType: String = "\(COATY_PREFIX)\(CoreType.Device)",
+                objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.Device)",
                 objectId: CoatyUUID = .init()) {
         self.displayType = displayType
         self.ioCapabilities = ioCapabilities

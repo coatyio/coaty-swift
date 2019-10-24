@@ -37,7 +37,7 @@ open class Annotation: CoatyObject {
                 creationTimestamp: Double,
                 status: AnnotationStatus,
                 name: String = "AnnotationObject",
-                objectType: String = "\(COATY_PREFIX)\(CoreType.Annotation)",
+                objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.Annotation)",
                 objectId: CoatyUUID = .init(),
                 variants: [AnnotationVariant]? = nil) {
         self.type = type

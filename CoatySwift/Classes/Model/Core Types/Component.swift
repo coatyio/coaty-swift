@@ -10,7 +10,7 @@ import Foundation
 open class Component: CoatyObject {
     
     public init(name: String = "ComponentObject",
-                objectType: String = "\(COATY_PREFIX)\(CoreType.Component)",
+                objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.Component)",
                 objectId: CoatyUUID = .init()) {
         super.init(coreType: .Component, objectType: objectType, objectId: objectId, name: name)
     }

@@ -7,6 +7,13 @@
 
 import Foundation
 
+/// The object type namespace prefix for all Coaty core types. 
+/// - Note: The object type of a Coaty core object is composed of this prefix
+///   and the class name of the core object, i.e.
+///   `"\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.Task)"`, for example,
+///   `"coaty.Task"`.
+public let COATY_OBJECT_TYPE_NAMESPACE_PREFIX = "coaty."
+
 /// The base type of all objects in the Coaty object model. Application-specific object types
 /// extend either CoatyObject directly or any of its derived core types.
 @objcMembers

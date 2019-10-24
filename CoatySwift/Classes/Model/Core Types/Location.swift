@@ -24,7 +24,7 @@ open class Location: CoatyObject {
     /// Default initializer for a `Location` object.
     public init(geoLocation: GeoLocation,
                 name: String = "LocationObject",
-                objectType: String = "\(COATY_PREFIX)\(CoreType.Location)",
+                objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.Location)",
                 objectId: CoatyUUID = .init()) {
         
         self.geoLocation = geoLocation

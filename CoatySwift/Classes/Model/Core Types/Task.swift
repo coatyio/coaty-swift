@@ -54,7 +54,7 @@ open class Task: CoatyObject {
                 creationTimestamp: Double,
                 status: TaskStatus,
                 name: String = "TaskObject",
-                objectType: String = "\(COATY_PREFIX)\(CoreType.Task)",
+                objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.Task)",
                 objectId: CoatyUUID = .init(),
                 lastModificationTimestamp: Double? = nil,
                 dueTimestamp: Double? = nil,

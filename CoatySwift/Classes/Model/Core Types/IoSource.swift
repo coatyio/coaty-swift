@@ -37,7 +37,7 @@ open class IoSource: IoPoint {
          updateRate: Double? = nil,
          externalTopic: String? = nil,
          name: String = "IoSourceObject",
-         objectType: String = "\(COATY_PREFIX)\(CoreType.IoSource)",
+         objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.IoSource)",
         objectId: CoatyUUID = .init()) {
         self.valueType = valueType
         self.updateStrategy = updateStrategy

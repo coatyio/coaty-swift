@@ -39,7 +39,7 @@ open class IoActor: IoPoint {
          updateRate: Double? = nil,
          externalTopic: String? = nil,
          name: String = "IoActorObject",
-         objectType: String = "\(COATY_PREFIX)\(CoreType.IoActor)",
+         objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.IoActor)",
          objectId: CoatyUUID = .init()) {
         self.valueType = valueType
         self.useRawIoValues = useRawIoValues

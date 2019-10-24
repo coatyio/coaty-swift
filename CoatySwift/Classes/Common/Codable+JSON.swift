@@ -54,7 +54,7 @@ extension KeyedDecodingContainer {
         return dictionary
     }
     
-    public func decodeIfPresent(_ type: [String:Any].Type, forKey key: K) throws -> [String:Any]? {
+    func decodeIfPresent(_ type: [String:Any].Type, forKey key: K) throws -> [String:Any]? {
         return try? decode(type, forKey: key)
     }
     
