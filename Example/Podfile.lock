@@ -25,7 +25,7 @@ DEPENDENCIES:
   - CoatySwift (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - CocoaAsyncSocket
     - CocoaMQTT
     - ObjcExceptionBridging
@@ -39,7 +39,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CoatySwift: 684493c59137062b47796cf9965b3b62841e5163
+  CoatySwift: 8a10c1ff019338fd87273768e26586dcf4f241cf
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   CocoaMQTT: b506d38ad3bbe1c55a4f8ee8c9fd02c35da1a7d8
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
@@ -48,6 +48,6 @@ SPEC CHECKSUMS:
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   XCGLogger: 0434f15e3909cdc450bb63faf638b8792ab782ab
 
-PODFILE CHECKSUM: 69b69ee24d9bc71993ca73cfc1a6015e467ddd74
+PODFILE CHECKSUM: ddbb35d82d6cbd2ad1a69599cfdc9e0f30857a1f
 
-COCOAPODS: 1.6.2
+COCOAPODS: 1.8.4
