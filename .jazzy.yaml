@@ -8,4 +8,5 @@ module: CoatySwift
 podspec: CoatySwift.podspec
 min_acl: public
 include: CoatySwift/Classes/**/*.swift
+exclude: CoatySwift/Classes/Common/AnyCodable/_*.swift
 use_safe_filenames: true

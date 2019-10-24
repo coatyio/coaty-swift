@@ -29,20 +29,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyDecodable.swift",
-      "line": 49,
-      "symbol": "_AnyDecodable",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyDecodable.swift",
-      "line": 50,
-      "symbol": "_AnyDecodable.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
       "line": 41,
       "symbol": "AnyEncodable.value",
@@ -53,83 +39,6 @@
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
       "line": 43,
       "symbol": "AnyEncodable.init(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
-      "line": 58,
-      "symbol": "_AnyEncodable",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
-      "line": 59,
-      "symbol": "_AnyEncodable.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
-      "line": 190,
-      "symbol": "_AnyEncodable",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
-      "line": 191,
-      "symbol": "_AnyEncodable.init(nilLiteral:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
-      "line": 195,
-      "symbol": "_AnyEncodable.init(booleanLiteral:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
-      "line": 199,
-      "symbol": "_AnyEncodable.init(integerLiteral:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
-      "line": 203,
-      "symbol": "_AnyEncodable.init(floatLiteral:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
-      "line": 207,
-      "symbol": "_AnyEncodable.init(extendedGraphemeClusterLiteral:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
-      "line": 211,
-      "symbol": "_AnyEncodable.init(stringLiteral:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
-      "line": 215,
-      "symbol": "_AnyEncodable.init(arrayLiteral:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
-      "line": 219,
-      "symbol": "_AnyEncodable.init(dictionaryLiteral:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1339,21 +1248,21 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
-      "line": 30,
+      "line": 33,
       "symbol": "Snapshot.init(creationTimestamp:creatorId:tags:object:name:objectType:objectId:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
-      "line": 56,
+      "line": 59,
       "symbol": "Snapshot.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
-      "line": 73,
+      "line": 76,
       "symbol": "Snapshot.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
