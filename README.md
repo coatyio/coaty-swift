@@ -57,11 +57,15 @@ XCode 10.2 or higher. CoatySwift is available through
 version `1.8.4` of CocoaPods, i.e. running `pod --version` should yield `1.8.4`
 or higher.
 
-To install the CoatySwift pod, simply add the following line to your Podfile:
+You can add the CoatySwift pod to the Podfile of your app as follows:
 
 ```ruby
-pod 'CoatySwift'
+target 'MyApp' do
+  pod 'CoatySwift', '~> 1.0'
+end
 ```
+
+Then, run a `pod install`.
 
 CoatySwift is compatible with the the following deployment targets:
 

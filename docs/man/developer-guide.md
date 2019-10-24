@@ -125,12 +125,15 @@ are familiar with the following programming concepts:
   [CocoaPods](https://cocoapods.org). Ensure you have installed **at least**
   version `1.8.4` of CocoaPods, i.e. running `pod --version` should yield `1.8.4` or higher.
 
-  To install CoatySwift, simply add the following line to your Podfile, and run
-  `pod install` or `pod update` afterwards:
+  You can add the CoatySwift pod to the Podfile of your app as follows:
 
    ```ruby
-   pod 'CoatySwift'
+   target 'MyApp' do
+   pod 'CoatySwift', '~> 1.0'
+   end
    ```
+
+   Then run a `pod install` or a `pod update`.
 
 ### mDNS Broker Discovery Support
 
