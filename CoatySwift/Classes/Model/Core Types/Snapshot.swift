@@ -7,6 +7,9 @@
 import Foundation
 
 /// - Experiment: Convenience Snapshot alias for dynamic Coaty.
+///
+/// Needed for encoding/decoding because Snapshot class has an instance member
+/// `object` which represents an entire CoatyObject.
 public typealias DynamicSnapshot = Snapshot<CoatyObjectFamily>
 
 /// Represents a snapshot in time of the state of any Coaty object.
