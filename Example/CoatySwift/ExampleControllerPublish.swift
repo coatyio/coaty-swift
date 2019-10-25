@@ -7,6 +7,7 @@
 
 import Foundation
 import CoatySwift
+import RxSwift
 
 
 class ExampleControllerPublish<Family: ObjectFamily>: Controller<Family> {
@@ -14,14 +15,17 @@ class ExampleControllerPublish<Family: ObjectFamily>: Controller<Family> {
     private var timer: Timer?
     
     override func onCommunicationManagerStarting() {
-        self.timer = Timer.scheduledTimer(timeInterval: 5.0,
-                                            target: self,
-                                            selector: #selector(publishAdvertise),
-                                            userInfo: nil,
-                                            repeats: true)
+        // Start RxSwift timer to publish an AdvertiseEvent every 5 seonds.
+        _ = Observable<Int>
+            .timer(RxTimeInterval.seconds(0),
+                   period: RxTimeInterval.seconds(5),
+                   scheduler: MainScheduler.instance)
+            .subscribe(onNext: { (_) in
+                self.publishAdvertise()
+            })
     }
     
-    @objc func publishAdvertise() {
+    func publishAdvertise() {
         // Create the object.
         let object = ExampleObject(myValue: "Hello Coaty!")
         
