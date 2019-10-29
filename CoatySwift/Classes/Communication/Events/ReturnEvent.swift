@@ -50,7 +50,7 @@ public class ReturnEvent<Family: ObjectFamily>: CommunicationEvent<ReturnEventDa
     
     // MARK: - Initializers.
 
-    fileprivate override init(eventSource: Component, eventData: ReturnEventData<Family>) {
+    fileprivate override init(eventSource: Identity, eventData: ReturnEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
 

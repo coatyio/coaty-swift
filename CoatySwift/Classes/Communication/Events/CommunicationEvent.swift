@@ -17,7 +17,7 @@ public class CommunicationEvent<T: CommunicationEventData>: Codable {
     /// Event data that conforms to event type specific CommunicationEventData
     public var data: T
 
-    public var source: Component?
+    public var source: Identity?
     public var sourceId: CoatyUUID?
 
     /// The associated user id of an inbound event. The value is always nil for
@@ -27,7 +27,7 @@ public class CommunicationEvent<T: CommunicationEventData>: Codable {
     
     // MARK: - Initializer.
     
-    init(eventSource: Component, eventData: T) {
+    init(eventSource: Identity, eventData: T) {
         self.source = eventSource
         self.sourceId = eventSource.objectId
         self.userId = nil

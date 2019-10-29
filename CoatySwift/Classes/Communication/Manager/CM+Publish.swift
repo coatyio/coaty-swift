@@ -53,7 +53,7 @@ extension CommunicationManager {
                                                  messageToken: CoatyUUID().string)
         
         // Save advertises for Components or Devices.
-        if advertiseEvent.data.object.coreType == .Component ||
+        if advertiseEvent.data.object.coreType == .Identity ||
             advertiseEvent.data.object.coreType == .Device {
             
             // Add if not existing already in deadvertiseIds.
@@ -280,7 +280,7 @@ extension CommunicationManager {
     ///   - event: the complete event that should be sent out.
     ///   - messageToken: the message token associated with the update-complete
     ///     request.
-    internal func publishComplete(identity: Component,
+    internal func publishComplete(identity: Identity,
                                   event: CompleteEvent<Family>,
                                   messageToken: String) throws {
         
@@ -300,7 +300,7 @@ extension CommunicationManager {
     ///   - event: the resolve event that should be sent out.
     ///   - messageToken: the message token associated with the discover-resolve
     ///     request.
-    internal func publishResolve(identity: Component,
+    internal func publishResolve(identity: Identity,
                                                        event: ResolveEvent<Family>,
                                                        messageToken: String) throws {
         
@@ -378,7 +378,7 @@ extension CommunicationManager {
     ///   - event: the return event that should be sent out.
     ///   - messageToken: the message token associated with the call-return
     ///     request.
-    internal func publishReturn(identity: Component,
+    internal func publishReturn(identity: Identity,
                                 event: ReturnEvent<Family>,
                                 messageToken: String) throws {
         

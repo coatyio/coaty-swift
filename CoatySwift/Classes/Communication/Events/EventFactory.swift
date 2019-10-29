@@ -7,9 +7,9 @@
 import Foundation
 
 public class EventFactoryInit {
-    var identity: Component
+    var identity: Identity
     
-    init(_ identity: Component) {
+    init(_ identity: Identity) {
         self.identity = identity
     }
 }
@@ -28,7 +28,7 @@ public class EventFactory<Family: ObjectFamily>: EventFactoryInit {
     public var CallEvent:           CallEventFactory<Family>
     public var ReturnEvent:         ReturnEventFactory<Family>
 
-    override init(_ identity: Component) {
+    override init(_ identity: Identity) {
         self.AdvertiseEvent = AdvertiseEventFactory(identity)
         self.DeadvertiseEvent = DeadvertiseEventFactory(identity)
         self.ChannelEvent = ChannelEventFactory(identity)

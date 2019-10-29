@@ -51,11 +51,11 @@ public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEvent
     
     // MARK: - Initializers.
     
-    fileprivate override init(eventSource: Component, eventData: ChannelEventData<Family>) {
+    fileprivate override init(eventSource: Identity, eventData: ChannelEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
 
-    internal init(eventSource: Component, eventData: ChannelEventData<Family>, channelId: String) {
+    internal init(eventSource: Identity, eventData: ChannelEventData<Family>, channelId: String) {
         
         if !CommunicationTopic.isValidEventTypeFilter(filter: channelId) {
             LogManager.log.warning("\(channelId) is not a valid channel identifier.")

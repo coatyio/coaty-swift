@@ -103,7 +103,7 @@ public class DiscoverEvent<Family: ObjectFamily>: CommunicationEvent<DiscoverEve
         }
     }
 
-    override init(eventSource: Component, eventData: DiscoverEventData) {
+    override init(eventSource: Identity, eventData: DiscoverEventData) {
         super.init(eventSource: eventSource, eventData: eventData)
         type = .Discover
     }
