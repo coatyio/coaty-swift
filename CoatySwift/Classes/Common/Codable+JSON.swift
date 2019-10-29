@@ -45,6 +45,10 @@ extension KeyedDecodingContainer {
                 dictionary[key.stringValue] = stringValue
             } else if let doubleValue = try? decode(Double.self, forKey: key) {
                 dictionary[key.stringValue] = doubleValue
+            } else if let coatyUUIDValue = try? decode(CoatyUUID.self, forKey: key) {
+                dictionary[key.stringValue] = coatyUUIDValue
+            } else if let uuidValue = try? decode(UUID.self, forKey: key) {
+                dictionary[key.stringValue] = uuidValue
             } else if let nestedDictionary = try? decode([String: Any].self, forKey: key) {
                 dictionary[key.stringValue] = nestedDictionary
             } else if let nestedArray = try? decode([Any].self, forKey: key) {
