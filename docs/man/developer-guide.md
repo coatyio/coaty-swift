@@ -627,10 +627,10 @@ in the `decode` and `encode` methods is not related in any way to the Coaty
 
 ### Component vs. Identity
 
-Please note that in CoatySwift, the `Component` CoatyObject from coaty-js had
+Please note that in CoatySwift, the `Component` CoatyObject from Coaty JS had
 to be renamed to `Identity`. This is because `Component` causes a name conflict
 in the macOS runtime. However, regardless of the different name, CoatySwift
-and coaty-js are compatible.
+and Coaty JS are compatible.
 
 ## Additional resources
 
