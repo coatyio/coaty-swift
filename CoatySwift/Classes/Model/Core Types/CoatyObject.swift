@@ -16,7 +16,7 @@ public let COATY_OBJECT_TYPE_NAMESPACE_PREFIX = "coaty."
 
 /// The base type of all objects in the Coaty object model. Application-specific object types
 /// extend either CoatyObject directly or any of its derived core types.
-open class CoatyObject: NSObject, Codable {
+open class CoatyObject: Codable {
     
     // MARK: - Required attributes.
     
