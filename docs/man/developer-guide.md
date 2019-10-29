@@ -625,6 +625,13 @@ with the regular `UIViewController`, and likewise, the `container` variable used
 in the `decode` and `encode` methods is not related in any way to the Coaty
 `Container` object.
 
+### Component vs. Identity
+
+Please note that in CoatySwift, the `Component` CoatyObject from coaty-js had
+to be renamed to `Identity`. This is because `Component` causes a name conflict
+in the macOS runtime. However, regardless of the different name, CoatySwift
+and coaty-js are compatible.
+
 ## Additional resources
 
 We would like to point you to additional resources if you want to dig deeper
