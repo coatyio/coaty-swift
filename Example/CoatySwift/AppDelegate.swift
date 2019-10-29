@@ -8,15 +8,14 @@
 import UIKit
 import CoatySwift
 
-/// Save a reference of your container in the app delegate to
-/// make sure it stays alive during the entire life-time of the app.
-var coatyContainer: Container<ExampleObjectFamily>?
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    /// Save a reference of your container in the app delegate to
+    /// make sure it stays alive during the entire life-time of the app.
+    var container: Container<ExampleObjectFamily>?
     let brokerIp = "127.0.0.1"
     let brokerPort = 1883
 
@@ -68,9 +67,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // Resolve everything!
-        coatyContainer = Container.resolve(components: components,
-                                           configuration: configuration,
-                                           objectFamily: ExampleObjectFamily.self)
+        container = Container.resolve(components: components,
+                                      configuration: configuration,
+                                      objectFamily: ExampleObjectFamily.self)
 
     }
     
