@@ -22,7 +22,7 @@ open class DynamicController {
     private (set) public var runtime: Runtime
     private (set) public var options: ControllerOptions?
     private (set) public var controllerType: String
-    private (set) public var identity: Component
+    private (set) public var identity: Identity
     
     /// This disposebag holds references to all of your subscriptions. It is standard in RxSwift
     /// to call `.disposed(by: self.disposeBag)` at the end of every subscription.
@@ -37,7 +37,7 @@ open class DynamicController {
         self.controllerType = controllerType
         
         // Create default identity.
-        self.identity = Component(name: self.controllerType)
+        self.identity = Identity(name: self.controllerType)
 
         self.initializeIdentity(identity: identity)
         self.initializeIdentityFromOptions()
@@ -77,7 +77,7 @@ open class DynamicController {
     /// implementation advertises its identity if requested by the controller
     /// option property `shouldAdvertiseIdentity` (if this property is not
     /// specified, the identity is advertised by default). The base
-    /// implementation also observes Discover events for core type "Component" or
+    /// implementation also observes Discover events for core type "Identity" or
     /// the identity's object ID and resolves them with the controller's
     /// identity.
     open func onCommunicationManagerStarting() {
@@ -113,7 +113,7 @@ open class DynamicController {
     /// in the configuration options take precedence.
     ///
     /// @param identity the default identity object for a controller instance
-    open func initializeIdentity(identity: Component) {}
+    open func initializeIdentity(identity: Identity) {}
 
     private func initializeIdentityFromOptions() {
         // Merge property values from ControllerOptions.identity option.
@@ -163,7 +163,7 @@ open class DynamicController {
         try? self.communicationManager
             .observeDiscover()
             .filter { event -> Bool in
-                (event.data.isDiscoveringTypes() && event.data.isCoreTypeCompatible(.Component)) ||
+                (event.data.isDiscoveringTypes() && event.data.isCoreTypeCompatible(.Identity)) ||
                 (event.data.isDiscoveringObjectId() && event.data.objectId == self.identity.objectId)
             }.subscribe(onNext: { event in
                 let resolveEvent = self.eventFactory.ResolveEvent.with(object: self.identity)

@@ -50,7 +50,7 @@ public class ResolveEvent<Family: ObjectFamily>: CommunicationEvent<ResolveEvent
     
     // MARK: - Initializers.
 
-    override init(eventSource: Component, eventData: ResolveEventData<Family>) {
+    override init(eventSource: Identity, eventData: ResolveEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
