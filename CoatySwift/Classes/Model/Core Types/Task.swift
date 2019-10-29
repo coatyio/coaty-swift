@@ -118,7 +118,6 @@ open class Task: CoatyObject {
 }
 
 /// Predefined status values of Task objects.
-@objc
 public enum TaskStatus: Int, Codable, CaseIterable {
     
     /// Initial state of a new task.
