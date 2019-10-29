@@ -12,18 +12,18 @@ public enum CoreType: String, Codable {
     
     // MARK: - Value definitions.
     
-    case CoatyObject
-    case User
-    case Device
-    case Annotation
-    case Task
-    case IoSource
-    case IoActor
-    case Identity
-    case Config
-    case Log
-    case Location
-    case Snapshot
+    case CoatyObject = "CoatyObject"
+    case User = "User"
+    case Device = "Device"
+    case Annotation = "Annotation"
+    case Task = "Task"
+    case IoSource = "IoSource"
+    case IoActor = "IoActor"
+    case Identity = "Component"
+    case Config = "Config"
+    case Log = "Log"
+    case Location = "Location"
+    case Snapshot = "Snapshot"
     
     // MARK: - Codable methods.
     

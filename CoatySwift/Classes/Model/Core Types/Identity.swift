@@ -10,7 +10,7 @@ import Foundation
 open class Identity: CoatyObject {
     
     public init(name: String = "ComponentObject",
-                objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.Identity)",
+                objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.Identity.rawValue)",
                 objectId: CoatyUUID = .init()) {
         super.init(coreType: .Identity, objectType: objectType, objectId: objectId, name: name)
     }
