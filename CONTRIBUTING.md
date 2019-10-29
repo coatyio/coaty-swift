@@ -106,6 +106,9 @@ against the example in the `Example` Xcode folder of the CoatySwift repo and the
 examples in the `swift` sections of the
 [coaty-examples](https://github.com/coatyio/coaty-examples) repo on GitHub.
 
+You can also use `pod lib lint` to validate the Pod locally using the files in
+the CoatySwift working directory.
+
 In order to release a new CoatySwift version on CocoaPods, you have to follow
 these steps:
 

@@ -1,6 +1,34 @@
 # Changelog
 
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/coatyio/coaty-swift/compare/1.0.0...1.0.1) (2019-10-29)
+
+This patch release fixes an Xcode build issue concerning macOS deployments and
+some issues related to communication events and object types.
+
+### Bug Fixes
+
+* **Model/Core Types:** rename `Component` to `Identity` in order to make
+  CoatySwift macOS compatible
+  
+  *BREAKING CHANGE*: rename all occurrences of Coaty
+  object type `Component` with `Identity` to avoid name conflict in Objective-C
+  macOS runtime
+  ([fac20c1](https://github.com/coatyio/coaty-swift/commit/fac20c1))
+* **Common:** make `CoatyUUID` equatable
+  ([3a2b1d7](https://github.com/coatyio/coaty-swift/commit/3a2b1d7))
+* **Common,Model:** remove unneeded `NSObject` dependency from `CoatyUUID` and
+  `CoatyObject`
+  ([ccd4aaf](https://github.com/coatyio/coaty-swift/commit/ccd4aaf))
+* **Common,Model:** remove unnecessary `objc` members
+  ([9d02133](https://github.com/coatyio/coaty-swift/commit/9d02133))
+* **Common:** add missing decodings for `CoatyUUID` and `UUID` in
+  `KeyedDecodingContainer`
+  ([cc4115c](https://github.com/coatyio/coaty-swift/commit/cc4115c))
+* **Communication/Events:** correct parameter validation logic of Discover event
+  ([a399b43](https://github.com/coatyio/coaty-swift/commit/a399b43))
+
 <a name="1.0.0"></a>
-# [1.0.0](https://github.com/coatyio/coaty-swift/tree/v1.0.0) (2019-10-22)
+# [1.0.0](https://github.com/coatyio/coaty-swift/tree/1.0.0) (2019-10-22)
 
 Initial release of the CoatySwift framework.
