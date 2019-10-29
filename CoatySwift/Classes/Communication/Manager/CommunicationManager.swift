@@ -32,7 +32,7 @@ public class CommunicationManager<Family: ObjectFamily> {
     private var subscriptions = [String: Int]()
 
     /// Coaty identity object of the communication manager. Initialized through initializeIdentity().
-    var identity: Component!
+    var identity: Identity!
 
     /// The operating state of the communication manager.
     var operatingState: BehaviorSubject<OperatingState> = BehaviorSubject(value: .initial)
@@ -81,7 +81,7 @@ public class CommunicationManager<Family: ObjectFamily> {
     // MARK: - Setup methods.
 
     func initializeIdentity() {
-        identity = Component(name: "CommunicationManager")
+        identity = Identity(name: "CommunicationManager")
 
         // Merge property values from CommunicationOptions.identity option.
         if self.communicationOptions.identity != nil {
@@ -312,7 +312,7 @@ public class CommunicationManager<Family: ObjectFamily> {
 
         try? observeDiscover(eventTarget: identity)
             .filter({ (event) -> Bool in
-                (event.data.isDiscoveringTypes() && event.data.isCoreTypeCompatible(.Component)) ||
+                (event.data.isDiscoveringTypes() && event.data.isCoreTypeCompatible(.Identity)) ||
                 (event.data.isDiscoveringObjectId() && event.data.objectId == self.identity.objectId)
             })
             .subscribe(onNext: { event in

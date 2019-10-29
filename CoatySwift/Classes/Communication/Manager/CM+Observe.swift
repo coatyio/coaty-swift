@@ -32,7 +32,7 @@ extension CommunicationManager {
     ///     - coreType: observed coreType.
     ///     - objectType: observed objectType.
     private func observeAdvertise<Family: ObjectFamily, T: AdvertiseEvent<Family>>(topic: String,
-                                                                        eventTarget: Component,
+                                                                        eventTarget: Identity,
                                                                         coreType: CoreType?,
                                                                         objectType: String?) throws -> Observable<T> {
         
@@ -92,7 +92,7 @@ extension CommunicationManager {
     ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
     ///     - coreType: coreType core type of objects to be observed.
     /// - Returns: An observable emitting the advertise events, that have the given coreType.
-    public func observeAdvertiseWithCoreType<T: AdvertiseEvent<Family>>(eventTarget: Component,
+    public func observeAdvertiseWithCoreType<T: AdvertiseEvent<Family>>(eventTarget: Identity,
                               coreType: CoreType) throws -> Observable<T> {
         let topic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Advertise,
                                                                                  eventTypeFilter: coreType.rawValue)
@@ -107,7 +107,7 @@ extension CommunicationManager {
     ///     - eventTarget: eventTarget target for which Advertise events should be emitted.
     ///     - objectType: objectType object type of objects to be observed.
     /// - Returns: An observable emitting the advertise events, that have the given objectType.
-    public func observeAdvertiseWithObjectType<T: AdvertiseEvent<Family>>(eventTarget: Component,
+    public func observeAdvertiseWithObjectType<T: AdvertiseEvent<Family>>(eventTarget: Identity,
                               objectType: String) throws -> Observable<T> {
         let topic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, 
                                                                                 eventTypeFilter: objectType)
@@ -129,7 +129,7 @@ extension CommunicationManager {
     ///   - eventTarget: target for which Channel events should be emitted
     ///   - channelId: a channel identifier
     /// - Returns: a hot observable emitting incoming Channel events.
-    public func observeChannel<T: ChannelEvent<Family>>(eventTarget: Component,
+    public func observeChannel<T: ChannelEvent<Family>>(eventTarget: Identity,
                                                         channelId: String) throws -> Observable<T> {
         
         if !CommunicationTopic.isValidEventTypeFilter(filter: channelId) {
@@ -180,7 +180,7 @@ extension CommunicationManager {
     /// - Parameters:
     ///     - eventTarget: target for which Deadvertise events should be emitted
     /// - Returns:  a hot observable emitting incoming Deadvertise events
-    public func observeDeadvertise(eventTarget: Component) throws -> Observable<DeadvertiseEvent<Family>> {
+    public func observeDeadvertise(eventTarget: Identity) throws -> Observable<DeadvertiseEvent<Family>> {
         let deadvertiseTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Deadvertise)
         
         var observable =  client.messages.map(convertToTupleFormat)
@@ -219,7 +219,7 @@ extension CommunicationManager {
     /// - Parameters:
     ///    - eventTarget: target for which Update events should be emitted.
     /// - Returns: a hot observable emitting incoming Update events.
-    public func observeUpdate<T: UpdateEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
+    public func observeUpdate<T: UpdateEvent<Family>>(eventTarget: Identity) throws -> Observable<T> {
         
         let updateTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Update)
 
@@ -265,7 +265,7 @@ extension CommunicationManager {
     /// - Parameters:
     ///     - eventTarget: target for which Discover events should be emitted.
     /// - Returns: a hot observable emitting incoming Discover events.
-    public func observeDiscover<T: DiscoverEvent<Family>>(eventTarget: Component) throws -> Observable<T> {
+    public func observeDiscover<T: DiscoverEvent<Family>>(eventTarget: Identity) throws -> Observable<T> {
         let discoverTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Discover)
 
         var observable = client.messages.map(convertToTupleFormat)
@@ -323,7 +323,7 @@ extension CommunicationManager {
     ///   - operationId: the name of the operation to be invoked
     /// - Returns: a hot observable emitting incoming Call events
     /// whose context filter matches the given context
-    public func observeCall<T: CallEvent<Family>>(eventTarget: Component, operationId: String) throws -> Observable<T> {
+    public func observeCall<T: CallEvent<Family>>(eventTarget: Identity, operationId: String) throws -> Observable<T> {
         if !CommunicationTopic.isValidEventTypeFilter(filter: operationId) {
             throw CoatySwiftError.InvalidArgument("\(operationId) is not a valid parameter name.")
         }

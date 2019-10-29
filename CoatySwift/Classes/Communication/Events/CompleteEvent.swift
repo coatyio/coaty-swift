@@ -26,7 +26,7 @@ public class CompleteEventFactory<Family: ObjectFamily>: EventFactoryInit {
 /// Note that this class should preferably be initialized via its withObject() method.
 public class CompleteEvent<Family: ObjectFamily>: CommunicationEvent<CompleteEventData<Family>> {
 
-    override init(eventSource: Component, eventData: CompleteEventData<Family>) {
+    override init(eventSource: Identity, eventData: CompleteEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     

@@ -65,7 +65,7 @@ public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData
     
     // MARK: - Initializers.
 
-    fileprivate override init(eventSource: Component, eventData: QueryEventData<Family>) {
+    fileprivate override init(eventSource: Identity, eventData: QueryEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
 

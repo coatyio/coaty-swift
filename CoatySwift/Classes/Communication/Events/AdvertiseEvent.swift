@@ -24,14 +24,14 @@ public class AdvertiseEventFactory<Family: ObjectFamily>: EventFactoryInit {
 /// Note that this class should preferably be initialized via its withObject() method.
 public class AdvertiseEvent<Family: ObjectFamily>: CommunicationEvent<AdvertiseEventData<Family>> {
     
-    override init(eventSource: Component, eventData: AdvertiseEventData<Family>) {
+    override init(eventSource: Identity, eventData: AdvertiseEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
     /// Convenience factory method that configures an instance of an AdvertiseEvent with
     /// an object and privateData. Note that the event source should be the controller that
     /// creates the AdvertiseEvent.
-    internal static func withObject(eventSource: Component,
+    internal static func withObject(eventSource: Identity,
                            object: CoatyObject,
                            privateData: [String: Any]? = nil) -> AdvertiseEvent {
         

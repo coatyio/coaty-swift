@@ -83,11 +83,11 @@ public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<F
         }
     }
     
-    fileprivate override init(eventSource: Component, eventData: CallEventData<Family>) {
+    fileprivate override init(eventSource: Identity, eventData: CallEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
-    fileprivate init(eventSource: Component, eventData: CallEventData<Family>, operation: String) {
+    fileprivate init(eventSource: Identity, eventData: CallEventData<Family>, operation: String) {
         
         if !CommunicationTopic.isValidEventTypeFilter(filter: operation) {
             LogManager.log.warning("\(operation) is not a valid operation name.")

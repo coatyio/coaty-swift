@@ -146,7 +146,7 @@ class CommunicationTopic {
     /// See [Communication Protocol - Topic Structure](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-structure)
     /// - Parameters:
     ///   - eventType: CommunicationEventType (e.g. Advertise)
-    ///   - eventTypeFilter: may either be a core type (e.g. Component) or an object type
+    ///   - eventTypeFilter: may either be a core type (e.g. Identity) or an object type
     ///     (e.g. org.example.object)
     ///   - associatedUserId: an optional UUID String, if the parameter is omitted it is replaced
     ///     with a wildcard.
@@ -190,7 +190,7 @@ class CommunicationTopic {
     /// See [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-structure)
     /// - Parameters:
     ///   - eventType: CommunicationEventType (e.g. Advertise)
-    ///   - eventTypeFilter: may either be a core type (e.g. Component) or an object type
+    ///   - eventTypeFilter: may either be a core type (e.g. Identity) or an object type
     ///     (e.g. org.example.object)
     ///   - associatedUserId: an optional UUID String, if the parameter is omitted it is replaced
     ///     with "-".
@@ -214,7 +214,7 @@ class CommunicationTopic {
     /// See [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-filters)
     /// - Parameters:
     ///   - eventType: CommunicationEventType (e.g. Advertise)
-    ///   - eventTypeFilter: may either be a core type (e.g. Component) or an object type
+    ///   - eventTypeFilter: may either be a core type (e.g. Identity) or an object type
     ///     (e.g. org.example.object)
     ///   - associatedUserId: an optional UUID String, if the parameter is omitted it is replaced
     ///     with a wildcard.

@@ -53,7 +53,7 @@ public class UpdateEvent<Family: ObjectFamily>: CommunicationEvent<UpdateEventDa
     
     // MARK: - Initializers.
     
-    fileprivate override init(eventSource: Component, eventData: UpdateEventData<Family>) {
+    fileprivate override init(eventSource: Identity, eventData: UpdateEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     

@@ -22,7 +22,7 @@ public enum CoatyObjectFamily: String, ObjectFamily {
     case log = "coaty.Log"
     case location = "coaty.Location"
     case snapshot = "coaty.Snapshot"
-    case component = "coaty.Component"
+    case identity = "coaty.Component"
     
     // Core type matching for dynamic coaty applications.
     case core_CoatyObject = "CoatyObject"
@@ -34,7 +34,7 @@ public enum CoatyObjectFamily: String, ObjectFamily {
     case core_IoSource = "IoSource"
     case core_IoActor = "IoActor"
     case core_Config = "Config"
-    case core_Component = "Component"
+    case core_Identity = "Component"
     case core_Log = "Log"
     case core_Location = "Location"
     
@@ -42,8 +42,8 @@ public enum CoatyObjectFamily: String, ObjectFamily {
         switch self {
         case .coatyObject:
             return CoatyObject.self
-        case .component:
-            return Component.self
+        case .identity:
+            return Identity.self
         case .snapshot:
             // This does _not always_ work properly. Snapshot objects need to be parametrized with the
             // object family of the snapshotted objects. The base implementation only allows core objects.

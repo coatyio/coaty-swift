@@ -20,14 +20,14 @@ public class DeadvertiseEventFactory<Family: ObjectFamily>: EventFactoryInit {
 /// Note that this class should preferably be initialized via its withObjectIds() method.
 public class DeadvertiseEvent<Family: ObjectFamily>: CommunicationEvent<DeadvertiseEventData<Family>> {
 
-    override init(eventSource: Component, eventData: DeadvertiseEventData<Family>) {
+    override init(eventSource: Identity, eventData: DeadvertiseEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
     /// Convenience factory method that configures an instance of a DeadvertiseEvent with
     /// object ids to be deadvertised. Note that the event source should be the controller that
     /// creates the DeadvertiseEvent.
-    internal static func withObjectIds(eventSource: Component,
+    internal static func withObjectIds(eventSource: Identity,
                                        objectIds: [CoatyUUID]) throws -> DeadvertiseEvent {
         
         let deadvertiseEventData = DeadvertiseEventData<Family>(objectIds: objectIds)

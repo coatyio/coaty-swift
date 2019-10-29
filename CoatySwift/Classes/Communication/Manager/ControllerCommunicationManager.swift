@@ -10,13 +10,13 @@ import RxSwift
 
 public class ControllerCommunicationManager<Family: ObjectFamily> {
     
-    private var controllerIdentity: Component
+    private var controllerIdentity: Identity
     private var cm: CommunicationManager<Family>
-    public var identity: Component {
+    public var identity: Identity {
         return self.cm.identity
     }
     
-    init(identity: Component, communicationManager: CommunicationManager<Family>) {
+    init(identity: Identity, communicationManager: CommunicationManager<Family>) {
         self.controllerIdentity = identity
         self.cm = communicationManager
     }

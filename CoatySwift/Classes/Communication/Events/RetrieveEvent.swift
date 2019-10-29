@@ -32,7 +32,7 @@ public class RetrieveEvent<Family: ObjectFamily>: CommunicationEvent<RetrieveEve
     
     // MARK: - Initializers.
     
-    fileprivate override init(eventSource: Component, eventData: RetrieveEventData<Family>) {
+    fileprivate override init(eventSource: Identity, eventData: RetrieveEventData<Family>) {
         super.init(eventSource: eventSource, eventData: eventData)
     }
     
