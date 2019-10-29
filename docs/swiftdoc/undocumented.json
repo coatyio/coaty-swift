@@ -9,6 +9,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyCodable.swift",
+      "line": 20,
+      "symbol": "AnyCodable.value",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyCodable.swift",
+      "line": 22,
+      "symbol": "AnyCodable.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyCodable.swift",
       "line": 22,
       "symbol": "AnyCodable.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
@@ -19,6 +33,20 @@
       "line": 35,
       "symbol": "AnyDecodable.value",
       "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyDecodable.swift",
+      "line": 35,
+      "symbol": "AnyDecodable.value",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyDecodable.swift",
+      "line": 37,
+      "symbol": "AnyDecodable.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
@@ -37,6 +65,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
+      "line": 41,
+      "symbol": "AnyEncodable.value",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
+      "line": 43,
+      "symbol": "AnyEncodable.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
       "line": 43,
       "symbol": "AnyEncodable.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
@@ -46,6 +88,20 @@
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
       "line": 12,
       "symbol": "CoatyObjectFamily.coatyObject",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 12,
+      "symbol": "CoatyObjectFamily.coatyObject",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 13,
+      "symbol": "CoatyObjectFamily.user",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -65,8 +121,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 14,
+      "symbol": "CoatyObjectFamily.device",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
       "line": 15,
       "symbol": "CoatyObjectFamily.annotation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 15,
+      "symbol": "CoatyObjectFamily.annotation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 16,
+      "symbol": "CoatyObjectFamily.task",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -86,8 +163,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 17,
+      "symbol": "CoatyObjectFamily.ioSource",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
       "line": 18,
       "symbol": "CoatyObjectFamily.ioActor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 18,
+      "symbol": "CoatyObjectFamily.ioActor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 22,
+      "symbol": "CoatyObjectFamily.log",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -107,6 +205,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 23,
+      "symbol": "CoatyObjectFamily.location",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 24,
+      "symbol": "CoatyObjectFamily.snapshot",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
       "line": 24,
       "symbol": "CoatyObjectFamily.snapshot",
       "symbol_kind": "source.lang.swift.decl.enumelement",
@@ -115,7 +227,21 @@
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
       "line": 25,
-      "symbol": "CoatyObjectFamily.component",
+      "symbol": "CoatyObjectFamily.identity",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 25,
+      "symbol": "CoatyObjectFamily.identity",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 28,
+      "symbol": "CoatyObjectFamily.core_CoatyObject",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -135,8 +261,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 29,
+      "symbol": "CoatyObjectFamily.core_Task",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
       "line": 30,
       "symbol": "CoatyObjectFamily.core_Snapshot",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 30,
+      "symbol": "CoatyObjectFamily.core_Snapshot",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 31,
+      "symbol": "CoatyObjectFamily.core_User",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -156,8 +303,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 32,
+      "symbol": "CoatyObjectFamily.core_Device",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
       "line": 33,
       "symbol": "CoatyObjectFamily.core_Annotation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 33,
+      "symbol": "CoatyObjectFamily.core_Annotation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 34,
+      "symbol": "CoatyObjectFamily.core_IoSource",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -177,6 +345,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 35,
+      "symbol": "CoatyObjectFamily.core_IoActor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 36,
+      "symbol": "CoatyObjectFamily.core_Config",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
       "line": 36,
       "symbol": "CoatyObjectFamily.core_Config",
       "symbol_kind": "source.lang.swift.decl.enumelement",
@@ -185,7 +367,14 @@
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
       "line": 37,
-      "symbol": "CoatyObjectFamily.core_Component",
+      "symbol": "CoatyObjectFamily.core_Identity",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 37,
+      "symbol": "CoatyObjectFamily.core_Identity",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -193,6 +382,20 @@
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
       "line": 38,
       "symbol": "CoatyObjectFamily.core_Log",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 38,
+      "symbol": "CoatyObjectFamily.core_Log",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyObjectFamily.swift",
+      "line": 39,
+      "symbol": "CoatyObjectFamily.core_Location",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -212,6 +415,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatySwiftError.swift",
+      "line": 12,
+      "symbol": "CoatySwiftError.InvalidArgument(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatySwiftError.swift",
+      "line": 13,
+      "symbol": "CoatySwiftError.DecodingFailure(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatySwiftError.swift",
       "line": 13,
       "symbol": "CoatySwiftError.DecodingFailure(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
@@ -225,36 +442,64 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatySwiftError.swift",
+      "line": 14,
+      "symbol": "CoatySwiftError.InvalidConfiguration(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyUUID.swift",
-      "line": 18,
+      "line": 17,
       "symbol": "CoatyUUID.string",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyUUID.swift",
-      "line": 22,
+      "line": 17,
+      "symbol": "CoatyUUID.string",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyUUID.swift",
+      "line": 21,
       "symbol": "CoatyUUID.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyUUID.swift",
-      "line": 26,
+      "line": 21,
+      "symbol": "CoatyUUID.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyUUID.swift",
+      "line": 25,
       "symbol": "CoatyUUID.init(uuidString:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyUUID.swift",
-      "line": 49,
-      "symbol": "CoatyUUID.isEqual(_:)",
+      "line": 25,
+      "symbol": "CoatyUUID.init(uuidString:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyUUID.swift",
-      "line": 58,
+      "line": 54,
+      "symbol": "CoatyUUID.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Common/CoatyUUID.swift",
+      "line": 54,
       "symbol": "CoatyUUID.description",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -268,8 +513,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/AdvertiseEvent.swift",
+      "line": 44,
+      "symbol": "AdvertiseEvent.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/AdvertiseEvent.swift",
       "line": 48,
       "symbol": "AdvertiseEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/AdvertiseEvent.swift",
+      "line": 48,
+      "symbol": "AdvertiseEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/AdvertiseEvent.swift",
+      "line": 96,
+      "symbol": "AdvertiseEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -289,8 +555,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/CallEvent.swift",
+      "line": 102,
+      "symbol": "CallEvent.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/CallEvent.swift",
       "line": 106,
       "symbol": "CallEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/CallEvent.swift",
+      "line": 106,
+      "symbol": "CallEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/CallEvent.swift",
+      "line": 198,
+      "symbol": "CallEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -310,8 +597,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ChannelEvent.swift",
+      "line": 70,
+      "symbol": "ChannelEvent.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ChannelEvent.swift",
       "line": 74,
       "symbol": "ChannelEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ChannelEvent.swift",
+      "line": 74,
+      "symbol": "ChannelEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ChannelEvent.swift",
+      "line": 134,
+      "symbol": "ChannelEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -331,6 +639,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/CommunicationEvent.swift",
+      "line": 15,
+      "symbol": "CommunicationEvent.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/CommunicationEvent.swift",
+      "line": 20,
+      "symbol": "CommunicationEvent.source",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/CommunicationEvent.swift",
       "line": 20,
       "symbol": "CommunicationEvent.source",
       "symbol_kind": "source.lang.swift.decl.var.instance",
@@ -340,6 +662,20 @@
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/CommunicationEvent.swift",
       "line": 21,
       "symbol": "CommunicationEvent.sourceId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/CommunicationEvent.swift",
+      "line": 21,
+      "symbol": "CommunicationEvent.sourceId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/CommunicationEvent.swift",
+      "line": 53,
+      "symbol": "CommunicationEvent.json",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -359,8 +695,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/CompleteEvent.swift",
+      "line": 35,
+      "symbol": "CompleteEvent.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/CompleteEvent.swift",
       "line": 39,
       "symbol": "CompleteEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/CompleteEvent.swift",
+      "line": 39,
+      "symbol": "CompleteEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/CompleteEvent.swift",
+      "line": 79,
+      "symbol": "CompleteEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -380,8 +737,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/DeadvertiseEvent.swift",
+      "line": 39,
+      "symbol": "DeadvertiseEvent.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/DeadvertiseEvent.swift",
       "line": 43,
       "symbol": "DeadvertiseEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/DeadvertiseEvent.swift",
+      "line": 43,
+      "symbol": "DeadvertiseEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/DeadvertiseEvent.swift",
+      "line": 81,
+      "symbol": "DeadvertiseEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -401,6 +779,13 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
+      "line": 113,
+      "symbol": "DiscoverEvent.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
       "line": 117,
       "symbol": "DiscoverEvent.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
@@ -408,14 +793,35 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
-      "line": 300,
+      "line": 117,
+      "symbol": "DiscoverEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
+      "line": 301,
       "symbol": "DiscoverEventData.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
-      "line": 311,
+      "line": 301,
+      "symbol": "DiscoverEventData.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
+      "line": 312,
+      "symbol": "DiscoverEventData.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
+      "line": 312,
       "symbol": "DiscoverEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -424,6 +830,20 @@
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
       "line": 9,
       "symbol": "EventFactoryInit",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
+      "line": 9,
+      "symbol": "EventFactoryInit",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
+      "line": 17,
+      "symbol": "EventFactory",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
@@ -443,8 +863,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
+      "line": 19,
+      "symbol": "EventFactory.AdvertiseEvent",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
       "line": 20,
       "symbol": "EventFactory.DeadvertiseEvent",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
+      "line": 20,
+      "symbol": "EventFactory.DeadvertiseEvent",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
+      "line": 21,
+      "symbol": "EventFactory.ChannelEvent",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -464,8 +905,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
+      "line": 22,
+      "symbol": "EventFactory.DiscoverEvent",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
       "line": 23,
       "symbol": "EventFactory.ResolveEvent",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
+      "line": 23,
+      "symbol": "EventFactory.ResolveEvent",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
+      "line": 24,
+      "symbol": "EventFactory.UpdateEvent",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -485,8 +947,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
+      "line": 25,
+      "symbol": "EventFactory.CompleteEvent",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
       "line": 26,
       "symbol": "EventFactory.QueryEvent",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
+      "line": 26,
+      "symbol": "EventFactory.QueryEvent",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
+      "line": 27,
+      "symbol": "EventFactory.RetrieveEvent",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -506,6 +989,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
+      "line": 28,
+      "symbol": "EventFactory.CallEvent",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
+      "line": 29,
+      "symbol": "EventFactory.ReturnEvent",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/EventFactory.swift",
       "line": 29,
       "symbol": "EventFactory.ReturnEvent",
       "symbol_kind": "source.lang.swift.decl.var.instance",
@@ -520,8 +1017,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
+      "line": 10,
+      "symbol": "QueryEventFactory",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
       "line": 74,
       "symbol": "QueryEvent.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
+      "line": 74,
+      "symbol": "QueryEvent.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
+      "line": 78,
+      "symbol": "QueryEvent.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -541,6 +1059,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
+      "line": 166,
+      "symbol": "QueryEventData.createFrom(objectTypes:objectFilter:objectJoinConditions:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
+      "line": 185,
+      "symbol": "QueryEventData.createFrom(coreTypes:objectFilter:objectJoinConditions:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
       "line": 185,
       "symbol": "QueryEventData.createFrom(coreTypes:objectFilter:objectJoinConditions:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
@@ -550,6 +1082,20 @@
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
       "line": 234,
       "symbol": "QueryEventData.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
+      "line": 234,
+      "symbol": "QueryEventData.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ResolveEvent.swift",
+      "line": 35,
+      "symbol": "ResolveEventFactory.with(object:relatedObjects:privateData:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -569,8 +1115,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ResolveEvent.swift",
+      "line": 59,
+      "symbol": "ResolveEvent.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ResolveEvent.swift",
       "line": 63,
       "symbol": "ResolveEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ResolveEvent.swift",
+      "line": 63,
+      "symbol": "ResolveEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ResolveEvent.swift",
+      "line": 129,
+      "symbol": "ResolveEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -590,8 +1157,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/RetrieveEvent.swift",
+      "line": 41,
+      "symbol": "RetrieveEvent.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/RetrieveEvent.swift",
       "line": 45,
       "symbol": "RetrieveEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/RetrieveEvent.swift",
+      "line": 45,
+      "symbol": "RetrieveEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/RetrieveEvent.swift",
+      "line": 92,
+      "symbol": "RetrieveEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -611,8 +1199,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "line": 49,
+      "symbol": "ReturnEvent",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 59,
       "symbol": "ReturnEvent.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "line": 59,
+      "symbol": "ReturnEvent.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "line": 63,
+      "symbol": "ReturnEvent.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -632,6 +1241,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "line": 69,
+      "symbol": "ReturnEventData",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "line": 131,
+      "symbol": "ReturnEventData.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 131,
       "symbol": "ReturnEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
@@ -641,6 +1264,20 @@
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 141,
       "symbol": "ReturnResult",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "line": 141,
+      "symbol": "ReturnResult",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "line": 142,
+      "symbol": "ExecutionInfo",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
@@ -660,9 +1297,30 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "line": 153,
+      "symbol": "RemoteCallErrorCode.invalidParameters",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 161,
       "symbol": "RemoteCallErrorMessage.invalidParameters",
       "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "line": 161,
+      "symbol": "RemoteCallErrorMessage.invalidParameters",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "line": 165,
+      "symbol": "ReturnError",
+      "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
@@ -681,6 +1339,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "line": 167,
+      "symbol": "ReturnError.code",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "line": 168,
+      "symbol": "ReturnError.message",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 168,
       "symbol": "ReturnError.message",
       "symbol_kind": "source.lang.swift.decl.var.instance",
@@ -689,6 +1361,20 @@
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 170,
+      "symbol": "ReturnError.init(code:message:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "line": 170,
+      "symbol": "ReturnError.init(code:message:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "line": 175,
       "symbol": "ReturnError.init(code:message:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -709,8 +1395,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/UpdateEvent.swift",
+      "line": 62,
+      "symbol": "UpdateEvent.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/UpdateEvent.swift",
       "line": 66,
       "symbol": "UpdateEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/UpdateEvent.swift",
+      "line": 66,
+      "symbol": "UpdateEvent.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Events/UpdateEvent.swift",
+      "line": 157,
+      "symbol": "UpdateEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -730,6 +1437,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Manager/CM+Util.swift",
+      "line": 14,
+      "symbol": "CommunicationManager.getCommunicationState()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Manager/CM+Util.swift",
+      "line": 18,
+      "symbol": "CommunicationManager.getOperatingState()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Manager/CM+Util.swift",
       "line": 18,
       "symbol": "CommunicationManager.getOperatingState()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
@@ -739,6 +1460,20 @@
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Manager/CommunicationManager.swift",
       "line": 63,
       "symbol": "CommunicationManager.init(runtime:communicationOptions:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Manager/CommunicationManager.swift",
+      "line": 63,
+      "symbol": "CommunicationManager.init(runtime:communicationOptions:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Manager/CommunicationManager.swift",
+      "line": 199,
+      "symbol": "CommunicationManager.start()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -758,6 +1493,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Manager/ControllerCommunicationManager.swift",
+      "line": 11,
+      "symbol": "ControllerCommunicationManager",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Manager/ControllerCommunicationManager.swift",
+      "line": 15,
+      "symbol": "ControllerCommunicationManager.identity",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Manager/ControllerCommunicationManager.swift",
       "line": 15,
       "symbol": "ControllerCommunicationManager.identity",
       "symbol_kind": "source.lang.swift.decl.var.instance",
@@ -767,6 +1516,20 @@
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
       "line": 11,
       "symbol": "CommunicationEventType.Raw",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
+      "line": 11,
+      "symbol": "CommunicationEventType.Raw",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
+      "line": 12,
+      "symbol": "CommunicationEventType.Advertise",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -786,8 +1549,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
+      "line": 13,
+      "symbol": "CommunicationEventType.Deadvertise",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
       "line": 14,
       "symbol": "CommunicationEventType.Channel",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
+      "line": 14,
+      "symbol": "CommunicationEventType.Channel",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
+      "line": 15,
+      "symbol": "CommunicationEventType.Discover",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -807,8 +1591,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
+      "line": 16,
+      "symbol": "CommunicationEventType.Resolve",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
       "line": 17,
       "symbol": "CommunicationEventType.Query",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
+      "line": 17,
+      "symbol": "CommunicationEventType.Query",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
+      "line": 18,
+      "symbol": "CommunicationEventType.Retrieve",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -828,8 +1633,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
+      "line": 19,
+      "symbol": "CommunicationEventType.Update",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
       "line": 20,
       "symbol": "CommunicationEventType.Complete",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
+      "line": 20,
+      "symbol": "CommunicationEventType.Complete",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
+      "line": 21,
+      "symbol": "CommunicationEventType.Associate",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -849,8 +1675,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
+      "line": 22,
+      "symbol": "CommunicationEventType.IoValue",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
       "line": 23,
       "symbol": "CommunicationEventType.Call",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
+      "line": 23,
+      "symbol": "CommunicationEventType.Call",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationEventType.swift",
+      "line": 24,
+      "symbol": "CommunicationEventType.Return",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -870,8 +1717,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationState.swift",
+      "line": 12,
+      "symbol": "CommunicationState.online",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationState.swift",
       "line": 13,
       "symbol": "CommunicationState.offline",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/CommunicationState.swift",
+      "line": 13,
+      "symbol": "CommunicationState.offline",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/OperatingState.swift",
+      "line": 10,
+      "symbol": "OperatingState.initial",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -891,8 +1759,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/OperatingState.swift",
+      "line": 11,
+      "symbol": "OperatingState.starting",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/OperatingState.swift",
       "line": 12,
       "symbol": "OperatingState.started",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/OperatingState.swift",
+      "line": 12,
+      "symbol": "OperatingState.started",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/OperatingState.swift",
+      "line": 13,
+      "symbol": "OperatingState.stopping",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -911,9 +1800,30 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Communication/Misc/OperatingState.swift",
+      "line": 14,
+      "symbol": "OperatingState.stopped",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/DB/DbConnectionInfo.swift",
       "line": 38,
       "symbol": "DbConnectionInfo.init(adapter:adapterOptions:connectionString:connectionOptions:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/DB/DbConnectionInfo.swift",
+      "line": 38,
+      "symbol": "DbConnectionInfo.init(adapter:adapterOptions:connectionString:connectionOptions:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "line": 35,
+      "symbol": "Annotation.init(type:creatorId:creationTimestamp:status:name:objectType:objectId:variants:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -933,8 +1843,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "line": 61,
+      "symbol": "Annotation.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 71,
       "symbol": "Annotation.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "line": 71,
+      "symbol": "Annotation.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "line": 96,
+      "symbol": "AnnotationVariant.init(variant:downloadUrl:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -954,8 +1885,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "line": 123,
+      "symbol": "AnnotationType.text",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 124,
       "symbol": "AnnotationType.image",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "line": 124,
+      "symbol": "AnnotationType.image",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "line": 125,
+      "symbol": "AnnotationType.audio",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -975,8 +1927,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "line": 126,
+      "symbol": "AnnotationType.video",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 127,
       "symbol": "AnnotationType.object3D",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "line": 127,
+      "symbol": "AnnotationType.object3D",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "line": 128,
+      "symbol": "AnnotationType.pdf",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -996,6 +1969,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "line": 129,
+      "symbol": "AnnotationType.webDocumentUrl",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "line": 130,
+      "symbol": "AnnotationType.liveDataUrl",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 130,
       "symbol": "AnnotationType.liveDataUrl",
       "symbol_kind": "source.lang.swift.decl.enumelement",
@@ -1009,37 +1996,58 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "line": 134,
+      "symbol": "AnnotationStatus",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoatyObject.swift",
-      "line": 64,
+      "line": 63,
       "symbol": "CoatyObject.init(coreType:objectType:objectId:name:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoatyObject.swift",
-      "line": 132,
+      "line": 63,
+      "symbol": "CoatyObject.init(coreType:objectType:objectId:name:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoatyObject.swift",
+      "line": 131,
       "symbol": "CoatyObject.json",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Component.swift",
-      "line": 12,
-      "symbol": "Component.init(name:objectType:objectId:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Component.swift",
-      "line": 18,
-      "symbol": "Component.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoatyObject.swift",
+      "line": 131,
+      "symbol": "CoatyObject.json",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
       "line": 15,
       "symbol": "CoreType.CoatyObject",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "line": 15,
+      "symbol": "CoreType.CoatyObject",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "line": 16,
+      "symbol": "CoreType.User",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -1059,8 +2067,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "line": 17,
+      "symbol": "CoreType.Device",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
       "line": 18,
       "symbol": "CoreType.Annotation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "line": 18,
+      "symbol": "CoreType.Annotation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "line": 19,
+      "symbol": "CoreType.Task",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -1080,6 +2109,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "line": 20,
+      "symbol": "CoreType.IoSource",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "line": 21,
+      "symbol": "CoreType.IoActor",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
       "line": 21,
       "symbol": "CoreType.IoActor",
       "symbol_kind": "source.lang.swift.decl.enumelement",
@@ -1088,7 +2131,21 @@
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
       "line": 22,
-      "symbol": "CoreType.Component",
+      "symbol": "CoreType.Identity",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "line": 22,
+      "symbol": "CoreType.Identity",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "line": 23,
+      "symbol": "CoreType.Config",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -1108,8 +2165,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "line": 24,
+      "symbol": "CoreType.Log",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
       "line": 25,
       "symbol": "CoreType.Location",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "line": 25,
+      "symbol": "CoreType.Location",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "line": 26,
+      "symbol": "CoreType.Snapshot",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -1129,6 +2207,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Device.swift",
+      "line": 22,
+      "symbol": "Device.init(displayType:ioCapabilities:name:objectType:objectId:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Device.swift",
+      "line": 39,
+      "symbol": "Device.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Device.swift",
       "line": 39,
       "symbol": "Device.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
@@ -1142,9 +2234,58 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Device.swift",
+      "line": 46,
+      "symbol": "Device.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Identity.swift",
+      "line": 12,
+      "symbol": "Identity.init(name:objectType:objectId:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Identity.swift",
+      "line": 12,
+      "symbol": "Identity.init(name:objectType:objectId:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Identity.swift",
+      "line": 18,
+      "symbol": "Identity.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Identity.swift",
+      "line": 18,
+      "symbol": "Identity.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/IoActor.swift",
       "line": 61,
       "symbol": "IoActor.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/IoActor.swift",
+      "line": 61,
+      "symbol": "IoActor.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/IoActor.swift",
+      "line": 68,
+      "symbol": "IoActor.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1164,6 +2305,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/IoPoint.swift",
+      "line": 52,
+      "symbol": "IoPoint.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/IoPoint.swift",
+      "line": 59,
+      "symbol": "IoPoint.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/IoPoint.swift",
       "line": 59,
       "symbol": "IoPoint.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
@@ -1173,6 +2328,20 @@
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/IoSource.swift",
       "line": 59,
       "symbol": "IoSource.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/IoSource.swift",
+      "line": 59,
+      "symbol": "IoSource.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/IoSource.swift",
+      "line": 66,
+      "symbol": "IoSource.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1192,8 +2361,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
+      "line": 20,
+      "symbol": "Location.geoLocation",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
       "line": 40,
       "symbol": "Location.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
+      "line": 40,
+      "symbol": "Location.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
+      "line": 46,
+      "symbol": "Location.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1213,8 +2403,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
+      "line": 75,
+      "symbol": "GeoLocation.init(coords:timestamp:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
       "line": 143,
       "symbol": "GeoCoordinates.init(latitude:longitude:accuracy:altitude:altitudeAccuracy:heading:speed:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
+      "line": 143,
+      "symbol": "GeoCoordinates.init(latitude:longitude:accuracy:altitude:altitudeAccuracy:heading:speed:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
+      "line": 44,
+      "symbol": "Log.init(logLevel:logMessage:logDate:name:objectType:objectId:logTags:logHost:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1234,8 +2445,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
+      "line": 70,
+      "symbol": "Log.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
       "line": 80,
       "symbol": "Log.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
+      "line": 80,
+      "symbol": "Log.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
+      "line": 116,
+      "symbol": "LogHost.init(agentInfo:pid:hostname:userAgent:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1255,8 +2487,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
+      "line": 33,
+      "symbol": "Snapshot.init(creationTimestamp:creatorId:tags:object:name:objectType:objectId:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
       "line": 59,
       "symbol": "Snapshot.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
+      "line": 59,
+      "symbol": "Snapshot.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
+      "line": 76,
+      "symbol": "Snapshot.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1276,6 +2529,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
+      "line": 53,
+      "symbol": "Task.init(creatorId:creationTimestamp:status:name:objectType:objectId:lastModificationTimestamp:dueTimestamp:doneTimestamp:requirements:description:workflowId:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
+      "line": 91,
+      "symbol": "Task.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
       "line": 91,
       "symbol": "Task.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
@@ -1290,8 +2557,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
-      "line": 145,
+      "line": 105,
+      "symbol": "Task.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
+      "line": 144,
       "symbol": "TaskStatus.init(stringValue:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
+      "line": 144,
+      "symbol": "TaskStatus.init(stringValue:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "line": 56,
+      "symbol": "User.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1311,9 +2599,30 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "line": 81,
+      "symbol": "User.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
       "line": 260,
       "symbol": "User.addresses",
       "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "line": 260,
+      "symbol": "User.addresses",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "line": 353,
+      "symbol": "ScimUserNames.init(formatted:familyName:givenName:middleName:honorificPrefix:honorificSuffix:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
@@ -1332,6 +2641,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "line": 369,
+      "symbol": "ScimMultiValuedAttribute",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "line": 394,
+      "symbol": "ScimMultiValuedAttribute.init(type:value:primary:display:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
       "line": 394,
       "symbol": "ScimMultiValuedAttribute.init(type:value:primary:display:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
@@ -1346,8 +2669,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "line": 428,
+      "symbol": "ScimAddress",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
       "line": 465,
       "symbol": "ScimAddress.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "line": 465,
+      "symbol": "ScimAddress.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "line": 476,
+      "symbol": "ScimAddress.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1367,8 +2711,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "line": 909,
+      "symbol": "ObjectFilterBuilder.conditions",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
       "line": 910,
       "symbol": "ObjectFilterBuilder.condition",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "line": 910,
+      "symbol": "ObjectFilterBuilder.condition",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "line": 911,
+      "symbol": "ObjectFilterBuilder.orderByProperties",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -1388,8 +2753,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "line": 912,
+      "symbol": "ObjectFilterBuilder.take",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
       "line": 913,
       "symbol": "ObjectFilterBuilder.skip",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "line": 913,
+      "symbol": "ObjectFilterBuilder.skip",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "line": 918,
+      "symbol": "ObjectFilterConditionBuilder.property",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -1409,8 +2795,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "line": 919,
+      "symbol": "ObjectFilterConditionBuilder.expression",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
       "line": 927,
       "symbol": "ObjectFilterConditionsBuilder.and",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "line": 927,
+      "symbol": "ObjectFilterConditionsBuilder.and",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "line": 928,
+      "symbol": "ObjectFilterConditionsBuilder.or",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -1429,9 +2836,30 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Model/ObjectJoinCondition.swift",
+      "line": 53,
+      "symbol": "ObjectJoinCondition.init(localProperty:asProperty:isLocalPropertyArray:isOneToOneRelation:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/AgentInfo.swift",
       "line": 18,
       "symbol": "AgentInfo.packageInfo",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/AgentInfo.swift",
+      "line": 18,
+      "symbol": "AgentInfo.packageInfo",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/AgentInfo.swift",
+      "line": 20,
+      "symbol": "AgentInfo.buildInfo",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -1451,8 +2879,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/AgentInfo.swift",
+      "line": 22,
+      "symbol": "AgentInfo.configInfo",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/AgentInfo.swift",
       "line": 26,
       "symbol": "AgentInfo.init(packageInfo:buildInfo:configInfo:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/AgentInfo.swift",
+      "line": 26,
+      "symbol": "AgentInfo.init(packageInfo:buildInfo:configInfo:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/AgentInfo.swift",
+      "line": 71,
+      "symbol": "AgentPackageInfo.init(name:version:extra:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1472,8 +2921,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/AgentInfo.swift",
+      "line": 123,
+      "symbol": "AgentBuildInfo.init(buildDate:buildMode:extra:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/AgentInfo.swift",
       "line": 171,
       "symbol": "AgentConfigInfo.init(serviceHost:extra:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/AgentInfo.swift",
+      "line": 171,
+      "symbol": "AgentConfigInfo.init(serviceHost:extra:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Components.swift",
+      "line": 22,
+      "symbol": "Components.init(controllers:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1493,8 +2963,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 11,
+      "symbol": "ConfigurationBuilder.common",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
       "line": 12,
       "symbol": "ConfigurationBuilder.communication",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 12,
+      "symbol": "ConfigurationBuilder.communication",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 13,
+      "symbol": "ConfigurationBuilder.controllers",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -1514,8 +3005,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 14,
+      "symbol": "ConfigurationBuilder.databases",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
       "line": 37,
       "symbol": "Configuration.init(common:communication:controllers:databases:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 37,
+      "symbol": "Configuration.init(common:communication:controllers:databases:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 92,
+      "symbol": "CommonOptions.init(associatedUser:associatedDevice:agentInfo:extra:logLevel:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1535,6 +3047,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 159,
+      "symbol": "CommunicationOptions.init(mqttClientOptions:identity:shouldAutoStart:shouldAdvertiseIdentity:shouldAdvertiseDevice:useProtocolCompliantClientId:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 181,
+      "symbol": "ControllerConfig.controllerOptions",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
       "line": 181,
       "symbol": "ControllerConfig.controllerOptions",
       "symbol_kind": "source.lang.swift.decl.var.instance",
@@ -1544,6 +3070,20 @@
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
       "line": 183,
       "symbol": "ControllerConfig.init(controllerOptions:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 183,
+      "symbol": "ControllerConfig.init(controllerOptions:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 210,
+      "symbol": "ControllerOptions.init(identity:shouldAdvertiseIdentity:extra:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1563,8 +3103,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 230,
+      "symbol": "DatabaseOptions.init(databaseConnections:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
       "line": 237,
       "symbol": "MQTTClientOptions.host",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 237,
+      "symbol": "MQTTClientOptions.host",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 238,
+      "symbol": "MQTTClientOptions.port",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -1584,8 +3145,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 239,
+      "symbol": "MQTTClientOptions.clientId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
       "line": 240,
       "symbol": "MQTTClientOptions.shouldTryMDNSDiscovery",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 240,
+      "symbol": "MQTTClientOptions.shouldTryMDNSDiscovery",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 241,
+      "symbol": "MQTTClientOptions.username",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -1605,8 +3187,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 242,
+      "symbol": "MQTTClientOptions.password",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
       "line": 243,
       "symbol": "MQTTClientOptions.cleanSession",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 243,
+      "symbol": "MQTTClientOptions.cleanSession",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 244,
+      "symbol": "MQTTClientOptions.allowUntrustCACertificate",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -1626,8 +3229,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 245,
+      "symbol": "MQTTClientOptions.autoReconnectTimeInterval",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
       "line": 250,
       "symbol": "MQTTClientOptions.enableSSL",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 250,
+      "symbol": "MQTTClientOptions.enableSSL",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 251,
+      "symbol": "MQTTClientOptions.autoReconnect",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -1646,9 +3270,30 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Configuration.swift",
+      "line": 253,
+      "symbol": "MQTTClientOptions.init(host:port:enableSSL:shouldTryMDNSDiscovery:username:password:cleanSession:keepAlive:autoReconnect:allowUntrustCACertificate:autoReconnectTimeInterval:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Container.swift",
       "line": 19,
       "symbol": "Container.runtime",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Container.swift",
+      "line": 19,
+      "symbol": "Container.runtime",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Container.swift",
+      "line": 20,
+      "symbol": "Container.communicationManager",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -1668,6 +3313,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Container.swift",
+      "line": 21,
+      "symbol": "Container.eventFactory",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Container.swift",
+      "line": 33,
+      "symbol": "Container.resolve(components:configuration:objectFamily:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Container.swift",
       "line": 33,
       "symbol": "Container.resolve(components:configuration:objectFamily:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
@@ -1677,6 +3336,20 @@
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Controller.swift",
       "line": 22,
       "symbol": "Controller.runtime",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Controller.swift",
+      "line": 22,
+      "symbol": "Controller.runtime",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Controller.swift",
+      "line": 23,
+      "symbol": "Controller.options",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -1696,6 +3369,20 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Controller.swift",
+      "line": 24,
+      "symbol": "Controller.controllerType",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Controller.swift",
+      "line": 25,
+      "symbol": "Controller.identity",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Controller.swift",
       "line": 25,
       "symbol": "Controller.identity",
       "symbol_kind": "source.lang.swift.decl.var.instance",
@@ -1705,6 +3392,20 @@
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Controller.swift",
       "line": 31,
       "symbol": "Controller.init(runtime:options:communicationManager:controllerType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Controller.swift",
+      "line": 31,
+      "symbol": "Controller.init(runtime:options:communicationManager:controllerType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Dynamic/DynamicComponents.swift",
+      "line": 23,
+      "symbol": "DynamicComponents.init(controllers:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1724,8 +3425,29 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Dynamic/DynamicContainer.swift",
+      "line": 19,
+      "symbol": "DynamicContainer.runtime",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Dynamic/DynamicContainer.swift",
       "line": 20,
       "symbol": "DynamicContainer.communicationManager",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Dynamic/DynamicContainer.swift",
+      "line": 20,
+      "symbol": "DynamicContainer.communicationManager",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Dynamic/DynamicContainer.swift",
+      "line": 21,
+      "symbol": "DynamicContainer.eventFactory",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -1744,9 +3466,30 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Dynamic/DynamicContainer.swift",
+      "line": 33,
+      "symbol": "DynamicContainer.resolve(components:configuration:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Dynamic/DynamicController.swift",
       "line": 22,
       "symbol": "DynamicController.runtime",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Dynamic/DynamicController.swift",
+      "line": 22,
+      "symbol": "DynamicController.runtime",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Dynamic/DynamicController.swift",
+      "line": 23,
+      "symbol": "DynamicController.options",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -1766,9 +3509,30 @@
     },
     {
       "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Dynamic/DynamicController.swift",
+      "line": 24,
+      "symbol": "DynamicController.controllerType",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Dynamic/DynamicController.swift",
       "line": 25,
       "symbol": "DynamicController.identity",
       "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Dynamic/DynamicController.swift",
+      "line": 25,
+      "symbol": "DynamicController.identity",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/markussauer/Development/020_gitrepos/020_collaborative-iot/coaty-swift/CoatySwift/Classes/Runtime/Dynamic/DynamicController.swift",
+      "line": 31,
+      "symbol": "DynamicController.init(runtime:options:communicationManager:controllerType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {

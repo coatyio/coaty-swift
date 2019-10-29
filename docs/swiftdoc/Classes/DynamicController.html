@@ -14,7 +14,7 @@
     <a title="DynamicController Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">CoatySwift 1.0.0 Docs</a> (68% documented)</p>
+        <p><a href="../index.html">CoatySwift 1.0.1 Docs</a> (68% documented)</p>
         <p class="header-right"><a href="https://github.com/coatyio/coaty-swift"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -107,9 +107,6 @@
                 <a href="../Classes/CompleteEventFactory.html">CompleteEventFactory</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/Component.html">Component</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Classes/Components.html">Components</a>
               </li>
               <li class="nav-group-task">
@@ -183,6 +180,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/GeoLocation.html">GeoLocation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Identity.html">Identity</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/IoActor.html">IoActor</a>
@@ -621,9 +621,9 @@ create CommunicationEvents.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10CoatySwift17DynamicControllerC8identityAA9ComponentCvp"></a>
+                    <a name="/s:10CoatySwift17DynamicControllerC8identityAA8IdentityCvp"></a>
                     <a name="//apple_ref/swift/Property/identity" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift17DynamicControllerC8identityAA9ComponentCvp">identity</a>
+                    <a class="token" href="#/s:10CoatySwift17DynamicControllerC8identityAA8IdentityCvp">identity</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -638,7 +638,7 @@ create CommunicationEvents.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">private(set)</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">identity</span><span class="p">:</span> <span class="kt"><a href="../Classes/Component.html">Component</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">private(set)</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">identity</span><span class="p">:</span> <span class="kt"><a href="../Classes/Identity.html">Identity</a></span></code></pre>
 
                         </div>
                       </div>
@@ -788,7 +788,7 @@ is called in your override. The base
 implementation advertises its identity if requested by the controller
 option property <code>shouldAdvertiseIdentity</code> (if this property is not
 specified, the identity is advertised by default). The base
-implementation also observes Discover events for core type <q>Component</q> or
+implementation also observes Discover events for core type <q>Identity</q> or
 the identity&rsquo;s object ID and resolves them with the controller&rsquo;s
 identity.</p>
 
@@ -865,9 +865,9 @@ Implement cleanup side effects here. The base implementation does nothing.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10CoatySwift17DynamicControllerC18initializeIdentity8identityyAA9ComponentC_tF"></a>
+                    <a name="/s:10CoatySwift17DynamicControllerC18initializeIdentity8identityyAA0F0C_tF"></a>
                     <a name="//apple_ref/swift/Method/initializeIdentity(identity:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift17DynamicControllerC18initializeIdentity8identityyAA9ComponentC_tF">initializeIdentity(identity:)</a>
+                    <a class="token" href="#/s:10CoatySwift17DynamicControllerC18initializeIdentity8identityyAA0F0C_tF">initializeIdentity(identity:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -880,11 +880,11 @@ based on the specified default identity object.</p>
 
 <p>Do not call this method in your application code, it is called by the
 framework. To retrieve the identity of a controller use
-its <code><a href="../Classes/DynamicController.html#/s:10CoatySwift17DynamicControllerC8identityAA9ComponentCvp">identity</a></code> getter.</p>
+its <code><a href="../Classes/DynamicController.html#/s:10CoatySwift17DynamicControllerC8identityAA8IdentityCvp">identity</a></code> getter.</p>
 
 <p>You can overwrite this method to initalize the identity with a custom name
 or additional application-specific properties. Alternatively, you can
-set or add custom property-value pairs by specifying them in the <code><a href="../Classes/DynamicController.html#/s:10CoatySwift17DynamicControllerC8identityAA9ComponentCvp">identity</a></code>
+set or add custom property-value pairs by specifying them in the <code><a href="../Classes/DynamicController.html#/s:10CoatySwift17DynamicControllerC8identityAA8IdentityCvp">identity</a></code>
 property of the controller configuration options <code><a href="../Classes/ControllerOptions.html">ControllerOptions</a></code>.
 If you specify identity properties in both ways, the ones specified
 in the configuration options take precedence.</p>
@@ -896,7 +896,7 @@ in the configuration options take precedence.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">initializeIdentity</span><span class="p">(</span><span class="nv">identity</span><span class="p">:</span> <span class="kt"><a href="../Classes/Component.html">Component</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">initializeIdentity</span><span class="p">(</span><span class="nv">identity</span><span class="p">:</span> <span class="kt"><a href="../Classes/Identity.html">Identity</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -908,7 +908,7 @@ in the configuration options take precedence.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://coaty.io" target="_blank" rel="external">Siemens AG</a>. All rights reserved. (Last updated: 2019-10-24)</p>
+          <p>&copy; 2019 <a class="link" href="https://coaty.io" target="_blank" rel="external">Siemens AG</a>. All rights reserved. (Last updated: 2019-10-29)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

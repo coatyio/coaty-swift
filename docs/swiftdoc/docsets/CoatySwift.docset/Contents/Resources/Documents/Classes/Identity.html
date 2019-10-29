@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Component Class Reference</title>
+    <title>Identity Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,11 +10,11 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/Component" class="dashAnchor"></a>
-    <a title="Component Class Reference"></a>
+    <a name="//apple_ref/swift/Class/Identity" class="dashAnchor"></a>
+    <a title="Identity Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">CoatySwift 1.0.0 Docs</a> (68% documented)</p>
+        <p><a href="../index.html">CoatySwift 1.0.1 Docs</a> (68% documented)</p>
         <p class="header-right"><a href="https://github.com/coatyio/coaty-swift"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">CoatySwift Reference</a>
         <img id="carat" src="../img/carat.png" />
-        Component Class Reference
+        Identity Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -107,9 +107,6 @@
                 <a href="../Classes/CompleteEventFactory.html">CompleteEventFactory</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/Component.html">Component</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Classes/Components.html">Components</a>
               </li>
               <li class="nav-group-task">
@@ -183,6 +180,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/GeoLocation.html">GeoLocation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Identity.html">Identity</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/IoActor.html">IoActor</a>
@@ -462,10 +462,10 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>Component</h1>
+            <h1>Identity</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">Component</span> <span class="p">:</span> <span class="kt"><a href="../Classes/CoatyObject.html">CoatyObject</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">Identity</span> <span class="p">:</span> <span class="kt"><a href="../Classes/CoatyObject.html">CoatyObject</a></span></code></pre>
 
                 </div>
               </div>
@@ -478,9 +478,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@CoatySwift@objc(cs)Component(im)initWithName:objectType:objectId:"></a>
+                    <a name="/s:10CoatySwift8IdentityC4name10objectType0E2IdACSS_SSAA0A4UUIDCtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(name:objectType:objectId:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@CoatySwift@objc(cs)Component(im)initWithName:objectType:objectId:">init(name:objectType:objectId:)</a>
+                    <a class="token" href="#/s:10CoatySwift8IdentityC4name10objectType0E2IdACSS_SSAA0A4UUIDCtcfc">init(name:objectType:objectId:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -496,7 +496,7 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"ComponentObject"</span><span class="p">,</span>
-            <span class="nv">objectType</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"</span><span class="se">\(</span><span class="kt"><a href="../Global%20Variables.html#/s:10CoatySwift34COATY_OBJECT_TYPE_NAMESPACE_PREFIXSSvp">COATY_OBJECT_TYPE_NAMESPACE_PREFIX</a></span><span class="se">)\(</span><span class="kt"><a href="../Enums/CoreType.html">CoreType</a></span><span class="o">.</span><span class="kt">Component</span><span class="se">)</span><span class="s">"</span><span class="p">,</span>
+            <span class="nv">objectType</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"</span><span class="se">\(</span><span class="kt"><a href="../Global%20Variables.html#/s:10CoatySwift34COATY_OBJECT_TYPE_NAMESPACE_PREFIXSSvp">COATY_OBJECT_TYPE_NAMESPACE_PREFIX</a></span><span class="se">)\(</span><span class="kt"><a href="../Enums/CoreType.html">CoreType</a></span><span class="o">.</span><span class="kt">Identity</span><span class="o">.</span><span class="n">rawValue</span><span class="se">)</span><span class="s">"</span><span class="p">,</span>
             <span class="nv">objectId</span><span class="p">:</span> <span class="kt"><a href="../Classes/CoatyUUID.html">CoatyUUID</a></span> <span class="o">=</span> <span class="o">.</span><span class="nf">init</span><span class="p">())</span></code></pre>
 
                         </div>
@@ -507,9 +507,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10CoatySwift9ComponentC4fromACs7Decoder_p_tKcfc"></a>
+                    <a name="/s:10CoatySwift8IdentityC4fromACs7Decoder_p_tKcfc"></a>
                     <a name="//apple_ref/swift/Method/init(from:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift9ComponentC4fromACs7Decoder_p_tKcfc">init(from:)</a>
+                    <a class="token" href="#/s:10CoatySwift8IdentityC4fromACs7Decoder_p_tKcfc">init(from:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -536,7 +536,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://coaty.io" target="_blank" rel="external">Siemens AG</a>. All rights reserved. (Last updated: 2019-10-24)</p>
+          <p>&copy; 2019 <a class="link" href="https://coaty.io" target="_blank" rel="external">Siemens AG</a>. All rights reserved. (Last updated: 2019-10-29)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

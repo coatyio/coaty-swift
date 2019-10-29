@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CoatySwift'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'CoatySwift is a Swift implementation of the Coaty Collaborative IoT framework for iOS, iPadOS, and macOS.'
 
 # This description is used to generate tags and improve search results.
@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
 
   s.ios.deployment_target = '9.0'
-# s.osx.deployment_target = '10.14'
+  s.osx.deployment_target = '10.14'
 
   s.source_files = 'CoatySwift/Classes/**/*'
     

@@ -39,7 +39,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CoatySwift: 8a10c1ff019338fd87273768e26586dcf4f241cf
+  CoatySwift: 50e0c6d9c39b00c00473f182e9759bd891c15e9f
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   CocoaMQTT: b506d38ad3bbe1c55a4f8ee8c9fd02c35da1a7d8
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
