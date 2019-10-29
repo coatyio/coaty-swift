@@ -333,7 +333,7 @@ enum ExampleObjectFamily: String, ObjectFamily {
 
                     <p><small><b>Step 1</b>
                             <br>
-                            Create a global variable <code>coatyContainer</code>.
+                            Create a global variable <code>container</code>.
                             <hr>
                             This will hold a reference to our Coaty container.
                             It is needed because otherwise all of our references go out of scope and for example
@@ -358,14 +358,17 @@ enum ExampleObjectFamily: String, ObjectFamily {
 import UIKit
 import CoatySwift
 
-/// Save a reference of your container in the app delegate to
-/// make sure it stays alive during the entire life-time of the app.
-var coatyContainer: Container&lt;ExampleObjectFamily&gt;?
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var window: UIWindow?
+    
+    /// Save a reference of your container in the app delegate to
+    /// make sure it stays alive during the entire life-time of the app.
+    var container: Container&lt;ExampleObjectFamily&gt;?
     ...
 }
+
                         </code></pre>
                     </div>
 
@@ -565,7 +568,7 @@ private func launchContainer() {
 
                     <p><small><b>Step 4</b>
                             <br>
-                            Resolve everything and assign the variable <code>coatyContainer</code> with the return
+                            Resolve everything and assign the variable <code>container</code> with the return
                             value of
                             <code>container.resolve(...)</code>, while passing in
                             our previously defined <code>components</code>, <code>configuration</code> and our
@@ -593,9 +596,9 @@ private func launchContainer() {
     ...
 
     // Resolve everything!
-    coatyContainer = Container.resolve(components: components,
-                                       configuration: configuration,
-                                       objectFamily: ExampleObjectFamily.self)
+    container = Container.resolve(components: components,
+                                  configuration: configuration,
+                                  objectFamily: ExampleObjectFamily.self)
 
 }
                                     </code></pre>
