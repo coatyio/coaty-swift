@@ -10,7 +10,7 @@ import Foundation
 /// Custom implementation of a UUID that actually is compatible with the RFC
 /// specification of sending UUIDs over the network (lowercase in contrast to Apple's
 /// uppercase implementation).
-public class CoatyUUID: Codable {
+public class CoatyUUID: Codable, Equatable {
     
     private var uuid: UUID
     
@@ -18,7 +18,7 @@ public class CoatyUUID: Codable {
         return uuid.uuidString.lowercased()
     }
     
-    public override init() {
+    public init() {
         self.uuid = .init()
     }
     
@@ -45,16 +45,13 @@ public class CoatyUUID: Codable {
     
     // MARK: - Equatable methods.
     
-    public override func isEqual(_ object: Any?) -> Bool {
-        if let other = object as? CoatyUUID {
-            return self.uuid == other.uuid
-        }
-        return false
+    public static func == (lhs: CoatyUUID, rhs: CoatyUUID) -> Bool {
+        return lhs.uuid == rhs.uuid
     }
     
     // MARK: - String Convertible.
     
-    override public var description: String {
+    public var description: String {
         return self.string
     }
 }
