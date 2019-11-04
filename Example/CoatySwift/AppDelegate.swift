@@ -46,7 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        // Shutdown container in order to trigger a graceful deadvertise of all advertised components.
+        container?.shutdown();
     }
     
     // MARK: - Coaty Container setup methods.

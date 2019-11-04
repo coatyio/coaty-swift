@@ -388,7 +388,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             Create a new function in your <code>AppDelegate.swift</code> called
                             <code>launchContainer()</code>. Make sure to call this method in your
                             <code>application(_ application:, didFinishLaunchingWithOptions:)</code>
-                            method.
+                            method. Also make sure to call the <code>container.shutdown()</code> method
+                            in the <code>applicationWillTerminate(_ application:)</code> method to
+                            gracefully release all container components when the app terminates.
                             <hr>
                             This will be our main method for setting up the Coaty
                             application.
