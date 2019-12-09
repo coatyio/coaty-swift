@@ -530,7 +530,8 @@ final class ExampleObject: CoatyObject {
 >that can be any valid JSON data, and you don't know the JSON structure in
 >advance, declare the property type as `AnyCodable`. Using this type, you can
 >encode or decode mixed-type values in dictionaries and other collections that
->require `Encodable` or `Decodable` conformance.
+>require `Encodable` or `Decodable` conformance. For decoding, simply cast the
+> `value` property of the `AnyCodable` to the expected Swift type.
 
 To let the framework know about the new custom type you need to define a so
 called `ObjectFamily`. The `ObjectFamily` provides a mapping from a type name
