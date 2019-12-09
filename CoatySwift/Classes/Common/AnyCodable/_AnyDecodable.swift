@@ -2,10 +2,18 @@
 
 import Foundation
 
+#if swift(>=4.2)
+@usableFromInline
 protocol _AnyDecodable {
     var value: Any { get }
     init<T>(_ value: T?)
 }
+#else
+protocol _AnyDecodable {
+    var value: Any { get }
+    init<T>(_ value: T?)
+}
+#endif
 
 extension _AnyDecodable {
     public init(from decoder: Decoder) throws {

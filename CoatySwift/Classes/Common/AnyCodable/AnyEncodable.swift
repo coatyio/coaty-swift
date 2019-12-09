@@ -27,15 +27,7 @@ import Foundation
  ]
  
  let encoder = JSONEncoder()
- let json = try! encoder.encode(dic
- var encodableValue: Encodable? {
- <#code#>
- }
- 
- var encodableValue: Encodable? {
- <#code#>
- }
- tionary)
+ let json = try! encoder.encode(dictionary)
  */
 public struct AnyEncodable: Encodable {
     public let value: Any
