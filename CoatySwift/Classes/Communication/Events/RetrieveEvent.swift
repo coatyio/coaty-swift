@@ -6,34 +6,28 @@
 
 import Foundation
 
-/// A Factory that creates RetrieveEvents.
-public class RetrieveEventFactory<Family: ObjectFamily>: EventFactoryInit {
+/// RetrieveEvent provides a generic implementation for responding to a
+/// `QueryEvent`.
+public class RetrieveEvent: CommunicationEvent<RetrieveEventData> {
     
-    /// Create a RetrieveEvent instance for delivering the given objects.
+    // MARK: - Static Factory Methods.
+
+    /// Create a RetrieveEvent instance for delivering the queried objects.
     ///
     /// - Parameters:
-    ///   - objects: the objects payload.
+    ///   - objects: the objects which have been queried.
     ///   - privateData: application-specific options (optional).
-    /// - Returns: a retrieve event that contains CoatyObjects that are part of the `ObjectFamily`.
-    public func with(objects: [CoatyObject],
-                     privateData: [String: Any]? = nil) -> RetrieveEvent<Family> {
-        let retrieveEventData = RetrieveEventData<Family>(objects: objects, privateData: privateData)
-        return .init(eventSource: self.identity, eventData: retrieveEventData)
+    /// - Returns: a Retrieve event with the given parameters
+    public static func with(objects: [CoatyObject],
+                     privateData: [String: Any]? = nil) -> RetrieveEvent {
+        let retrieveEventData = RetrieveEventData(objects: objects, privateData: privateData)
+        return .init(eventType: .Retrieve, eventData: retrieveEventData)
     }
-    
-}
 
-/// RetrieveEvent provides a generic implementation for responding to a `QueryEvent`.
-///
-/// The class requires the definition of a `ObjectFamily`, e.g. `CoatyObjectFamily` or a
-/// custom implementation of a `ObjectFamily` to support custom object types.
-/// - NOTE: This class should preferably be initialized via its withObject() method.
-public class RetrieveEvent<Family: ObjectFamily>: CommunicationEvent<RetrieveEventData<Family>> {
-    
     // MARK: - Initializers.
     
-    fileprivate override init(eventSource: Identity, eventData: RetrieveEventData<Family>) {
-        super.init(eventSource: eventSource, eventData: eventData)
+    fileprivate override init(eventType: CommunicationEventType, eventData: RetrieveEventData) {
+        super.init(eventType: eventType, eventData: eventData)
     }
     
     // MARK: - Codable methods.
@@ -50,7 +44,7 @@ public class RetrieveEvent<Family: ObjectFamily>: CommunicationEvent<RetrieveEve
 /// RetrieveEventData provides the entire message payload data for a
 /// `RetrieveEvent` including the object itself as well as associated private
 /// data.
-public class RetrieveEventData<Family: ObjectFamily>: CommunicationEventData {
+public class RetrieveEventData: CommunicationEventData {
     
     // MARK: - Public attributes.
     
@@ -84,7 +78,7 @@ public class RetrieveEventData<Family: ObjectFamily>: CommunicationEventData {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.objects = try container.decode(family: Family.self, forKey: .objects)
+        self.objects = try container.decode([AnyCoatyObjectDecodable].self, forKey: .objects).compactMap({ $0.object })
         self.privateData = try container.decodeIfPresent([String: Any].self, forKey: .privateData)
         try super.init(from: decoder)
     }

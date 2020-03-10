@@ -7,63 +7,70 @@
 
 import Foundation
 
-/// A Factory that creates ChannelEvents.
-public class ChannelEventFactory<Family: ObjectFamily>: EventFactoryInit {
+/// ChannelEvent provides a generic implementation for broadcasting objects
+/// through a channel.
+public class ChannelEvent: CommunicationEvent<ChannelEventData> {
     
+    // MARK: - Internal attributes.
+    
+    var channelId: String?
+
+    // MARK: - Static Factory Methods.
+
     /// Create a ChannelEvent instance for delivering the given object.
     ///
+    /// The channel identifier must be a non-empty string that does not contain
+    /// the following characters: `NULL (U+0000)`, `# (U+0023)`, `+ (U+002B)`,
+    /// `/ (U+002F)`.
+    ///
     /// - Parameters:
-    ///   - channelId: channel identifier string.
     ///   - object: the object to be channelized.
-    ///   - privateData: application-specific options (optional).
-    /// - Returns: a channel event that emits CoatyObjects that are part of a defined `ObjectFamily`.
-    public func with(object: CoatyObject,
-                     channelId: String,
-                     privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
-        let channelEventData = ChannelEventData<Family>(object: object, privateData: privateData)
-        return .init(eventSource: self.identity, eventData: channelEventData, channelId: channelId)
+    ///   - channelId: channel identifier string
+    ///   - privateData: application-specific options (optional)
+    /// - Returns: a Channel event with the given parameters
+    /// - Throws: if channel identifier is invalid
+    public static func with(object: CoatyObject,
+                            channelId: String,
+                            privateData: [String: Any]? = nil) throws -> ChannelEvent {
+        let channelEventData = ChannelEventData(object: object, privateData: privateData)
+        return try .init(eventType: .Channel, eventData: channelEventData, channelId: channelId)
     }
     
     /// Create a ChannelEvent instance for delivering the given objects.
     ///
+    /// The channel identifier must be a non-empty string that does not contain
+    /// the following characters: `NULL (U+0000)`, `# (U+0023)`, `+ (U+002B)`,
+    /// `/ (U+002F)`.
+    ///
     /// - Parameters:
-    ///   - channelId: channel identifier string.
     ///   - objects: the objects to be channelized
+    ///   - channelId: channel identifier string
     ///   - privateData: application-specific options (optional)
-    /// - Returns: a channel event that emits CoatyObjects that are part of a defined `ObjectFamily`.
-    public func with(objects: [CoatyObject],
-                     channelId: String,
-                     privateData: [String: Any]? = nil) -> ChannelEvent<Family> {
-        let channelEventData = ChannelEventData<Family>(objects: objects, privateData: privateData)
-        return .init(eventSource: self.identity, eventData: channelEventData, channelId: channelId)
+    /// - Returns: a Channel event with the given parameters
+    /// - Throws: if channel identifier is invalid
+    public static func with(objects: [CoatyObject],
+                            channelId: String,
+                            privateData: [String: Any]? = nil) throws -> ChannelEvent {
+        let channelEventData = ChannelEventData(objects: objects, privateData: privateData)
+        return try .init(eventType: .Channel, eventData: channelEventData, channelId: channelId)
     }
-    
-}
-
-/// ChannelEvent provides a generic implementation for broadcasting objects through a channel.
-///
-/// The class requires the definition of an `ObjectFamily`, e.g. `CoatyObjectFamily` or a
-/// custom implementation of an `ObjectFamily` to support custom object types.
-/// - NOTE: This class should preferably be initialized via its withObject() method.
-public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEventData<Family>> {
-    
-    var channelId: String?
     
     // MARK: - Initializers.
     
-    fileprivate override init(eventSource: Identity, eventData: ChannelEventData<Family>) {
-        super.init(eventSource: eventSource, eventData: eventData)
+    fileprivate override init(eventType: CommunicationEventType, eventData: ChannelEventData) {
+        super.init(eventType: eventType, eventData: eventData)
     }
 
-    internal init(eventSource: Identity, eventData: ChannelEventData<Family>, channelId: String) {
-        
-        if !CommunicationTopic.isValidEventTypeFilter(filter: channelId) {
-            LogManager.log.warning("\(channelId) is not a valid channel identifier.")
+    fileprivate init(eventType: CommunicationEventType, eventData: ChannelEventData, channelId: String) throws {
+        guard CommunicationTopic.isValidEventTypeFilter(filter: channelId) else {
+            throw CoatySwiftError.InvalidArgument("Invalid channel identifier.")
         }
         
-        super.init(eventSource: eventSource, eventData: eventData)
+        super.init(eventType: eventType, eventData: eventData)
+        self.typeFilter = channelId
         self.channelId = channelId
     }
+
     
     // MARK: - Codable methods.
     
@@ -79,7 +86,7 @@ public class ChannelEvent<Family: ObjectFamily>: CommunicationEvent<ChannelEvent
 /// ChannelEventData provides the entire message payload data for a
 /// `ChannelEvent` including the object itself as well as associated private
 /// data.
-public class ChannelEventData<Family: ObjectFamily>: CommunicationEventData {
+public class ChannelEventData: CommunicationEventData {
     
     // MARK: - Public attributes.
     
@@ -125,8 +132,8 @@ public class ChannelEventData<Family: ObjectFamily>: CommunicationEventData {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.decodeIfPresent(ClassWrapper<Family, CoatyObject>.self, forKey: .object)?.object
-        self.objects = try container.decodeIfPresent(family: Family.self, forKey: .objects)
+        self.object = try container.decodeIfPresent(AnyCoatyObjectDecodable.self, forKey: .object)?.object
+        self.objects = try container.decodeIfPresent([AnyCoatyObjectDecodable].self, forKey: .objects)?.compactMap({ $0.object })
         try? self.privateData = container.decodeIfPresent([String: Any].self, forKey: .privateData)
         try super.init(from: decoder)
     }

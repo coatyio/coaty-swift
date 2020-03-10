@@ -47,7 +47,7 @@ extension BonjourResolver: NetServiceBrowserDelegate {
  
     func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
         
-        log.info("Did find net service.")
+        log.debug("Did find net service.")
  
         // Has to be saved here, otherwise we lose reference and cannot resolve.
         brokerService = service
@@ -61,7 +61,7 @@ extension BonjourResolver: NetServiceBrowserDelegate {
     }
  
     func netServiceBrowser(_ browser: NetServiceBrowser, didNotSearch errorDict: [String : NSNumber]) {
-        log.warning("Did not search net service.")
+        log.debug("Did not search net service.")
     }
 }
 
@@ -70,12 +70,12 @@ extension BonjourResolver: NetServiceBrowserDelegate {
 extension BonjourResolver: NetServiceDelegate {
  
     func netServiceBrowser(_ browser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
-        log.info("Did remove net service.")
+        log.debug("Did remove net service.")
     }
  
     func netServiceDidResolveAddress(_ sender: NetService) {
  
-        log.info("Did resolve net service address.")
+        log.debug("Did resolve net service address.")
  
         // Find the IPV4 address.
         guard let serviceIPs = resolveIPv4Addresses(addresses: sender.addresses!) else {
@@ -83,8 +83,8 @@ extension BonjourResolver: NetServiceDelegate {
             return
         }
  
-            delegate?.didReceiveService(addresses: serviceIPs, port: sender.port)
-        }
+        delegate?.didReceiveService(addresses: serviceIPs, port: sender.port)
+    }
  
     // MARK: - Message parsing methods.
  

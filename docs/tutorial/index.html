@@ -170,7 +170,7 @@ target 'HelloCoaty' do
     use_frameworks!
 
     # Pods for HelloCoaty
-    pod 'CoatySwift', '~> 1.0'
+    pod 'CoatySwift', '~> 2.0'
 
 end            </code></pre>
                     </div>
@@ -184,15 +184,13 @@ end            </code></pre>
         <!-- Section 2 -->
 
         <h5>Section 2</h5>
-        <h2>Create a new CoatySwift ObjectFamily</h2>
+        <h2>Create a new Coaty Object Type</h2>
 
         <div class="row">
             <div class="col">
                 <p class="text-secondary">
                     If you want to use custom objects with your Coaty application, you will have to define each of
-                    them,
-                    and integrate them in an <code>ObjectFamily</code>. We will now create such an example object and
-                    integrate it accordingly.
+                    them. We will now create such an example object type and integrate it accordingly.
                 </p>
             </div>
 
@@ -210,14 +208,16 @@ end            </code></pre>
 
                     <p><small><b>Step 1</b>
                             <br>
-                            Add custom objects by creating classes that extend from <code>CoatyObject</code>.
-                            Also make sure that the object implements the <a
+                            Add custom objects by creating classes that extend from <code>CoatyObject</code>
+                            or one of the other builtin Coaty core types.
+                            <br><br>
+                            Ensure that the class for your custom Coaty object type is registered with CoatySwift.
+                            This is necessary to properly decode custom objects received over the wire.
+                            <br><br>
+                            Also make sure that the class implements the <a
                                 href="https://developer.apple.com/documentation/swift/codable"><code>Codable</code></a>
-                            interface, and implement the methods <code>required init(from decoder: Decoder)</code>
-                            and
-                            <code>override func encode(to encoder: Encoder)</code>.
-
-
+                            interface, implementing the methods <code>required init(from decoder: Decoder)</code>
+                            and <code>override func encode(to encoder: Encoder)</code>.                            
                         </small></p>
 
                 </div>
@@ -234,15 +234,25 @@ import Foundation
 import CoatySwift
 
 final class ExampleObject: CoatyObject {
+
+    // MARK: - Class registration.
+    
+    override class var objectType: String {
+        return register(objectType: "hello.coaty.ExampleObject", with: self)
+    }
+
+    // MARK: - Properties.
     
     let myValue: String
+
+    // MARK: - Initializers.
     
     init(myValue: String) {
         self.myValue = myValue
         super.init(coreType: .CoatyObject,
-                    objectType: ExampleObjectFamily.exampleObject.rawValue,
-                    objectId: .init(),
-                    name: "ExampleObject Name :)")
+                   objectType: ExampleObject.objectType,
+                   objectId: .init(),
+                   name: "ExampleObject Name :)")
     }
     
     // MARK: Codable methods.
@@ -271,55 +281,6 @@ final class ExampleObject: CoatyObject {
             </div>
         </div>
 
-        <!--Section 2 Step 2-->
-
-        <div class="row">
-
-            <div class="col-5">
-
-                <div class="alert alert-step" role="alert">
-
-                    <p><small><b>Step 2</b>
-                            <br>
-                            Create a new file <code>ExampleObjectFamily.swift</code>. Add the object type and class
-                            mapping to the file.
-                            <hr>
-                            After we have implemented all of our (custom) objects, you will have to add the
-                            corresponding object type case and its mapping to your custom object class. This is
-                            necessary in order to properly parse objects when they are sent over the wire.
-
-                        </small></p>
-
-                </div>
-            </div>
-
-            <div class="col-7">
-
-                <div class="card card-default">
-                    <div class="card-header"><code>ExampleObjectFamily.swift</code></div>
-
-                    <div class="card-body">
-                        <pre><code class="swift">
-import Foundation
-import CoatySwift
-
-enum ExampleObjectFamily: String, ObjectFamily {
-    case exampleObject = "io.coaty.hello-coaty.example-object"
-    
-    func getType() -> AnyObject.Type {
-        switch self {
-        case .exampleObject:
-            return ExampleObject.self
-        }
-    }
-}
-</code></pre>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
         <!-- Section 3 Step 1 -->
 
         <h5>Section 3</h5>
@@ -335,10 +296,9 @@ enum ExampleObjectFamily: String, ObjectFamily {
                             <br>
                             Create a global variable <code>container</code>.
                             <hr>
-                            This will hold a reference to our Coaty container.
-                            It is needed because otherwise all of our references go out of scope and for example
-                            then
-                            the MQTT connection is simply terminated.
+                            This will hold a reference to our Coaty container for the lifetime of the app.
+                            It is needed because otherwise all of our references go out of scope and
+                            communication is terminated.
 
                         </small></p>
 
@@ -364,8 +324,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     /// Save a reference of your container in the app delegate to
-    /// make sure it stays alive during the entire life-time of the app.
-    var container: Container&lt;ExampleObjectFamily&gt;?
+    /// make sure it stays alive during the entire lifetime of the app.
+    var container: Container?
     ...
 }
 
@@ -403,12 +363,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
                     <p><small><b>Step 2b</b>
                             <br>
-                            Instantiate the <code>controllers</code> in the <code>launchContainer()</code> me.
+                            Register <code>controllers</code> in the <code>launchContainer()</code> method.
                             <hr>
                             Here, you define which controllers you want to use for your application. Note that the
-                            keys
-                            (such as <code>ExampleController</code>) do <b>not</b> have to have the exact name of
-                            their
+                            keys do <b>not</b> have to have the exact name of their
                             controller class. Feel free to give them any names you want. The <i>mapping</i> is the
                             important thing, so
                             which name maps to what controller class.
@@ -429,11 +387,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 /// This method sets up the Coaty container necessary to run our application.
 private func launchContainer() {
     
-    // Instantiate controllers.
+    // Register controllers.
     let components = Components(controllers: [
-        "ExampleControllerPublish": ExampleControllerPublish&lt;ExampleObjectFamily&gt;.self, 
-        "ExampleControllerObserve": ExampleControllerPublish&lt;ExampleObjectFamily&gt;.self
-        ])
+        "ExampleControllerPublish": ExampleControllerPublish.self, 
+        "ExampleControllerObserve": ExampleControllerObserve.self
+    ])
     ...
 }
                                     </code></pre>
@@ -455,7 +413,7 @@ private func launchContainer() {
                             <br>
                             Create a new method called <code>createExampleConfiguration()</code>.
                             <hr>
-                            Note the <code>brokerOptions</code> variable in particular. These define your broker's
+                            Note the <code>mqttClientOptions</code> variable in particular. These define your broker's
                             host address and port.
 
                         </small></p>
@@ -482,26 +440,24 @@ private func createExampleConfiguration() -> Configuration? {
         config.common = CommonOptions()
         
         // Adjusts the logging level of CoatySwift messages, which is especially
-        // helpful when you want to debug applications.
+        // helpful if you want to test or debug applications (default is .error).
         config.common?.logLevel = .info
+
+        // Configure an expressive `name` of the container's identity here.
+        config.common?.agentIdentity = ["name": "Example Agent"]
         
         // You can also add extra information to your configuration in the form of a
         // [String: String] dictionary.
         config.common?.extra = ["ContainerVersion": "0.0.1"]
         
-        // Define the communication-related options, such as the IP address of your broker and
-        // the port it exposes, and your own MQTT client Id. Also, make sure
-        // to immediately connect with the broker, indicated by `shouldAutoStart: true`.
-        let mqttClientOptions = MQTTClientOptions(host: brokerIp,
+        // Define communication-related options, such as the host address of your broker
+        // (default is "localhost") and the port it exposes (default is 1883). Also,
+        // make sure to immediately connect with the broker, indicated by `shouldAutoStart: true`.
+        let mqttClientOptions = MQTTClientOptions(host: brokerHost,
                                                   port: UInt16(brokerPort))
         
-        config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,                                              
-                                                    identity: ["name": "ExampleClient"],
+        config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,
                                                     shouldAutoStart: true)
-        
-        // The communicationManager will advertise its identity upon connection to the
-        // MQTT broker.
-        config.communication?.shouldAdvertiseIdentity = true
     }
 }
                     </code></pre>
@@ -573,8 +529,7 @@ private func launchContainer() {
                             Resolve everything and assign the variable <code>container</code> with the return
                             value of
                             <code>container.resolve(...)</code>, while passing in
-                            our previously defined <code>components</code>, <code>configuration</code> and our
-                            <code>ExampleObjectFamily.self</code>.
+                            our previously defined <code>components</code> and <code>configuration</code>.
                         </small></p>
 
                 </div>
@@ -599,8 +554,7 @@ private func launchContainer() {
 
     // Resolve everything!
     container = Container.resolve(components: components,
-                                  configuration: configuration,
-                                  objectFamily: ExampleObjectFamily.self)
+                                  configuration: configuration)
 
 }
                                     </code></pre>
@@ -620,27 +574,18 @@ private func launchContainer() {
             <div class="col">
 
                 <p class="text-secondary">
-                    To be able to add your own business logic for a CoatySwift application you
+                    To be able to add your own communication business logic for a CoatySwift application you
                     need to define one or
-                    multiple controllers. All controllers are created and managed by CoatySwift through life-cycle
+                    multiple controllers. All controllers are created and managed by CoatySwift through lifecycle
                     methods.
                     <br><br>
 
-                    For the example, we will create two controllers: the <code>ExampleControllerPublish</code>
-                    and the <code>ExampleControllerObserve</code>. The <code>ExampleControllerPublish</code>
-                    will periodically publish an advertise event for an <code>ExampleObject</code> that will
-                    be received and printed by the <code>ExampleControllerObserve</code>.
+                    For the example, we will create two controllers named <code>ExampleControllerPublish</code>
+                    and <code>ExampleControllerObserve</code>. <code>ExampleControllerPublish</code>
+                    will periodically publish an Advertise event for an <code>ExampleObject</code> that will
+                    be received and printed by <code>ExampleControllerObserve</code>.
                     <br>
                 </p>
-                <div class="alert alert-secondary" role="alert">
-
-                    <p>
-                        <small>
-                            <b>Note</b><br>
-                            A Coaty <code>Controller</code> will never receive its own publications!
-                        </small>
-                    </p>
-                </div>
 
             </div>
 
@@ -658,18 +603,17 @@ private func launchContainer() {
                             <b>Step 4a</b>
                             <br>
 
-                            To create the <code>ExampleControllerPublish</code>, extend the <code>Controller</code>
+                            To create <code>ExampleControllerPublish</code>, extend the <code>Controller</code>
                             class.
                             In the <code>onCommunicationManagerStarting()</code> method, we set up a timer that
-                            periodically executes the <code>publishAdvertise()</code> method below.
+                            periodically executes the <code>advertiseExampleObject()</code> method below.
 
                             <hr>
 
-                            The <code>publishAdvertise()</code> method implements a basic pattern for
+                            The <code>advertiseExampleObject()</code> method implements a basic communication pattern for
                             Coaty applications. We create an <code>ExampleObject</code>, add it to a new
-                            <code>AdvertiseEvent</code> that is created via the <code>EventFactory</code>
-                            and publish it using the <code>publishAdvertise()</code> method of the
-                            <code>CommunicationManager</code>.
+                            <code>AdvertiseEvent</code> and publish it using the <code>publishAdvertise()</code> 
+                            method of the <code>CommunicationManager</code>.
 
                         </small> </p>
                 </div>
@@ -685,32 +629,35 @@ private func launchContainer() {
 import Foundation
 import CoatySwift
 
-class ExampleControllerPublish&lt;Family: ObjectFamily&gt;: Controller&lt;Family&gt; {
+class ExampleControllerPublish: Controller {
 
     private var timer: Timer?
     
     override func onCommunicationManagerStarting() {
-        // Start RxSwift timer to publish an AdvertiseEvent every 5 seonds.
+        super.onCommunicationManagerStarting()
+        
+        // Start RxSwift timer to publish an AdvertiseEvent every 5 seconds.
         _ = Observable<Int>
             .timer(RxTimeInterval.seconds(0),
                    period: RxTimeInterval.seconds(5),
                    scheduler: MainScheduler.instance)
-            .subscribe(onNext: { (_) in
-                self.publishAdvertise()
+            .subscribe(onNext: { (i) in
+                self.advertiseExampleObject(i + 1)
             })
+            .disposed(by: self.disposeBag)
     }
     
-    func publishAdvertise() {
+    func advertiseExampleObject(_ counter: Int) {
         // Create the object.
-        let object = ExampleObject(myValue: "Hello Coaty!")
+        let object = ExampleObject(myValue: "Hello Coaty! (\(counter))")
         
-        // Create an event by using the event factory.
-        let event = self.eventFactory.AdvertiseEvent.with(object: object)
+        // Create the event.
+        let event = try! AdvertiseEvent.with(object: object)
         
-        // Publish the event by using the communication manager.
-        try? self.communicationManager.publishAdvertise(event)
+        // Publish the event by the communication manager.
+        self.communicationManager.publishAdvertise(event)
         
-        print("[ExampleControllerPublish] published advertise event:\t\(object.myValue)")
+        print("[ExampleControllerPublish] published Advertise event:\t\(object.myValue)")
     }
 }                                          
                             </code></pre>
@@ -732,17 +679,17 @@ class ExampleControllerPublish&lt;Family: ObjectFamily&gt;: Controller&lt;Family
                             <b>Step 4b</b>
                             <br>
 
-                            We add a second controller called the <code>ExampleControllerObserve</code>
-                            and observe advertise events for objects of a certain object type. Again,
+                            We add a second controller named <code>ExampleControllerObserve</code>
+                            and observe Advertise events for objects of a certain object type. Again,
                             we use the <code>CommunicationManager</code> and call the
                             <code>observeAdvertise(withObjectType)</code>
-                            method. The method returns an <code>Observable<CoatyObject></code>.
+                            method. The method returns an <code>Observable<AdvertiseEvent></code>.
                             <hr>
                             We subscribe to <code>onNext</code> events that are emitted by the
-                            observable and cast the <code>CoatyObject</code> as an <code>ExampleObject</code>.
-                            Finally, we receive the <code>ExampleObject</code> as a normal Swift object
+                            observable and extract the <code>ExampleObject</code> from the event data.
+                            Since we observe only CoatyObjects of the specified custom object type,
+                            we can force cast the received CoatyObject to an <code>ExampleObject</code>
                             and print a message with the <code>myValue</code> attribute.
-
                         </small> </p>
                 </div>
             </div>
@@ -757,20 +704,23 @@ class ExampleControllerPublish&lt;Family: ObjectFamily&gt;: Controller&lt;Family
 import Foundation
 import CoatySwift
 
-class ExampleControllerObserve&lt;Family: ObjectFamily&gt;: Controller&lt;Family&gt; {
+class ExampleControllerObserve: Controller {
 
     override func onCommunicationManagerStarting() {
+        super.onCommunicationManagerStarting()
+
         self.observeAdvertiseExampleObjects()
     }
     
     private func observeAdvertiseExampleObjects() {
-        _ = try? self.communicationManager
-            .observeAdvertise(withObjectType: "io.coaty.hello-coaty.example-object")
+        try! self.communicationManager
+            .observeAdvertise(withObjectType: ExampleObject.objectType)
             .subscribe(onNext: { (event) in
                 let object = event.data.object as! ExampleObject
                 
-                print("[ExampleControllerObserve] received advertise event:\t\(object.myValue)")
+                print("[ExampleControllerObserve] received Advertise event:\t\(object.myValue)")
             })
+            .disposed(by: self.disposeBag)
     }
 }
                             </code></pre>

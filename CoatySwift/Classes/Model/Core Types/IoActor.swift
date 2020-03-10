@@ -10,6 +10,12 @@ import Foundation
 /// Defines meta information of an IO actor.
 open class IoActor: IoPoint {
     
+    // MARK: - Class registration.
+    
+    override open class var objectType: String {
+        return register(objectType: CoreType.IoActor.objectType, with: self)
+    }
+    
     // MARK: - Attributes.
 
     /// The semantic, application-specific data type of values to be consumed
@@ -34,12 +40,13 @@ open class IoActor: IoPoint {
     
     // MARK: - Initializers.
     
+    /// Default initializer for an `IoActor` object.
     init(valueType: String,
          useRawIoValues: Bool? = false,
          updateRate: Double? = nil,
          externalTopic: String? = nil,
          name: String = "IoActorObject",
-         objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.IoActor)",
+         objectType: String = IoActor.objectType,
          objectId: CoatyUUID = .init()) {
         self.valueType = valueType
         self.useRawIoValues = useRawIoValues
@@ -53,7 +60,7 @@ open class IoActor: IoPoint {
     
     // MARK: Codable methods.
     
-    enum IoActorKeys: String, CodingKey {
+    enum IoActorKeys: String, CodingKey, CaseIterable {
         case valueType
         case useRawIoValues
     }
@@ -62,6 +69,8 @@ open class IoActor: IoPoint {
         let container = try decoder.container(keyedBy: IoActorKeys.self)
         self.valueType = try container.decode(String.self, forKey: .valueType)
         self.useRawIoValues = try container.decodeIfPresent(Bool.self, forKey: .useRawIoValues) ?? false
+        
+        CoatyObject.addCoreTypeKeys(decoder: decoder, coreTypeKeys: IoActorKeys.self)
         try super.init(from: decoder)
     }
     

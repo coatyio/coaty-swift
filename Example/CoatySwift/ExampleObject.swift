@@ -10,14 +10,22 @@ import CoatySwift
 
 final class ExampleObject: CoatyObject {
     
+    // MARK: - Class registration.
+    
+    override class var objectType: String {
+        return register(objectType: "hello.coaty.ExampleObject", with: self)
+    }
+    
+    // MARK: - Initializers.
+    
     let myValue: String
     
     init(myValue: String) {
         self.myValue = myValue
         super.init(coreType: .CoatyObject,
-                    objectType: ExampleObjectFamily.exampleObject.rawValue,
-                    objectId: .init(),
-                    name: "ExampleObject Name :)")
+                   objectType: ExampleObject.objectType,
+                   objectId: .init(),
+                   name: "ExampleObject Name :)")
     }
     
     // MARK: Codable methods.

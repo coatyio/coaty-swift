@@ -6,36 +6,36 @@
 
 import Foundation
 
-/// - Experiment: Convenience Snapshot alias for dynamic Coaty.
-///
-/// Needed for encoding/decoding because Snapshot class has an instance member
-/// `object` which represents an entire CoatyObject.
-public typealias DynamicSnapshot = Snapshot<CoatyObjectFamily>
-
 /// Represents a snapshot in time of the state of any Coaty object.
-open class Snapshot<Family: ObjectFamily>: CoatyObject {
+open class Snapshot: CoatyObject {
+    
+    // MARK: - Class registration.
+    
+    override open class var objectType: String {
+        return register(objectType: CoreType.Snapshot.objectType, with: self)
+    }
     
     /// Coaty compatible timestamp when snapshot was issued/created.
     /// (see `CoatyTimestamp.nowMillis()` or `CoatyTimestamp.dateMillis()`)
     public var creationTimestamp: Double
     
-    /// UUID of controller which created this snapshot.
+    /// UUID of creator of this snapshot.
     public var creatorId: CoatyUUID
     
-    /// Deep copy of the object and its state stored in this snapshot.
+    /// The Coaty object captured by this snapshot.
     public var object: CoatyObject
     
     /// Tags associated with this snapshot (optional). They can be used on
     /// retrieval to identify different purposes of the snapshot.
     public var tags: [String]?
     
-    
+    /// Default initializer for a `Snapshot` object.
     public init(creationTimestamp: Double,
          creatorId: CoatyUUID,
          tags: [String]? = nil,
          object: CoatyObject,
          name: String = "SnapshotObject",
-         objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.Snapshot)",
+         objectType: String = Snapshot.objectType,
          objectId: CoatyUUID = .init()) {
         self.creationTimestamp = creationTimestamp
         self.creatorId = creatorId
@@ -47,7 +47,7 @@ open class Snapshot<Family: ObjectFamily>: CoatyObject {
                    name: name)
     }
     
-    enum CodingKeys: String, CodingKey {
+    enum SnapshotCodingKeys: String, CodingKey, CaseIterable {
         case creationTimestamp
         case creatorId
         case object
@@ -57,25 +57,20 @@ open class Snapshot<Family: ObjectFamily>: CoatyObject {
     // MARK: - Codable methods.
     
     public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let container = try decoder.container(keyedBy: SnapshotCodingKeys.self)
         
         self.creationTimestamp = try container.decode(Double.self, forKey: .creationTimestamp)
         self.creatorId = try container.decode(CoatyUUID.self, forKey: .creatorId)
-        
-        guard let object = try container.decode(ClassWrapper<Family, CoatyObject>.self,
-                                                forKey: .object).object else {
-            throw CoatySwiftError.DecodingFailure("Object field in Snapshot not set.")
-        }
-        
-        self.object = object
-        
+        self.object = try container.decode(AnyCoatyObjectDecodable.self, forKey: .object).object
         self.tags = try container.decodeIfPresent([String].self, forKey: .tags)
+        
+        CoatyObject.addCoreTypeKeys(decoder: decoder, coreTypeKeys: SnapshotCodingKeys.self)
         try super.init(from: decoder)
     }
     
     open override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: SnapshotCodingKeys.self)
         try container.encode(creatorId.string, forKey: .creatorId)
         try container.encode(creationTimestamp, forKey: .creationTimestamp)
         try container.encode(object, forKey: .object)

@@ -8,9 +8,17 @@ import Foundation
 
 /// Convenience class for building a configuration.
 public class ConfigurationBuilder {
+    
+    /// Common options shared by container components (optional).
     public var common: CommonOptions?
+    
+    /// Options used for communication.
     public var communication: CommunicationOptions?
+    
+    /// Controller configuration options (optional).
     public var controllers: ControllerConfig?
+    
+    /// Options used to connect to databases (optional).
     public var databases: DatabaseOptions?
 }
 
@@ -18,12 +26,12 @@ public class ConfigurationBuilder {
 /// Configuration options for Coaty container components,
 /// such as controllers, communication manager, and runtime.
 ///
-/// - Warning: Configuration objects does not need to conform to JSON format as opposed
-///            to the coaty-js version!
+/// - Warning: Configuration objects do not need to conform to JSON format as opposed
+///            to the Coaty JS framework!!
 public class Configuration {
     
-    /// Common options shared by container components.
-    public var common: CommonOptions
+    /// Common options shared by container components (optional).
+    public var common: CommonOptions?
     
     /// Options used for communication.
     public var communication: CommunicationOptions
@@ -34,7 +42,8 @@ public class Configuration {
     /// Options used to connect to databases (optional).
     public var databases: DatabaseOptions?
     
-    public init(common: CommonOptions, communication: CommunicationOptions,
+    /// Create a new configuration instance with the given options.
+    public init(common: CommonOptions? = nil, communication: CommunicationOptions,
          controllers: ControllerConfig? = nil, databases: DatabaseOptions? = nil) {
         self.common = common
         self.communication = communication
@@ -65,35 +74,35 @@ public class Configuration {
 }
 
 
-/// Common options shared by all container components.
+/// Common options shared by container components.
 public class CommonOptions {
-    
-    /// User object that is associated with this runtime configuration
-    /// (optional).
-    /// Used for a Coaty container that runs on a user device.
-    public var associatedUser: User?
-    
-    /// Device object that is associated with this runtime configuration
-    /// (optional).
-    /// Used for a Coaty container that runs on a user device.
-    public var associatedDevice: Device?
+
+    /// Property-value pairs to be configured on the identity object of the agent
+    /// container (optional). Usually, an expressive `name` of the identity is
+    /// configured here.
+    /// 
+    /// - Note: `objectType` and `coreType` properties of an identity
+    ///         object are ignored, i.e. cannot be overridden.
+    public var agentIdentity: [String: Any]?
     
     /// Agent information generated and injected into the configuration
     /// when the agent project is build (optional).
     public var agentInfo: AgentInfo?
     
-    /// Any other custom properties accessible by indexer.
+    /// Additional application-specific properties (optional).
+    /// Useful to inject service instances to be shared among controllers.
     public var extra = [String: Any]()
     
-    /// Determines the log level (default error) for logging CoatySwift internal
+    /// Determines the log level (default is .error) for logging CoatySwift internal
     /// errors, warnings, and informational messages.
     public var logLevel = CoatySwiftLogLevel.error
     
-    public init(associatedUser: User? = nil, associatedDevice: Device? = nil,
-         agentInfo: AgentInfo? = nil, extra: [String: Any]? = nil,
+    /// Create a new CommonOptions instance.
+    public init(agentIdentity: [String: Any]? = nil,
+         agentInfo: AgentInfo? = nil,
+         extra: [String: Any]? = nil,
          logLevel: CoatySwiftLogLevel? = nil) {
-        self.associatedUser = associatedUser
-        self.associatedDevice = associatedDevice
+        self.agentIdentity = agentIdentity
         self.agentInfo = agentInfo
         if let extra = extra {
             self.extra = extra
@@ -108,38 +117,35 @@ public class CommonOptions {
 
 /// Options used for communication
 public class CommunicationOptions {
+
+    /// Namespace used to isolate different Coaty applications (optional).
+    ///
+    /// Communication events are only routed between agents within a common
+    /// namespace.
+    ///
+    /// A namespace string must not contain the following characters: `NULL
+    /// (U+0000)`, `# (U+0023)`, `+ (U+002B)`, `/ (U+002F)`.
+    ///
+    /// If not specified or empty, a default namespace named "-" is used.
+    ///
+    public var namespace: String?
+
+    /// Determines whether to enable cross-namespace communication between agents
+    /// in special use cases (optional). 
+    ///
+    /// If `true`, an agent receives communication events published by *any*
+    /// agent in the same networking infrastructure, regardless of namespace.
+    ///
+    /// This option's value defaults to false.
+    public var shouldEnableCrossNamespacing: Bool = false
     
     /// Options to connect with CocoaMQTT client to broker.
     public var mqttClientOptions: MQTTClientOptions?
-    
-    /// Property-value pairs to be initialized on the identity object of the
-    /// communication manager (optional). For example, the `name` of the
-    /// identity object can be configured here.
-    public var identity: [String: Any]?
     
     /// Determines whether the communication manager should start initially
     /// when the container has been resolved. Its value defaults
     /// to false.
     public var shouldAutoStart: Bool = false
-    
-    /// Determines whether the communication manager should advertise its
-    /// identity automatically when started and deadvertise its identity when
-    /// stopped or terminated abnormally (via last will). If not specified or
-    /// nil, de/advertisements will be done by default.
-    /// The communication managers's identity is also discoverable (by publishing
-    /// a Discover event with core type "Component" or with the object id of a
-    /// component) if and only if the identity has also been advertised.
-    public var shouldAdvertiseIdentity: Bool?
-    
-    /// Determines whether the communication manager should advertise the
-    /// associated device (defined in CommonOptions.associatedDevice)
-    /// automatically when started and deadvertise the device when stopped or
-    /// terminated abnormally (via last will). If not specified or nil,
-    /// de/advertisements will be done by default.
-    /// The associated device is also discoverable (by publishing a Discover
-    /// event with core type "Device" or with the object id of a device) if and
-    /// only if the device has also been advertised.
-    public var shouldAdvertiseDevice: Bool?
     
     /// Determines whether the communication manager should provide a protocol
     /// compliant client ID when connecting to the broker/router.
@@ -151,24 +157,25 @@ public class CommunicationOptions {
     /// the characters "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".
     /// However, broker implementations are free to allow non-compliant Client IDs.
     ///
-    /// By default, non-compliant Client IDs of the form "COATY<uuid>" are used where
+    /// By default, non-compliant Client IDs of the form "Coaty<uuid>" are used where
     /// <uuid> specifies the `objectId` of the communication manager's `identity` object.
     /// If you experience issues with a specific broker, specify this option as `true`.
     public var useProtocolCompliantClientId: Bool = false
     
-    public init(mqttClientOptions: MQTTClientOptions? = nil,
-                identity: [String: Any]? = nil,
+    /// Create a new CommunicationOptions instance.
+    public init(namespace: String? = nil,
+                shouldEnableCrossNamespacing: Bool? = nil,
+                mqttClientOptions: MQTTClientOptions? = nil,
                 shouldAutoStart: Bool? = nil,
-                shouldAdvertiseIdentity: Bool? = true,
-                shouldAdvertiseDevice: Bool? = nil,
                 useProtocolCompliantClientId: Bool? = nil) {
+        self.namespace = namespace
+        if let shouldEnableCrossNamespacing = shouldEnableCrossNamespacing {
+            self.shouldEnableCrossNamespacing = shouldEnableCrossNamespacing
+        }
         self.mqttClientOptions = mqttClientOptions
-        self.identity = identity
         if let shouldAutoStart = shouldAutoStart {
             self.shouldAutoStart = shouldAutoStart
         }
-        self.shouldAdvertiseIdentity = shouldAdvertiseIdentity
-        self.shouldAdvertiseDevice = shouldAdvertiseDevice
         if let useProtocolCompliantClientId = useProtocolCompliantClientId {
             self.useProtocolCompliantClientId = useProtocolCompliantClientId
         }
@@ -178,8 +185,11 @@ public class CommunicationOptions {
 
 /// Controller options mapped by controller class name.
 public class ControllerConfig {
+    
+    /// Controller-specific options.
     public var controllerOptions: [String: ControllerOptions]
     
+    /// Create a new ControllerConfig instance.
     public init(controllerOptions: [String: ControllerOptions]) {
         self.controllerOptions = controllerOptions
     }
@@ -189,31 +199,11 @@ public class ControllerConfig {
 /// Controller-specific options.
 public class ControllerOptions {
     
-    /// Property-value pairs to be initialized on the identity object of the
-    /// controller (optional). For example, the `name` of the
-    /// identity object can be configured here.
-    public var identity: [String: Any]?
-    
-    /// Determines whether the controller should advertise its identity
-    /// automatically when it is instantiated and deadvertise its identity when
-    /// the communication manager is stopped or terminated abnormally (via last
-    /// will). The identity is advertised/deadvertised by default.
-    ///
-    /// The controller's identity is also discoverable (by publishing
-    /// a Discover event with core type "Component" or with the object id of a
-    /// component) if and only if the identity has also been advertised.
-    public var shouldAdvertiseIdentity: Bool = true
-    
-    /// Any other application-specific properties accessible by indexer.
+    /// Any application-specific properties accessible by indexer.
     public var extra = [String: Any]()
     
-    public init(identity: [String: Any]? = nil,
-         shouldAdvertiseIdentity: Bool? = nil,
-         extra: [String: Any]? = nil) {
-        self.identity = identity
-        if let shouldAdvertiseIdentity = shouldAdvertiseIdentity {
-            self.shouldAdvertiseIdentity = shouldAdvertiseIdentity
-        }
+    /// Create a new ControllerOptions instance.
+    public init(extra: [String: Any]? = nil) {
         if let extra = extra {
             self.extra = extra
         }
@@ -227,6 +217,7 @@ public class DatabaseOptions {
     /// Database connection info indexed by a database key.
     public var databaseConnections: [String: DbConnectionInfo]
     
+    /// Create a new DatabaseOptions instance.
     public init(databaseConnections: [String: DbConnectionInfo]) {
         self.databaseConnections = databaseConnections
     }
@@ -234,33 +225,67 @@ public class DatabaseOptions {
 
 /// MQTT client options for the CocoaMQTT client.
 public class MQTTClientOptions {
+
+    /// Broker host name or IP address (default "localhost").
     public var host: String
+
+    /// Broker port (default is 1883).
     public var port: UInt16
-    public var clientId: String?
+
+    /// MQTT client ID set by communication manager.
+    internal var clientId: String?
+
+    /// Determines whether to try to discover a broker host/port 
+    /// by mDNS/Bonjour service (default is false).
     public var shouldTryMDNSDiscovery: Bool
+
+    /// Username for secure connection (optional).
     public var username: String?
-    public var password: String?
-    public var cleanSession: Bool
-    public var allowUntrustCACertificate: Bool
-    public var autoReconnectTimeInterval: Int
     
-    /// Do not set keepAlive under 10 seconds. Otherwise it might happen that you will reconnect
-    /// unnecessarily because of latency issues, especially if you are using a public broker.
+    /// Password for secure connection (optional).
+    public var password: String?
+    
+    /// Whether to allow untrusted certificate roots or not.
+    public var allowUntrustCACertificate: Bool
+    
+    /// Interval in which keep alive messages are sent (in seconds).
+    ///
+    /// - NOTE: Do not set keepAlive under 10 seconds. Otherwise it might happen
+    ///   that you will reconnect unnecessarily because of latency issues,
+    ///   especially if you are using a public broker.
     public var keepAlive: UInt16
+
+    /// Whether to enable secure SSL connection.
     public var enableSSL: Bool
+
+    /// Determines whether client should reconnect automatically
+    /// if connection is closed abnormally.
     public var autoReconnect: Bool
     
-    public init(host: String,
-         port: UInt16,
+    /// Auto reconnect time interval In seconds.
+    public var autoReconnectTimeInterval: Int
+
+    /// MQTT Quality of Service level (1, 2, 3) for publications, subscriptions,
+    /// and last will messages (defaults to 0).
+    public var qos: Int
+    
+    /// Determines whether to log MQTT protocol messages (defaults to false).
+    /// Turn on for debugging only because output is rather abundant.
+    public var shouldLog: Bool
+    
+    /// Create a new instance of MQTTClientOptions.
+    public init(host: String = "localhost",
+         port: UInt16 = 1883,
          enableSSL: Bool = false,
          shouldTryMDNSDiscovery: Bool = false,
          username: String? = nil,
          password: String? = nil,
-         cleanSession: Bool = true,
          keepAlive: UInt16 = 60,
          autoReconnect: Bool = true,
          allowUntrustCACertificate: Bool = false,
-         autoReconnectTimeInterval: Int = 3) {
+         autoReconnectTimeInterval: Int = 1,
+         qos: Int = 0,
+         shouldLog: Bool = false) {
         self.host = host
         self.port = port
         self.clientId = nil
@@ -268,11 +293,12 @@ public class MQTTClientOptions {
         self.shouldTryMDNSDiscovery = shouldTryMDNSDiscovery
         self.username = username
         self.password = password
-        self.cleanSession = cleanSession
         self.keepAlive = keepAlive
         self.autoReconnect = autoReconnect
         self.allowUntrustCACertificate = allowUntrustCACertificate
         self.autoReconnectTimeInterval = autoReconnectTimeInterval
+        self.qos = qos
+        self.shouldLog = shouldLog
     }
 }
 

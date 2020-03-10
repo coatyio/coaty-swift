@@ -6,11 +6,18 @@
 
 import Foundation
 
-/// Represents a Coaty container component, i.e. a controller or the communication manager.
+/// Represents the unique identity of a Coaty container.
 open class Identity: CoatyObject {
     
-    public init(name: String = "ComponentObject",
-                objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.Identity.rawValue)",
+    // MARK: - Class registration.
+    
+    override open class var objectType: String {
+        return register(objectType: CoreType.Identity.objectType, with: self)
+    }
+    
+    /// Default initializer for an `Identity` object.
+    public init(name: String = "IdentityObject",
+                objectType: String = Identity.objectType,
                 objectId: CoatyUUID = .init()) {
         super.init(coreType: .Identity, objectType: objectType, objectId: objectId, name: name)
     }

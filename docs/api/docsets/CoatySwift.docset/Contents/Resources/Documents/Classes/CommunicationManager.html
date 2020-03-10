@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CommunicationManager Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/CommunicationManager" class="dashAnchor"></a>
+    <a title="CommunicationManager Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">CoatySwift 2.0.0 Docs</a></p>
+        <p class="header-right"><a href="https://github.com/coatyio/coaty-swift"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">CoatySwift Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        CommunicationManager Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AdvertiseEvent.html">AdvertiseEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AdvertiseEventData.html">AdvertiseEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AgentBuildInfo.html">AgentBuildInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AgentConfigInfo.html">AgentConfigInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AgentInfo.html">AgentInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AgentPackageInfo.html">AgentPackageInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Annotation.html">Annotation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AnnotationVariant.html">AnnotationVariant</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AnyCoatyObjectDecodable.html">AnyCoatyObjectDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CallEvent.html">CallEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CallEventData.html">CallEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ChannelEvent.html">ChannelEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ChannelEventData.html">ChannelEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CoatyObject.html">CoatyObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CoatyUUID.html">CoatyUUID</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CommonOptions.html">CommonOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CommunicationEvent.html">CommunicationEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10CoatySwift22CommunicationEventDataC">CommunicationEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CommunicationManager.html">CommunicationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CommunicationOptions.html">CommunicationOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CompleteEvent.html">CompleteEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CompleteEventData.html">CompleteEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Components.html">Components</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Configuration.html">Configuration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ConfigurationBuilder.html">ConfigurationBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Container.html">Container</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Controller.html">Controller</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ControllerConfig.html">ControllerConfig</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ControllerOptions.html">ControllerOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DatabaseOptions.html">DatabaseOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DbConnectionInfo.html">DbConnectionInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DeadvertiseEvent.html">DeadvertiseEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DeadvertiseEventData.html">DeadvertiseEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DiscoverEvent.html">DiscoverEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DiscoverEventData.html">DiscoverEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FilterOperations.html">FilterOperations</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GeoCoordinates.html">GeoCoordinates</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GeoLocation.html">GeoLocation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Identity.html">Identity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoActor.html">IoActor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoPoint.html">IoPoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoSource.html">IoSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Location.html">Location</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Log.html">Log</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LogHost.html">LogHost</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MQTTClientOptions.html">MQTTClientOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilter.html">ObjectFilter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilterBuilder.html">ObjectFilterBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilterCondition.html">ObjectFilterCondition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilterConditionBuilder.html">ObjectFilterConditionBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilterConditions.html">ObjectFilterConditions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilterConditionsBuilder.html">ObjectFilterConditionsBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilterExpression.html">ObjectFilterExpression</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectFilterProperty.html">ObjectFilterProperty</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObjectJoinCondition.html">ObjectJoinCondition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OrderByProperty.html">OrderByProperty</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PayloadCoder.html">PayloadCoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/QueryEvent.html">QueryEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/QueryEventData.html">QueryEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResolveEvent.html">ResolveEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResolveEventData.html">ResolveEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RetrieveEvent.html">RetrieveEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RetrieveEventData.html">RetrieveEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ReturnError.html">ReturnError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ReturnEvent.html">ReturnEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ReturnEventData.html">ReturnEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Runtime.html">Runtime</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ScimAddress.html">ScimAddress</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ScimMultiValuedAttribute.html">ScimMultiValuedAttribute</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ScimUserNames.html">ScimUserNames</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Snapshot.html">Snapshot</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Task.html">Task</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/UpdateEvent.html">UpdateEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/UpdateEventData.html">UpdateEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/User.html">User</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AnnotationStatus.html">AnnotationStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/AnnotationType.html">AnnotationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CoatySwiftError.html">CoatySwiftError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CoatySwiftLogLevel.html">CoatySwiftLogLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CommunicationState.html">CommunicationState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CoreType.html">CoreType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/IoSourceBackpressureStrategy.html">IoSourceBackpressureStrategy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LogLevel.html">LogLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ObjectFilterOperator.html">ObjectFilterOperator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OperatingState.html">OperatingState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RemoteCallErrorCode.html">RemoteCallErrorCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RemoteCallErrorMessage.html">RemoteCallErrorMessage</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SortingOrder.html">SortingOrder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TaskStatus.html">TaskStatus</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/AnyCodable.html">AnyCodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyDecodable.html">AnyDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyEncodable.html">AnyEncodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CoatyTimestamp.html">CoatyTimestamp</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10CoatySwift13ContextFiltera">ContextFilter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10CoatySwift22ContextFilterConditiona">ContextFilterCondition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10CoatySwift13ExecutionInfoa">ExecutionInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10CoatySwift12ReturnResulta">ReturnResult</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>CommunicationManager</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">CommunicationManager</span></code></pre>
+
+                </div>
+              </div>
+            <p>Provides a set of predefined communication events to transfer Coaty objects
+between distributed Coaty agents based on the publish-subscribe API of a
+<code>CommunicationClient</code>.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Properties."></a>
+                <a name="//apple_ref/swift/Section/Properties." class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Properties."></a>
+                  <h3 class="section-name"><p>Properties.</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC9namespaceSSvp"></a>
+                    <a name="//apple_ref/swift/Property/namespace" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC9namespaceSSvp">namespace</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets the namespace for communication as specified in the configuration
+options. Returns the default namespace used, if no namespace has been
+specified in configuration options.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">private(set)</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">namespace</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC8identityAA8IdentityCvp"></a>
+                    <a name="//apple_ref/swift/Property/identity" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC8identityAA8IdentityCvp">identity</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">identity</span><span class="p">:</span> <span class="kt"><a href="../Classes/Identity.html">Identity</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initializers."></a>
+                <a name="//apple_ref/swift/Section/Initializers." class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Initializers."></a>
+                  <h3 class="section-name"><p>Initializers.</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC8identity20communicationOptionsAcA8IdentityC_AA0cG0Ctcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(identity:communicationOptions:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC8identity20communicationOptionsAcA8IdentityC_AA0cG0Ctcfc">init(identity:communicationOptions:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">identity</span><span class="p">:</span> <span class="kt"><a href="../Classes/Identity.html">Identity</a></span><span class="p">,</span> <span class="nv">communicationOptions</span><span class="p">:</span> <span class="kt"><a href="../Classes/CommunicationOptions.html">CommunicationOptions</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Manager%20lifecycle%20methods."></a>
+                <a name="//apple_ref/swift/Section/Manager lifecycle methods." class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Manager%20lifecycle%20methods."></a>
+                  <h3 class="section-name"><p>Manager lifecycle methods.</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC5startyyF"></a>
+                    <a name="//apple_ref/swift/Method/start()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC5startyyF">start()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Starts this communication manager with the communication options
+specified in the configuration. This is a noop if the communication
+manager has already been started.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">start</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC4stopyyF"></a>
+                    <a name="//apple_ref/swift/Method/stop()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC4stopyyF">stop()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Stops dispatching and emitting communication events and disconnects from
+the communication infrastructure.</p>
+
+<p>To continue processing with this communication manager sometime later,
+invoke <code><a href="../Classes/CommunicationManager.html#/s:10CoatySwift20CommunicationManagerC5startyyF">start()</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">stop</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC9onDisposeyyF"></a>
+                    <a name="//apple_ref/swift/Method/onDispose()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC9onDisposeyyF">onDispose()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Unsubscribe and disconnect from the communication binding.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onDispose</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC07observeC5State02RxB010ObservableCyAA0cF0OGyF"></a>
+                    <a name="//apple_ref/swift/Method/observeCommunicationState()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC07observeC5State02RxB010ObservableCyAA0cF0OGyF">observeCommunicationState()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Observe communication state changes.</p>
+
+<p>When subscribed the observable immediately emits the current
+communication state.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">observeCommunicationState</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Enums/CommunicationState.html">CommunicationState</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an observable emitting communication states</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/One%20way%20events."></a>
+                <a name="//apple_ref/swift/Section/One way events." class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/One%20way%20events."></a>
+                  <h3 class="section-name"><p>One way events.</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC10observeRaw11topicFilter02RxB010ObservableCySS_Says5UInt8VGtGSS_tKF"></a>
+                    <a name="//apple_ref/swift/Method/observeRaw(topicFilter:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC10observeRaw11topicFilter02RxB010ObservableCySS_Says5UInt8VGtGSS_tKF">observeRaw(topicFilter:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Observes incoming messages on a raw subscription topic.</p>
+
+<p>The topic filter must be a non-empty string that does not contain
+the character <code>NULL (U+0000)</code>.</p>
+
+<p>Use this method to interoperate with external systems that publish messages on external topics.
+Use this method together with <code>publishRaw()</code> to transfer binary data between Coaty agents.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    if topic filter is invalid
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">observeRaw</span><span class="p">(</span><span class="nv">topicFilter</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="p">(</span><span class="kt">String</span><span class="p">,</span> <span class="p">[</span><span class="kt">UInt8</span><span class="p">])</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>topicFilter</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the subscription topic</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an observable emitting any incoming messages as tuples
+containing the actual topic and the payload as a UInt8 Array</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC16observeAdvertise12withCoreType02RxB010ObservableCyAA0F5EventCGAA0hI0O_tF"></a>
+                    <a name="//apple_ref/swift/Method/observeAdvertise(withCoreType:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC16observeAdvertise12withCoreType02RxB010ObservableCyAA0F5EventCGAA0hI0O_tF">observeAdvertise(withCoreType:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Observe Advertise events for the given core type.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">observeAdvertise</span><span class="p">(</span><span class="nv">withCoreType</span><span class="p">:</span> <span class="kt"><a href="../Enums/CoreType.html">CoreType</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/AdvertiseEvent.html">AdvertiseEvent</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>coreType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>coreType core type of objects to be observed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an observable emitting incoming Advertise events for the given core type</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC16observeAdvertise14withObjectType02RxB010ObservableCyAA0F5EventCGSS_tKF"></a>
+                    <a name="//apple_ref/swift/Method/observeAdvertise(withObjectType:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC16observeAdvertise14withObjectType02RxB010ObservableCyAA0F5EventCGSS_tKF">observeAdvertise(withObjectType:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Observe Advertise events for the given object type.</p>
+
+<p>The given object type must be a non-empty string that does not contain
+the following characters: <code>NULL (U+0000)</code>, <code># (U+0023)</code>, <code>+ (U+002B)</code>,
+<code>/ (U+002F)</code>.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    if object type is invalid
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">observeAdvertise</span><span class="p">(</span><span class="nv">withObjectType</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/AdvertiseEvent.html">AdvertiseEvent</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>objectType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>objectType object type of objects to be observed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an observable emitting incoming Advertise events for the given object type</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC18observeDeadvertise02RxB010ObservableCyAA0F5EventCGyF"></a>
+                    <a name="//apple_ref/swift/Method/observeDeadvertise()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC18observeDeadvertise02RxB010ObservableCyAA0F5EventCGyF">observeDeadvertise()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Observe Deadvertise events.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">observeDeadvertise</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/DeadvertiseEvent.html">DeadvertiseEvent</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an observable emitting incoming Deadvertise events</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC14observeChannel9channelId02RxB010ObservableCyAA0F5EventCGSS_tKF"></a>
+                    <a name="//apple_ref/swift/Method/observeChannel(channelId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC14observeChannel9channelId02RxB010ObservableCyAA0F5EventCGSS_tKF">observeChannel(channelId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Observe Channel events for the given channel identifier.</p>
+
+<p>The channel identifier must be a non-empty string that does not contain
+the following characters: <code>NULL (U+0000)</code>, <code># (U+0023)</code>, <code>+ (U+002B)</code>,
+<code>/ (U+002F)</code>.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    if channel identifier is invalid
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">observeChannel</span><span class="p">(</span><span class="nv">channelId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/ChannelEvent.html">ChannelEvent</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>channelId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a channel identifier</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an observable emitting incoming Channel events for the given channel identifier</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Two%20way%20events."></a>
+                <a name="//apple_ref/swift/Section/Two way events." class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Two%20way%20events."></a>
+                  <h3 class="section-name"><p>Two way events.</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC13observeUpdate12withCoreType02RxB010ObservableCyAA0F5EventCGAA0hI0O_tF"></a>
+                    <a name="//apple_ref/swift/Method/observeUpdate(withCoreType:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC13observeUpdate12withCoreType02RxB010ObservableCyAA0F5EventCGAA0hI0O_tF">observeUpdate(withCoreType:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Observe Update events for the given core type.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">observeUpdate</span><span class="p">(</span><span class="nv">withCoreType</span><span class="p">:</span> <span class="kt"><a href="../Enums/CoreType.html">CoreType</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/UpdateEvent.html">UpdateEvent</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>coreType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>coreType core type of objects to be observed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an observable emitting incoming Update events for the given core type</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC13observeUpdate14withObjectType02RxB010ObservableCyAA0F5EventCGSS_tKF"></a>
+                    <a name="//apple_ref/swift/Method/observeUpdate(withObjectType:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC13observeUpdate14withObjectType02RxB010ObservableCyAA0F5EventCGSS_tKF">observeUpdate(withObjectType:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Observe Update events for the given object type.</p>
+
+<p>The given object type must be a non-empty string that does not contain
+the following characters: <code>NULL (U+0000)</code>, <code># (U+0023)</code>, <code>+ (U+002B)</code>,
+<code>/ (U+002F)</code>.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    if object type is invalid
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">observeUpdate</span><span class="p">(</span><span class="nv">withObjectType</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/UpdateEvent.html">UpdateEvent</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>objectType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>objectType object type of objects to be observed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an observable emitting incoming Update events for the given object type</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC15observeDiscover02RxB010ObservableCyAA0F5EventCGyF"></a>
+                    <a name="//apple_ref/swift/Method/observeDiscover()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC15observeDiscover02RxB010ObservableCyAA0F5EventCGyF">observeDiscover()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Observe Discover events.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">observeDiscover</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/DiscoverEvent.html">DiscoverEvent</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an observable emitting incoming Discover events</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC11observeCall11operationId02RxB010ObservableCyAA0F5EventCGSS_tKF"></a>
+                    <a name="//apple_ref/swift/Method/observeCall(operationId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC11observeCall11operationId02RxB010ObservableCyAA0F5EventCGSS_tKF">observeCall(operationId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Observe Call events for the given operation and context object.</p>
+
+<p>The operation name must be a non-empty string that does not contain
+the following characters: <code>NULL (U+0000)</code>, <code># (U+0023)</code>, <code>+ (U+002B)</code>,
+<code>/ (U+002F)</code>.</p>
+
+<p>The given context object is matched against the context filter specified
+in incoming Call event data to determine whether the Call event should be
+emitted or skipped by the observable.</p>
+
+<p>A Call event is <em>not</em> emitted by the observable if:</p>
+
+<ul>
+<li>context filter and context object are <em>both</em> specified and they do not
+match (checked by using <code>ObjectMatcher.matchesFilter</code>), or</li>
+<li>context filter is <em>not</em> supplied <em>and</em> context object <em>is</em> specified.</li>
+</ul>
+
+<p>In all other cases, the Call event is emitted.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>You can also invoke <code>observeCall</code> <em>without</em> context parameter
+and realize a custom matching logic with an RxJS <code>filter</code> operator.</p>
+
+</div><div class="aside aside-todo">
+    <p class="aside-title">Todo</p>
+    <p>We are missing the optional context parameter.</p>
+
+</div><div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <p>if operationId is invalid</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">observeCall</span><span class="p">(</span><span class="nv">operationId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/CallEvent.html">CallEvent</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>operationId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the name of the operation to be invoked</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an observable emitting incoming Call events
+whose context filter matches the given context</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/One%20way%20events.2"></a>
+                <a name="//apple_ref/swift/Section/One way events." class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/One%20way%20events.2"></a>
+                  <h3 class="section-name"><p>One way events.</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC10publishRaw5topic5valueySS_SStKF"></a>
+                    <a name="//apple_ref/swift/Method/publishRaw(topic:value:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC10publishRaw5topic5valueySS_SStKF">publishRaw(topic:value:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Publish a value on the given topic. Used to interoperate with external
+clients that subscribe on the given topic.</p>
+
+<p>The topic is an MQTT publication topic, i.e. a non-empty string that
+must not contain the following characters: <code>NULL (U+0000)</code>, <code>#
+(U+0023)</code>, <code>+ (U+002B)</code>.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    if topic name is invalid
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">publishRaw</span><span class="p">(</span><span class="nv">topic</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>topic</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the topic on which to publish the given payload</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>value</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a payload string to be published on the given topic</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC16publishAdvertiseyyAA0F5EventCF"></a>
+                    <a name="//apple_ref/swift/Method/publishAdvertise(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC16publishAdvertiseyyAA0F5EventCF">publishAdvertise(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Advertise an object.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">publishAdvertise</span><span class="p">(</span><span class="n">_</span> <span class="nv">event</span><span class="p">:</span> <span class="kt"><a href="../Classes/AdvertiseEvent.html">AdvertiseEvent</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>advertiseEvent</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the Advertise event to be published</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC18publishDeadvertiseyyAA0F5EventCF"></a>
+                    <a name="//apple_ref/swift/Method/publishDeadvertise(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC18publishDeadvertiseyyAA0F5EventCF">publishDeadvertise(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Notify subscribers that an advertised object has been deadvertised.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">publishDeadvertise</span><span class="p">(</span><span class="n">_</span> <span class="nv">event</span><span class="p">:</span> <span class="kt"><a href="../Classes/DeadvertiseEvent.html">DeadvertiseEvent</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>deadvertiseEvent</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the Deadvertise event to be published</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC14publishChannelyyAA0F5EventCF"></a>
+                    <a name="//apple_ref/swift/Method/publishChannel(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC14publishChannelyyAA0F5EventCF">publishChannel(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Publish a Channel event.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">publishChannel</span><span class="p">(</span><span class="n">_</span> <span class="nv">event</span><span class="p">:</span> <span class="kt"><a href="../Classes/ChannelEvent.html">ChannelEvent</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>event</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the Channel event to be published</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Two%20way%20events.2"></a>
+                <a name="//apple_ref/swift/Section/Two way events." class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Two%20way%20events.2"></a>
+                  <h3 class="section-name"><p>Two way events.</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC13publishUpdatey02RxB010ObservableCyAA13CompleteEventCGAA0fJ0CF"></a>
+                    <a name="//apple_ref/swift/Method/publishUpdate(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC13publishUpdatey02RxB010ObservableCyAA13CompleteEventCGAA0fJ0CF">publishUpdate(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Request or propose an update of the specified object and receive
+accomplishments.</p>
+
+<p>Note that after all initial subscribers have unsubscribed from the returned observable
+no more response events will be emitted on the observable and an error event will
+be emitted on resubscription.</p>
+<div class="aside aside-todo">
+    <p class="aside-title">Todo</p>
+    Implement the lazy publishing behavior (not until the first subscription)
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">publishUpdate</span><span class="p">(</span><span class="n">_</span> <span class="nv">event</span><span class="p">:</span> <span class="kt"><a href="../Classes/UpdateEvent.html">UpdateEvent</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/CompleteEvent.html">CompleteEvent</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>event</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the Update event to be published</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an observable on which associated Complete events are emitted</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC15publishDiscovery02RxB010ObservableCyAA12ResolveEventCGAA0fJ0CF"></a>
+                    <a name="//apple_ref/swift/Method/publishDiscover(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC15publishDiscovery02RxB010ObservableCyAA12ResolveEventCGAA0fJ0CF">publishDiscover(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Find discoverable objects and receive Resolve events for them.</p>
+
+<p>Note that after all initial subscribers have unsubscribed from the returned observable
+no more response events will be emitted on the observable and an error event will
+be emitted on resubscription.</p>
+<div class="aside aside-todo">
+    <p class="aside-title">Todo</p>
+    Implement the lazy publishing behavior (not until the first subscription)
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">publishDiscover</span><span class="p">(</span><span class="n">_</span> <span class="nv">event</span><span class="p">:</span> <span class="kt"><a href="../Classes/DiscoverEvent.html">DiscoverEvent</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/ResolveEvent.html">ResolveEvent</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>event</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the Discover event to be published.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an observable on which associated Resolve events are emitted</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC12publishQueryy02RxB010ObservableCyAA13RetrieveEventCGAA0fJ0CF"></a>
+                    <a name="//apple_ref/swift/Method/publishQuery(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC12publishQueryy02RxB010ObservableCyAA13RetrieveEventCGAA0fJ0CF">publishQuery(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Find queryable objects and receive Retrieve events for them.</p>
+
+<p>Note that after all initial subscribers have unsubscribed from the returned observable
+no more response events will be emitted on the observable and an error event will
+be emitted on resubscription.</p>
+<div class="aside aside-todo">
+    <p class="aside-title">Todo</p>
+    Implement the lazy publishing behavior (not until the first subscription)
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">publishQuery</span><span class="p">(</span><span class="n">_</span> <span class="nv">event</span><span class="p">:</span> <span class="kt"><a href="../Classes/QueryEvent.html">QueryEvent</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/RetrieveEvent.html">RetrieveEvent</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>event</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the Query event to be published</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an observable on which associated Retrieve events are emitted.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC11publishCally02RxB010ObservableCyAA11ReturnEventCGAA0fJ0CF"></a>
+                    <a name="//apple_ref/swift/Method/publishCall(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC11publishCally02RxB010ObservableCyAA11ReturnEventCGAA0fJ0CF">publishCall(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Publish a Call event to perform a remote operation and receive results
+emitted by the observable returned.</p>
+
+<p>Note that after all initial subscribers have unsubscribed from the returned observable
+no more response events will be emitted on the observable and an error event will
+be emitted on resubscription.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">publishCall</span><span class="p">(</span><span class="n">_</span> <span class="nv">event</span><span class="p">:</span> <span class="kt"><a href="../Classes/CallEvent.html">CallEvent</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/ReturnEvent.html">ReturnEvent</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>event</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the Call event to be published.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an observable of associated Return events.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Utility%20methods."></a>
+                <a name="//apple_ref/swift/Section/Utility methods." class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Utility%20methods."></a>
+                  <h3 class="section-name"><p>Utility methods.</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC03getC5State02RxB010ObservableCyAA0cF0OGyF"></a>
+                    <a name="//apple_ref/swift/Method/getCommunicationState()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC03getC5State02RxB010ObservableCyAA0cF0OGyF">getCommunicationState()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets an observer for communication state changes.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getCommunicationState</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Enums/CommunicationState.html">CommunicationState</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC17getOperatingState02RxB010ObservableCyAA0fG0OGyF"></a>
+                    <a name="//apple_ref/swift/Method/getOperatingState()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC17getOperatingState02RxB010ObservableCyAA0fG0OGyF">getOperatingState()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets an observer for operating state changes.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getOperatingState</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Enums/OperatingState.html">OperatingState</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>Code and documentation © 2019 Siemens AG.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

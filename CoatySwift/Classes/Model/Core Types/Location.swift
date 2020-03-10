@@ -15,6 +15,12 @@ import Foundation
 /// shop floor number, etc.).
 open class Location: CoatyObject {
     
+    // MARK: - Class registration.
+    
+    override open class var objectType: String {
+        return register(objectType: CoreType.Location.objectType, with: self)
+    }
+    
     // MARK: - Attributes.
     
     public var geoLocation: GeoLocation;
@@ -24,7 +30,7 @@ open class Location: CoatyObject {
     /// Default initializer for a `Location` object.
     public init(geoLocation: GeoLocation,
                 name: String = "LocationObject",
-                objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.Location)",
+                objectType: String = Location.objectType,
                 objectId: CoatyUUID = .init()) {
         
         self.geoLocation = geoLocation
@@ -33,13 +39,15 @@ open class Location: CoatyObject {
 
     // MARK: - Codable methods.
     
-    enum LocationKeys: String, CodingKey {
+    enum LocationKeys: String, CodingKey, CaseIterable {
         case geoLocation
     }
 
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: LocationKeys.self)
         self.geoLocation = try container.decode(GeoLocation.self, forKey: .geoLocation)
+        
+        CoatyObject.addCoreTypeKeys(decoder: decoder, coreTypeKeys: LocationKeys.self)
         try super.init(from: decoder)
     }
 

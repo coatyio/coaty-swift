@@ -1,15 +1,17 @@
 # Coaty Swift
 
-[![Powered by Coaty](https://img.shields.io/badge/Powered%20by-Coaty-FF8C00.svg)](https://coaty.io)
+[![Powered by Coaty 2](https://img.shields.io/badge/Powered%20by-Coaty%202-FF8C00.svg)](https://coaty.io)
 [![Swift version](https://img.shields.io/badge/swift-5-FF4029.svg)](https://developer.apple.com/swift/)
-[![Version](https://img.shields.io/cocoapods/v/CoatySwift.svg?style=flat)](https://cocoapods.org/pods/CoatySwift)
-[![Platform](https://img.shields.io/cocoapods/p/CoatySwift.svg?style=flat)](https://cocoapods.org/pods/CoatySwift)
+[![Pod version](https://img.shields.io/cocoapods/v/CoatySwift.svg?style=flat)](https://cocoapods.org/pods/CoatySwift)
+[![Pod platform](https://img.shields.io/cocoapods/p/CoatySwift.svg?style=flat)](https://cocoapods.org/pods/CoatySwift)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+> [Ready to upgrade to CoatySwift
+> 2?](https://coatyio.github.io/coaty-swift/man/migration-guide/)
 
 __CoatySwift__ is a [Coaty](https://coaty.io/) implementation written in Swift 5.
 The CoatySwift package provides the cross-platform implementation targeted at
-__iOS__, __iPadOS__, and __macOS__ applications running as native application
-code.
+__iOS__, __iPadOS__,and __macOS__ native applications.
 
 CoatySwift comes with complete API documentation, a developer guide, a tutorial,
 and best-practice examples.
@@ -43,7 +45,7 @@ out the following resources:
   how to set up a minimal CoatySwift app.
 * [Developer Guide](https://coatyio.github.io/coaty-swift/man/developer-guide/) - explains
   how to develop a CoatySwift app.
-* [API Documentation](https://coatyio.github.io/coaty-swift/swiftdoc/index.html) - the
+* [API Documentation](https://coatyio.github.io/coaty-swift/api/index.html) - the
   source code documentation of public types and members of the CoatySwift framework.
 * [Design Rationale](https://coatyio.github.io/coaty-swift/man/design-rationale/) - in case
   you want to know why certain things have been implemented in a particular way
@@ -61,7 +63,7 @@ You can add the CoatySwift pod to the Podfile of your app as follows:
 
 ```ruby
 target 'MyApp' do
-  pod 'CoatySwift', '~> 1.0'
+  pod 'CoatySwift', '~> 2.0'
 end
 ```
 

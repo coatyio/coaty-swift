@@ -8,19 +8,22 @@
 import Foundation
 import CoatySwift
 
-class ExampleControllerObserve<Family: ObjectFamily>: Controller<Family> {
+class ExampleControllerObserve: Controller {
 
     override func onCommunicationManagerStarting() {
+        super.onCommunicationManagerStarting()
+        
         self.observeAdvertiseExampleObjects()
     }
     
     private func observeAdvertiseExampleObjects() {
-        _ = try? self.communicationManager
-            .observeAdvertise(withObjectType: "io.coaty.hello-coaty.example-object")
+        try! self.communicationManager
+            .observeAdvertise(withObjectType: ExampleObject.objectType)
             .subscribe(onNext: { (event) in
                 let object = event.data.object as! ExampleObject
-                
-                print("[ExampleControllerObserve] received advertise event:\t\(object.myValue)")
+
+                print("[ExampleControllerObserve] received Advertise event: \(object.myValue)")
             })
+            .disposed(by: self.disposeBag)
     }
 }

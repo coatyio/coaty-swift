@@ -6,9 +6,26 @@
 
 import Foundation
 
-/// A Factory that creates CallEvents.
-public class CallEventFactory<Family: ObjectFamily>: EventFactoryInit {
+/// Defines criteria for filtering Coaty objects. Used in combination with Call
+/// events, and with the `ObjectMatcher` functionality.
+public typealias ContextFilter = ObjectFilter
+
+/// Defines a filter condition for filtering Coaty objects. Used in combination
+/// with Call events, and with the `ObjectMatcher` functionality.
+public typealias ContextFilterCondition = ObjectFilterCondition
+
+/// CallEvent provides a generic implementation for invoking remote operations.
+public class CallEvent: CommunicationEvent<CallEventData> {
     
+    // MARK: - Internal attributes.
+    
+    internal var operation: String?
+    
+    /// Provides a Return handler for reacting to Call events.
+    internal var returnHandler: ((ReturnEvent) -> Void)?
+
+    // MARK: - Static Factory Methods.
+
     /// Create a CallEvent instance for invoking a remote operation call with the given
     /// operation name, parameters (optional), and a context filter (optional).
     ///
@@ -22,13 +39,13 @@ public class CallEventFactory<Family: ObjectFamily>: EventFactoryInit {
     ///       the operation (optional)
     ///     - filter: a context filter that must match a given context object at the remote
     ///       end (optional)
-    public func with(operation: String, parameters: [String: AnyCodable],
-                     filter: ContextFilter? = nil) -> CallEvent<Family> {
-        let callEventdata = CallEventData<Family>.createFrom(parameters: parameters,
-                                                             filter: filter)
-        return .init(eventSource: self.identity,
-                     eventData: callEventdata,
-                     operation: operation)
+    /// - Returns: a Call event with the given parameters
+    /// - Throws: if operation name is invalid
+    public static func with(operation: String, parameters: [String: AnyCodable],
+                            filter: ContextFilter? = nil) throws -> CallEvent {
+        let callEventdata = CallEventData.createFrom(parameters: parameters,
+                                                     filter: filter)
+        return try .init(eventType: .Call, eventData: callEventdata, operation: operation)
     }
     
     /// Create a CallEvent instance for invoking a remote operation call with the given
@@ -44,56 +61,37 @@ public class CallEventFactory<Family: ObjectFamily>: EventFactoryInit {
     ///       the operation (optional)
     ///     - filter: a context filter that must match a given context object at the remote
     ///       end (optional)
-    public func with(operation: String, parameters: [AnyCodable],
-                     filter: ContextFilter? = nil) -> CallEvent<Family> {
-        let callEventdata = CallEventData<Family>.createFrom(parameters: parameters,
-                                                             filter: filter)
-        
-        return .init(eventSource: self.identity, eventData: callEventdata, operation: operation)
+    /// - Returns: a Call event with the given parameters
+    /// - Throws: if operation name is invalid
+    public static func with(operation: String, parameters: [AnyCodable],
+                            filter: ContextFilter? = nil) throws -> CallEvent {
+        let callEventdata = CallEventData.createFrom(parameters: parameters,
+                                                     filter: filter)
+        return try .init(eventType: .Call, eventData: callEventdata, operation: operation)
     }
 
-}
-
-/// Defines criteria for filtering Coaty objects. Used in combination with Call
-/// events, and with the `ObjectMatcher` functionality.
-public typealias ContextFilter = ObjectFilter
-
-/// Defines a filter condition for filtering Coaty objects. Used in combination
-/// with Call events, and with the `ObjectMatcher` functionality.
-public typealias ContextFilterCondition = ObjectFilterCondition
-
-/// CallEvent provides a generic implementation for invoking remote operations.
-public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<Family>> {
-    
-    // MARK: - Internal attributes.
-    
-    internal var operation: String?
-    
-    /// Provides a Return handler for reacting to Call events.
-    internal var returnHandler: ((ReturnEvent<Family>) -> Void)?
-
-    // MARK: - Initializers.
-    
-    /// Respond to an observed Call event by sending the given Return event.
+    /// Respond to a Call event with the given Return event.
     ///
     /// - Parameter returnEvent: a Return event.
-    public func returned(returnEvent: ReturnEvent<Family>) {
+    public func returned(returnEvent: ReturnEvent) {
         if let returnHandler = returnHandler {
             returnHandler(returnEvent)
         }
     }
-    
-    fileprivate override init(eventSource: Identity, eventData: CallEventData<Family>) {
-        super.init(eventSource: eventSource, eventData: eventData)
+
+    // MARK: - Initializers.
+
+    fileprivate override init(eventType: CommunicationEventType, eventData: CallEventData) {
+        super.init(eventType: eventType, eventData: eventData)
     }
     
-    fileprivate init(eventSource: Identity, eventData: CallEventData<Family>, operation: String) {
-        
-        if !CommunicationTopic.isValidEventTypeFilter(filter: operation) {
-            LogManager.log.warning("\(operation) is not a valid operation name.")
+    fileprivate init(eventType: CommunicationEventType, eventData: CallEventData, operation: String) throws {
+        guard CommunicationTopic.isValidEventTypeFilter(filter: operation) else {
+            throw CoatySwiftError.InvalidArgument("Invalid call operation.")
         }
         
-        super.init(eventSource: eventSource, eventData: eventData)
+        super.init(eventType: eventType, eventData: eventData)
+        self.typeFilter = operation
         self.operation = operation
     }
     
@@ -111,7 +109,7 @@ public class CallEvent<Family: ObjectFamily>: CommunicationEvent<CallEventData<F
 
 
 /// CallEventData provides the entire message payload data for a `CallEvent`.
-public class CallEventData<Family: ObjectFamily>: CommunicationEventData {
+public class CallEventData: CommunicationEventData {
     
     // MARK: - Public attributes.
     
@@ -180,16 +178,8 @@ public class CallEventData<Family: ObjectFamily>: CommunicationEventData {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        do {
-            self.parameterDictionary = try container.decodeIfPresent([String: AnyCodable].self,
-                                                                     forKey: .parameters)
-        } catch { /* Surpress error. */ }
-        
-        do {
-            self.parameterArray = try container.decodeIfPresent([AnyCodable].self,
-                                                                forKey: .parameters)
-        } catch { /* Surpress error. */ }
-    
+        self.parameterDictionary = try? container.decodeIfPresent([String: AnyCodable].self, forKey: .parameters)
+        self.parameterArray = try? container.decodeIfPresent([AnyCodable].self, forKey: .parameters)
         self.filter = try container.decodeIfPresent(ContextFilter.self, forKey: .filter)
         
         try super.init(from: decoder)

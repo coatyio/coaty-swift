@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CoatySwift'
-  s.version          = '1.0.1'
+  s.version          = '2.0.0'
   s.summary          = 'CoatySwift is a Swift implementation of the Coaty Collaborative IoT framework for iOS, iPadOS, and macOS.'
 
 # This description is used to generate tags and improve search results.
@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Siemens AG' => 'coaty.team@gmail.com' }
   s.source           = { :git => 'https://github.com/coatyio/coaty-swift.git', :tag => s.version.to_s }
-  s.documentation_url = 'https://coatyio.github.io/coaty-swift/swiftdoc/index.html'
+  s.documentation_url = 'https://coatyio.github.io/coaty-swift/api/index.html'
   s.swift_version = '5.0'
 
   s.ios.deployment_target = '9.0'
@@ -33,10 +33,10 @@ Pod::Spec.new do |s|
 
   s.source_files = 'CoatySwift/Classes/**/*'
     
-  s.dependency 'CocoaMQTT', '~> 1.1.3'
+  s.dependency 'CocoaMQTT', '~> 1.2.5'
   s.dependency 'RxSwift', '~> 5'
   s.dependency 'RxCocoa', '~> 5'
-  s.dependency 'XCGLogger', '~> 7.0.0'
+  s.dependency 'XCGLogger', '~> 7.0.1'
 
 end
 

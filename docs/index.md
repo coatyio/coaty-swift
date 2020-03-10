@@ -8,7 +8,7 @@ recommend reviewing this framework documentation:
   shows how to set up a minimal CoatySwift app.
 * [Developer Guide]({{ site.baseurl }}{% link man/developer-guide.md %}) -
   explains how to develop a CoatySwift app.
-* [API Documentation]({{ site.baseurl }}{% link swiftdoc/index.html %}) -
+* [API Documentation]({{ site.baseurl }}{% link api/index.html %}) -
   source code documentation of public types and members of the CoatySwift framework.
 * [Design Rationale]({{ site.baseurl }}{% link man/design-rationale.md %}) -
   in case you want to know why certain things have been implemented in a

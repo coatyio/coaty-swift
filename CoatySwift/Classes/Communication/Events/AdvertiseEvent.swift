@@ -5,38 +5,41 @@
 //
 //
 
-/// A Factory that creates AdvertiseEvents.
-public class AdvertiseEventFactory<Family: ObjectFamily>: EventFactoryInit {
-    
-    /// Convenience factory method that configures an instance of and AdvertiseEvent with
-    /// an object and privateData. Note that the event source should be the controller that
-    /// creates the AdvertiseEvent.
-    /// - NOTE: It is required to delegate the call to `.withObject()` in order to create
-    ///   AdvertiseEvents during the bootstrapping process.
-    public func with(object: CoatyObject, privateData: [String: Any]? = nil) -> AdvertiseEvent<Family> {
-        
-        return AdvertiseEvent<Family>.withObject(eventSource: self.identity,
-                                                 object: object, privateData: privateData)
-    }
-}
+/// AdvertiseEvent provides a generic implementation for advertising
+/// CoatyObjects.
+public class AdvertiseEvent: CommunicationEvent<AdvertiseEventData> {
 
-/// AdvertiseEvent provides a generic implementation for advertising CoatyObjects.
-/// Note that this class should preferably be initialized via its withObject() method.
-public class AdvertiseEvent<Family: ObjectFamily>: CommunicationEvent<AdvertiseEventData<Family>> {
-    
-    override init(eventSource: Identity, eventData: AdvertiseEventData<Family>) {
-        super.init(eventSource: eventSource, eventData: eventData)
+    // MARK: - Static Factory Methods.
+
+    /// Create an AdvertiseEvent with an object and optional privateData.
+    ///
+    /// The object type of the given object must be a non-empty string that does not contain
+    /// the following characters: `NULL (U+0000)`, `# (U+0023)`, `+ (U+002B)`,
+    /// `/ (U+002F)`.
+    ///
+    /// - Parameters:
+    ///     - object: The object to be advertised
+    ///     - privateData: Associated private data to be published (optional).
+    /// - Returns: an Advertise event with the given parameters
+    /// - Throws: if object type of given object is invalid
+    public static func with(object: CoatyObject,
+                            privateData: [String: Any]? = nil) throws -> AdvertiseEvent {
+        let advertiseEventData = AdvertiseEventData(object: object, privateData: privateData)
+        return try .init(eventType: .Advertise, eventData: advertiseEventData, objectType: advertiseEventData.object.objectType)
+    }
+
+    // MARK: - Initializers.
+
+    fileprivate override init(eventType: CommunicationEventType, eventData: AdvertiseEventData) {
+        super.init(eventType: eventType, eventData: eventData)
     }
     
-    /// Convenience factory method that configures an instance of an AdvertiseEvent with
-    /// an object and privateData. Note that the event source should be the controller that
-    /// creates the AdvertiseEvent.
-    internal static func withObject(eventSource: Identity,
-                           object: CoatyObject,
-                           privateData: [String: Any]? = nil) -> AdvertiseEvent {
+    fileprivate init(eventType: CommunicationEventType, eventData: AdvertiseEventData, objectType: String) throws {
+        guard CommunicationTopic.isValidEventTypeFilter(filter: objectType) else {
+            throw CoatySwiftError.InvalidArgument("Invalid object type: \(objectType)")
+        }
         
-        let advertiseEventData = AdvertiseEventData<Family>(object: object, privateData: privateData)
-        return .init(eventSource: eventSource, eventData: advertiseEventData)
+        super.init(eventType: eventType, eventData: eventData)
     }
     
     // MARK: - Codable methods.
@@ -51,10 +54,8 @@ public class AdvertiseEvent<Family: ObjectFamily>: CommunicationEvent<AdvertiseE
 }
 
 
-/// AdvertiseEventData provides the entire message payload data of an
-/// `AdvertiseEvent` including the object itself as well as associated
-/// private data.
-public class AdvertiseEventData<Family: ObjectFamily>: CommunicationEventData {
+/// Defines event data format for advertising objects.
+public class AdvertiseEventData: CommunicationEventData {
     
     // MARK: - Public attributes.
     
@@ -85,10 +86,7 @@ public class AdvertiseEventData<Family: ObjectFamily>: CommunicationEventData {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard let object = try container.decode(ClassWrapper<Family, CoatyObject>.self, forKey: .object).object else {
-            throw CoatySwiftError.DecodingFailure("No object found while decoding an Advertise Event.")
-        }
-        self.object = object
+        self.object = try container.decode(AnyCoatyObjectDecodable.self, forKey: .object).object
         try? self.privateData = container.decodeIfPresent([String: Any].self, forKey: .privateData)
         try super.init(from: decoder)
     }

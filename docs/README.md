@@ -6,17 +6,16 @@ documentation on GitHub Pages at
 
 ## Website Content
 
-Documentation content is hosted in the subfolders `man`, `tutorial`, and
-`swiftdoc`.
+Documentation content is hosted in these subfolders:
 
-The `man` subfolder contains CoatySwift manuals in markdown format.
-
-The `swiftdoc` subfolder contains the CoatySwift framework API documentation
-generated automatically whenever a new `CoatySwift` framework release is created.
+* `api` - contains the CoatySwift framework API documentation.
+* `man` - contains CoatySwift manuals in markdown format.
+* `tutorial` - contains the HTML tutorial for the `Example` in the CoatySwift
+  project.
 
 GitHub Pages has been configured to host the static website content from the
 `/docs` folder on the master branch. This means that each time, changes to
-`man`, `tutorial`, or `swiftdoc` folders are pushed on the master branch, GitHub
+`api`, `man`, or `tutorial` folders are pushed on the master branch, GitHub
 Pages automatically regenerates the documentation website.
 
 ## Previewing the website locally
@@ -32,6 +31,14 @@ proposing a change):
   this proxy before invoking the `bundle` commands.
 * Run `bundle exec jekyll serve` to start the preview server and point your
   browser to `localhost:4000/coaty-swift/`.
+
+## Upgrade gem dependencies
+
+To upgrade a gem dependency to a newer version (e.g. because of a security
+alert), add new gem version to `Gemfile` (e.g. `gem "nokogiri", ">= 1.10.8"`)
+and run `bundle update` on the dependency (e.g. `bundle update nokogiri`).
+
+To update all gem dependencies, run `bundle update`.
 
 ## GitHub Pages Theme
 

@@ -5,11 +5,13 @@
 //
 //
 
-/// Operating state indicates the current state of a CommunicationManager.
+/// Indicates the current operating state of a CommunicationManager.
 public enum OperatingState {
-    case initial
-    case starting
-    case started
-    case stopping
+
+    /// Indicates the communication manager is stopped or initialized.
     case stopped
+    
+    /// Indicates the communication manager is started.
+    case started
+
 }

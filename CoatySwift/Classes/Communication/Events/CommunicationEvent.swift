@@ -10,27 +10,24 @@ import Foundation
 /// CommunicationEvent is a generic supertype for all defined Coaty event types.
 public class CommunicationEvent<T: CommunicationEventData>: Codable {
     
-    // MARK: - Public attributes.
+    // MARK: - Attributes.
     
-    public var type: CommunicationEventType?
-    
-    /// Event data that conforms to event type specific CommunicationEventData
-    public var data: T
+    /// Event data of this event.
+    private (set) public var data: T
 
-    public var source: Identity?
-    public var sourceId: CoatyUUID?
+    /// Object ID of the event source.
+    internal (set) public var sourceId: CoatyUUID?
 
-    /// The associated user id of an inbound event. The value is always nil for
-    /// outbound events. For inbound events, the value is nil if the event
-    /// doesn't provide an associated user id in the topic.
-    internal (set) public var userId: CoatyUUID?
+    /// Event type of this event.
+    internal var type: CommunicationEventType?
+
+    /// Event type filter of this event.
+    internal var typeFilter: String?
     
     // MARK: - Initializer.
     
-    init(eventSource: Identity, eventData: T) {
-        self.source = eventSource
-        self.sourceId = eventSource.objectId
-        self.userId = nil
+    init(eventType: CommunicationEventType, eventData: T) {
+        self.type = eventType
         self.data = eventData
     }
     

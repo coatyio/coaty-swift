@@ -6,28 +6,27 @@
 
 import Foundation
 
-/// A Factory that creates CompleteEvents.
-public class CompleteEventFactory<Family: ObjectFamily>: EventFactoryInit {
-    
-    /// Create a CompleteEvent instance for updating the given object.
+/// CompleteEvent provides a generic implementation for responding to an
+/// `UpdateEvent`.
+public class CompleteEvent: CommunicationEvent<CompleteEventData> {
+
+    // MARK: - Static Factory Methods.
+
+    /// Create a CompleteEvent instance for the given object.
     ///
     /// - Parameters:
     ///   - object: the updated object
     ///   - privateData: application-specific options (optional)
-    public func with(object: CoatyObject, privateData: [String: Any]? = nil) -> CompleteEvent<Family> {
-        
-        let completeEventData = CompleteEventData<Family>(object, privateData)
-        return .init(eventSource: self.identity, eventData: completeEventData)
+    /// - Returns: a Complete event with the given parameters
+    public static func with(object: CoatyObject, privateData: [String: Any]? = nil) -> CompleteEvent {
+        let completeEventData = CompleteEventData(object, privateData)
+        return .init(eventType: .Complete, eventData: completeEventData)
     }
-}
 
+    // MARK: - Initializers.
 
-/// CompleteEvent provides a generic implementation for responding to an `UpdateEvent`.
-/// Note that this class should preferably be initialized via its withObject() method.
-public class CompleteEvent<Family: ObjectFamily>: CommunicationEvent<CompleteEventData<Family>> {
-
-    override init(eventSource: Identity, eventData: CompleteEventData<Family>) {
-        super.init(eventSource: eventSource, eventData: eventData)
+    fileprivate override init(eventType: CommunicationEventType, eventData: CompleteEventData) {
+        super.init(eventType: eventType, eventData: eventData)
     }
     
     // MARK: - Codable methods.
@@ -44,7 +43,7 @@ public class CompleteEvent<Family: ObjectFamily>: CommunicationEvent<CompleteEve
 /// CompleteEventData provides the entire message payload data for a
 /// `CompleteEvent` including the object itself as well as associated private
 /// data.
-public class CompleteEventData<Family: ObjectFamily>: CommunicationEventData {
+public class CompleteEventData: CommunicationEventData {
     
     // MARK: - Public attributes.
     
@@ -71,7 +70,7 @@ public class CompleteEventData<Family: ObjectFamily>: CommunicationEventData {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.object = try container.decodeIfPresent(ClassWrapper<Family, CoatyObject>.self, forKey: .object)?.object
+        self.object = try container.decodeIfPresent(AnyCoatyObjectDecodable.self, forKey: .object)?.object
         self.privateData = try container.decodeIfPresent([String: Any].self, forKey: .privateData)
         try super.init(from: decoder)
     }

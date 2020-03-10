@@ -3,12 +3,14 @@
 //  ExampleViewController.swift
 //  CoatySwift
 //
-//
 
 import Foundation
 import UIKit
+import RxSwift
 
 class ExampleViewController: UIViewController {
+
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         setupView()
@@ -35,7 +37,7 @@ class ExampleViewController: UIViewController {
         // Add example name label.
         let label = UILabel(frame: CGRect.zero)
         label.textAlignment = .center
-        label.text = "Dynamic Hello World Example - Client"
+        label.text = "Hello Coaty Example"
         
         label.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(label)
@@ -49,7 +51,7 @@ class ExampleViewController: UIViewController {
         let note = UILabel(frame: CGRect.zero)
         note.font = note.font.withSize(14)
         note.textAlignment = .center
-        note.text = "Note: The output is logged to the XCode console."
+        note.text = "Note: Output is logged to the Xcode console."
         
         note.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(note)
@@ -63,7 +65,7 @@ class ExampleViewController: UIViewController {
         let broker = UILabel(frame: CGRect.zero)
         broker.font = broker.font.withSize(14)
         broker.textAlignment = .center
-        broker.text = "MQTT Broker: \(appDelegate.brokerIp):\(appDelegate.brokerPort)"
+        broker.text = "Broker: \(appDelegate.brokerHost):\(appDelegate.brokerPort)"
         
         broker.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(broker)
@@ -87,13 +89,15 @@ class ExampleViewController: UIViewController {
         indicator.heightAnchor.constraint(equalToConstant: 24).isActive = true
         
         // Dynamically update the indicator color based on the connection state.
+        // Ensure to unsubscribe from the subscription when this view controller is disposed.
         _ = appDelegate
             .container?
             .communicationManager?
             .getCommunicationState()
             .subscribe(onNext: {
                 indicator.backgroundColor = $0 == .online ? .green : .red
-        })
+            })
+            .disposed(by: self.disposeBag)
     
     }
 }

@@ -5,33 +5,26 @@
 //
 //
 
-/// A Factory that creates DeadvertiseEvents.
-public class DeadvertiseEventFactory<Family: ObjectFamily>: EventFactoryInit {
-    
-    /// Convenience factory method that configures an instance of and DeadvertiseEvent with
-    /// object ids to be deadvertised. Note that the event source should be the controller that
-    /// creates the DeadvertiseEvent.
-    public func with(objectIds: [CoatyUUID]) throws -> DeadvertiseEvent<Family> {
-        return try DeadvertiseEvent.withObjectIds(eventSource: self.identity, objectIds: objectIds)
-    }
-}
+/// DeadvertiseEvent provides a generic implementation for deadvertising
+/// CoatyObjects.
+public class DeadvertiseEvent: CommunicationEvent<DeadvertiseEventData> {
 
-/// DeadvertiseEvent provides a generic implementation for deadvertising CoatyObjects.
-/// Note that this class should preferably be initialized via its withObjectIds() method.
-public class DeadvertiseEvent<Family: ObjectFamily>: CommunicationEvent<DeadvertiseEventData<Family>> {
-
-    override init(eventSource: Identity, eventData: DeadvertiseEventData<Family>) {
-        super.init(eventSource: eventSource, eventData: eventData)
-    }
+    // MARK: - Static Factory Methods.
     
-    /// Convenience factory method that configures an instance of a DeadvertiseEvent with
-    /// object ids to be deadvertised. Note that the event source should be the controller that
-    /// creates the DeadvertiseEvent.
-    internal static func withObjectIds(eventSource: Identity,
-                                       objectIds: [CoatyUUID]) throws -> DeadvertiseEvent {
-        
-        let deadvertiseEventData = DeadvertiseEventData<Family>(objectIds: objectIds)
-        return .init(eventSource: eventSource, eventData: deadvertiseEventData)
+    /// Create a Deadvertise event with object ids to be deadvertised.
+    ///
+    /// - Parameters:
+    ///   - objectIds: the object ids to be deadvertised
+    /// - Returns: a Deadvertise event with the given parameters
+    public static func with(objectIds: [CoatyUUID]) -> DeadvertiseEvent {
+        let deadvertiseEventData = DeadvertiseEventData(objectIds: objectIds)
+        return .init(eventType: .Deadvertise, eventData: deadvertiseEventData)
+    }
+
+    // MARK: - Initializers.
+
+    fileprivate override init(eventType: CommunicationEventType, eventData: DeadvertiseEventData) {
+        super.init(eventType: eventType, eventData: eventData)
     }
     
     // MARK: - Codable methods.
@@ -48,12 +41,12 @@ public class DeadvertiseEvent<Family: ObjectFamily>: CommunicationEvent<Deadvert
 
 /// DeadvertiseEventData provides the entire message payload data for a
 /// `DeadvertiseEvent`.
-public class DeadvertiseEventData<Family: ObjectFamily>: CommunicationEventData {
+public class DeadvertiseEventData: CommunicationEventData {
     
     // MARK: - Public attributes.
     
     /// The objectIds of the objects to be deadvertised.
-    var objectIds: [CoatyUUID]
+    public var objectIds: [CoatyUUID]
     
     // MARK: - Initializers.
     

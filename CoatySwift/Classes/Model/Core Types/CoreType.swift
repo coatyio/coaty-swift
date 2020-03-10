@@ -7,23 +7,114 @@
 
 import Foundation
 
-/// All Coaty CoreTypes as defined in https://github.com/coatyio/coaty-js/blob/master/src/model/types.ts
+/// All Coaty core types as defined in https://github.com/coatyio/coaty-js/blob/master/src/model/types.ts
 public enum CoreType: String, Codable {
     
     // MARK: - Value definitions.
     
     case CoatyObject = "CoatyObject"
     case User = "User"
-    case Device = "Device"
     case Annotation = "Annotation"
     case Task = "Task"
     case IoSource = "IoSource"
     case IoActor = "IoActor"
-    case Identity = "Component"
-    case Config = "Config"
+    case Identity = "Identity"
     case Log = "Log"
     case Location = "Location"
     case Snapshot = "Snapshot"
+    
+    enum ObjectType: String {
+        case CoatyObject = "coaty.CoatyObject"
+        case User = "coaty.User"
+        case Annotation = "coaty.Annotation"
+        case Task = "coaty.Task"
+        case IoSource = "coaty.IoSource"
+        case IoActor = "coaty.IoActor"
+        case Identity = "coaty.Identity"
+        case Log = "coaty.Log"
+        case Location = "coaty.Location"
+        case Snapshot = "coaty.Snapshot"
+    }
+    
+    static func getClassType(forCoreType: CoreType) -> CoatyObject.Type {
+        switch forCoreType {
+        case .CoatyObject:
+            return CoatySwift.CoatyObject.self
+        case .User:
+            return CoatySwift.User.self
+        case .Annotation:
+            return CoatySwift.Annotation.self
+        case .Task:
+            return CoatySwift.Task.self
+        case .IoSource:
+            return CoatySwift.IoSource.self
+        case .IoActor:
+            return CoatySwift.IoActor.self
+        case .Identity:
+            return CoatySwift.Identity.self
+        case .Log:
+            return CoatySwift.Log.self
+        case .Location:
+            return CoatySwift.Location.self
+        case .Snapshot:
+            return CoatySwift.Snapshot.self
+        }
+    }
+
+    /// Gets the core type for the given object type, if the object type corresponds
+    /// to a Coaty core type.
+    static func getCoreType(forObjectType: String) -> CoreType? {
+        switch forObjectType {
+        case ObjectType.CoatyObject.rawValue:
+            return self.CoatyObject
+        case ObjectType.User.rawValue:
+            return self.User
+        case ObjectType.Annotation.rawValue:
+            return self.Annotation
+        case ObjectType.Task.rawValue:
+            return self.Task
+        case ObjectType.IoSource.rawValue:
+            return self.IoSource
+        case ObjectType.IoActor.rawValue:
+            return self.IoActor
+        case ObjectType.Identity.rawValue:
+            return self.Identity
+        case ObjectType.Log.rawValue:
+            return self.Log
+        case ObjectType.Location.rawValue:
+            return self.Location
+        case ObjectType.Snapshot.rawValue:
+            return self.Snapshot
+        default:
+            return nil
+        }
+    }
+    
+    /// Gets the object type of this core type.
+    public var objectType: String {
+        switch self {
+        case .CoatyObject:
+            return ObjectType.CoatyObject.rawValue
+        case .User:
+            return ObjectType.User.rawValue
+        case .Annotation:
+            return ObjectType.Annotation.rawValue
+        case .Task:
+            return ObjectType.Task.rawValue
+        case .IoSource:
+            return ObjectType.IoSource.rawValue
+        case .IoActor:
+            return ObjectType.IoActor.rawValue
+        case .Identity:
+            return ObjectType.Identity.rawValue
+        case .Log:
+            return ObjectType.Log.rawValue
+        case .Location:
+            return ObjectType.Location.rawValue
+        case .Snapshot:
+            return ObjectType.Snapshot.rawValue
+        }
+    }
     
     // MARK: - Codable methods.
     
@@ -35,7 +126,7 @@ public enum CoreType: String, Codable {
         guard let coreType = CoreType(rawValue: rawString) else {
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(codingPath: decoder.codingPath,
-                                      debugDescription: "Attempted to decode invalid enum."))
+                                      debugDescription: "Attempt to decode invalid CoreType."))
         }
         
         self = coreType

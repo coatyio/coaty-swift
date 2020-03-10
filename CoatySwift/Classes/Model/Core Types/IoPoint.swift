@@ -31,6 +31,7 @@ import Foundation
     
     // MARK: - Initializers.
     
+    /// Default initializer for an`IoPoint` object.
     init(coreType: CoreType,
          objectType: String,
          objectId: CoatyUUID,
@@ -44,7 +45,7 @@ import Foundation
     
     // MARK: - Codable methods.
 
-    enum IoPointKeys: String, CodingKey {
+    enum IoPointKeys: String, CodingKey, CaseIterable {
         case updateRate
         case externalTopic
     }
@@ -53,6 +54,8 @@ import Foundation
         let container = try decoder.container(keyedBy: IoPointKeys.self)
         self.updateRate = try container.decodeIfPresent(Double.self, forKey: .updateRate)
         self.externalTopic = try container.decodeIfPresent(String.self, forKey: .externalTopic)
+        
+        CoatyObject.addCoreTypeKeys(decoder: decoder, coreTypeKeys: IoPointKeys.self)
         try super.init(from: decoder)
     }
     

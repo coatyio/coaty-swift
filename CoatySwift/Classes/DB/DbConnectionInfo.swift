@@ -35,6 +35,7 @@ public class DbConnectionInfo {
     
     // MARK: - Initializers.
     
+    /// Default initializer for a `DbConnectionInfo` object.
     public init(adapter: String, adapterOptions: [String: Any]? = nil,
          connectionString: String? = nil, connectionOptions: Any? = nil) {
         self.adapter = adapter

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0900"
+   LastUpgradeVersion = "1130"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -42,7 +42,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8C664A9ED0D9FCC7B075BACBCB561F94"
+               BlueprintIdentifier = "9087E00EBC13E61E3D0A765A92072AA7"
                BuildableName = "CoatySwift.framework"
                BlueprintName = "CoatySwift"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">

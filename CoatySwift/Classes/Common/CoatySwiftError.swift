@@ -7,9 +7,15 @@
 
 import Foundation
 
-/// The base error for all CoatySwift related errors.
+/// The base error type for all CoatySwift related errors.
 public enum CoatySwiftError: Error {
+    
+    /// Invalid argument error.
     case InvalidArgument(String)
+    
+    /// Decoding of a Coaty object or event failed.
     case DecodingFailure(String)
+    
+    /// Invalid configuration option.
     case InvalidConfiguration(String)
 }

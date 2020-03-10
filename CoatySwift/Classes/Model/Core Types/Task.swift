@@ -9,6 +9,12 @@ import Foundation
 /// Represents a task or task request.
 open class Task: CoatyObject {
     
+    // MARK: - Class registration.
+    
+    override open class var objectType: String {
+        return register(objectType: CoreType.Task.objectType, with: self)
+    }
+    
     // MARK: - Attributes.
     
     /// Object ID of user who created the task
@@ -37,31 +43,32 @@ open class Task: CoatyObject {
     /// Status of task.
     public var status: TaskStatus
     
-    /// Required competencies / roles needed for this task (optional).
-    /// The requirements specified are combined by logical AND, i.e. all
-    /// requirements must be fullfilled.
-    public var requirements: [String]?
+    /// Required competencies, roles, etc. needed to fulfill this task
+    /// (optional). Requirements are specified as key-value pairs with JSON
+    /// compatible values.
+    public var requirements: [String: Any]?
     
     /// Description of the task (optional)
     public var desc: String?
-    
-    /// Associated workflow Id (optional)
-    public var workflowId: CoatyUUID?
+
+    /// Unique ID of object that this task is assigned to (optional).
+    public var assigneeObjectId: CoatyUUID?
 
     // MARK: - Initializers.
 
+    /// Default initializer for a `Task` object.
     public init(creatorId: CoatyUUID,
                 creationTimestamp: Double,
                 status: TaskStatus,
                 name: String = "TaskObject",
-                objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.Task)",
+                objectType: String = Task.objectType,
                 objectId: CoatyUUID = .init(),
                 lastModificationTimestamp: Double? = nil,
                 dueTimestamp: Double? = nil,
                 doneTimestamp: Double? = nil,
-                requirements: [String]? = nil,
+                requirements: [String: Any]? = nil,
                 description: String? = nil,
-                workflowId: CoatyUUID? = nil) {
+                assigneeObjectId: CoatyUUID? = nil) {
         self.creatorId = creatorId
         self.creationTimestamp = creationTimestamp
         self.status = status
@@ -70,13 +77,13 @@ open class Task: CoatyObject {
         self.doneTimestamp = doneTimestamp
         self.requirements = requirements
         self.desc = description
-        self.workflowId = workflowId
+        self.assigneeObjectId = assigneeObjectId
         super.init(coreType: .Task, objectType: objectType, objectId: objectId, name: name)
     }
     
     // MARK: - Codable methods.
     
-    enum CodingKeys: String, CodingKey {
+    enum TaskCodingKeys: String, CodingKey, CaseIterable {
         case creatorId
         case creationTimestamp
         case status
@@ -85,26 +92,28 @@ open class Task: CoatyObject {
         case doneTimestamp
         case requirements
         case description
-        case workflowId
+        case assigneeObjectId
     }
     
     public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let container = try decoder.container(keyedBy: TaskCodingKeys.self)
         self.creatorId = try container.decode(CoatyUUID.self, forKey: .creatorId)
         self.creationTimestamp = try container.decode(Double.self, forKey: .creationTimestamp)
         self.status = try container.decode(TaskStatus.self, forKey: .status)
         self.lastModificationTimestamp = try container.decodeIfPresent(Double.self, forKey: .lastModificationTimestamp)
         self.dueTimestamp = try container.decodeIfPresent(Double.self, forKey: .dueTimestamp)
         self.doneTimestamp = try container.decodeIfPresent(Double.self, forKey: .doneTimestamp)
-        self.requirements = try container.decodeIfPresent([String].self, forKey: .requirements)
+        self.requirements = try container.decodeIfPresent([String: Any].self, forKey: .requirements)
         self.desc = try container.decodeIfPresent(String.self, forKey: .description)
-        self.workflowId = try container.decodeIfPresent(CoatyUUID.self, forKey: .workflowId)
+        self.assigneeObjectId = try container.decodeIfPresent(CoatyUUID.self, forKey: .assigneeObjectId)
+        
+        CoatyObject.addCoreTypeKeys(decoder: decoder, coreTypeKeys: TaskCodingKeys.self)
         try super.init(from: decoder)
     }
     
     open override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: TaskCodingKeys.self)
         try container.encode(creatorId.string, forKey: .creatorId)
         try container.encode(creationTimestamp, forKey: .creationTimestamp)
         try container.encode(status, forKey: .status)
@@ -113,7 +122,7 @@ open class Task: CoatyObject {
         try container.encodeIfPresent(doneTimestamp, forKey: .doneTimestamp)
         try container.encodeIfPresent(requirements, forKey: .requirements)
         try container.encodeIfPresent(desc, forKey: .description)
-        try container.encodeIfPresent(workflowId, forKey: .workflowId)
+        try container.encodeIfPresent(assigneeObjectId, forKey: .assigneeObjectId)
     }
 }
 

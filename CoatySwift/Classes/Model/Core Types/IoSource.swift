@@ -10,6 +10,12 @@ import Foundation
 /// Defines meta information of an IO source.
 open class IoSource: IoPoint {
     
+    // MARK: - Class registration.
+    
+    override open class var objectType: String {
+        return register(objectType: CoreType.IoSource.objectType, with: self)
+    }
+    
     // MARK: - Attributes.
 
     /// The semantic, application-specific data type of values to be represented
@@ -32,13 +38,14 @@ open class IoSource: IoPoint {
     
     // MARK: - Initializers.
     
+    /// Default initializer for an `IoSource` object.
     init(valueType: String,
          updateStrategy: IoSourceBackpressureStrategy? = nil,
          updateRate: Double? = nil,
          externalTopic: String? = nil,
          name: String = "IoSourceObject",
-         objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.IoSource)",
-        objectId: CoatyUUID = .init()) {
+         objectType: String = IoSource.objectType,
+         objectId: CoatyUUID = .init()) {
         self.valueType = valueType
         self.updateStrategy = updateStrategy
         super.init(coreType: .IoSource,
@@ -51,7 +58,7 @@ open class IoSource: IoPoint {
     
     // MARK: - Codable methods.
 
-    enum IoSourceKeys: String, CodingKey {
+    enum IoSourceKeys: String, CodingKey, CaseIterable {
         case valueType
         case updateStrategy
     }
@@ -60,6 +67,8 @@ open class IoSource: IoPoint {
         let container = try decoder.container(keyedBy: IoSourceKeys.self)
         self.valueType = try container.decode(String.self, forKey: .valueType)
         self.updateStrategy = try container.decodeIfPresent(IoSourceBackpressureStrategy.self, forKey: .updateStrategy)
+        
+        CoatyObject.addCoreTypeKeys(decoder: decoder, coreTypeKeys: IoSourceKeys.self)
         try super.init(from: decoder)
     }
     

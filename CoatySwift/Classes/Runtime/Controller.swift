@@ -7,166 +7,82 @@
 import Foundation
 import RxSwift
 
-/// An IoC container that uses constructor dependency injection to
-/// create container components and to resolve dependencies.
-/// This container defines the entry and exit points for any Coaty application
-/// providing lifecycle management for its components.
-open class Controller<Family: ObjectFamily> {
-    
-    /// This is the communicationManager for this particular controller.
-    private (set) public var communicationManager: ControllerCommunicationManager<Family>!
-    
-    /// This is the factory for this particular controller that is used to
-    /// create CommunicationEvents.
-    private (set) public var eventFactory: EventFactory<Family>!
-    private (set) public var runtime: Runtime
+/// The base controller class.
+open class Controller {
+
+    /// Gets the contrainer's communicationManager.
+    private (set) public var communicationManager: CommunicationManager!
+
+    /// Gets the container object of this controller.
+    private (set) public var container: Container!
+
+    /// Gets the container's Runtime object.
+    private (set) public var runtime: Runtime!
+
+    /// Gets the controller's options as specified in the configuration options.
     private (set) public var options: ControllerOptions?
-    private (set) public var controllerType: String
-    private (set) public var identity: Identity!
+
+    /// Gets the registered name of this controller.
+    ///
+    /// The registered name is either defined by the corresponding key in the
+    /// `Components.controllers` object in the container configuration, or by
+    /// invoking `Container.registerController` method with this name.
+    private (set) public var registeredName: String
     
-    /// This disposebag holds references to all of your subscriptions. It is standard in RxSwift
-    /// to call `.disposed(by: self.disposeBag)` at the end of every subscription.
+    /// This dispose bag holds references to your observable subscriptions added
+    /// with `.disposed(by: self.disposeBag)`. These subscriptions are
+    /// *automatically* disposed when the communication manager is stopped (in
+    /// the `onCommunicationManagerStopping` base method).
     public var disposeBag = DisposeBag()
     
-    required public init(runtime: Runtime,
-                  options: ControllerOptions?,
-                  communicationManager: CommunicationManager<Family>,
-                  controllerType: String) {
-        self.runtime = runtime
+    /// Never instantiate controller objects in your application; they are created
+    /// automatically by dependency injection.
+    ///
+    /// - Remark: for internal use in CoatySwift framework only.
+    required public init(container: Container,
+                         options: ControllerOptions?,
+                         controllerType: String) {
+        self.container = container
+        self.runtime = container.runtime
         self.options = options ?? ControllerOptions()
-        self.controllerType = controllerType
-        
-        // Create default identity.
-        self.identity = Identity(name: self.controllerType)
-
-        self.initializeIdentity(identity: identity)
-        self.initializeIdentityFromOptions()
-        identity.parentObjectId = communicationManager.identity.objectId
-        
-        self.eventFactory = EventFactory<Family>(identity)
-        
-        self.communicationManager = ControllerCommunicationManager(identity: self.identity,
-                                                                   communicationManager: communicationManager)
-
+        self.registeredName = controllerType
+        self.communicationManager = container.communicationManager
     }
     
-    /// Called when the controller instance has been instantiated.
-    /// This method is called immediately after the base controller
-    /// constructor. The base implementation does nothing.
+    /// Called when the container has completely set up and injected all
+    /// dependency components, including all its controllers.
     ///
-    /// Use this method to perform initializations in your custom
-    /// controller class instead of defining a constructor.
-    /// The method is called immediately after the controller instance
-    /// has been created. Although the base implementation does nothing it is good
-    /// practice to call super.onInit() in your override method; especially if your
-    /// custom controller class extends from another custom controller class
-    /// and not from the base `Controller` class directly.
+    /// Use this method to perform initializations in your custom controller
+    /// class instead of defining a constructor. Although the base
+    /// implementation does nothing it is good practice to call super.onInit()
+    /// in your override method; especially if your custom controller class
+    /// extends from another custom controller class and not from the base
+    /// `Controller` class directly.
     open func onInit() {}
     
-    /// Called by the Coaty container after it has resolved and created all
-    /// controller instances within the container. Implement initialization side
-    /// effects here. The base implementation does nothing.
-    ///
-    /// - Parameters: the Coaty container of this controller.
-    open func onContainerResolved(container: Container<Family>) {}
-    
     /// Called when the communication manager is about to start or restart.
-    /// Implement side effects here. Ensure that super.onCommunicationManagerStarting
-    /// is called in your override. The base
-    /// implementation advertises its identity if requested by the controller
-    /// option property `shouldAdvertiseIdentity` (if this property is not
-    /// specified, the identity is advertised by default). The base
-    /// implementation also observes Discover events for core type "Identity" or
-    /// the identity's object ID and resolves them with the controller's
-    /// identity.
-    open func onCommunicationManagerStarting() {
-        if let options = self.options, options.shouldAdvertiseIdentity {
-            self.observeDiscoverIdentity()
-            self.advertiseIdentity()
-        }
-    }
-    
-    /// Called when the communication manager is about to stop.
     /// Implement side effects here. Ensure that
-    /// super.onCommunicationManagerStopping is called in your override.
-    /// The base implementation does nothing.
-    open func onCommunicationManagerStopping() {}
+    /// super.onCommunicationManagerStarting is called in your override. The
+    /// base implementation does nothing.
+    open func onCommunicationManagerStarting() {}
+    
+    /// Called when the communication manager is about to stop. Implement side
+    /// effects here. Ensure that super.onCommunicationManagerStopping is called
+    /// in your override.
+    ///
+    /// The base implementation disposes all observable subscriptions collected
+    /// by the controller's dispose bag (see `self.disposeBag`) and
+    /// reinitializes a new dispose bag afterwards.
+    open func onCommunicationManagerStopping() {
+        self.disposeBag = DisposeBag()
+    }
     
     /// Called by the Coaty container when this instance should be disposed.
     /// Implement cleanup side effects here. The base implementation does nothing.
-    open func onDispose() {
-    }
-    
-    /// Initialize identity object properties for a concrete controller subclass
-    /// based on the specified default identity object.
-    ///
-    /// Do not call this method in your application code, it is called by the
-    /// framework. To retrieve the identity of a controller use
-    /// its `identity` getter.
-    ///
-    /// You can overwrite this method to initalize the identity with a custom name
-    /// or additional application-specific properties. Alternatively, you can
-    /// set or add custom property-value pairs by specifying them in the `identity`
-    /// property of the controller configuration options `ControllerOptions`.
-    /// If you specify identity properties in both ways, the ones specified
-    /// in the configuration options take precedence.
-    ///
-    /// @param identity the default identity object for a controller instance
-    open func initializeIdentity(identity: Identity) {}
-
-    private func initializeIdentityFromOptions() {
-        // Merge property values from ControllerOptions.identity option.
-        if self.options?.identity != nil {
-            for (key, value) in self.options!.identity! {
-                switch key {
-                    case "name":
-                        identity.name = value as! String
-                    case "objectId":
-                        identity.objectId = value as! CoatyUUID
-                    case "objectType":
-                        identity.objectType = value as! String
-                    case "externalId":
-                        identity.externalId = value as? String
-                    case "parentObjectId":
-                        // Ignore parentObjectId, it is always set to the CommunicationManager's identity.
-                        break
-                    case "assigneeUserId":
-                        identity.assigneeUserId = value as? CoatyUUID
-                    case "locationId":
-                        identity.locationId = value as? CoatyUUID
-                    case "isDeactivated":
-                        identity.isDeactivated = value as? Bool
-                    default:
-                        break
-                }
-            }
-        }
-    }
-    
-    private func advertiseIdentity() {
-        let event = AdvertiseEvent<CoatyObjectFamily>.withObject(eventSource: self.identity,
-                                                                 object: self.identity)
-        try? self.communicationManager.publishAdvertise(event)
-        
-    }
+    open func onDispose() {}
     
     deinit {
         onDispose()
     }
-    
-    private func observeDiscoverIdentity() {
-        if self.options?.shouldAdvertiseIdentity == false {
-            return
-        }
-        
-        try? self.communicationManager
-            .observeDiscover()
-            .filter { event -> Bool in
-                (event.data.isDiscoveringTypes() && event.data.isCoreTypeCompatible(.Identity)) ||
-                (event.data.isDiscoveringObjectId() && event.data.objectId == self.identity.objectId)
-            }.subscribe(onNext: { event in
-                let resolveEvent = self.eventFactory.ResolveEvent.with(object: self.identity)
-                event.resolve(resolveEvent: resolveEvent)
-            }).disposed(by: self.disposeBag)
-    }
+
 }

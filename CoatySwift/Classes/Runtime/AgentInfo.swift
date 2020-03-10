@@ -6,23 +6,26 @@
 
 import Foundation
 
-/// Represents package, build and config information about a Coaty
-/// agent which is running as a mobile/browser app or as a Node.js service.
+/// Represents package, build and release information about a Coaty agent.
 ///
-/// Agent information is generated when the agent project is build
-/// and can be used at run time, e.g. for logging, display, or configuration.
+/// Agent information is generated when the agent project is build and can be
+/// used at run time, e.g. for logging, display, or configuration.
 public class AgentInfo: Codable {
     
     // MARK: - Attributes.
     
+    /// Represents information about the agent's package.
     public var packageInfo: AgentPackageInfo
     
+    /// Represents information about agent build.
     public var buildInfo: AgentBuildInfo
     
+    /// Represents information about agent configuration.
     public var configInfo: AgentConfigInfo
     
     // MARK: - Initializers.
     
+    /// Create a new instance of AgentInfo.
     public init(packageInfo: AgentPackageInfo, buildInfo: AgentBuildInfo, configInfo: AgentConfigInfo) {
         self.packageInfo = packageInfo
         self.buildInfo = buildInfo
@@ -52,7 +55,7 @@ public class AgentInfo: Codable {
     }
 }
 
-/// Represents information about the agent's package (usually npm).
+/// Represents information about the agent's package, such as Swift package format or Cocoapods.
 public class AgentPackageInfo: Codable {
     
     // MARK: - Attributes.
@@ -68,6 +71,7 @@ public class AgentPackageInfo: Codable {
     
     // MARK: - Initializers.
     
+    /// Create a new instance of AgentPackageInfo.
     public init(name: String, version: String, extra : [String: Any]? = nil) {
         self.name = name
         self.version = version
@@ -120,6 +124,7 @@ public class AgentBuildInfo: Codable {
     
     // MARK: - Initializers.
     
+    /// Create a new instance of AgentBuildInfo.
     public init(buildDate: String, buildMode: String, extra : [String: Any]? = nil) {
         self.buildDate = buildDate
         self.buildMode = buildMode
@@ -159,8 +164,7 @@ public class AgentConfigInfo: Codable {
     /// The host name used for MQTT broker connections and REST based
     /// services (optional).
     ///
-    /// The value is acquired from the environment variable
-    /// `COATY_SERVICE_HOST`. If not set the value defaults to an empty string.
+    /// If not set the value defaults to an empty string.
     public var serviceHost: String
     
     /// Any other config-specific properties accessible by indexer
@@ -168,6 +172,7 @@ public class AgentConfigInfo: Codable {
     
     // MARK: - Initializers.
     
+    /// Create a new instance of AgentConfigInfo.
     public init(serviceHost: String, extra : [String: Any]? = nil) {
         self.serviceHost = serviceHost
         if let extra = extra {

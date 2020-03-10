@@ -10,6 +10,12 @@ import Foundation
 /// Represents an annotation
 open class Annotation: CoatyObject {
     
+    // MARK: - Class registration.
+    
+    override open class var objectType: String {
+        return register(objectType: CoreType.Annotation.objectType, with: self)
+    }
+    
     // MARK: Attributes.
     
     /// Specific type of this annotation object
@@ -32,12 +38,13 @@ open class Annotation: CoatyObject {
     
     // MARK: Initializers.
     
+    /// Default initializer for a n`Annotation` object.
     public init(type: AnnotationType,
                 creatorId: CoatyUUID,
                 creationTimestamp: Double,
                 status: AnnotationStatus,
                 name: String = "AnnotationObject",
-                objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.Annotation)",
+                objectType: String = Annotation.objectType,
                 objectId: CoatyUUID = .init(),
                 variants: [AnnotationVariant]? = nil) {
         self.type = type
@@ -50,7 +57,7 @@ open class Annotation: CoatyObject {
     
     // MARK: Codable methods.
     
-    enum AnnotationKeys: String, CodingKey {
+    enum AnnotationKeys: String, CodingKey, CaseIterable {
         case type
         case creatorId
         case creationTimestamp
@@ -65,6 +72,8 @@ open class Annotation: CoatyObject {
         self.creationTimestamp = try container.decode(Double.self, forKey: .creationTimestamp)
         self.status = try container.decode(AnnotationStatus.self, forKey: .status)
         self.variants = try container.decodeIfPresent([AnnotationVariant].self, forKey: .variants)
+        
+        CoatyObject.addCoreTypeKeys(decoder: decoder, coreTypeKeys: AnnotationKeys.self)
         try super.init(from: decoder)
     }
     

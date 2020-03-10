@@ -1,12 +1,16 @@
 clean: true
-output: docs/swiftdoc
+output: docs/api
 xcodebuild_arguments: -scheme,CoatySwift
+copyright: Code and documentation © 2019 Siemens AG.
 author: Siemens AG
 author_url: https://coaty.io
 github_url: https://github.com/coatyio/coaty-swift
+readme: README.md
 module: CoatySwift
+module_version: 2.0.0
 podspec: CoatySwift.podspec
 min_acl: public
 include: CoatySwift/Classes/**/*.swift
 exclude: CoatySwift/Classes/Common/AnyCodable/_*.swift
 use_safe_filenames: true
+hide_documentation_coverage: true

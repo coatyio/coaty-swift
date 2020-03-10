@@ -14,6 +14,12 @@ import Foundation
 /// `name` property of the base CoatyObject type.
 open class User: CoatyObject {
     
+    // MARK: - Class registration.
+    
+    override open class var objectType: String {
+        return register(objectType: CoreType.User.objectType, with: self)
+    }
+    
     // MARK: - Initializer.
     
     /// Default initializer for a `User` object.
@@ -22,7 +28,7 @@ open class User: CoatyObject {
     /// after initializing the object.
     public init(name: String,
                 names: ScimUserNames,
-                objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.User)",
+                objectType: String = User.objectType,
                 objectId: CoatyUUID = .init()) {
         
         self.names = names
@@ -31,7 +37,7 @@ open class User: CoatyObject {
     
     // MARK: - Codable methods.
     
-    enum UserKeys: String, CodingKey {
+    enum UserCodingKeys: String, CodingKey, CaseIterable {
         case names
         case displayName
         case nickName
@@ -54,7 +60,7 @@ open class User: CoatyObject {
     }
     
     public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: UserKeys.self)
+        let container = try decoder.container(keyedBy: UserCodingKeys.self)
         self.names = try container.decode(ScimUserNames.self, forKey: .names)
         self.displayName = try container.decodeIfPresent(String.self, forKey: .displayName)
         self.nickName = try container.decodeIfPresent(String.self, forKey: .nickName)
@@ -75,12 +81,13 @@ open class User: CoatyObject {
         self.roles = try container.decodeIfPresent([String].self, forKey: .roles)
         self.x509Certificates = try container.decodeIfPresent([String].self, forKey: .x509Certificates)
         
+        CoatyObject.addCoreTypeKeys(decoder: decoder, coreTypeKeys: UserCodingKeys.self)
         try super.init(from: decoder)
     }
     
     open override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
-        var container = encoder.container(keyedBy: UserKeys.self)
+        var container = encoder.container(keyedBy: UserCodingKeys.self)
         try container.encodeIfPresent(names, forKey: .names)
         try container.encodeIfPresent(displayName, forKey: .displayName)
         try container.encodeIfPresent(nickName, forKey: .displayName)

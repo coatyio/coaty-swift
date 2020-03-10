@@ -1,6 +1,6 @@
 //  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
-//  CommunicationManager+Publish.swift
+//  CM+Publish.swift
 //  CoatySwift
 //
 
@@ -11,114 +11,129 @@ extension CommunicationManager {
     
     // MARK: - One way events.
     
-    /// Publish a value on the given topic. Used to interoperate
-    /// with external MQTT clients that subscribe on the given topic.
+    /// Publish a value on the given topic. Used to interoperate with external
+    /// clients that subscribe on the given topic.
     ///
-    /// The topic is an MQTT publication topic,
-    /// i.e. a non-empty string that must not contain the following
-    /// characters: `NULL (U+0000)`, `# (U+0023)`, `+ (U+002B)`.
+    /// The topic is an MQTT publication topic, i.e. a non-empty string that
+    /// must not contain the following characters: `NULL (U+0000)`, `#
+    /// (U+0023)`, `+ (U+002B)`.
     ///
     /// - Parameters:
     ///   - topic: the topic on which to publish the given payload
-    ///   - value: a payload string or Uint8Array (Buffer in Node.js) to be published on the given topic
+    ///   - value: a payload string to be published on the given topic
+    /// - Throws: if topic name is invalid
     public func publishRaw(topic: String, value: String) throws {
-        if topic.count == 0 ||
-           topic.contains("\u{0000}") ||
-           topic.contains("#") ||
-           topic.contains("+") {
+        guard CommunicationTopic.isValidPublicationTopic(topic) else {
             throw CoatySwiftError.InvalidArgument("Could not publish raw: invalid topic name.")
         }
 
-        self.publish(topic: topic, message: value)
+        publish(topic: topic, message: value)
     }
     
-    /// Publishes a given advertise event.
+    /// Advertise an object.
     ///
     /// - Parameters:
-    ///     - advertiseEvent: The event that should be advertised.
-    public func publishAdvertise<Family: ObjectFamily,T: AdvertiseEvent<Family>>(advertiseEvent: T) throws {
+    ///     - advertiseEvent:  the Advertise event to be published
+    public func publishAdvertise(_ event: AdvertiseEvent) {
+
+        let coreType = event.data.object.coreType
+        let objectType = event.data.object.objectType
+
+        event.sourceId = self.identity.objectId
         
-        let topicForObjectType = try CommunicationTopic
-            .createTopicStringByLevelsForPublish( eventType: .Advertise,
-                                                  eventTypeFilter: advertiseEvent.data.object.objectType,
-                                                  associatedUserId: associatedUser?.objectId.string,
-                                                  sourceObject: advertiseEvent.source!,
-                                                  messageToken: CoatyUUID().string)
+        // Publish the Advertise event with core type filter to satisfy core type observers.
+        let topicForCoreType = CommunicationTopic
+                .createTopicStringByLevelsForPublish(namespace: self.namespace,
+                                                     sourceId: event.sourceId!,
+                                                     eventType: .Advertise,
+                                                     eventTypeFilter: coreType.rawValue)
         
-        let topicForCoreType = try CommunicationTopic
-            .createTopicStringByLevelsForPublish(eventType: .Advertise,
-                                                 eventTypeFilter: advertiseEvent.data.object.coreType.rawValue,
-                                                 associatedUserId: associatedUser?.objectId.string,
-                                                 sourceObject: advertiseEvent.source!,
-                                                 messageToken: CoatyUUID().string)
-        
-        // Save advertises for Components or Devices.
-        if advertiseEvent.data.object.coreType == .Identity ||
-            advertiseEvent.data.object.coreType == .Device {
+        publish(topic: topicForCoreType, message: event.json)
+
+        // Publish event with object type filter to satisfy object type
+        // observers unless the advertised object is a core object with a core
+        // object type. In this case, object type observers subscribe on the
+        // core type followed by a local filter operation to filter out unwanted
+        // objects (see `observeAdvertise`).
+        if (coreType.objectType != objectType) {
+            let topicForObjectType = CommunicationTopic
+                .createTopicStringByLevelsForPublish(namespace: self.namespace,
+                                                     sourceId: event.sourceId!,
+                                                     eventType: .Advertise,
+                                                     eventTypeFilter: EVENT_TYPE_FILTER_SEPARATOR + objectType)
+            publish(topic: topicForObjectType, message: event.json)
+        }
+
+        // Ensure a Deadvertise event is emitted for an advertised Identity.
+        if event.data.object.coreType == .Identity {
             
             // Add if not existing already in deadvertiseIds.
-            if !deadvertiseIds.contains(advertiseEvent.data.object.objectId) {
-                deadvertiseIds.append(advertiseEvent.data.object.objectId)
+            if !deadvertiseIds.contains(event.data.object.objectId) {
+                deadvertiseIds.append(event.data.object.objectId)
             }
         }
-        
-        // Publish the advertise for core AND object type.
-        //
-        // TODO: Optimization: Publish event with object type filter to satisfy object type observers
-        // unless the advertised object is a core object with a core object type.
-        // In this (exotic) case, core object type observers subscribe on the core type
-        // followed by a local filter operation to filter out unwanted objects
-        // (see `observeAdvertise`).
-        publish(topic: topicForCoreType, message: advertiseEvent.json)
-        publish(topic: topicForObjectType, message: advertiseEvent.json)
+
     }
     
     /// Notify subscribers that an advertised object has been deadvertised.
     ///
     /// - Parameter deadvertiseEvent: the Deadvertise event to be published
-    public func publishDeadvertise(deadvertiseEvent: DeadvertiseEvent<Family>) throws {
-        let topic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Deadvertise,
-                                                                  associatedUserId: associatedUser?.objectId.string,
-                                                                  sourceObject: deadvertiseEvent.source!,
-                                                                  messageToken: CoatyUUID().string)
-        
-        self.publish(topic: topic, message: deadvertiseEvent.json)
+    public func publishDeadvertise(_ event: DeadvertiseEvent) {
+        event.sourceId = self.identity.objectId
+        let topic = CommunicationTopic.createTopicStringByLevelsForPublish(namespace: self.namespace,
+                                                                               sourceId: event.sourceId!,
+                                                                               eventType: .Deadvertise)
+
+        publish(topic: topic, message: event.json)
+    }
+
+    /// Publish a Channel event.
+    ///
+    /// - Parameter event: the Channel event to be published
+    public func publishChannel(_ event: ChannelEvent) {
+        event.sourceId = self.identity.objectId
+        let publishTopic = CommunicationTopic.createTopicStringByLevelsForPublish(namespace: self.namespace,
+                                                                                  sourceId: event.sourceId!,
+                                                                                  eventType: .Channel,
+                                                                                  eventTypeFilter: event.channelId)
+        publish(topic: publishTopic, message: event.json)
     }
     
     // MARK: - Two way events.
     
-    /// Publish updates and receive Complete events for them emitted by the hot
-    /// observable returned.
+    /// Request or propose an update of the specified object and receive
+    /// accomplishments.
     ///
-    /// - TODO: Implement the lazy behavior.
+    /// Note that after all initial subscribers have unsubscribed from the returned observable
+    /// no more response events will be emitted on the observable and an error event will
+    /// be emitted on resubscription.
+    ///
+    /// - TODO: Implement the lazy publishing behavior (not until the first subscription)
     /// - Parameters:
-    ///     - event: the Update event to be published.
-    /// - Returns: a hot observable on which associated Resolve events are emitted.
-    public func publishUpdate<V: CompleteEvent<Family>>(event: UpdateEvent<Family>) throws -> Observable<V> {
-        let updateMessageToken = CoatyUUID().string
-        let topic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Update,
-                                                                  associatedUserId: associatedUser?.objectId.string,
-                                                                  sourceObject: event.source!,
-                                                                  messageToken: updateMessageToken)
+    ///     - event: the Update event to be published
+    /// - Returns: an observable on which associated Complete events are emitted
+    public func publishUpdate(_ event: UpdateEvent) -> Observable<CompleteEvent> {
+        
+        let coreType = event.data.object.coreType
+        let objectType = event.data.object.objectType
+        let correlationId = CoatyUUID().string
+
+        event.sourceId = self.identity.objectId
   
-        let completeTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Complete,
-                                                                                         messageToken: updateMessageToken)
-    
-        var observable = client.messages.map(convertToTupleFormat)
-            .filter({ (topic, payload) -> Bool in
-                return topic.sourceObjectId != event.sourceId
-            })
-            .filter(isComplete)
-            .filter { rawMessageWithTopic -> Bool in
+        let namespace = self.communicationOptions.shouldEnableCrossNamespacing ? nil : self.namespace;
+        let completeTopic = CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Complete,
+                                                                                     namespace: namespace,
+                                                                                     correlationId: correlationId)
+        var observable = self.messagesFor(.Complete)
+            .filter { message -> Bool in
                 // Filter messages according to message token.
-                let (topic, _) = rawMessageWithTopic
-                return topic.messageToken == updateMessageToken
+                let (topic, _) = message
+                return topic.correlationId == correlationId
             }
-            .compactMap { message -> V? in
+            .compactMap { message -> CompleteEvent? in
                 let (topic, payload) = message
                 
-                guard let completeEvent: V = PayloadCoder.decode(payload)! else {
-                    LogManager.log.warning("could not parse completeEvent")
+                guard let completeEvent: CompleteEvent = PayloadCoder.decode(payload) else {
                     return nil
                 }
                 
@@ -126,8 +141,8 @@ extension CommunicationManager {
                     return nil
                 }
 
-                completeEvent.sourceId = topic.sourceObjectId;
-                completeEvent.userId = topic.associatedUserId;
+                completeEvent.type = .Complete
+                completeEvent.sourceId = topic.sourceId;
                 
                 return completeEvent
             }
@@ -135,70 +150,93 @@ extension CommunicationManager {
         observable = createSelfCleaningObservable(observable: observable, topic: completeTopic)
 
         subscribe(topic: completeTopic)
-        publish(topic: topic, message: event.json)
+
+        // Publish event with core type filter to satisfy core type observers.
+        let topicForCoreType = CommunicationTopic
+            .createTopicStringByLevelsForPublish(namespace: self.namespace,
+                                                 sourceId: event.sourceId!,
+                                                 eventType: .Update,
+                                                 eventTypeFilter: coreType.rawValue,
+                                                 correlationId: correlationId)
+        publish(topic: topicForCoreType, message: event.json)
+
+        // Publish event with object type filter to satisfy object type
+        // observers unless the updated object is a core object with a core
+        // object type. In this case, object type observers subscribe on the
+        // core type followed by a local filter operation to filter out unwanted
+        // objects (see `observeUpdate`).
+        if (coreType.objectType != objectType) {
+            let topicForObjectType = CommunicationTopic
+                .createTopicStringByLevelsForPublish(namespace: self.namespace,
+                                                     sourceId: event.sourceId!,
+                                                     eventType: .Update,
+                                                     eventTypeFilter: EVENT_TYPE_FILTER_SEPARATOR + objectType,
+                                                     correlationId: correlationId)
+            publish(topic: topicForObjectType, message: event.json)
+        }
         
         return observable
     }
 
-    /// Publish a channel event.
+    /// Publishes a complete in response to an Update event. Not accessible by
+    /// the application programmer, it is just a convenience method for reacting
+    /// upon an update.
     ///
-    /// - Parameter event: the Channel event to be published
-    public func publishChannel(event: ChannelEvent<Family>) throws {
-        guard let channelId = event.channelId else {
-            throw CoatySwiftError.InvalidArgument("Could not publish because ChannelID missing.")
-        }
-        
-        let publishTopic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Channel,
-                                                                         eventTypeFilter: channelId,
-                                                                         associatedUserId: associatedUser?.objectId.string,
-                                                                         sourceObject: event.source!,
-                                                                         messageToken: CoatyUUID().string)
-        
-        publish(topic: publishTopic, message: event.json)
-        
+    /// - Parameters:
+    ///   - event: the Complete event that should be sent out.
+    ///   - correlationId: the correlation Id of the Update request.
+    internal func publishComplete(event: CompleteEvent,
+                                  correlationId: String) -> Void {
+        event.sourceId = self.identity.objectId
+        let topic = CommunicationTopic.createTopicStringByLevelsForPublish(namespace: self.namespace,
+                                                                           sourceId: event.sourceId!,
+                                                                           eventType: .Complete,
+                                                                           correlationId: correlationId)
+        publish(topic: topic, message: event.json)
     }
     
-    /// Find discoverable objects and receive Resolve events for them emitted by the hot
-    /// observable returned.
+    /// Find discoverable objects and receive Resolve events for them.
     ///
-    /// - TODO: Implement the lazy behavior.
+    /// Note that after all initial subscribers have unsubscribed from the returned observable
+    /// no more response events will be emitted on the observable and an error event will
+    /// be emitted on resubscription.
+    ///
+    /// - TODO: Implement the lazy publishing behavior (not until the first subscription)
     /// - Parameters:
     ///     - event: the Discover event to be published.
-    /// - Returns: a hot observable on which associated Resolve events are emitted.
-    public func publishDiscover<V: ResolveEvent<Family>>(event: DiscoverEvent<Family>) throws -> Observable<V> {
-        let discoverMessageToken = CoatyUUID().string
-        let topic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Discover,
-                                                                  associatedUserId: associatedUser?.objectId.string,
-                                                                  sourceObject: event.source!,
-                                                                  messageToken: discoverMessageToken)
+    /// - Returns: an observable on which associated Resolve events are emitted
+    public func publishDiscover(_ event: DiscoverEvent) -> Observable<ResolveEvent> {
+        event.sourceId = self.identity.objectId
+        let correlationId = CoatyUUID().string
+        let topic = CommunicationTopic.createTopicStringByLevelsForPublish(namespace: self.namespace,
+                                                                           sourceId: event.sourceId!,
+                                                                           eventType: .Discover,
+                                                                           correlationId: correlationId)
         
-        let resolveTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Resolve,
-                                                                                        messageToken: discoverMessageToken)
+        let namespace = self.communicationOptions.shouldEnableCrossNamespacing ? nil : self.namespace;
+        let resolveTopic = CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Resolve,
+                                                                                    namespace: namespace,
+                                                                                    correlationId: correlationId)
         
-        var observable = client.messages.map(convertToTupleFormat)
-            .filter({ (topic, payload) -> Bool in
-                return topic.sourceObjectId != event.sourceId
-            })
-            .filter(isResolve)
-            .filter({ (rawMessageWithTopic) -> Bool in
+        var observable = self.messagesFor(.Resolve)
+            .filter { message -> Bool in
                 // Filter messages according to message token.
-                let (topic, _) = rawMessageWithTopic
-                return topic.messageToken == discoverMessageToken
-            })
-            .compactMap{ message -> V? in
+                let (topic, _) = message
+                return topic.correlationId == correlationId
+            }
+            .compactMap { message -> ResolveEvent? in
                 let (topic, payload) = message
                 
-                guard let resolveEvent: V = PayloadCoder.decode(payload)! else {
-                    LogManager.log.warning("could not parse resolveEvent")
+                guard let resolveEvent: ResolveEvent = PayloadCoder.decode(payload) else {
                     return nil
                 }
                 
                 guard event.ensureValidResponseParameters(eventData: resolveEvent.data) else {
                     return nil
                 }
-
-                resolveEvent.sourceId = topic.sourceObjectId;
-                resolveEvent.userId = topic.associatedUserId;
+                
+                resolveEvent.type = .Resolve
+                resolveEvent.sourceId = topic.sourceId;
                 
                 return resolveEvent
             }
@@ -210,46 +248,57 @@ extension CommunicationManager {
  
         return observable
     }
-    
-    /// Find queryable objects and receive Retrieve events for them
-    /// emitted by the hot observable returned.
-    ///
-    /// - TODO: Implement the lazy behavior.
-    ///
-    /// Since the observable never emits a completed or error event,
-    /// a subscriber should unsubscribe when the observable is no longer needed
-    /// to release system resources and to avoid memory leaks. After all initial
-    /// subscribers have unsubscribed no more response events will be emitted
-    /// on the observable and an error will be thrown on resubscription.
+
+    /// Publishes a resolve in response to a Discover event. Not accessible by
+    /// the application programmer, it is just a convenience method for reacting
+    /// upon a discover.
     ///
     /// - Parameters:
+    ///   - event: the Resolve event that should be sent out.
+    ///   - correlationId: the correlation Id of the Discover request.
+    internal func publishResolve(event: ResolveEvent,
+                                 correlationId: String) {
+        event.sourceId = self.identity.objectId
+        let topic = CommunicationTopic.createTopicStringByLevelsForPublish(namespace: self.namespace,
+                                                                           sourceId: event.sourceId!,
+                                                                           eventType: .Resolve,
+                                                                           correlationId: correlationId)
+        publish(topic: topic, message: event.json)
+    }
+    
+    /// Find queryable objects and receive Retrieve events for them.
+    ///
+    /// Note that after all initial subscribers have unsubscribed from the returned observable
+    /// no more response events will be emitted on the observable and an error event will
+    /// be emitted on resubscription.
+    ///
+    /// - TODO: Implement the lazy publishing behavior (not until the first subscription)
+    /// - Parameters:
     ///     - event: the Query event to be published
-    /// - Returns: a hot observable on which associated Retrieve events are emitted.
-    public func publishQuery<V: RetrieveEvent<Family>>(event: QueryEvent<Family>) throws -> Observable<V> {
-        let queryMessageToken = CoatyUUID().string
-        let topic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Query,
-                                                                  associatedUserId: associatedUser?.objectId.string,
-                                                                  sourceObject: event.source!,
-                                                                  messageToken: queryMessageToken)
+    /// - Returns: an observable on which associated Retrieve events are emitted.
+    public func publishQuery(_ event: QueryEvent) -> Observable<RetrieveEvent> {
+        event.sourceId = self.identity.objectId
+        let correlationId = CoatyUUID().string
+        let topic = CommunicationTopic.createTopicStringByLevelsForPublish(namespace: self.namespace,
+                                                                           sourceId: event.sourceId!,
+                                                                           eventType: .Query,
+                                                                           correlationId: correlationId)
         
-        let retrieveTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Retrieve,
-                                                                                         messageToken: queryMessageToken)
+        let namespace = self.communicationOptions.shouldEnableCrossNamespacing ? nil : self.namespace;
+        let retrieveTopic = CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Retrieve,
+                                                                                     namespace: namespace,
+                                                                                     correlationId: correlationId)
                 
-        var observable = client.messages.map(convertToTupleFormat)
-            .filter({ (topic, payload) -> Bool in
-                return topic.sourceObjectId != event.sourceId
-            })
-            .filter(isRetrieve)
-            .filter { rawMessageWithTopic -> Bool in
+        var observable = self.messagesFor(.Retrieve)
+            .filter { message -> Bool in
                 // Filter messages according to message token.
-                let (topic, _) = rawMessageWithTopic
-                return topic.messageToken == queryMessageToken
+                let (topic, _) = message
+                return topic.correlationId == correlationId
             }
-            .compactMap { (message) -> V? in
+            .compactMap { message -> RetrieveEvent? in
                 let (topic, payload) = message
                 
-                guard let retrieveEvent: V = PayloadCoder.decode(payload)! else {
-                    LogManager.log.warning("could not parse retrieveEvent")
+                guard let retrieveEvent: RetrieveEvent = PayloadCoder.decode(payload) else {
                     return nil
                 }
                 
@@ -257,8 +306,8 @@ extension CommunicationManager {
                     return nil
                 }
 
-                retrieveEvent.sourceId = topic.sourceObjectId;
-                retrieveEvent.userId = topic.associatedUserId;
+                retrieveEvent.type = .Retrieve
+                retrieveEvent.sourceId = topic.sourceId;
                 
                 return retrieveEvent
             }
@@ -271,92 +320,44 @@ extension CommunicationManager {
         return observable
     }
     
-    /// Publishes a complete in response to an update event. Not accessible by
-    /// the application programmer, it is just a convenience method for reacting
-    /// upon an update.
-    ///
-    /// - Parameters:
-    ///   - identity: the identity of the responder.
-    ///   - event: the complete event that should be sent out.
-    ///   - messageToken: the message token associated with the update-complete
-    ///     request.
-    internal func publishComplete(identity: Identity,
-                                  event: CompleteEvent<Family>,
-                                  messageToken: String) throws {
-        
-        let topic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Complete,
-                                                              associatedUserId: associatedUser?.objectId.string,
-                                                              sourceObject: identity,
-                                                              messageToken: messageToken)
-        publish(topic: topic, message: event.json)
-    }
-    
-    /// Publishes a resolve in response to a discover event. Not accessible by
-    /// the application programmer, it is just a convenience method for reacting
-    /// upon a discover.
-    ///
-    /// - Parameters:
-    ///   - identity: the identity of the responder.
-    ///   - event: the resolve event that should be sent out.
-    ///   - messageToken: the message token associated with the discover-resolve
-    ///     request.
-    internal func publishResolve(identity: Identity,
-                                                       event: ResolveEvent<Family>,
-                                                       messageToken: String) throws {
-        
-        let topic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Resolve,
-                                                                  associatedUserId: associatedUser?.objectId.string,
-                                                                  sourceObject: identity,
-                                                                  messageToken: messageToken)
-        publish(topic: topic, message: event.json)
-    }
-    
     /// Publish a Call event to perform a remote operation and receive results
-    /// emitted by the hot observable returned.
+    /// emitted by the observable returned.
     ///
-    /// Note that the Call event is lazily published when the
-    /// first observer subscribes to the observable.
-    ///
-    /// Since the observable never emits a completed or error event,
-    /// a subscriber should unsubscribe when the observable is no longer needed
-    /// to release system resources and to avoid memory leaks. After all initial
-    /// subscribers have unsubscribed no more response events will be emitted
-    /// on the observable and an error will be thrown on resubscription.
+    /// Note that after all initial subscribers have unsubscribed from the returned observable
+    /// no more response events will be emitted on the observable and an error event will
+    /// be emitted on resubscription.
     ///
     /// - Parameter event: the Call event to be published.
-    /// - Returns: a hot observable of associated Return events.
-    public func publishCall<V: ReturnEvent<Family>>(event: CallEvent<Family>) throws -> Observable<V> {
+    /// - Returns: an observable of associated Return events.
+    public func publishCall(_ event: CallEvent) -> Observable<ReturnEvent> {
+        event.sourceId = self.identity.objectId
+        let correlationId = CoatyUUID().string
+        let topic = CommunicationTopic.createTopicStringByLevelsForPublish(namespace: self.namespace,
+                                                                           sourceId: event.sourceId!,
+                                                                           eventType: .Call,
+                                                                           eventTypeFilter: event.operation,
+                                                                           correlationId: correlationId)
         
-        let callMessageToken = CoatyUUID().string
-        let topic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Call,
-                                                                               eventTypeFilter: event.operation,
-                                                                               associatedUserId: associatedUser?.objectId.string,
-                                                                               sourceObject: event.source!,
-                                                                               messageToken: callMessageToken)
+        let namespace = self.communicationOptions.shouldEnableCrossNamespacing ? nil : self.namespace;
+        let returnTopic = CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Return,
+                                                                                   namespace: namespace,
+                                                                                   correlationId: correlationId)
         
-        let returnTopic = try CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Return,
-                                                                                       messageToken: callMessageToken)
-        
-        var observable = client.messages.map(convertToTupleFormat)
-            .filter({ (topic, payload) -> Bool in
-                return topic.sourceObjectId != event.sourceId
-            })
-            .filter(isReturn)
-            .filter({ (rawMessageWithTopic) -> Bool in
+        var observable = self.messagesFor(.Return)
+            .filter { message -> Bool in
                 // Filter messages according to message token.
-                let (topic, _) = rawMessageWithTopic
-                return topic.messageToken == callMessageToken
-            })
-            .compactMap { (message) -> V? in
+                let (topic, _) = message
+                return topic.correlationId == correlationId
+            }
+            .compactMap { message -> ReturnEvent? in
                 let (topic, payload) = message
                 
-                guard let returnEvent: V = PayloadCoder.decode(payload)! else {
-                    LogManager.log.warning("could not parse returnEvent")
+                guard let returnEvent: ReturnEvent = PayloadCoder.decode(payload) else {
                     return nil
                 }
 
-                returnEvent.sourceId = topic.sourceObjectId;
-                returnEvent.userId = topic.associatedUserId;
+                returnEvent.type = .Return
+                returnEvent.sourceId = topic.sourceId;
                 
                 return returnEvent
             }
@@ -374,18 +375,15 @@ extension CommunicationManager {
     /// upon a call.
     ///
     /// - Parameters:
-    ///   - identity: the identity of the responder.
     ///   - event: the return event that should be sent out.
-    ///   - messageToken: the message token associated with the call-return
-    ///     request.
-    internal func publishReturn(identity: Identity,
-                                event: ReturnEvent<Family>,
-                                messageToken: String) throws {
-        
-        let topic = try CommunicationTopic.createTopicStringByLevelsForPublish(eventType: .Return,
-                                                                  associatedUserId: associatedUser?.objectId.string,
-                                                                  sourceObject: identity,
-                                                                  messageToken: messageToken)
+    ///   - correlationId: the correlation Id of the Call request.
+    internal func publishReturn(event: ReturnEvent,
+                                correlationId: String) {
+        event.sourceId = self.identity.objectId
+        let topic = CommunicationTopic.createTopicStringByLevelsForPublish(namespace: self.namespace,
+                                                                           sourceId: event.sourceId!,
+                                                                           eventType: .Return,
+                                                                           correlationId: correlationId)
         publish(topic: topic, message: event.json)
     }
 

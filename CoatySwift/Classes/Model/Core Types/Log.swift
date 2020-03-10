@@ -10,6 +10,12 @@ import Foundation
 /// Represents a log object.
 open class Log: CoatyObject {
     
+    // MARK: - Class registration.
+    
+    override open class var objectType: String {
+        return register(objectType: CoreType.Log.objectType, with: self)
+    }
+    
     // MARK: - Attributes.
 
     /// The level of logging.
@@ -24,11 +30,17 @@ open class Log: CoatyObject {
     /// Represents a series of tags assigned to this Log object (optional).
     /// Tags are used to categorize or filter log output.
     /// Agents may introduce specific tags, such as "service" or "app".
-    ///
-    /// Log objects published by the framework itself always use the reserved
-    /// tag named "coaty" as part of the `logTags` property. This tag should
-    /// never be used by agent projects.
     public var logTags: [String]?
+
+    ///
+    /// Represents a set of key-value label pairs, used to add context-specific
+    /// information to this log object (optional).
+    ///
+    /// Labels are useful in providing multi-dimensional data along a log entry
+    /// to be exploited by external logging services, such as Prometheus.
+    ///
+    /// Any label value must be JSON compatible.
+    public var logLabels: [String: Any]?
 
     /// Information about the host environment in which this log object is
     /// created (optional).
@@ -41,29 +53,33 @@ open class Log: CoatyObject {
     
     // MARK: Initializers.
     
+    /// Default initializer for a `Log` object.
     public init(logLevel: LogLevel,
                 logMessage: String,
                 logDate: String,
                 name: String = "LogObject",
-                objectType: String = "\(COATY_OBJECT_TYPE_NAMESPACE_PREFIX)\(CoreType.Log)",
+                objectType: String = Log.objectType,
                 objectId: CoatyUUID = .init(),
                 logTags: [String]? = nil,
+                logLabels: [String: Any]? = nil,
                 logHost: LogHost? = nil) {
         self.logLevel = logLevel
         self.logMessage = logMessage
         self.logDate = logDate
         self.logTags = logTags
+        self.logLabels = logLabels
         self.logHost = logHost
         super.init(coreType: .Log, objectType: objectType, objectId: objectId, name: name)
     }
     
     // MARK: - Codable methods.
 
-    enum LogHostKeys: String, CodingKey {
+    enum LogHostKeys: String, CodingKey, CaseIterable {
         case logLevel
         case logMessage
         case logDate
         case logTags
+        case logLabels
         case logHost
     }
        
@@ -73,7 +89,10 @@ open class Log: CoatyObject {
         self.logMessage = try container.decode(String.self, forKey: .logMessage)
         self.logDate = try container.decode(String.self, forKey: .logDate)
         self.logTags = try container.decodeIfPresent([String].self, forKey: .logTags)
+        self.logLabels = try container.decodeIfPresent([String: Any].self, forKey: .logLabels)
         self.logHost = try container.decodeIfPresent(LogHost.self, forKey: .logHost)
+        
+        CoatyObject.addCoreTypeKeys(decoder: decoder, coreTypeKeys: LogHostKeys.self)
         try super.init(from: decoder)
     }
        
@@ -84,6 +103,7 @@ open class Log: CoatyObject {
         try container.encode(logMessage, forKey: .logMessage)
         try container.encode(logDate, forKey: .logDate)
         try container.encodeIfPresent(logTags, forKey: .logTags)
+        try container.encodeIfPresent(logLabels, forKey: .logLabels)
         try container.encodeIfPresent(logHost, forKey: .logHost)
     }
     
@@ -100,15 +120,13 @@ public class LogHost: Codable {
     public var agentInfo: AgentInfo?
 
     /// Process ID of the application that generates a log record (optional).
-    /// May be specified by Node.js applications.
     public var pid: Double?
 
     /// Hostname of the application that generates a log record (optional).
-    /// May be specified by Node.js applications.
     public var hostname: String?
 
-    /// Hostname of the application that generates a log record (optional).
-    /// May be specified by browser or cordova applications.
+    /// User agent of the application that generates a log record (optional).
+    /// May be specified by apps that run in a browser.
     public var userAgent: String?
     
     // MARK: - Initializers.

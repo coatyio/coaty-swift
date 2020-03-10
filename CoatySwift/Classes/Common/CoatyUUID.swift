@@ -8,16 +8,18 @@
 import Foundation
 
 /// Custom implementation of a UUID that actually is compatible with the RFC
-/// specification of sending UUIDs over the network (lowercase in contrast to Apple's
-/// uppercase implementation).
-public class CoatyUUID: Codable, Equatable {
+/// 4122 V4 specification of defining UUIDs (lowercase in contrast to
+/// Apple's uppercase implementation).
+public class CoatyUUID: Codable, CustomStringConvertible, Hashable {
     
     private var uuid: UUID
     
+    /// The UUID as a lowercased string.
     public var string: String {
         return uuid.uuidString.lowercased()
     }
     
+    /// Default initializer for a `CoatyUUID` object which assigns a new UUID.
     public init() {
         self.uuid = .init()
     }
@@ -43,13 +45,17 @@ public class CoatyUUID: Codable, Equatable {
         try container.encode(self.string)
     }
     
-    // MARK: - Equatable methods.
+    // MARK: - Hashable / Equatable methods.
     
     public static func == (lhs: CoatyUUID, rhs: CoatyUUID) -> Bool {
         return lhs.uuid == rhs.uuid
     }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.uuid)
+    }
     
-    // MARK: - String Convertible.
+    // MARK: - Custom String Convertible.
     
     public var description: String {
         return self.string

@@ -6,58 +6,59 @@
 
 import Foundation
 
-
-public class QueryEventFactory<Family: ObjectFamily>: EventFactoryInit {
+/// QueryEvent provides a generic implementation for querying CoatyObjects.
+public class QueryEvent: CommunicationEvent<QueryEventData> {
     
-    /// Create a QueryEvent instance for querying the given object types, filter, and join conditions.
-    /// The object filter and join conditions are optional.
+    // MARK: - Internal attributes.
+    
+    /// Provides a complete handler for reacting to Query events.
+    internal var retrieveHandler: ((RetrieveEvent) -> Void)?
+
+    // MARK: - Static Factory Methods.
+
+    /// Create a QueryEvent instance for querying the given object types,
+    /// filter, and join conditions. The object filter and join conditions are
+    /// optional.
     ///
     /// - Parameters:
     ///     - objectTypes: restrict results by object types (logical OR).
     ///     - objectFilter: restrict results by object filter (optional).
-    ///     - objectJoinConditions: join related objects into results (optional).
-    public func with(objectTypes: [String], objectFilter: ObjectFilter? = nil,
-                     objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEvent<Family> {
+    ///     - objectJoinConditions: join related objects into results
+    ///       (optional).
+    /// - Returns: a Query event with the given parameters
+    public static func with(objectTypes: [String],
+                            objectFilter: ObjectFilter? = nil,
+                            objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEvent {
         
-        let queryEventData = QueryEventData<Family>.createFrom(objectTypes: objectTypes,
-                                                               objectFilter: objectFilter,
-                                                               objectJoinConditions: objectJoinConditions)
-        
-        return .init(eventSource: self.identity, eventData: queryEventData)
+        let queryEventData = QueryEventData.createFrom(objectTypes: objectTypes,
+                                                       objectFilter: objectFilter,
+                                                       objectJoinConditions: objectJoinConditions)
+        return .init(eventType: .Query, eventData: queryEventData)
     }
     
-    /// Create a QueryEvent instance for querying the given core types, filter, and join conditions.
-    /// The object filter and join conditions are optional.
+    /// Create a QueryEvent instance for querying the given core types, filter,
+    /// and join conditions. The object filter and join conditions are optional.
     ///
     /// - Parameters:
     ///     - coreTypes: restrict results by core types (logical OR).
     ///     - objectFilter: restrict results by object filter (optional).
-    ///     - objectJoinConditions: join related objects into results (optional).
-    public func with(coreTypes: [CoreType],
-                     objectFilter: ObjectFilter? = nil,
-                     objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEvent<Family> {
+    ///     - objectJoinConditions: join related objects into results
+    ///       (optional).
+    /// - Returns: a Query event with the given parameters
+    public static func with(coreTypes: [CoreType],
+                            objectFilter: ObjectFilter? = nil,
+                            objectJoinConditions: [ObjectJoinCondition]? = nil) -> QueryEvent {
+        let queryEventData = QueryEventData.createFrom(coreTypes: coreTypes,
+                                                       objectFilter: objectFilter,
+                                                       objectJoinConditions: objectJoinConditions)
         
-        let queryEventData = QueryEventData<Family>.createFrom(coreTypes: coreTypes,
-                                                               objectFilter: objectFilter,
-                                                               objectJoinConditions: objectJoinConditions)
-        
-        return .init(eventSource: self.identity, eventData: queryEventData)
+        return .init(eventType: .Query, eventData: queryEventData)
     }
-
-}
-
-/// QueryEvent provides a generic implementation for querying CoatyObjects.
-public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData<Family>> {
     
-    // MARK: - Internal attributes.
-    
-    /// Provides a complete handler for reacting to query events.
-    internal var retrieveHandler: ((RetrieveEvent<Family>) -> Void)?
-    
-    /// Respond to an observed Query event by sending the given Retrieve event.
+    /// Respond to a Query event with the given Retrieve event.
     ///
     /// - Parameter retrieveEvent: a Retrieve event.
-    public func retrieve(retrieveEvent: RetrieveEvent<Family>) {
+    public func retrieve(retrieveEvent: RetrieveEvent) {
         if let retrieveHandler = retrieveHandler {
             retrieveHandler(retrieveEvent)
         }
@@ -65,8 +66,8 @@ public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData
     
     // MARK: - Initializers.
 
-    fileprivate override init(eventSource: Identity, eventData: QueryEventData<Family>) {
-        super.init(eventSource: eventSource, eventData: eventData)
+    fileprivate override init(eventType: CommunicationEventType, eventData: QueryEventData) {
+        super.init(eventType: eventType, eventData: eventData)
     }
 
     // MARK: - Codable methods.
@@ -84,7 +85,7 @@ public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData
     ///
     /// - Parameter eventData:  event data for Retrieve response event
     /// - Returns: boolean that indicates whether the object is valid
-    internal func ensureValidResponseParameters(eventData: RetrieveEventData<Family>) -> Bool {
+    internal func ensureValidResponseParameters(eventData: RetrieveEventData) -> Bool {
         for object in eventData.objects {
             if let coreTypes = self.data.coreTypes {
                 let coreTypeValid = coreTypes.contains { type -> Bool in
@@ -92,7 +93,7 @@ public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData
                 }
                 
                 if !coreTypeValid {
-                    LogManager.log.warning("retrieved coreType not contained in Query coreTypes")
+                    LogManager.log.debug("retrieved coreType not contained in Query coreTypes")
                     return false
                 }
             }
@@ -103,7 +104,7 @@ public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData
                 }
                 
                 if !objectTypeValid {
-                    LogManager.log.warning("retrieved objectType not contained in Query objectTypes")
+                    LogManager.log.debug("retrieved objectType not contained in Query objectTypes")
                     return false
                 }
             }
@@ -115,7 +116,7 @@ public class QueryEvent<Family: ObjectFamily>: CommunicationEvent<QueryEventData
 
 
 /// QueryEventData provides the entire message payload data for a `QueryEvent`.
-public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
+public class QueryEventData: CommunicationEventData {
     
     // MARK: - Public attributes.
     
@@ -217,17 +218,8 @@ public class QueryEventData<Family: ObjectFamily>: CommunicationEventData {
         self.coreTypes = try container.decodeIfPresent([CoreType].self, forKey: .coreTypes)
         self.objectFilter = try container.decodeIfPresent(ObjectFilter.self, forKey: .objectFilter)
         
-        do {
-            self.objectJoinConditions = try container.decodeIfPresent([ObjectJoinCondition].self,
-                                                                  forKey: .objectJoinConditions)
-        } catch { /* Surpress error. */ }
-        
-        do {
-            self.objectJoinCondition = try container.decodeIfPresent(ObjectJoinCondition.self,
-                                                                 forKey: .objectJoinConditions)
-        } catch { /* Surpress error. */ }
-
-        
+        self.objectJoinConditions = try? container.decodeIfPresent([ObjectJoinCondition].self, forKey: .objectJoinConditions)
+        self.objectJoinCondition = try? container.decodeIfPresent(ObjectJoinCondition.self, forKey: .objectJoinConditions)
         try super.init(from: decoder)
     }
     

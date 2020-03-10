@@ -1,336 +1,279 @@
 //  Copyright (c) 2019 Siemens AG. Licensed under the MIT License.
 //
-//  Topic.swift
+//  CommunicationTopic.swift
 //  CoatySwift
 //
 //
 
 import Foundation
 
-/// Topic represents a Coaty topic as defined in the
-/// [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-structure)
+/// Encapsulates the internal representation of messaging topics used by the
+/// [Coaty communication
+/// infrastructure](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-structure).
 class CommunicationTopic {
-    
-    // MARK: - Public Attributes.
+
+    // MARK: - Internal Attributes.
     
     var protocolVersion: Int
-    /// event returns the entire event string including separators and filters,
-    /// e.g. Advertise:Component or Advertise::org.example.object
-    var event: String
+    var namespace: String
     var eventType: CommunicationEventType
-    var coreType: CoreType?
-    var objectType: String?
-    var associatedUserId: CoatyUUID?
-    var sourceObjectId: CoatyUUID
-    var messageToken: String
-    var channelId: String?
-    var callOperationId: String?
-    
-    /// String representation for the topic.
-    var string: String { get {
-        return "\(TOPIC_SEPARATOR)\(COATY)"
-            + "\(TOPIC_SEPARATOR)\(PROTOCOL_VERSION)"
-            + "\(TOPIC_SEPARATOR)\(event)"
-            + "\(TOPIC_SEPARATOR)\(associatedUserId?.string ?? EMPTY_ASSOCIATED_USER_ID)"
-            + "\(TOPIC_SEPARATOR)\(sourceObjectId)"
-            + "\(TOPIC_SEPARATOR)\(messageToken)"
-            + "\(TOPIC_SEPARATOR)"
-        }
-    }
+    var eventTypeFilter: String? = nil
+    var sourceId: CoatyUUID
+    var correlationId: String? = nil
     
     // MARK: - Initializers.
     
-    /// This initializer checks all required conditions to return a valid Coaty Topic.
-    init(protocolVersion: Int, event: String, associatedUserId: String, sourceObjectId: String,
-         messageToken: String) throws {
-        
-        // Check if protocol version is compatible.
-        if protocolVersion != PROTOCOL_VERSION {
-            throw CoatySwiftError.InvalidArgument("Unsupported protocol version \(protocolVersion).")
-        }
-        
-        self.protocolVersion = protocolVersion
-        
-        // Initialize event fields.
-        self.event = event
-        let eventType = try CommunicationTopic.extractEventType(event)
-        self.eventType = eventType
-        let objectType = CommunicationTopic.extractObjectType(event)
-        let coreType = CommunicationTopic.extractCoreType(event)
-        let channelId = CommunicationTopic.extractChannelId(event)
-        let callOperationId = CommunicationTopic.extractCallOperationId(event)
-
-        // Check if coreType or objectType have been set correctly.
-        if CommunicationTopic.isEventTypeFilterRequired(forEvent: eventType) {
-            if eventType == .Channel && channelId == nil {
-                 throw CoatySwiftError.InvalidArgument("\(eventType.rawValue) requires a set channelId.")
-            } else if eventType == .Call && callOperationId == nil {
-                throw CoatySwiftError.InvalidArgument("\(eventType.rawValue) requires a set callOperationId.")
-            } else if eventType != .Channel && eventType != .Call && objectType == nil && coreType == nil {
-                throw CoatySwiftError.InvalidArgument("\(eventType.rawValue) requires a set eventTypeFilter.")
-            }
-            
-            if eventType != .Channel && objectType != nil && coreType != nil {
-                throw CoatySwiftError.InvalidArgument("You have to specify either the objectType or the coreType.")
-            }
-        }
-        
-        self.callOperationId = callOperationId
-        self.channelId = channelId
-        self.coreType = coreType
-        self.objectType = objectType
-        
-        // Try to parse an associatedUserId, if none is set (i.e. "-") the
-        // CoatyUUID() initializer will return nil.
-        guard let sanitizedAssociatedUserId = CommunicationTopic.extractIdFromReadableString(associatedUserId) else {
-            throw CoatySwiftError.InvalidArgument("Could not sanitize associatedUserId")
-        }
-        
-        // Parse associatedUserId.
-        self.associatedUserId = CoatyUUID(uuidString: sanitizedAssociatedUserId)
-        
-        // Parse sourceObjectId.
-        guard let sanitizedSourceObjectId = CommunicationTopic.extractIdFromReadableString(sourceObjectId) else {
-            throw CoatySwiftError.InvalidArgument("Could not sanitize sourceObjectId.")
-        }
-        
-        guard let sourceObjectIdAsUUID = CoatyUUID(uuidString: sanitizedSourceObjectId) else {
-            throw CoatySwiftError.InvalidArgument("Invalid sourceObjectId.")
-        }
-        
-        self.sourceObjectId = sourceObjectIdAsUUID
-        
-        self.messageToken = messageToken
-    }
-    
-    
-    /// Initializes a Topic object from a string value.
-    /// The expected structure therefore looks like:
-    /// /coaty/<ProtocolVersion>/<Event>/<AssociatedUserId>/<SourceObjectId>/<MessageToken>/
-    /// - Parameters:
-    ///   - topic: string representation of a Coaty communication topic.
-    convenience init(_ topic: String) throws {
-        var topicLevels = topic.components(separatedBy: TOPIC_SEPARATOR)
-        
-        // .components() returns empty strings at the beginning and the end.
-        // e.g. /a/b/c/ => ["", "a", "b", "c", ""]
-        topicLevels = Array(topicLevels.dropFirst())
-        topicLevels = Array(topicLevels.dropLast())
-        
-        // Check if all topic fields are available.
-        if topicLevels.count != 6 {
-            throw CoatySwiftError.InvalidArgument("Wrong amount of topic levels.")
-        }
-        
-        guard let protocolVersion = Int(topicLevels[1]) else {
-            throw CoatySwiftError.InvalidArgument("Invalid protocol version.")
-        }
-        
-        let event = topicLevels[2]
-        let associatedUserId = topicLevels[3]
-        let sourceObjectId = topicLevels[4]
-        let messageToken = topicLevels[5]
-        
-        try self.init(protocolVersion: protocolVersion,
-                      event: event,
-                      associatedUserId: associatedUserId,
-                      sourceObjectId: sourceObjectId,
-                      messageToken: messageToken
-        )
-    }
-    
-    // MARK: - Helper methods.
-    
-    /// Helper method that creates a topic string with or without wildcards for subscribing or publishing.
-    /// See [Communication Protocol - Topic Filters](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-filter)
-    /// See [Communication Protocol - Topic Structure](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-structure)
-    /// - Parameters:
-    ///   - eventType: CommunicationEventType (e.g. Advertise)
-    ///   - eventTypeFilter: may either be a core type (e.g. Identity) or an object type
-    ///     (e.g. org.example.object)
-    ///   - associatedUserId: an optional UUID String, if the parameter is omitted it is replaced
-    ///     with a wildcard.
-    ///   - sourceObject: the Coaty object that issued the method call, if the parameter is omitted
-    ///     it is replaced with a wildcard.
-    ///   - messageToken: if omitted it is replaced with a wildcard.
-    /// - Returns: A topic string with correct wildcards.
-    private static func createTopicStringByLevels(eventType: CommunicationEventType,
-                                                  eventTypeFilter: String? = nil,
-                                                  associatedUserId: String? = nil,
-                                                  sourceObject: CoatyObject? = nil,
-                                                  messageToken: String? = nil) throws -> String {
-    
-        // Select the correct separator.
-        var event = eventType.rawValue
-        
-        if let eventTypeFilter = eventTypeFilter {
-            // Support creation of channel and corresponding channelId.
-            if eventType == .Channel {
-                let separator = CORE_TYPE_SEPARATOR
-                event = eventType.rawValue + separator + eventTypeFilter
-            } else if eventType == .Call {
-                let separator = CORE_TYPE_SEPARATOR
-                event = eventType.rawValue + separator + eventTypeFilter
-            } else {
-                let separator = isCoreType(eventTypeFilter) ? CORE_TYPE_SEPARATOR : OBJECT_TYPE_SEPARATOR
-                event = eventType.rawValue + separator + eventTypeFilter
-            }
-        }
-        
-        return "\(TOPIC_SEPARATOR)\(COATY)"
-            + "\(TOPIC_SEPARATOR)\(PROTOCOL_VERSION)"
-            + "\(TOPIC_SEPARATOR)\(event)"
-            + "\(TOPIC_SEPARATOR)\(associatedUserId ?? WILDCARD_TOPIC)"
-            + "\(TOPIC_SEPARATOR)\(sourceObject?.objectId.string ?? WILDCARD_TOPIC)"
-            + "\(TOPIC_SEPARATOR)\(messageToken ?? WILDCARD_TOPIC)"
-            + "\(TOPIC_SEPARATOR)"
-    }
-    
-    /// Convenience Method to create a topic string that can be used for publications.
-    /// See [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-structure)
-    /// - Parameters:
-    ///   - eventType: CommunicationEventType (e.g. Advertise)
-    ///   - eventTypeFilter: may either be a core type (e.g. Identity) or an object type
-    ///     (e.g. org.example.object)
-    ///   - associatedUserId: an optional UUID String, if the parameter is omitted it is replaced
-    ///     with "-".
-    ///   - sourceObject: the Coaty object that issued the method call
-    ///   - messageToken: a UUID string that identifies the message
-    /// - Returns: A topic string that can be used for publications.
-    static func createTopicStringByLevelsForPublish(eventType: CommunicationEventType,
-                                                    eventTypeFilter: String? = nil,
-                                                    associatedUserId: String? = nil,
-                                                    sourceObject: CoatyObject,
-                                                    messageToken: String) throws -> String {
-        
-        return try createTopicStringByLevels(eventType: eventType,
-                                             eventTypeFilter: eventTypeFilter,
-                                             associatedUserId: associatedUserId ?? EMPTY_ASSOCIATED_USER_ID,
-                                             sourceObject: sourceObject,
-                                             messageToken: messageToken)
-    }
-    
-    /// Convenience Method to create a topic string that can be used for subscriptions.
-    /// See [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-filters)
-    /// - Parameters:
-    ///   - eventType: CommunicationEventType (e.g. Advertise)
-    ///   - eventTypeFilter: may either be a core type (e.g. Identity) or an object type
-    ///     (e.g. org.example.object)
-    ///   - associatedUserId: an optional UUID String, if the parameter is omitted it is replaced
-    ///     with a wildcard.
-    ///   - messageToken: if omitted it is replaced with a wildcard.
-    /// - Returns: A topic string that can be used for subscriptions.
-    static func createTopicStringByLevelsForSubscribe(eventType: CommunicationEventType,
-                                                      eventTypeFilter: String? = nil,
-                                                      associatedUserId: String? = nil,
-                                                      messageToken: String? = nil) throws -> String {
-        
-        return try createTopicStringByLevels(eventType: eventType,
-                                             eventTypeFilter: eventTypeFilter,
-                                             associatedUserId: associatedUserId,
-                                             sourceObject: nil,
-                                             messageToken: messageToken)
-    }
-    
-    // MARK: - Parsing helper methods.
-    
-    /// Checks whether the eventTypeFilter field has to be set for a specific event type.
+    /// Creates a valid Topic object from a given MQTT publication topic string.
     ///
-    /// - Parameter event: the event type
-    /// - Returns: whether the eventTypeFilter field has to be set or not.
-    private static func isEventTypeFilterRequired(forEvent event: CommunicationEventType) -> Bool {
-        // Events that require an eventTypeFilter to be set.
-        let events: [CommunicationEventType] = [.Advertise, .Channel, .Call]
-        return events.contains(event)
-    }
-    
-    private static func isCoreType(_ eventTypeFilter: String) -> Bool {
-        return CoreType(rawValue: eventTypeFilter) != nil
-    }
-    
-    private static func extractObjectType(_ event: String) -> String? {
-        // Object types are separated as follows: "Advertise::<coreType>".
-        if !event.contains(OBJECT_TYPE_SEPARATOR) {
-            return nil
+    /// - Parameters:
+    ///   - topic: string representation of a Coaty publication topic.
+    init(_ topic: String) throws {
+        // .components() returns empty strings at the beginning/end
+        // if string starts with/ends with the separator.
+        // e.g. /a/b/c/ => ["", "a", "b", "c", ""]
+        let topicLevels = topic.components(separatedBy: TOPIC_SEPARATOR)
+        
+        guard topicLevels.count >= 5 else {
+            throw CoatySwiftError.InvalidArgument("Invalid topic.")
         }
         
-        // Take the second element (the object type) and return it.
-        let eventTypeComponents = event.components(separatedBy: OBJECT_TYPE_SEPARATOR).dropFirst()
-        return eventTypeComponents.first
-    }
-    
-    private static func extractCoreType(_ event: String) -> CoreType? {
-        // Core types are separated as follows: "Advertise:<coreType>".
-        if !event.contains(CORE_TYPE_SEPARATOR) {
-            return nil
+        let protocolName = topicLevels[0]
+        let version = topicLevels[1]
+        let namespace = topicLevels[2]
+        let eventName = topicLevels[3]
+        let sourceId = topicLevels[4]
+        let corrId: String? = topicLevels.count == 6 ? topicLevels[5] : nil
+        let postfix: String? = topicLevels.count >= 7 ? topicLevels[6] : nil
+
+        guard protocolName == PROTOCOL_NAME && version != "" && namespace != "" && eventName != "" && sourceId != "" else {
+            throw CoatySwiftError.InvalidArgument("Invalid topic.")
+        }
+        guard (corrId == nil && postfix == nil) || (corrId != nil && corrId != "" && postfix == nil) else {
+            throw CoatySwiftError.InvalidArgument("Invalid topic.")
+        }
+        // No need to validate protocol version as subscriptions are filtered by PROTOCOL_VERSION.
+        // guard let protocolVersion = Int(version) else {
+        //    throw CoatySwiftError.InvalidArgument("Invalid topic protocol version.")
+        // }
+        // guard protocolVersion == PROTOCOL_VERSION else {
+        //    throw CoatySwiftError.InvalidArgument("Unsupported topic protocol version \(protocolVersion).")
+        // }
+        guard let sourceIdAsUUID = CoatyUUID(uuidString: sourceId) else {
+            throw CoatySwiftError.InvalidArgument("Invalid topic sourceId.")
+        }
+
+        guard let (eventType, eventTypeFilter) = try CommunicationTopic.extractEventType(eventName) else {
+            throw CoatySwiftError.InvalidArgument("Invalid topic event type: \(eventName)")
         }
         
-        // Take the second element (the core type) and return it.
-        let eventTypeComponents = event.components(separatedBy: CORE_TYPE_SEPARATOR).dropFirst()
-        guard let coreTypeString = eventTypeComponents.first else {
-            return nil
+        guard eventType != .Associate && eventType != .IoValue else {
+            throw CoatySwiftError.InvalidArgument("Topic event type \(eventName) not yet supported")
         }
-        
-        return CoreType(rawValue: coreTypeString)
-    }
-    
-    private static func extractChannelId(_ event: String) -> String? {
-        if !event.contains("Channel\(CORE_TYPE_SEPARATOR)") {
-            return nil
-        }
-        
-        // Take the second element (the channelId) and return it.
-        let eventTypeComponents = event.components(separatedBy: CORE_TYPE_SEPARATOR).dropFirst()
-        return eventTypeComponents.first
-    }
-    
-    private static func extractCallOperationId(_ event: String) -> String? {
-        if !event.contains("Call\(CORE_TYPE_SEPARATOR)") {
-            return nil
-        }
-        
-        // Take the second element (the callOperationId) and return it.
-        let eventTypeComponents = event.components(separatedBy: CORE_TYPE_SEPARATOR).dropFirst()
-        return eventTypeComponents.first
-    }
-    
-    private static func extractEventType(_ event: String) throws -> CommunicationEventType {
-        if !(event.contains(CORE_TYPE_SEPARATOR) || event.contains(OBJECT_TYPE_SEPARATOR)) {
-            guard let communicationEventType = CommunicationEventType(rawValue: event) else {
-                throw CoatySwiftError.InvalidArgument("Event needs to contain a valid CommunicationEventType")
+
+        if eventType.isOneWay {
+            if corrId != nil {
+                throw CoatySwiftError.InvalidArgument("Topic has correlation id for one-way \(eventType) event")
             }
-            
-            return communicationEventType
+            if (eventType == .Advertise || eventType == .Channel) &&
+                (eventTypeFilter == nil || eventTypeFilter!.isEmpty) {
+                throw CoatySwiftError.InvalidArgument("Topic missing event filter for \(eventType) event")
+            }
+            if  eventType != .Advertise && eventType != .Channel && eventTypeFilter != nil {
+                throw CoatySwiftError.InvalidArgument("Topic has event filter for \(eventType) event")
+            }
+        } else {
+            if corrId == nil {
+                throw CoatySwiftError.InvalidArgument("Topic missing correlation id for two-way event: \(eventType)")
+            }
+            if (eventType == .Call || eventType == .Update) &&
+                (eventTypeFilter == nil || eventTypeFilter!.isEmpty) {
+                throw CoatySwiftError.InvalidArgument("Topic missing event filter for \(eventType) event")
+            }
+            if eventType != .Call && eventType != .Update && eventTypeFilter != nil {
+                throw CoatySwiftError.InvalidArgument("Topic has event filter for \(eventType) event")
+            }
         }
-        
-        // This is required to parse Advertise events correct. (In the future: Channels).
-        guard let communicationEventTypeString = event.components(
-            separatedBy: CORE_TYPE_SEPARATOR).first else {
-                throw CoatySwiftError.InvalidArgument("Event needs to contain a valid CommunicationEventType")
-        }
-        
-        guard let communicationEventType = CommunicationEventType(
-            rawValue: communicationEventTypeString) else {
-                throw CoatySwiftError.InvalidArgument("Unknown CommunicationEventType")
-        }
-        
-        return communicationEventType
+
+        self.protocolVersion = PROTOCOL_VERSION
+        self.namespace = namespace
+        self.eventType = eventType
+        self.eventTypeFilter = eventTypeFilter
+        self.sourceId = sourceIdAsUUID
+        self.correlationId = corrId
     }
     
-    /// Returns the Id from a string that was created using readable topic names.
-    private static func extractIdFromReadableString(_ readable: String) -> String? {
-        return readable.components(separatedBy: READABLE_TOPIC_SEPARATOR).last
-    }
-    
+    // MARK: - Utility methods.
+
     /// Determines whether the given data is valid as an event type filter.
     ///
     /// - Parameter filter: an event type filter
     /// - Returns: true if the given topic name is a valid event type filter; false otherwise
     static func isValidEventTypeFilter(filter: String) -> Bool {
-        return filter.count > 0
-            && !filter.contains("\u{0000}")
-            && !filter.contains("#")
-            && !filter.contains("+")
-            && !filter.contains("/")
+        return self.isValidPublicationTopic(filter) && !filter.contains("/")
     }
+
+
+    /// Determines whether the given name is a valid topic name for publication.
+    ///
+    /// - Parameter name: a string
+    /// - Returns: true if the given name can be used for publication; false otherwise
+    static func isValidPublicationTopic(_ name: String) -> Bool {
+        return name.count > 0
+            && !name.contains("\u{0000}")
+            && !name.contains("#")
+            && !name.contains("+")
+    }
+
+    /// Determines whether the given name is a valid topic filter for subscribing.
+    ///
+    /// - Parameter name: a string
+    /// - Returns: true if the given name can be used for subscriptions; false otherwise
+    static func isValidSubscriptionTopic(_ name: String) -> Bool {
+        return name.count > 0
+            && !name.contains("\u{0000}")
+    }
+    
+    /// Determines whether the given topic should be dispatched to raw observers.
+    ///
+    /// - Parameter topic: an incoming topic string
+    /// - Returns: false if the topic starts with "coaty/"; true otherwise
+    static func isRawTopic(topic: String) -> Bool {
+        return !topic.hasPrefix(PROTOCOL_NAME_PREFIX)
+    }
+    
+    /// Determines whether the given MQTT topic matches the given MQTT topic filter.
+    ///
+    /// Examples:
+    /// * topic filter a/b/# match topics a/b/c/d, a/b/c, ...
+    /// * topic filter a/+/+ match topic a/b/c, but _not_ a/b/c/d, ...
+    /// * topic filter a/+/b match topic a/c/b and a//b
+    /// * topic filters / and +/ and /+ and +/+ match topic /
+    ///
+    /// - Note: Matching assumes that both topic and filter are valid according
+    ///         to the MQTT 3.1.1 specification. Otherwise, the result is not defined.
+    ///
+    /// - Parameters:
+    ///     - topic: a valid MQTT topic name
+    ///     - filter: a valid MQTT topic filter
+    /// - Returns:true if topic matches filter; otherwise false
+    static func matches(_ topic: String, _ filter: String) -> Bool {
+        if topic.isEmpty || filter.isEmpty {
+            return false
+        }
+        
+        let patternLevels = filter.components(separatedBy: TOPIC_SEPARATOR)
+        let topicLevels = topic.components(separatedBy: TOPIC_SEPARATOR)
+
+        let patternLength = patternLevels.count
+        let topicLength = topicLevels.count
+        let lastIndex = patternLength - 1
+
+        for i in 0...lastIndex {
+            let currentPatternLevel = patternLevels[i]
+            let currentLevel = i < topicLength ? topicLevels[i] : nil
+            let currentLevelEmpty = currentLevel?.isEmpty ?? true
+            
+            if currentLevelEmpty && currentPatternLevel.isEmpty {
+                continue
+            }
+
+            if currentLevelEmpty && currentPatternLevel == SINGLE_TOPIC_LEVEL_WILDCARD {
+                continue
+            }
+
+            if currentLevelEmpty && currentPatternLevel != MULTI_TOPIC_LEVEL_WILDCARD {
+                return false
+            }
+
+            if currentPatternLevel == MULTI_TOPIC_LEVEL_WILDCARD {
+                return i == lastIndex
+            }
+
+            if currentPatternLevel != SINGLE_TOPIC_LEVEL_WILDCARD && currentPatternLevel != currentLevel {
+                return false
+            }
+        }
+
+        return patternLength == topicLength
+    }
+    
+    /// Gets the topic event level consisting of the given event type and optional event type filter.
+    static func getEventLevel(eventType: CommunicationEventType, eventTypeFilter: String?) -> String {
+        var eventLevel = eventType.rawValue
+        
+        if eventTypeFilter != nil {
+            eventLevel += EVENT_TYPE_FILTER_SEPARATOR + eventTypeFilter!
+        }
+        
+        return eventLevel
+    }
+
+    /// Convenience Method to create a topic string that can be used for publications.
+    /// See [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-structure)
+    /// - Parameters:
+    ///   - namepace: the messaging namespace
+    ///   - sourceId: UUID from which this event originates
+    ///   - eventType: CommunicationEventType
+    ///   - eventTypeFilter: optional event filter
+    ///   - correlationId: correlation ID for two-way message, or nil for one-way message
+    /// - Returns: a topic string that can be used for publication
+    static func createTopicStringByLevelsForPublish(namespace: String,
+                                                    sourceId: CoatyUUID,
+                                                    eventType: CommunicationEventType,
+                                                    eventTypeFilter: String? = nil,
+                                                    correlationId: String? = nil) -> String {
+        let eventLevel = getEventLevel(eventType: eventType, eventTypeFilter: eventTypeFilter)
+        var topic = "\(PROTOCOL_NAME)"
+            + "\(TOPIC_SEPARATOR)\(PROTOCOL_VERSION)"
+            + "\(TOPIC_SEPARATOR)\(namespace)"
+            + "\(TOPIC_SEPARATOR)\(eventLevel)"
+            + "\(TOPIC_SEPARATOR)\(sourceId.string)"
+
+        if !eventType.isOneWay {
+            topic += "\(TOPIC_SEPARATOR)\(correlationId!)"
+        }
+
+        return topic;
+    }
+    
+    /// Convenience Method to create a topic string that can be used for subscriptions.
+    /// See [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/#topic-filters)
+    /// - Parameters:
+    ///   - eventType: CommunicationEventType
+    ///   - eventTypeFilter: optional event filter
+    ///   - namespace: the messaging namespace or nil for wildcard namespacing
+    ///   - correlationId: correlation ID for response message subscription, or nil
+    ///     for request message subscription with wildcard
+    /// - Returns: a topic string that can be used for subscriptions
+    static func createTopicStringByLevelsForSubscribe(eventType: CommunicationEventType,
+                                                      eventTypeFilter: String? = nil,
+                                                      namespace: String? = nil,
+                                                      correlationId: String? = nil) -> String {
+        let eventLevel = getEventLevel(eventType: eventType, eventTypeFilter: eventTypeFilter)
+        var topic = "\(PROTOCOL_NAME)"
+            + "\(TOPIC_SEPARATOR)\(PROTOCOL_VERSION)"
+            + "\(TOPIC_SEPARATOR)\(namespace ?? SINGLE_TOPIC_LEVEL_WILDCARD)"
+            + "\(TOPIC_SEPARATOR)\(eventLevel)"
+            + "\(TOPIC_SEPARATOR)\(SINGLE_TOPIC_LEVEL_WILDCARD)"
+
+        if !eventType.isOneWay {
+            topic += "\(TOPIC_SEPARATOR)\(correlationId ?? SINGLE_TOPIC_LEVEL_WILDCARD)"
+        }
+
+        return topic;
+    }
+    
+    // MARK: - Parsing helper methods.
+    
+    private static func extractEventType(_ eventName: String) throws -> (CommunicationEventType, String?)? {
+        let index = eventName.firstIndex(of: EVENT_TYPE_FILTER_SEPARATOR[EVENT_TYPE_FILTER_SEPARATOR.startIndex])
+        let eventType = index == nil ? eventName : String(eventName[..<index!])
+        let eventTypeFilter = index == nil ? nil : String(eventName[eventName.index(after: index!)...])
+        
+        guard let evType = CommunicationEventType.from(eventType) else {
+            return nil;
+        }
+        return (evType, eventTypeFilter)
+    }
+
 }

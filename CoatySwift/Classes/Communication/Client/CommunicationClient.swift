@@ -8,34 +8,36 @@
 import Foundation
 import RxSwift
 
-/// This protocol defines the networking methods all of our clients have to
-/// implement, such as the `CocoaMQTTClient` class.
+/// This protocol defines the networking API of a communication client, such as
+/// the `CocoaMQTTClient` class.
 ///
-/// Note: We expect our clients to work in a MQTT-like fashion.
+/// Note: We expect our clients to use publish-subscribe communication.
 protocol CommunicationClient {
     
-    /// Observable emitting *raw* (topic, payload) mqtt messages.
+    /// Observable emitting *raw* (topic, payload) MQTT messages.
     var rawMQTTMessages: PublishSubject<(String, [UInt8])> { get }
     
-    /// Observable emitting (topic, payload) values.
-    var messages: PublishSubject<(String, String)> { get }
+    /// Observable emitting (parsed topic, payload) values.
+    var messages: PublishSubject<(CommunicationTopic, String)> { get }
     
     /// Delegate necessary to start the communication manager
     /// when discovering the broker over mDNS.
-    var delegate: Startable? { get set }
+    var delegate: Startable { get }
     
     /// MARK: - State management.
     
-    /// Emits the online or offline state depending on the connection
+    /// Emits online or offline state depending on the connection
     /// status of the client.
     var communicationState: BehaviorSubject<CommunicationState> { get }
     
-    /// MARK: - Pubsub methods.
+    /// MARK: - Connection methods.
     
-    func connect()
+    func connect(lastWillTopic: String, lastWillMessage: String)
     func disconnect()
+
+    /// MARK: - Pub-Sub methods.
+
     func publish(_ topic: String, message: String)
     func subscribe(_ topic: String)
     func unsubscribe(_ topic: String)
-    func setWill(_ topic: String, message: String)
 }

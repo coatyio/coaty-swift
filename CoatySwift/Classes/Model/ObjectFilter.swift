@@ -160,9 +160,11 @@ public class ObjectFilter: Codable {
 /// by the second tuple, etc.
 public class OrderByProperty: Codable {
     
-    var objectFilterProperties: ObjectFilterProperty
+    /// The ordered collection of filter properties.
+    internal (set) public var objectFilterProperties: ObjectFilterProperty
 
-    var sortingOrder: SortingOrder
+    /// The sorting order.
+    internal (set) public var sortingOrder: SortingOrder
     
     /// Create an OrderByProperty instance.
     /// - Parameters:
@@ -204,9 +206,11 @@ public class OrderByProperty: Codable {
 /// contains a dot (.) in its name. In such cases, array notation must be used.
 public class ObjectFilterProperty: Codable {
 
-    var objectFilterProperty: String?
+    /// The name of a single filter property.
+    internal (set) public var objectFilterProperty: String?
 
-    var objectFilterProperties: [String]?
+    /// The ordered collection of names of chained filter properties.
+    internal (set) public var objectFilterProperties: [String]?
     
     private init(objectFilterProperty: String? = nil,
                  objectFilterProperties: [String]? = nil) {
@@ -265,9 +269,11 @@ public class ObjectFilterConditions: Codable {
     
     // MARK: - Attributes.
     
-    var and: [ObjectFilterCondition]?
+    /// The set of (optional) filter conditions which are combined by logical AND.
+    internal (set) public var and: [ObjectFilterCondition]?
 
-    var or: [ObjectFilterCondition]?
+    /// The set of (optional) filter conditions which are combined by logical OR.
+    internal (set) public var or: [ObjectFilterCondition]?
     
     // MARK: - Initializers.
     
@@ -404,9 +410,11 @@ public class ObjectFilterCondition: Codable {
 
     // MARK: - Attributes.
     
-    var property: ObjectFilterProperty
+    /// The filter property of this filter condition.
+    internal (set) public var property: ObjectFilterProperty
 
-    var expression: ObjectFilterExpression
+    /// The filter expression of this filter condition.
+    internal (set) public var expression: ObjectFilterExpression
     
     // MARK: - Initializers.
     
@@ -463,13 +471,13 @@ public class ObjectFilterExpression: Codable {
     // MARK: - Attributes.
     
     /// The filter operator constant.
-    var filterOperator: ObjectFilterOperator
+    internal (set) public var filterOperator: ObjectFilterOperator
 
     /// The first operand of the filter expression (optional).
-    var firstOperand: AnyCodable?
+    internal (set) public var firstOperand: AnyCodable?
 
     /// The second operand of the filter expression (optional).
-    var secondOperand: AnyCodable?
+    internal (set) public var secondOperand: AnyCodable?
     
     // MARK: - Initializers.
     
@@ -489,7 +497,7 @@ public class ObjectFilterExpression: Codable {
     // MARK: - Codable methods.
     
     public func encode(to encoder: Encoder) throws {
-        // JSON encoding format is: [filterOperator, firstOperand, secondOperand]
+        // JSON encoding format is: [filterOperator, firstOperand?, secondOperand?]
         var container = encoder.unkeyedContainer()
         try container.encode(filterOperator.rawValue)
         
@@ -505,6 +513,7 @@ public class ObjectFilterExpression: Codable {
     }
     
     public required init(from decoder: Decoder) throws {
+        // JSON decoding format is: [filterOperator, firstOperand?, secondOperand?]
         var container = try decoder.unkeyedContainer()
         let filterOperatorInt = try container.decode(Int.self)
         filterOperator = ObjectFilterOperator(rawValue: filterOperatorInt)!

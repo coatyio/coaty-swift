@@ -9,7 +9,7 @@ import Foundation
 /// Defines a condition for joining related objects into a result set of Coaty objects.
 /// Result objects are augmented by resolving object references to related
 /// objects and by storing them in an extra property of the result object.
-/// Used in combination with query events.
+/// Used in combination with Query events.
 public class ObjectJoinCondition: Codable {
     
     /// Specifies the property name of an object reference to be resolved by joining.

@@ -6,52 +6,58 @@
 
 import Foundation
 
-/// A Factory that creates ReturnEvents.
-public class ReturnEventFactory<Family: ObjectFamily>: EventFactoryInit {
-    
-    /// Create a ReturnEvent instance for a remote operation call that successfully yields a result.
+/// ReturnEvent provides a generic implementation for responding to a
+/// `CallEvent`.
+public class ReturnEvent: CommunicationEvent<ReturnEventData> {
+
+    // MARK: - Static Factory Methods.
+
+    /// Create a ReturnEvent instance for a remote operation call that
+    /// successfully yields a result.
     ///
     /// - Parameters:
     ///   - result: the result value to be returned (any JSON data type)
-    ///   - executionTime: the time interval needed for execution of the operation (optional)
-    public func with(result: AnyCodable, executionInfo: ExecutionInfo?) -> ReturnEvent<Family> {
-        let returnEventData = ReturnEventData<Family>.createFrom(result: result,
-                                                                 executionInfo: executionInfo,
-                                                                 error: nil)
-        return .init(eventSource: self.identity, eventData: returnEventData)
+    ///   - executionInfo: information about the execution of the operation
+    ///     (optional)
+    /// - Returns: a Return event with the given parameters
+    public static func with(result: AnyCodable, executionInfo: ExecutionInfo?) -> ReturnEvent {
+        let returnEventData = ReturnEventData.createFrom(result: result,
+                                                         executionInfo: executionInfo,
+                                                         error: nil)
+        return .init(eventType: .Return, eventData: returnEventData)
     }
     
-    /// Create a ReturnEvent instance for a remote operation call that yields an error.
+    /// Create a ReturnEvent instance for a remote operation call that yields an
+    /// error.
     ///
-    /// The error code given is an integer that indicates the error type
-    /// that occurred, either a predefined error or an application defined one. Predefined error
-    /// codes are defined by the `RemoteCallErrorCode` enum. Predefined error
-    /// codes are within the range -32768 to -32000. Application defined error codes must be
-    /// defined outside this range.
+    /// The error code given is an integer that indicates the error type that
+    /// occurred, either a predefined error or an application defined one.
+    /// Predefined error codes are defined by the `RemoteCallErrorCode` enum.
+    /// Predefined error codes are within the range -32768 to -32000.
+    /// Application defined error codes must be defined outside this range.
     ///
-    /// The error message provides a short description of the error. Predefined error messages
-    /// exist for all predefined error codes (see enum `RemoteCallErrorMessage`).
+    /// The error message provides a short description of the error. Predefined
+    /// error messages exist for all predefined error codes (see enum
+    /// `RemoteCallErrorMessage`).
     ///
     /// - Parameters:
-    ///   - error: The error including the code that indicates the error type and the message string
-    ///            providing a short description of the error.
-    ///   - executionTime: the time interval needed for execution of the operation until
-    ///                    the error occurred (optional).
-    public func with(error: ReturnError, executionInfo: ExecutionInfo?) -> ReturnEvent<Family> {
-        let returnEventData = ReturnEventData<Family>.createFrom(result: nil,
-                                                                 executionInfo: executionInfo,
-                                                                 error: error)
-        return .init(eventSource: self.identity, eventData: returnEventData)
+    ///   - error: The error including the code that indicates the error type
+    ///            and the message string providing a short description of the
+    ///            error.
+    ///   - executionInfo: information about the execution of the operation
+    ///     (optional)
+    /// - Returns: a Return event with the given parameters
+    public static func with(error: ReturnError, executionInfo: ExecutionInfo?) -> ReturnEvent {
+        let returnEventData = ReturnEventData.createFrom(result: nil,
+                                                         executionInfo: executionInfo,
+                                                         error: error)
+        return .init(eventType: .Return, eventData: returnEventData)
     }
-    
-}
-
-public class ReturnEvent<Family: ObjectFamily>: CommunicationEvent<ReturnEventData<Family>> {
     
     // MARK: - Initializers.
 
-    fileprivate override init(eventSource: Identity, eventData: ReturnEventData<Family>) {
-        super.init(eventSource: eventSource, eventData: eventData)
+    fileprivate override init(eventType: CommunicationEventType, eventData: ReturnEventData) {
+        super.init(eventType: eventType, eventData: eventData)
     }
 
     // MARK: - Codable methods.
@@ -66,7 +72,7 @@ public class ReturnEvent<Family: ObjectFamily>: CommunicationEvent<ReturnEventDa
     
 }
 
-public class ReturnEventData<Family: ObjectFamily>: CommunicationEventData {
+public class ReturnEventData: CommunicationEventData {
     
     // MARK: - Public attributes.
     

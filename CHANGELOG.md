@@ -1,5 +1,25 @@
 # Changelog
 
+<a name="2.0.0"></a>
+## [2.0.0](https://github.com/coatyio/coaty-swift/compare/1.0.1...2.0.0) (2020-03-10)
+
+This major release upgrades the CoatySwift framework API to Coaty 2. To update
+your application, follow the migration steps described in this [migration
+guide](https://coatyio.github.io/coaty-swift/man/migration-guide/).
+
+Coaty 2 incorporates experience and feedback gathered with Coaty 1. It pursues
+the main goal to streamline and simplify the framework API, to get rid of unused
+and deprecated functionality, and to prepare for future extensions.
+
+Among other refactorings, CoatySwift 2 carries breaking changes regarding object
+types, distributed lifecycle management, and the communication protocol while
+keeping the essential set of communication event patterns. Therefore, CoatySwift
+2 applications are no longer backward-compatible and interoperable with
+CoatySwift 1 applications.
+
+CoatySwift 1 is still available as CocoaPod `CoatySwift', '~> 1.0'`. CoatySwift
+2 is deployed as Cocoapod `CoatySwift', '~> 2.0'`.
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/coatyio/coaty-swift/compare/1.0.0...1.0.1) (2019-10-29)
 

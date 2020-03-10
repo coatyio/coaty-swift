@@ -14,9 +14,9 @@ class LogManager {
     
     internal static var logLevel = XCGLogger.Level.error
     
-    internal static let log: XCGLogger = {
+    internal static var log: XCGLogger = {
         let log = XCGLogger(identifier: "CoatySwift",
-                               includeDefaultDestinations: false)
+                            includeDefaultDestinations: false)
         
         let systemDestination = AppleSystemLogDestination(identifier: "CoatySwift.systemDestination")
         systemDestination.outputLevel = LogManager.logLevel
@@ -24,8 +24,8 @@ class LogManager {
         systemDestination.showFunctionName = false
         systemDestination.showThreadName = false
         systemDestination.showLevel = true
-        systemDestination.showFileName = true
-        systemDestination.showLineNumber = true
+        systemDestination.showFileName = LogManager.logLevel != .info
+        systemDestination.showLineNumber = LogManager.logLevel != .info
         systemDestination.showDate = true
         
         log.add(destination: systemDestination)
@@ -51,10 +51,11 @@ class LogManager {
 /// The `CoatySwiftLogLevel` enum defines the verbositiy of the internal CoatySwift logger.
 public enum CoatySwiftLogLevel {
     
-    /// Logs information about underlying MQTT topic subscriptions (e.g. subscribe() and unsubscribe() operations).
+    /// Logs information about underlying MQTT topic subscriptions (e.g. subscribe() and unsubscribe() operations)
+    /// and OperatingState of communication manager.
     case debug
     
-    /// Logs events such as onCommunicationManagerStarting() or onContainerResolved().
+    /// Logs events such as CommunicationState of communication manager.
     case info
     
     /// Logs warnings that indicate partial failures which may indicate larger issues.

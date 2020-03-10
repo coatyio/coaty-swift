@@ -15,11 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     /// Save a reference of your container in the app delegate to
     /// make sure it stays alive during the entire life-time of the app.
-    var container: Container<ExampleObjectFamily>?
-    let brokerIp = "127.0.0.1"
+    var container: Container?
+    
+    let brokerHost = "127.0.0.1"
     let brokerPort = 1883
 
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         launchContainer()
@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        // Shutdown container in order to trigger a graceful deadvertise of all advertised components.
+        // Shutdown container in order to trigger a graceful Deadvertise of all advertised components.
         container?.shutdown();
     }
     
@@ -55,11 +55,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// This method sets up the Coaty container necessary to run our application.
     private func launchContainer() {
         
-        // Instantiate controllers.
+        // Register controllers.
         let components = Components(controllers: [
-            "ExampleControllerPublish": ExampleControllerPublish<ExampleObjectFamily>.self,
-            "ExampleControllerObserve": ExampleControllerObserve<ExampleObjectFamily>.self
-            ])
+            "ExampleControllerPublish": ExampleControllerPublish.self,
+            "ExampleControllerObserve": ExampleControllerObserve.self
+        ])
         
         // Create a configuration.
         guard let configuration = createExampleConfiguration() else {
@@ -69,8 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Resolve everything!
         container = Container.resolve(components: components,
-                                      configuration: configuration,
-                                      objectFamily: ExampleObjectFamily.self)
+                                      configuration: configuration)
 
     }
     
@@ -84,25 +83,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             config.common = CommonOptions()
             
             // Adjusts the logging level of CoatySwift messages, which is especially
-            // helpful when you want to debug applications.
+            // helpful if you want to test or debug applications (default is .error).
             config.common?.logLevel = .info
+
+            // Configure an expressive `name` of the container's identity here.
+            config.common?.agentIdentity = ["name": "Example Agent"]
             
             // You can also add extra information to your configuration in the form of a
             // [String: String] dictionary.
             config.common?.extra = ["ContainerVersion": "0.0.1"]
             
-            // Define the communication-related options, such as the IP address of your broker and
-            // the port it exposes, and your own MQTT client Id. Also, make sure
-            // to immediately connect with the broker, indicated by `shouldAutoStart: true`.
-            let mqttClientOptions = MQTTClientOptions(host: brokerIp,
+            // Define communication-related options, such as the host address of your broker
+            // (default is "localhost") and the port it exposes (default is 1883). Also,
+            // make sure to immediately connect with the broker, indicated by `shouldAutoStart: true`.
+            let mqttClientOptions = MQTTClientOptions(host: brokerHost,
                                                       port: UInt16(brokerPort))
             
-            config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,                                              identity: ["name": "ExampleClient"],
+            config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,
                                                         shouldAutoStart: true)
-            
-            // The communicationManager will advertise its identity upon connection to the
-            // MQTT broker.
-            config.communication?.shouldAdvertiseIdentity = true
         }
     }
     

@@ -7,105 +7,104 @@
 
 import Foundation
 
-/// A Factory that creates DiscoverEvents.
-public class DiscoverEventFactory<Family: ObjectFamily>: EventFactoryInit {
+/// DiscoverEvent provides a generic implementation for discovering CoatyObjects.
+/// Note that this class should preferably be initialized by its withObject() method.
+public class DiscoverEvent: CommunicationEvent<DiscoverEventData> {
     
-    /// Create a DiscoverEvent instance for discovering objects with the given external Id.
+    // MARK: - Internal attributes.
+    
+    /// Provides a resolve handler for reacting to Discover events.
+    internal var resolveHandler: ((ResolveEvent) -> Void)?
+
+    // MARK: - Static Factory Methods.
+
+    /// Create a DiscoverEvent instance for discovering objects with the given
+    /// external Id.
     ///
     /// - Parameters:
     ///     - externalId: the external ID to discover
-    public func with(externalId: String) -> DiscoverEvent<Family> {
+    public static func with(externalId: String) -> DiscoverEvent {
         let discoverEventData = DiscoverEventData(externalId: externalId)
-        return DiscoverEvent(eventSource: self.identity, eventData: discoverEventData)
+        return .init(eventType: .Discover, eventData: discoverEventData)
     }
     
-    /// Create a DiscoverEvent instance for discovering objects with the given external Id and
-    /// core types.
+    /// Create a DiscoverEvent instance for discovering objects with the given
+    /// external Id and core types.
     ///
     /// - Parameters:
     ///     - externalId: the external ID to discover
     ///     - coreTypes: an array of core types to discover
-    public func with(externalId: String, coreTypes: [CoreType]) -> DiscoverEvent<Family> {
+    public static func with(externalId: String, coreTypes: [CoreType]) -> DiscoverEvent {
         let discoverEventData = DiscoverEventData(externalId: externalId, coreTypes: coreTypes)
-        return DiscoverEvent(eventSource: self.identity, eventData: discoverEventData)
+        return .init(eventType: .Discover, eventData: discoverEventData)
     }
     
-    /// Create a DiscoverEvent instance for discovering objects with the given external Id and
-    /// object types.
+    /// Create a DiscoverEvent instance for discovering objects with the given
+    /// external Id and object types.
     ///
     /// - Parameters:
     ///   - externalId: the external ID to discover.
     ///   - objectTypes: an array of object types to discover.
-    public func with(externalId: String, objectTypes: [String]) -> DiscoverEvent<Family> {
+    public static func with(externalId: String, objectTypes: [String]) -> DiscoverEvent {
         let discoverEventData = DiscoverEventData(externalId: externalId, objectTypes: objectTypes)
-        return DiscoverEvent(eventSource: self.identity, eventData: discoverEventData)
+        return .init(eventType: .Discover, eventData: discoverEventData)
     }
     
-    /// Create a DiscoverEvent instance for discovering objects with the given object Id.
+    /// Create a DiscoverEvent instance for discovering objects with the given
+    /// object Id.
     ///
     /// - Parameters:
     ///   - objectId: the object ID to discover
-    public func with(objectId: CoatyUUID) -> DiscoverEvent<Family> {
+    public static func with(objectId: CoatyUUID) -> DiscoverEvent {
         let discoverEventData = DiscoverEventData(objectId: objectId)
-        return DiscoverEvent(eventSource: self.identity, eventData: discoverEventData)
+        return .init(eventType: .Discover, eventData: discoverEventData)
     }
     
-    /// Create a DiscoverEvent instance for discovering objects with the given external Id and
-    /// object Id.
+    /// Create a DiscoverEvent instance for discovering objects with the given
+    /// external Id and object Id.
     ///
     /// - Parameters:
     ///   - externalId: the external ID to discover
     ///   - objectId: the object ID to discover
-    public func with(externalId: String,
-                     objectId: CoatyUUID) -> DiscoverEvent<Family> {
+    public static func with(externalId: String,
+                     objectId: CoatyUUID) -> DiscoverEvent {
         let discoverEventData = DiscoverEventData(externalId: externalId, objectId: objectId)
-        return DiscoverEvent(eventSource: self.identity, eventData: discoverEventData)
+        return .init(eventType: .Discover, eventData: discoverEventData)
     }
     
-    /// Create a DiscoverEvent instance for discovering objects with the given core types.
+    /// Create a DiscoverEvent instance for discovering objects with the given
+    /// core types.
     ///
     /// - Parameters:
     ///   - coreTypes: coreTypes the core types to discover
-    public func with(coreTypes: [CoreType]) -> DiscoverEvent<Family> {
+    public static func with(coreTypes: [CoreType]) -> DiscoverEvent {
         let discoverEventData = DiscoverEventData(coreTypes: coreTypes)
-        return DiscoverEvent(eventSource: self.identity, eventData: discoverEventData)
+        return .init(eventType: .Discover, eventData: discoverEventData)
     }
     
-    /// Create a DiscoverEvent instance for discovering objects with the given object types.
+    /// Create a DiscoverEvent instance for discovering objects with the given
+    /// object types.
     ///
     /// - Parameters:
     ///   - objectTypes: the object types to discover
-    public func with(objectTypes: [String]) -> DiscoverEvent<Family> {
+    public static func with(objectTypes: [String]) -> DiscoverEvent {
         let discoverEventData = DiscoverEventData(objectTypes: objectTypes)
-        return DiscoverEvent(eventSource: self.identity, eventData: discoverEventData)
+        return .init(eventType: .Discover, eventData: discoverEventData)
     }
-}
 
-/// DiscoverEvent provides a generic implementation for discovering CoatyObjects.
-/// Note that this class should preferably be initialized via its withObject() method.
-/// - NOTE: DiscoverEvents also need an object family. This is because Discover-Resolve
-/// includes both sending a discover and receiving a family of resolves, as well as
-/// reacting to a family of discovers and sending out particular resolves.
-public class DiscoverEvent<Family: ObjectFamily>: CommunicationEvent<DiscoverEventData> {
-    
-    // MARK: - Internal attributes.
-    
-    /// Provides a resolve handler for reacting to discover events.
-    internal var resolveHandler: ((ResolveEvent<Family>) -> Void)?
-    
-    
-    /// Respond to an observed Discover event by returning the given event.
+    /// Respond to a Discover event with the given Resolve event.
     ///
     /// - Parameter resolveEvent: a Resolve event.
-    public func resolve(resolveEvent: ResolveEvent<Family>) {
+    public func resolve(resolveEvent: ResolveEvent) {
         if let resolveHandler = resolveHandler {
             resolveHandler(resolveEvent)
         }
     }
 
-    override init(eventSource: Identity, eventData: DiscoverEventData) {
-        super.init(eventSource: eventSource, eventData: eventData)
-        type = .Discover
+    // MARK: - Initializers.
+
+    fileprivate override init(eventType: CommunicationEventType, eventData: DiscoverEventData) {
+        super.init(eventType: eventType, eventData: eventData)
     }
     
     // MARK: - Codable methods.
@@ -119,35 +118,35 @@ public class DiscoverEvent<Family: ObjectFamily>: CommunicationEvent<DiscoverEve
     }
     
     /// Validates response parameters of Resolve event against the corresponding
-    /// discover event.
+    /// Discover event.
     /// - Parameter eventData: event data for Resolve response event
     /// - Returns: false and logs if the given Resolve event data does not
     ///   correspond to the event data of this Discover event.
-    internal func ensureValidResponseParameters(eventData: ResolveEventData<Family>) -> Bool {
+    internal func ensureValidResponseParameters(eventData: ResolveEventData) -> Bool {
         if self.data.coreTypes != nil && eventData.object != nil {
             if !((self.data.coreTypes?.contains(eventData.object!.coreType))!) {
-                LogManager.log.warning("resolved coreType not contained in Discover coreTypes")
+                LogManager.log.debug("resolved coreType not contained in Discover coreTypes")
                 return false
             }
         }
         
         if self.data.objectTypes != nil && eventData.object != nil {
             if !((self.data.objectTypes?.contains(eventData.object!.objectType))!) {
-                LogManager.log.warning("resolved objectType not contained in Discover objectTypes")
+                LogManager.log.debug("resolved objectType not contained in Discover objectTypes")
                 return false
             }
         }
             
         if self.data.objectId != nil && eventData.object != nil {
             if self.data.objectId != eventData.object?.objectId {
-                LogManager.log.warning("resolved object's UUID doesn't match Discover objectId")
+                LogManager.log.debug("resolved object's UUID doesn't match Discover objectId")
                 return false
             }
         }
         
         if self.data.externalId != nil && eventData.object != nil {
             if self.data.externalId != eventData.object!.externalId {
-                LogManager.log.warning("resolved object's external ID doesn't match Discover externalId")
+                LogManager.log.debug("resolved object's external ID doesn't match Discover externalId")
                 return false
             }
         }
@@ -156,7 +155,6 @@ public class DiscoverEvent<Family: ObjectFamily>: CommunicationEvent<DiscoverEve
     }
     
 }
-
 
 /// DiscoverEventData provides the entire message payload data of a
 /// `DiscoverEvent`.

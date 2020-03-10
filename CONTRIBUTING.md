@@ -91,7 +91,7 @@ jazzy
 
 Execute the command to generate HTML documentation from the Swift source code
 and the included comments. The generated documentation is written to the
-`docs/swiftdoc/` folder and accessible by opening a web browser on the `index.html`
+`docs/api/` folder and accessible by opening a web browser on the `index.html`
 file. The Jazzy configuration is located in the `.jazzy.yaml` file in the
 repository root.
 
@@ -115,18 +115,18 @@ these steps:
 1. Update the pod version in the `CoatySwift.podspec` file located in the
    repository root. Follow [semantic versioning](https://semver.org/).
 2. Build the Example application in the `Example` folder with Xcode.
-3. Generate Coaty framework documentation. Make sure that `[pod version]`
-   matches the version number from step 1.
+3. Generate Coaty framework documentation. First, update the `module_version` in
+   the `.jazzy.yaml` file to match the version number from step 1.
 
    ```sh
-   jazzy --module-version [pod version]
+   jazzy
    ```
 
 4. Manually update `CHANGELOG.md` with release information from the conventional
    commits. Take a look at the Coaty JS
    [CHANGELOG](https://github.com/coatyio/coaty-js/blob/master/CHANGELOG.md) to
    see how the format should look like.
-5. Push all your changes to the master branch.
+5. Commit and push all your changes to the master branch.
 6. Create an annotated `git` tag for the new pod version and push it. Make sure
    that `[pod version]` matches the version number from step 1.
 
