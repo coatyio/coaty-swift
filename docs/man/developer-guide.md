@@ -383,11 +383,13 @@ private func createExampleConfiguration() -> Configuration? {
         config.common?.extra = ["ContainerVersion": "0.0.1"]
 
         // Define communication-related options, such as the host address of your broker
-        // (default is "localhost") and the port it exposes (default is 1883). Also,
-        // make sure to immediately connect with the broker, indicated by `shouldAutoStart: true`.
+        // (default is "localhost") and the port it exposes (default is 1883). Define a
+        // unqiue communication namespace for your application and make sure to immediately
+        // connect with the broker, indicated by `shouldAutoStart: true`.
         let mqttClientOptions = MQTTClientOptions(host: brokerHost,
                                                   port: UInt16(brokerPort))
-        config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions,
+        config.communication = CommunicationOptions(namespace: "com.example",
+                                                    mqttClientOptions: mqttClientOptions,
                                                     shouldAutoStart: true)
     }
 }
