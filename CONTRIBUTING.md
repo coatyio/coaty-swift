@@ -114,7 +114,8 @@ these steps:
 
 1. Update the pod version in the `CoatySwift.podspec` file located in the
    repository root. Follow [semantic versioning](https://semver.org/).
-2. Build the Example application in the `Example` folder with Xcode.
+2. Run `pod update` on the Example application in the `Example` folder and build
+   it with Xcode.
 3. Generate Coaty framework documentation. First, update the `module_version` in
    the `.jazzy.yaml` file to match the version number from step 1.
 

@@ -34,8 +34,8 @@ Pod::Spec.new do |s|
   s.source_files = 'CoatySwift/Classes/**/*'
     
   s.dependency 'CocoaMQTT', '~> 1.2.5'
-  s.dependency 'RxSwift', '~> 5'
-  s.dependency 'RxCocoa', '~> 5'
+  s.dependency 'RxSwift', '~> 5.1.1'
+  s.dependency 'RxCocoa', '~> 5.1.1'
   s.dependency 'XCGLogger', '~> 7.0.1'
 
 end

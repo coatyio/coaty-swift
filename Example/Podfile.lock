@@ -1,8 +1,8 @@
 PODS:
-  - CoatySwift (2.0.0):
+  - CoatySwift (2.0.1):
     - CocoaMQTT (~> 1.2.5)
-    - RxCocoa (~> 5)
-    - RxSwift (~> 5)
+    - RxCocoa (~> 5.1.1)
+    - RxSwift (~> 5.1.1)
     - XCGLogger (~> 7.0.1)
   - CocoaAsyncSocket (7.6.4)
   - CocoaMQTT (1.2.5):
@@ -10,12 +10,12 @@ PODS:
   - ObjcExceptionBridging (1.0.1):
     - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
   - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
-  - RxCocoa (5.0.1):
+  - RxCocoa (5.1.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
-  - RxRelay (5.0.1):
+  - RxRelay (5.1.1):
     - RxSwift (~> 5)
-  - RxSwift (5.0.1)
+  - RxSwift (5.1.1)
   - XCGLogger (7.0.1):
     - XCGLogger/Core (= 7.0.1)
   - XCGLogger/Core (7.0.1):
@@ -39,13 +39,13 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CoatySwift: d22424fe04dbca27a8cb68ecbe9294bf9948f8b1
+  CoatySwift: 761fbae9b0507b9fff88f4a2859706562f48d4f2
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   CocoaMQTT: a61490ed3b328011c5d75169a77781983e2bb221
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
-  RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
-  RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
-  RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
+  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
   XCGLogger: 1943831ef907df55108b0b18657953f868de973b
 
 PODFILE CHECKSUM: 85609ec6ad04aff2fa12d8c48590c07c28e6d248
