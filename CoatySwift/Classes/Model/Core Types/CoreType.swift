@@ -90,6 +90,20 @@ public enum CoreType: String, Codable {
         }
     }
     
+    /// Registers all Coaty core object types.
+    static func registerCoreObjectTypes() {
+        _ = CoatySwift.CoatyObject.objectType
+        _ = CoatySwift.User.objectType
+        _ = CoatySwift.Annotation.objectType
+        _ = CoatySwift.Task.objectType
+        _ = CoatySwift.IoSource.objectType
+        _ = CoatySwift.IoActor.objectType
+        _ = CoatySwift.Identity.objectType
+        _ = CoatySwift.Log.objectType
+        _ = CoatySwift.Location.objectType
+        _ = CoatySwift.Snapshot.objectType
+    }
+    
     /// Gets the object type of this core type.
     public var objectType: String {
         switch self {

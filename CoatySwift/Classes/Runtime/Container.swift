@@ -55,6 +55,9 @@ public class Container {
         // Add container specific dispatch queue.
         container.queue = DispatchQueue(label: container.queueID)
         
+        // Ensure all Coaty core object types are registered.
+        CoreType.registerCoreObjectTypes()
+        
         container.resolveComponents(components, configuration)
         return container
     }
@@ -146,8 +149,16 @@ public class Container {
         return controller
     }
     
+    private func registerCustomObjectTypes(_ components: Components) {
+        for objectType in components.objectTypes {
+            _ = objectType.objectType
+        }
+    }
+    
     private func resolveComponents(_ components: Components,
                                    _ configuration: Configuration) {
+        self.registerCustomObjectTypes(components)
+
         let identity = createIdentity(options: configuration.common?.agentIdentity)
         self.identity = identity
         let runtime = Runtime(commonOptions: configuration.common, databaseOptions: configuration.databases)
@@ -159,7 +170,7 @@ public class Container {
         self.operatingState = communicationManager.operatingState.asObservable()
 
         // Create all controllers.
-        components.controllers?.forEach { (name, controllerType) in
+        components.controllers.forEach { (name, controllerType) in
             let options = configuration.controllers?.controllerOptions[name]
             let controller = resolveController(name: name,
                                                controllerType: controllerType,

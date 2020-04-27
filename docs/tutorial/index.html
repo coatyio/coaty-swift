@@ -363,14 +363,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
                     <p><small><b>Step 2b</b>
                             <br>
-                            Register <code>controllers</code> in the <code>launchContainer()</code> method.
+                            Register <code>controllers</code> and <code>custom object types</code> in the 
+                            <code>launchContainer()</code> method.
                             <hr>
-                            Here, you define which controllers you want to use for your application. Note that the
-                            keys do <b>not</b> have to have the exact name of their
-                            controller class. Feel free to give them any names you want. The <i>mapping</i> is the
-                            important thing, so
-                            which name maps to what controller class.
-
+                            Here, you define which Coaty controllers and object types you want to use in your application.
+                            Note that the controller keys do <b>not</b> have to have the exact name of their
+                            controller class. Feel free to give them any unique names you want. The <i>mapping</i> is the
+                            important thing, so which name maps to what controller class.
                         </small></p>
 
                 </div>
@@ -387,10 +386,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 /// This method sets up the Coaty container necessary to run our application.
 private func launchContainer() {
     
-    // Register controllers.
+    // Register controllers and custom object types.
     let components = Components(controllers: [
         "ExampleControllerPublish": ExampleControllerPublish.self, 
         "ExampleControllerObserve": ExampleControllerObserve.self
+    ],
+                                objectTypes: [
+        ExampleObject.self
     ])
     ...
 }

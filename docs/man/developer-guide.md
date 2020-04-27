@@ -298,7 +298,7 @@ of how you can create a container with an exemplary controller.
 > __TL;DR__
 >
 >1. Create a global variable that holds a reference to the `coatyContainer`.
->2. Register all controllers that you want to use.
+>2. Register all controllers and object types that you want to use.
 >3. Create an appropriate container configuration.
 >4. Simply call `container.resolve(…)` and assign its return value to the
 >   `coatyContainer` global variable from step 1.
@@ -338,21 +338,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // ...
 ```
 
-3. We will now go on to instantiate our controllers. Here, we assume that you
-   have already created an `ExampleController` (as explained
+3. We will now go on to register our custom controllers and object types. Here,
+   we assume that you have already defined an `ExampleController` (as explained
    [here](#creating-controllers)) as well as an `ExampleObject` (as explained
-   [here](#custom-object-types)). The key note of this step is
-   to indicate which key maps to which controller, in order to be able to access
-   these controllers later after the container has been bootstrapped.  
+   [here](#custom-object-types)). The key note of this step is to indicate which
+   key maps to which controller, in order to be able to access these controllers
+   later after the container has been bootstrapped.  
 
 ```swift
-// Here, you define which controllers you want to use for your application.
-// Note that the keys (such as "ExampleController")
+// Here, you specify which Coaty controllers and object types you want to use in
+// your application.
+//
+// Note that the controller keys (such as "ExampleController")
 // do NOT have to have the exact name of their controller class. Feel free to give
-// them any names you want. The _mapping_ is the important thing, so which name
+// them any unique names you want. The _mapping_ is the important thing, so which name
 // maps to what controller class.
 let components = Components(controllers: [
     "ExampleController": ExampleController.self
+],
+                            objectTypes: [
+    ExampleObject.self,
 ])
 ```
 
@@ -557,6 +562,13 @@ try! self.communicationManager
         .observeAdvertise(withObjectType: ExampleObject.objectType)
         .subscribe(onNext: { (event) in
 ```
+
+Note that your custom object type class must also be specified in the container
+`Components` as explained [previously](#bootstrapping-a-coaty-container). This
+is to guarantee that the class registration performed by
+`ExampleObject.objectType` has been completed *before* the first corresponding
+object is received over the wire and decoded (Swift only executes class variable
+initializers lazily on first usage).
 
 ### Initializers
 

@@ -89,6 +89,12 @@ final class ExampleObject: CoatyObject {
 }
 ```
 
+Since Swift only executes class variable initializers lazily on first usage, we
+also have to register the custom object type class in the container
+`Components`, so that container bootstrapping can run the class variable
+initializer once before corresponding objects are received over the wire and
+decoded.
+
 > Note that the registered object type is also used for the corresponding
 > initialization parameter of the initializer. It is also useful when observing
 > objects of this object type, like this:
