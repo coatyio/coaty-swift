@@ -1,1797 +1,943 @@
 {
   "warnings": [
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyCodable.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyCodable.swift",
       "line": 20,
       "symbol": "AnyCodable.value",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyCodable.swift",
-      "line": 20,
-      "symbol": "AnyCodable.value",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyCodable.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyCodable.swift",
       "line": 22,
       "symbol": "AnyCodable.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyCodable.swift",
-      "line": 22,
-      "symbol": "AnyCodable.init(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyDecodable.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyDecodable.swift",
       "line": 35,
       "symbol": "AnyDecodable.value",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyDecodable.swift",
-      "line": 35,
-      "symbol": "AnyDecodable.value",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyDecodable.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyDecodable.swift",
       "line": 37,
       "symbol": "AnyDecodable.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyDecodable.swift",
-      "line": 37,
-      "symbol": "AnyDecodable.init(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
       "line": 33,
       "symbol": "AnyEncodable.value",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
-      "line": 33,
-      "symbol": "AnyEncodable.value",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
       "line": 35,
       "symbol": "AnyEncodable.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Common/AnyCodable/AnyEncodable.swift",
-      "line": 35,
-      "symbol": "AnyEncodable.init(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Common/CoatyUUID.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Common/CoatyUUID.swift",
       "line": 27,
       "symbol": "CoatyUUID.init(uuidString:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Common/CoatyUUID.swift",
-      "line": 27,
-      "symbol": "CoatyUUID.init(uuidString:)",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Client/BonjourResolver.swift",
+      "line": 48,
+      "symbol": "BonjourResolver.netServiceBrowser(_:didFind:moreComing:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/AdvertiseEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Client/BonjourResolver.swift",
+      "line": 63,
+      "symbol": "BonjourResolver.netServiceBrowser(_:didNotSearch:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Client/BonjourResolver.swift",
+      "line": 72,
+      "symbol": "BonjourResolver.netServiceBrowser(_:didRemove:moreComing:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Client/BonjourResolver.swift",
+      "line": 76,
+      "symbol": "BonjourResolver.netServiceDidResolveAddress(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Client/CocoaMQTTClient.swift",
+      "line": 191,
+      "symbol": "CocoaMQTTClient.didReceiveService(addresses:port:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/AdvertiseEvent.swift",
       "line": 47,
       "symbol": "AdvertiseEvent.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/AdvertiseEvent.swift",
-      "line": 47,
-      "symbol": "AdvertiseEvent.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/AdvertiseEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/AdvertiseEvent.swift",
       "line": 51,
       "symbol": "AdvertiseEvent.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/AdvertiseEvent.swift",
-      "line": 51,
-      "symbol": "AdvertiseEvent.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/AdvertiseEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/AdvertiseEvent.swift",
       "line": 94,
       "symbol": "AdvertiseEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/AdvertiseEvent.swift",
-      "line": 94,
-      "symbol": "AdvertiseEventData.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/CallEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/CallEvent.swift",
       "line": 100,
       "symbol": "CallEvent.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/CallEvent.swift",
-      "line": 100,
-      "symbol": "CallEvent.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/CallEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/CallEvent.swift",
       "line": 104,
       "symbol": "CallEvent.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/CallEvent.swift",
-      "line": 104,
-      "symbol": "CallEvent.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/CallEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/CallEvent.swift",
       "line": 188,
       "symbol": "CallEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/CallEvent.swift",
-      "line": 188,
-      "symbol": "CallEventData.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ChannelEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ChannelEvent.swift",
       "line": 77,
       "symbol": "ChannelEvent.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ChannelEvent.swift",
-      "line": 77,
-      "symbol": "ChannelEvent.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ChannelEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ChannelEvent.swift",
       "line": 81,
       "symbol": "ChannelEvent.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ChannelEvent.swift",
-      "line": 81,
-      "symbol": "ChannelEvent.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ChannelEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ChannelEvent.swift",
       "line": 141,
       "symbol": "ChannelEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ChannelEvent.swift",
-      "line": 141,
-      "symbol": "ChannelEventData.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/CommunicationEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/CommunicationEvent.swift",
       "line": 50,
       "symbol": "CommunicationEvent.json",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/CommunicationEvent.swift",
-      "line": 50,
-      "symbol": "CommunicationEvent.json",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/CompleteEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/CompleteEvent.swift",
       "line": 34,
       "symbol": "CompleteEvent.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/CompleteEvent.swift",
-      "line": 34,
-      "symbol": "CompleteEvent.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/CompleteEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/CompleteEvent.swift",
       "line": 38,
       "symbol": "CompleteEvent.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/CompleteEvent.swift",
-      "line": 38,
-      "symbol": "CompleteEvent.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/CompleteEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/CompleteEvent.swift",
       "line": 78,
       "symbol": "CompleteEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/CompleteEvent.swift",
-      "line": 78,
-      "symbol": "CompleteEventData.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/DeadvertiseEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/DeadvertiseEvent.swift",
       "line": 32,
       "symbol": "DeadvertiseEvent.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/DeadvertiseEvent.swift",
-      "line": 32,
-      "symbol": "DeadvertiseEvent.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/DeadvertiseEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/DeadvertiseEvent.swift",
       "line": 36,
       "symbol": "DeadvertiseEvent.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/DeadvertiseEvent.swift",
-      "line": 36,
-      "symbol": "DeadvertiseEvent.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/DeadvertiseEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/DeadvertiseEvent.swift",
       "line": 74,
       "symbol": "DeadvertiseEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/DeadvertiseEvent.swift",
-      "line": 74,
-      "symbol": "DeadvertiseEventData.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
       "line": 112,
       "symbol": "DiscoverEvent.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
-      "line": 112,
-      "symbol": "DiscoverEvent.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
       "line": 116,
       "symbol": "DiscoverEvent.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
-      "line": 116,
-      "symbol": "DiscoverEvent.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
       "line": 299,
       "symbol": "DiscoverEventData.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
-      "line": 299,
-      "symbol": "DiscoverEventData.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
       "line": 310,
       "symbol": "DiscoverEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/DiscoverEvent.swift",
-      "line": 310,
-      "symbol": "DiscoverEventData.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
       "line": 75,
       "symbol": "QueryEvent.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
-      "line": 75,
-      "symbol": "QueryEvent.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
       "line": 79,
       "symbol": "QueryEvent.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
-      "line": 79,
-      "symbol": "QueryEvent.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
       "line": 167,
       "symbol": "QueryEventData.createFrom(objectTypes:objectFilter:objectJoinConditions:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
-      "line": 167,
-      "symbol": "QueryEventData.createFrom(objectTypes:objectFilter:objectJoinConditions:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
       "line": 186,
       "symbol": "QueryEventData.createFrom(coreTypes:objectFilter:objectJoinConditions:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
-      "line": 186,
-      "symbol": "QueryEventData.createFrom(coreTypes:objectFilter:objectJoinConditions:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
       "line": 226,
       "symbol": "QueryEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/QueryEvent.swift",
-      "line": 226,
-      "symbol": "QueryEventData.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ResolveEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ResolveEvent.swift",
       "line": 64,
       "symbol": "ResolveEvent.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ResolveEvent.swift",
-      "line": 64,
-      "symbol": "ResolveEvent.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ResolveEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ResolveEvent.swift",
       "line": 68,
       "symbol": "ResolveEvent.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ResolveEvent.swift",
-      "line": 68,
-      "symbol": "ResolveEvent.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ResolveEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ResolveEvent.swift",
       "line": 134,
       "symbol": "ResolveEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ResolveEvent.swift",
-      "line": 134,
-      "symbol": "ResolveEventData.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/RetrieveEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/RetrieveEvent.swift",
       "line": 35,
       "symbol": "RetrieveEvent.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/RetrieveEvent.swift",
-      "line": 35,
-      "symbol": "RetrieveEvent.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/RetrieveEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/RetrieveEvent.swift",
       "line": 39,
       "symbol": "RetrieveEvent.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/RetrieveEvent.swift",
-      "line": 39,
-      "symbol": "RetrieveEvent.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/RetrieveEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/RetrieveEvent.swift",
       "line": 86,
       "symbol": "RetrieveEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/RetrieveEvent.swift",
-      "line": 86,
-      "symbol": "RetrieveEventData.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 65,
       "symbol": "ReturnEvent.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
-      "line": 65,
-      "symbol": "ReturnEvent.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 69,
       "symbol": "ReturnEvent.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
-      "line": 69,
-      "symbol": "ReturnEvent.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 75,
       "symbol": "ReturnEventData",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
-      "line": 75,
-      "symbol": "ReturnEventData",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 137,
       "symbol": "ReturnEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
-      "line": 137,
-      "symbol": "ReturnEventData.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 147,
       "symbol": "ReturnResult",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
-      "line": 147,
-      "symbol": "ReturnResult",
-      "symbol_kind": "source.lang.swift.decl.typealias",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 148,
       "symbol": "ExecutionInfo",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
-      "line": 148,
-      "symbol": "ExecutionInfo",
-      "symbol_kind": "source.lang.swift.decl.typealias",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 159,
       "symbol": "RemoteCallErrorCode.invalidParameters",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
-      "line": 159,
-      "symbol": "RemoteCallErrorCode.invalidParameters",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 167,
       "symbol": "RemoteCallErrorMessage.invalidParameters",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
-      "line": 167,
-      "symbol": "RemoteCallErrorMessage.invalidParameters",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 171,
       "symbol": "ReturnError",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
-      "line": 171,
-      "symbol": "ReturnError",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 173,
       "symbol": "ReturnError.code",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
-      "line": 173,
-      "symbol": "ReturnError.code",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 174,
       "symbol": "ReturnError.message",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
-      "line": 174,
-      "symbol": "ReturnError.message",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 176,
       "symbol": "ReturnError.init(code:message:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
-      "line": 176,
-      "symbol": "ReturnError.init(code:message:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
       "line": 181,
       "symbol": "ReturnError.init(code:message:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/ReturnEvent.swift",
-      "line": 181,
-      "symbol": "ReturnError.init(code:message:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/UpdateEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/UpdateEvent.swift",
       "line": 59,
       "symbol": "UpdateEvent.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/UpdateEvent.swift",
-      "line": 59,
-      "symbol": "UpdateEvent.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/UpdateEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/UpdateEvent.swift",
       "line": 63,
       "symbol": "UpdateEvent.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/UpdateEvent.swift",
-      "line": 63,
-      "symbol": "UpdateEvent.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/UpdateEvent.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Events/UpdateEvent.swift",
       "line": 116,
       "symbol": "UpdateEventData.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Events/UpdateEvent.swift",
-      "line": 116,
-      "symbol": "UpdateEventData.encode(to:)",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Manager/CM+Util.swift",
+      "line": 26,
+      "symbol": "CommunicationManager.messagesFor(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Manager/CommunicationManager.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Manager/CommunicationManager.swift",
       "line": 35,
       "symbol": "CommunicationManager.identity",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Manager/CommunicationManager.swift",
-      "line": 35,
-      "symbol": "CommunicationManager.identity",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Manager/CommunicationManager.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Communication/Manager/CommunicationManager.swift",
       "line": 63,
       "symbol": "CommunicationManager.init(identity:communicationOptions:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Communication/Manager/CommunicationManager.swift",
-      "line": 63,
-      "symbol": "CommunicationManager.init(identity:communicationOptions:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 15,
       "symbol": "Annotation.objectType",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
-      "line": 15,
-      "symbol": "Annotation.objectType",
-      "symbol_kind": "source.lang.swift.decl.var.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 68,
       "symbol": "Annotation.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
-      "line": 68,
-      "symbol": "Annotation.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 80,
       "symbol": "Annotation.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
-      "line": 80,
-      "symbol": "Annotation.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 105,
       "symbol": "AnnotationVariant.init(variant:downloadUrl:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
-      "line": 105,
-      "symbol": "AnnotationVariant.init(variant:downloadUrl:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 132,
       "symbol": "AnnotationType.text",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
-      "line": 132,
-      "symbol": "AnnotationType.text",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 133,
       "symbol": "AnnotationType.image",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
-      "line": 133,
-      "symbol": "AnnotationType.image",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 134,
       "symbol": "AnnotationType.audio",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
-      "line": 134,
-      "symbol": "AnnotationType.audio",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 135,
       "symbol": "AnnotationType.video",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
-      "line": 135,
-      "symbol": "AnnotationType.video",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 136,
       "symbol": "AnnotationType.object3D",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
-      "line": 136,
-      "symbol": "AnnotationType.object3D",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 137,
       "symbol": "AnnotationType.pdf",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
-      "line": 137,
-      "symbol": "AnnotationType.pdf",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 138,
       "symbol": "AnnotationType.webDocumentUrl",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
-      "line": 138,
-      "symbol": "AnnotationType.webDocumentUrl",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 139,
       "symbol": "AnnotationType.liveDataUrl",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
-      "line": 139,
-      "symbol": "AnnotationType.liveDataUrl",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
       "line": 143,
       "symbol": "AnnotationStatus",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Annotation.swift",
-      "line": 143,
-      "symbol": "AnnotationStatus",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoatyObject.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/CoatyObject.swift",
       "line": 16,
       "symbol": "CoatyObject.objectType",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoatyObject.swift",
-      "line": 16,
-      "symbol": "CoatyObject.objectType",
-      "symbol_kind": "source.lang.swift.decl.var.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoatyObject.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/CoatyObject.swift",
       "line": 185,
       "symbol": "CoatyObject.json",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoatyObject.swift",
-      "line": 185,
-      "symbol": "CoatyObject.json",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
       "line": 15,
       "symbol": "CoreType.CoatyObject",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
-      "line": 15,
-      "symbol": "CoreType.CoatyObject",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
       "line": 16,
       "symbol": "CoreType.User",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
-      "line": 16,
-      "symbol": "CoreType.User",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
       "line": 17,
       "symbol": "CoreType.Annotation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
-      "line": 17,
-      "symbol": "CoreType.Annotation",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
       "line": 18,
       "symbol": "CoreType.Task",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
-      "line": 18,
-      "symbol": "CoreType.Task",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
       "line": 19,
       "symbol": "CoreType.IoSource",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
-      "line": 19,
-      "symbol": "CoreType.IoSource",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
       "line": 20,
       "symbol": "CoreType.IoActor",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
-      "line": 20,
-      "symbol": "CoreType.IoActor",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
       "line": 21,
       "symbol": "CoreType.Identity",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
-      "line": 21,
-      "symbol": "CoreType.Identity",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
       "line": 22,
       "symbol": "CoreType.Log",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
-      "line": 22,
-      "symbol": "CoreType.Log",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
       "line": 23,
       "symbol": "CoreType.Location",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
-      "line": 23,
-      "symbol": "CoreType.Location",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
       "line": 24,
       "symbol": "CoreType.Snapshot",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/CoreType.swift",
-      "line": 24,
-      "symbol": "CoreType.Snapshot",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Identity.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Identity.swift",
       "line": 14,
       "symbol": "Identity.objectType",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Identity.swift",
-      "line": 14,
-      "symbol": "Identity.objectType",
-      "symbol_kind": "source.lang.swift.decl.var.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Identity.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Identity.swift",
       "line": 25,
       "symbol": "Identity.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Identity.swift",
-      "line": 25,
-      "symbol": "Identity.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoActor.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/IoActor.swift",
       "line": 15,
       "symbol": "IoActor.objectType",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoActor.swift",
-      "line": 15,
-      "symbol": "IoActor.objectType",
-      "symbol_kind": "source.lang.swift.decl.var.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoActor.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/IoActor.swift",
       "line": 68,
       "symbol": "IoActor.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoActor.swift",
-      "line": 68,
-      "symbol": "IoActor.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoActor.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/IoActor.swift",
       "line": 77,
       "symbol": "IoActor.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoActor.swift",
-      "line": 77,
-      "symbol": "IoActor.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoPoint.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/IoPoint.swift",
       "line": 53,
       "symbol": "IoPoint.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoPoint.swift",
-      "line": 53,
-      "symbol": "IoPoint.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoPoint.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/IoPoint.swift",
       "line": 62,
       "symbol": "IoPoint.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoPoint.swift",
-      "line": 62,
-      "symbol": "IoPoint.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoSource.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/IoSource.swift",
       "line": 15,
       "symbol": "IoSource.objectType",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoSource.swift",
-      "line": 15,
-      "symbol": "IoSource.objectType",
-      "symbol_kind": "source.lang.swift.decl.var.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoSource.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/IoSource.swift",
       "line": 66,
       "symbol": "IoSource.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoSource.swift",
-      "line": 66,
-      "symbol": "IoSource.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoSource.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/IoSource.swift",
       "line": 75,
       "symbol": "IoSource.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/IoSource.swift",
-      "line": 75,
-      "symbol": "IoSource.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
       "line": 20,
       "symbol": "Location.objectType",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
-      "line": 20,
-      "symbol": "Location.objectType",
-      "symbol_kind": "source.lang.swift.decl.var.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
       "line": 26,
       "symbol": "Location.geoLocation",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
-      "line": 26,
-      "symbol": "Location.geoLocation",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
       "line": 46,
       "symbol": "Location.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
-      "line": 46,
-      "symbol": "Location.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
       "line": 54,
       "symbol": "Location.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
-      "line": 54,
-      "symbol": "Location.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
       "line": 83,
       "symbol": "GeoLocation.init(coords:timestamp:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
-      "line": 83,
-      "symbol": "GeoLocation.init(coords:timestamp:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
       "line": 151,
       "symbol": "GeoCoordinates.init(latitude:longitude:accuracy:altitude:altitudeAccuracy:heading:speed:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Location.swift",
-      "line": 151,
-      "symbol": "GeoCoordinates.init(latitude:longitude:accuracy:altitude:altitudeAccuracy:heading:speed:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
       "line": 15,
       "symbol": "Log.objectType",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
-      "line": 15,
-      "symbol": "Log.objectType",
-      "symbol_kind": "source.lang.swift.decl.var.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
       "line": 86,
       "symbol": "Log.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
-      "line": 86,
-      "symbol": "Log.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
       "line": 99,
       "symbol": "Log.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
-      "line": 99,
-      "symbol": "Log.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
       "line": 134,
       "symbol": "LogHost.init(agentInfo:pid:hostname:userAgent:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Log.swift",
-      "line": 134,
-      "symbol": "LogHost.init(agentInfo:pid:hostname:userAgent:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
       "line": 14,
       "symbol": "Snapshot.objectType",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
-      "line": 14,
-      "symbol": "Snapshot.objectType",
-      "symbol_kind": "source.lang.swift.decl.var.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
       "line": 59,
       "symbol": "Snapshot.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
-      "line": 59,
-      "symbol": "Snapshot.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
       "line": 71,
       "symbol": "Snapshot.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Snapshot.swift",
-      "line": 71,
-      "symbol": "Snapshot.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
       "line": 14,
       "symbol": "Task.objectType",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
-      "line": 14,
-      "symbol": "Task.objectType",
-      "symbol_kind": "source.lang.swift.decl.var.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
       "line": 98,
       "symbol": "Task.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
-      "line": 98,
-      "symbol": "Task.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
       "line": 114,
       "symbol": "Task.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
-      "line": 114,
-      "symbol": "Task.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
       "line": 153,
       "symbol": "TaskStatus.init(stringValue:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/Task.swift",
-      "line": 153,
-      "symbol": "TaskStatus.init(stringValue:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
       "line": 19,
       "symbol": "User.objectType",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
-      "line": 19,
-      "symbol": "User.objectType",
-      "symbol_kind": "source.lang.swift.decl.var.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
       "line": 62,
       "symbol": "User.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
-      "line": 62,
-      "symbol": "User.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
       "line": 88,
       "symbol": "User.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
-      "line": 88,
-      "symbol": "User.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
       "line": 267,
       "symbol": "User.addresses",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
-      "line": 267,
-      "symbol": "User.addresses",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
       "line": 360,
       "symbol": "ScimUserNames.init(formatted:familyName:givenName:middleName:honorificPrefix:honorificSuffix:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
-      "line": 360,
-      "symbol": "ScimUserNames.init(formatted:familyName:givenName:middleName:honorificPrefix:honorificSuffix:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
       "line": 376,
       "symbol": "ScimMultiValuedAttribute",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
-      "line": 376,
-      "symbol": "ScimMultiValuedAttribute",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
       "line": 401,
       "symbol": "ScimMultiValuedAttribute.init(type:value:primary:display:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
-      "line": 401,
-      "symbol": "ScimMultiValuedAttribute.init(type:value:primary:display:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
       "line": 435,
       "symbol": "ScimAddress",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
-      "line": 435,
-      "symbol": "ScimAddress",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
       "line": 472,
       "symbol": "ScimAddress.init(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
-      "line": 472,
-      "symbol": "ScimAddress.init(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
       "line": 483,
       "symbol": "ScimAddress.encode(to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/Core Types/User.swift",
-      "line": 483,
-      "symbol": "ScimAddress.encode(to:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
       "line": 918,
       "symbol": "ObjectFilterBuilder.conditions",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
-      "line": 918,
-      "symbol": "ObjectFilterBuilder.conditions",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
       "line": 919,
       "symbol": "ObjectFilterBuilder.condition",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
-      "line": 919,
-      "symbol": "ObjectFilterBuilder.condition",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
       "line": 920,
       "symbol": "ObjectFilterBuilder.orderByProperties",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
-      "line": 920,
-      "symbol": "ObjectFilterBuilder.orderByProperties",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
       "line": 921,
       "symbol": "ObjectFilterBuilder.take",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
-      "line": 921,
-      "symbol": "ObjectFilterBuilder.take",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
       "line": 922,
       "symbol": "ObjectFilterBuilder.skip",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
-      "line": 922,
-      "symbol": "ObjectFilterBuilder.skip",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
       "line": 927,
       "symbol": "ObjectFilterConditionBuilder.property",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
-      "line": 927,
-      "symbol": "ObjectFilterConditionBuilder.property",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
       "line": 928,
       "symbol": "ObjectFilterConditionBuilder.expression",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
-      "line": 928,
-      "symbol": "ObjectFilterConditionBuilder.expression",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
       "line": 936,
       "symbol": "ObjectFilterConditionsBuilder.and",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
-      "line": 936,
-      "symbol": "ObjectFilterConditionsBuilder.and",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
       "line": 937,
       "symbol": "ObjectFilterConditionsBuilder.or",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectFilter.swift",
-      "line": 937,
-      "symbol": "ObjectFilterConditionsBuilder.or",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectJoinCondition.swift",
-      "line": 53,
-      "symbol": "ObjectJoinCondition.init(localProperty:asProperty:isLocalPropertyArray:isOneToOneRelation:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift/CoatySwift/Classes/Model/ObjectJoinCondition.swift",
+      "file": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift/CoatySwift/Classes/Model/ObjectJoinCondition.swift",
       "line": 53,
       "symbol": "ObjectJoinCondition.init(localProperty:asProperty:isLocalPropertyArray:isOneToOneRelation:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/coatyteam/Projects/coaty-swift-repo/coaty-swift"
+  "source_directory": "/Users/coatyteam/Projects/coatyio/repos/coaty-swift"
 }

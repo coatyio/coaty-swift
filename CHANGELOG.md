@@ -1,7 +1,24 @@
 # Changelog
 
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/coatyio/coaty-swift/compare/2.0.0...2.0.1) (2020-04-27)
+
+This patch release fixes an issue with custom Coaty object types not properly
+registered although registration code has been specified in the Swift class
+definition.
+
+### Bug Fixes
+
+* **Runtime/Components:** add `objectTypes` argument to `Component` initializer to
+  register application-specific object types
+  
+  *BREAKING CHANGE*: specify all custom Coaty object types with
+  `Components.objectTypes` as described in the [developer
+  guide](https://coatyio.github.io/coaty-swift/man/developer-guide/#bootstrapping-a-coaty-container)
+  ([fc92815](https://github.com/coatyio/coaty-swift/commit/fc92815))
+
 <a name="2.0.0"></a>
-## [2.0.0](https://github.com/coatyio/coaty-swift/compare/1.0.1...2.0.0) (2020-03-10)
+# [2.0.0](https://github.com/coatyio/coaty-swift/compare/1.0.1...2.0.0) (2020-03-10)
 
 This major release upgrades the CoatySwift framework API to Coaty 2. To update
 your application, follow the migration steps described in this [migration

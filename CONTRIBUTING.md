@@ -126,7 +126,8 @@ these steps:
    commits. Take a look at the Coaty JS
    [CHANGELOG](https://github.com/coatyio/coaty-js/blob/master/CHANGELOG.md) to
    see how the format should look like.
-5. Commit and push all your changes to the master branch.
+5. Commit with message `chore(release): v[pod version]` and push all your
+   changes to the develop branch.
 6. Create an annotated `git` tag for the new pod version and push it. Make sure
    that `[pod version]` matches the version number from step 1.
 
@@ -135,13 +136,16 @@ these steps:
    git push origin --tags
    ```
 
-7. You now need to check whether the pod passes verification. Run the following command:
+7. Merge the local develop branch into local master and push master. This
+   ensures GitHub Pages automatically regenerates the CoatySwift documentation
+   website.
+8. You now need to check whether the pod passes verification. Run the following command:
 
    ```sh
    pod spec lint CoatySwift.podspec
    ```
 
-8. If the previous step was successful, deploy the new Podspec to make it
+9. If the previous step was successful, deploy the new Podspec to make it
    publicly available:
 
    ```sh

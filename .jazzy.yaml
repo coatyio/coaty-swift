@@ -7,10 +7,13 @@ author_url: https://coaty.io
 github_url: https://github.com/coatyio/coaty-swift
 readme: README.md
 module: CoatySwift
-module_version: 2.0.0
+module_version: 2.0.1
 podspec: CoatySwift.podspec
 min_acl: public
 include: CoatySwift/Classes/**/*.swift
-exclude: CoatySwift/Classes/Common/AnyCodable/_*.swift
+exclude: 
+  - CoatySwift/Classes/Common/AnyCodable/_*.swift
+  - CoatySwift/Classes/Common/Codable+JSON.swift
+  - CoatySwift/Classes/Common/Decoder+Context.swift
 use_safe_filenames: true
 hide_documentation_coverage: true
