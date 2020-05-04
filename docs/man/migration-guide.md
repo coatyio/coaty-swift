@@ -50,6 +50,9 @@ by getting rid of the notion of a Coaty object family:
   been removed. Instead, register classes for your custom Coaty object types as
   described
   [here](https://coatyio.github.io/coaty-swift/man/developer-guide/#custom-object-types).
+  Additionally, register your custom object types in the container `Components`
+  as described
+  [here](https://coatyio.github.io/coaty-swift/man/developer-guide/#bootstrapping-a-coaty-container).
 * Stop specifying generic type parameters for `Container`, `Components`,
   `Controller`, and all event classes, i.e. `AdvertiseEvent`, `ChannelEvent`,
   etc.

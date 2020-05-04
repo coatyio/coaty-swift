@@ -317,26 +317,26 @@ We suggest setting up the main structure of the container as part of the
 
 1. Make sure to import CoatySwift in the top.
 
-```swift
-import CoatySwift
-```
+    ```swift
+    import CoatySwift
+    ```
 
 2. Create a global variable `coatyContainer`. This will hold a reference to our
    Coaty container. It is needed because otherwise all of our references go out
    of scope and communication is terminated.
 
-```swift
-// ...
-import CoatySwift
+    ```swift
+    // ...
+    import CoatySwift
 
-/// Save a reference of your container in the app delegate to
-/// make sure it stays alive during the entire lifetime of the app.
-var coatyContainer: Container?
+    /// Save a reference of your container in the app delegate to
+    /// make sure it stays alive during the entire lifetime of the app.
+    var coatyContainer: Container?
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-// ...
-```
+    @UIApplicationMain
+    class AppDelegate: UIResponder, UIApplicationDelegate {
+    // ...
+    ```
 
 3. We will now go on to register our custom controllers and object types. Here,
    we assume that you have already defined an `ExampleController` (as explained
@@ -345,84 +345,84 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
    key maps to which controller, in order to be able to access these controllers
    later after the container has been bootstrapped.  
 
-```swift
-// Here, you specify which Coaty controllers and object types you want to use in
-// your application.
-//
-// Note that the controller keys (such as "ExampleController")
-// do NOT have to have the exact name of their controller class. Feel free to give
-// them any unique names you want. The _mapping_ is the important thing, so which name
-// maps to what controller class.
-let components = Components(controllers: [
-    "ExampleController": ExampleController.self
-],
-                            objectTypes: [
-    ExampleObject.self,
-])
-```
+    ```swift
+    // Here, you specify which Coaty controllers and object types you want to use in
+    // your application.
+    //
+    // Note that the controller keys (such as "ExampleController")
+    // do NOT have to have the exact name of their controller class. Feel free to give
+    // them any unique names you want. The _mapping_ is the important thing, so which name
+    // maps to what controller class.
+    let components = Components(controllers: [
+        "ExampleController": ExampleController.self
+    ],
+                                objectTypes: [
+        ExampleObject.self,
+    ])
+    ```
 
 4. The next step is to specify a configuration for your container. Below we have
    added an example configuration which should be appropriate for most Coaty
    beginner projects. Note the `MQTTClientOptions` in particular: Here, you pass in
    your broker's host address and port (and other optional connection options).
 
-```swift
-/// This method creates an exemplary Coaty configuration.
-/// You can use it as a basis for your application.
-private func createExampleConfiguration() -> Configuration? {
-    return try? .build { config in
+    ```swift
+    /// This method creates an exemplary Coaty configuration.
+    /// You can use it as a basis for your application.
+    private func createExampleConfiguration() -> Configuration? {
+        return try? .build { config in
 
-        // This part defines common options shared by all container components,
-        // including e.g. an associated user or associated device.
-        config.common = CommonOptions()
+            // This part defines common options shared by all container components,
+            // including e.g. an associated user or associated device.
+            config.common = CommonOptions()
 
-        // Adjusts the logging level of CoatySwift messages, which is especially
-        // helpful if you want to test or debug applications (default is .error).
-        config.common?.logLevel = .info
+            // Adjusts the logging level of CoatySwift messages, which is especially
+            // helpful if you want to test or debug applications (default is .error).
+            config.common?.logLevel = .info
 
-        // Configure an expressive `name` of the container's identity here.
-        config.common?.agentIdentity = ["name": "Example Agent"]
+            // Configure an expressive `name` of the container's identity here.
+            config.common?.agentIdentity = ["name": "Example Agent"]
 
-        // You can also add extra information to your configuration in the form of a
-        // [String: String] dictionary.
-        config.common?.extra = ["ContainerVersion": "0.0.1"]
+            // You can also add extra information to your configuration in the form of a
+            // [String: String] dictionary.
+            config.common?.extra = ["ContainerVersion": "0.0.1"]
 
-        // Define communication-related options, such as the host address of your broker
-        // (default is "localhost") and the port it exposes (default is 1883). Define a
-        // unqiue communication namespace for your application and make sure to immediately
-        // connect with the broker, indicated by `shouldAutoStart: true`.
-        let mqttClientOptions = MQTTClientOptions(host: brokerHost,
-                                                  port: UInt16(brokerPort))
-        config.communication = CommunicationOptions(namespace: "com.example",
-                                                    mqttClientOptions: mqttClientOptions,
-                                                    shouldAutoStart: true)
+            // Define communication-related options, such as the host address of your broker
+            // (default is "localhost") and the port it exposes (default is 1883). Define a
+            // unqiue communication namespace for your application and make sure to immediately
+            // connect with the broker, indicated by `shouldAutoStart: true`.
+            let mqttClientOptions = MQTTClientOptions(host: brokerHost,
+                                                      port: UInt16(brokerPort))
+            config.communication = CommunicationOptions(namespace: "com.example",
+                                                        mqttClientOptions: mqttClientOptions,
+                                                        shouldAutoStart: true)
+        }
     }
-}
 
-//...
+    //...
 
-/// And then, simply call it when you need it in order to integrate it
-/// into your container configuration.
-guard let configuration = createExampleConfiguration() else {
-    print("Invalid configuration! Please check your options.")
-    return
-}
+    /// And then, simply call it when you need it in order to integrate it
+    /// into your container configuration.
+    guard let configuration = createExampleConfiguration() else {
+        print("Invalid configuration! Please check your options.")
+        return
+    }
 
-//...
-```
+    //...
+    ```
 
 5. Lastly, the only thing you need to do is to resolve everything and assign the
    variable we previously defined, namely, `coatyContainer`,  with the return
    value of `container.resolve(…)`. Below code shows the last step in
    bootstrapping a Coaty container:
 
-```swift
-// Pass in the previously defined components and configuration.
-// Then, call Container.resolve(...), save it into our global variable,
-// and you're done!
-coatyContainer = Container.resolve(components: components,
-                                   configuration: configuration)
-```
+    ```swift
+    // Pass in the previously defined components and configuration.
+    // Then, call Container.resolve(...), save it into our global variable,
+    // and you're done!
+    coatyContainer = Container.resolve(components: components,
+                                       configuration: configuration)
+    ```
 
 ## Creating controllers
 
@@ -483,7 +483,7 @@ explained in this [section](#communication-patterns).
 >1. Create a new Swift class that inherits from `CoatyObject`, any other Coaty
 >   core type, or another custom object type.
 >2. Register the new class for your custom object type with CoatySwift and
->   specify this custom object type in the initializer.
+>   use this custom object type in the initializer.
 >3. Implement conformance to the
 >   [Codable](https://developer.apple.com/documentation/swift/codable) protocol.
 >   Make sure to call the super implementations of the initializer and the
@@ -551,11 +551,14 @@ final class ExampleObject: CoatyObject {
 ### Class registration
 
 Ensure that the class for your custom Coaty object type is registered with
-CoatySwift in a overriden class variable initializer named `objectType`. This is
-necessary to properly decode custom objects received over the wire.
+CoatySwift. This involves two separate registration steps:
 
-The registered object type is also useful when observing objects of this object
-type, like this:
+1. Define an overriden class variable initializer named `objectType`.
+2. Specify the custom object type in the container `Components` as explained
+   [previously](#bootstrapping-a-coaty-container).
+
+Note that the registered object type is also useful when observing objects of
+this object type, like this:
 
 ```swift
 try! self.communicationManager
@@ -563,12 +566,10 @@ try! self.communicationManager
         .subscribe(onNext: { (event) in
 ```
 
-Note that your custom object type class must also be specified in the container
-`Components` as explained [previously](#bootstrapping-a-coaty-container). This
-is to guarantee that the class registration performed by
-`ExampleObject.objectType` has been completed *before* the first corresponding
-object is received over the wire and decoded (Swift only executes class variable
-initializers lazily on first usage).
+The second registration step is necessary because Swift only executes class
+variable initializers lazily on first usage. It guarantees that the class
+registration performed by `ExampleObject.objectType` has been completed *before*
+the first corresponding object is received over the wire and decoded.
 
 ### Initializers
 
