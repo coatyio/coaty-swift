@@ -75,8 +75,8 @@ You need XCode 10.2 or higher. Ensure you have installed **at least** version
 `1.8.4` of [CocoaPods](https://cocoapods.org), i.e. running `pod --version`
 should yield `1.8.4` or higher.
 
-To build and run the Example application including the CoatySwift framework, run
-`pod install` on the CoatySwift `Example` folder and open the new `xcworkspace`
+To build and run the CoatySwiftExample application including the CoatySwift framework, run
+`pod install` on the CoatySwift root folder and open the new `xcworkspace`
 in Xcode.
 
 ## Generate CoatySwift documentation
@@ -97,14 +97,19 @@ repository root.
 
 ## Test CoatySwift
 
-Currently there is no testbench for CoatySwift.
+To test the CoatySwift framework using included Unit Tests, run
+`pod install` on the CoatySwift root folder and open the new `xcworkspace`
+in Xcode. Then select Test Navigator Tab in Navigator View, enable required 
+tests and run them. Results can be seen in the Report Navigator tab.
 
 ## Release CoatySwift
 
 Before releasing a new CoatySwift version, ensure to test the framework code
-against the example in the `Example` Xcode folder of the CoatySwift repo and the
+against the example in the `CoatySwiftExample` Xcode target of the CoatySwift repo and the
 examples in the `swift` sections of the
 [coaty-examples](https://github.com/coatyio/coaty-examples) repo on GitHub.
+Also follow the guide on how to test the framework (see above) and ensure that all tests 
+pass successfully.
 
 You can also use `pod lib lint` to validate the Pod locally using the files in
 the CoatySwift working directory.
@@ -114,8 +119,8 @@ these steps:
 
 1. Update the pod version in the `CoatySwift.podspec` file located in the
    repository root. Follow [semantic versioning](https://semver.org/).
-2. Run `pod update` on the Example application in the `Example` folder and build
-   it with Xcode.
+2. Run `pod update` on the root folder of CoatySwift and build the CoatySwiftExample target
+   with Xcode.
 3. Generate Coaty framework documentation. First, update the `module_version` in
    the `.jazzy.yaml` file to match the version number from step 1.
 
