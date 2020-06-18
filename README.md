@@ -82,9 +82,9 @@ If you want a short, concise look into CoatySwift, feel free to check out the
 [CoatySwift Tutorial](https://coatyio.github.io/coaty-swift/tutorial/index.html)
 with a step-by-step guide on how to set up a basic CoatySwift application. The
 source code of this tutorial can be found in the
-[Example](https://github.com/coatyio/coaty-swift/tree/master/Example) Xcode
-folder of the CoatySwift repo. Just clone the repo, run `pod install` on the
-Example folder and open the new `xcworkspace` in Xcode.
+[CoatySwiftExample](https://github.com/coatyio/coaty-swift/tree/master/CoatySwiftExample) Xcode
+target of the CoatySwift repo. Just clone the repo, run `pod install` on the
+root folder and open the new `xcworkspace` in Xcode.
 
 You can find additional examples in the `swift` sections of the
 [coaty-examples](https://github.com/coatyio/coaty-examples) repo on GitHub. You
@@ -92,6 +92,14 @@ will find the following Xcode projects there: `Hello World` and `Remote
 Operations`. They are interoperable with the corresponding Coaty JS examples and
 intended to be used along with them. These projects can serve as blueprints for
 how to design CoatySwift applications.
+
+## Testing
+
+If you want to run unit tests on CoatySwift, look at 
+(https://github.com/coatyio/coaty-swift/tree/master/CoatySwiftTests)
+Xcode target of the CoatySwift repo. Just clone the repo, run `pod install` on the
+root folder and open the new `xcworkspace` in Xcode. Then select the Test Navigator
+in Navigator View, enable chosen tests and run them.
 
 ## Contributing
 
