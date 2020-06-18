@@ -82,6 +82,8 @@
 		9E774EBD249B7A4800EF888A /* ExampleControllerObserve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E774EBC249B7A4800EF888A /* ExampleControllerObserve.swift */; };
 		9E774EBF249B7A5E00EF888A /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E774EBE249B7A5E00EF888A /* ExampleViewController.swift */; };
 		9E774EC1249B7BCC00EF888A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E774EC0249B7BCC00EF888A /* SceneDelegate.swift */; };
+		9E774EC3249B9D6200EF888A /* ObjectMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E774EC2249B9D6200EF888A /* ObjectMatcherTests.swift */; };
+		9E774EC9249B9E7E00EF888A /* ObjectMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E774EC8249B9E7E00EF888A /* ObjectMatcher.swift */; };
 		ACB0B1C91E23DC90548BF9E5 /* Pods_CoatySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3E0AA54419785B21762EE7 /* Pods_CoatySwift.framework */; };
 /* End PBXBuildFile section */
 
@@ -177,6 +179,8 @@
 		9E774EBC249B7A4800EF888A /* ExampleControllerObserve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleControllerObserve.swift; sourceTree = "<group>"; };
 		9E774EBE249B7A5E00EF888A /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		9E774EC0249B7BCC00EF888A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		9E774EC2249B9D6200EF888A /* ObjectMatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectMatcherTests.swift; sourceTree = "<group>"; };
+		9E774EC8249B9E7E00EF888A /* ObjectMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectMatcher.swift; sourceTree = "<group>"; };
 		A1DA605E3E3430C821B9B615 /* Pods-CoatySwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwiftTests.release.xcconfig"; path = "Target Support Files/Pods-CoatySwiftTests/Pods-CoatySwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		A50E9FCB24FDCD197C3AE970 /* Pods-CoatySwiftExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwiftExample.release.xcconfig"; path = "Target Support Files/Pods-CoatySwiftExample/Pods-CoatySwiftExample.release.xcconfig"; sourceTree = "<group>"; };
 		B9633893E0B3A21A53823626 /* Pods-CoatySwiftExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwiftExample.debug.xcconfig"; path = "Target Support Files/Pods-CoatySwiftExample/Pods-CoatySwiftExample.debug.xcconfig"; sourceTree = "<group>"; };
@@ -290,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				9E774E28249B75B500EF888A /* CoatySwiftTests.swift */,
+				9E774EC2249B9D6200EF888A /* ObjectMatcherTests.swift */,
 				9E774E2A249B75B500EF888A /* Info.plist */,
 			);
 			path = CoatySwiftTests;
@@ -436,6 +441,7 @@
 				9E774E6C249B772B00EF888A /* ObjectFilter.swift */,
 				9E774E6D249B772B00EF888A /* ObjectJoinCondition.swift */,
 				9E774E6E249B772B00EF888A /* Core Types */,
+				9E774EC8249B9E7E00EF888A /* ObjectMatcher.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -738,6 +744,7 @@
 				9E774E91249B772B00EF888A /* BonjourResolverDelegate.swift in Sources */,
 				9E774E8F249B772B00EF888A /* RetrieveEvent.swift in Sources */,
 				9E774E95249B772B00EF888A /* BonjourConfiguration.swift in Sources */,
+				9E774EC9249B9E7E00EF888A /* ObjectMatcher.swift in Sources */,
 				9E774EAD249B772B00EF888A /* CoatyObject.swift in Sources */,
 				9E774EA2249B772B00EF888A /* AnyEncodable.swift in Sources */,
 				9E774EB7249B772B00EF888A /* IoPoint.swift in Sources */,
@@ -789,6 +796,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E774E29249B75B500EF888A /* CoatySwiftTests.swift in Sources */,
+				9E774EC3249B9D6200EF888A /* ObjectMatcherTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
