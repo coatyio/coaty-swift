@@ -168,6 +168,37 @@ public class CallEventData: CommunicationEventData {
         return parameterArray[index].value
     }
     
+    // MARK: - Filtering methods.
+    
+    /// Determines whether the given context object matches the context filter of
+    /// this event data, returning false if it does not match, true otherwise.
+    ///
+    /// A match fails if:
+    /// - context filter and context object are *both* specified and they do not
+    ///   match (checked by using `ObjectMatcher.matchesFilter`), or
+    /// - context filter is *not* specified *and* context object *is* specified.
+    ///
+    /// In all other cases, the match is considered successfull.
+    ///
+    /// Note that there is no need to use this operation in application code.
+    /// When observing incoming Call events (via
+    /// `CommunicationManager.observeCall`), the communication manager takes care
+    /// to invoke this function automatically and to filter out events that do
+    /// not match a given context.
+    ///
+    /// - Parameters:
+    ///     - context: a CoatyObject to match against the context filter specified in event data (optional).
+    /// - Returns: A boolean value indicating whether the context object matches the context filter.
+    internal func matchesFilter(context: CoatyObject?) -> Bool {
+        if (self.filter != nil && context != nil) {
+            return ObjectMatcher.matchesFilter(obj: context, filter: self.filter)
+        }
+        if (self.filter == nil && context != nil) {
+            return false
+        }
+        return true
+    }
+    
     // MARK: - Codable methods.
     
     enum CodingKeys: String, CodingKey {
@@ -193,3 +224,4 @@ public class CallEventData: CommunicationEventData {
     }
     
 }
+

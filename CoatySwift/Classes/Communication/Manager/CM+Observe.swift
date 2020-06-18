@@ -100,7 +100,7 @@ extension CommunicationManager {
     /// The given object type must be a non-empty string that does not contain
     /// the following characters: `NULL (U+0000)`, `# (U+0023)`, `+ (U+002B)`,
     /// `/ (U+002F)`.
-    /// 
+    ///
     /// - Parameters:
     ///     - objectType: objectType object type of objects to be observed
     /// - Returns: an observable emitting incoming Advertise events for the given object type
@@ -118,7 +118,7 @@ extension CommunicationManager {
         // core object type (see `publishAdvertise`).
         let objectCoreType = CoreType.getCoreType(forObjectType: withObjectType)
         if objectCoreType != nil {
-            let topic = CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, 
+            let topic = CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Advertise,
                                                                                  eventTypeFilter: objectCoreType!.rawValue,
                                                                                  namespace: namespace)
             return observeAdvertise(topic: topic,
@@ -129,7 +129,7 @@ extension CommunicationManager {
                     }
         }
 
-        let topic = CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Advertise, 
+        let topic = CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Advertise,
                                                                              eventTypeFilter: EVENT_TYPE_FILTER_SEPARATOR + withObjectType,
                                                                              namespace: namespace)
         return observeAdvertise(topic: topic,
@@ -268,7 +268,7 @@ extension CommunicationManager {
     /// The given object type must be a non-empty string that does not contain
     /// the following characters: `NULL (U+0000)`, `# (U+0023)`, `+ (U+002B)`,
     /// `/ (U+002F)`.
-    /// 
+    ///
     /// - Parameters:
     ///     - objectType: objectType object type of objects to be observed
     /// - Returns: an observable emitting incoming Update events for the given object type
@@ -286,7 +286,7 @@ extension CommunicationManager {
         // core object type (see `publishUpdate`).
         let objectCoreType = CoreType.getCoreType(forObjectType: withObjectType)
         if objectCoreType != nil {
-            let topic = CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Update, 
+            let topic = CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Update,
                                                                                  eventTypeFilter: objectCoreType!.rawValue,
                                                                                  namespace: namespace)
             return observeUpdate(topic: topic,
@@ -297,7 +297,7 @@ extension CommunicationManager {
                     }
         }
 
-        let topic = CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Update, 
+        let topic = CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Update,
                                                                              eventTypeFilter: EVENT_TYPE_FILTER_SEPARATOR + withObjectType,
                                                                              namespace: namespace)
         return observeUpdate(topic: topic,
@@ -352,20 +352,20 @@ extension CommunicationManager {
     /// - context filter and context object are *both* specified and they do not
     ///   match (checked by using `ObjectMatcher.matchesFilter`), or
     /// - context filter is *not* supplied *and* context object *is* specified.
-    /// 
+    ///
     /// In all other cases, the Call event is emitted.
     ///
     /// - NOTE: You can also invoke `observeCall` *without* context parameter
     /// and realize a custom matching logic with an RxJS `filter` operator.
     ///
-    /// - TODO: We are missing the optional context parameter.
     ///
     /// - Parameters:
     ///   - operationId: the name of the operation to be invoked
+    ///   - context: a context object to be matched against the Call event data's context filter (optional)
     /// - Returns: an observable emitting incoming Call events
     /// whose context filter matches the given context
     /// - Throws: if operationId is invalid
-    public func observeCall(operationId: String) throws -> Observable<CallEvent> {
+    public func observeCall(operationId: String, context: CoatyObject?) throws -> Observable<CallEvent> {
         guard CommunicationTopic.isValidEventTypeFilter(filter: operationId) else {
             throw CoatySwiftError.InvalidArgument("\(operationId) is not a valid operation name.")
         }
@@ -391,7 +391,9 @@ extension CommunicationManager {
                 }
                 
                 return callEvent
-            }
+        }.filter { event -> Bool in
+            return event.data.matchesFilter(context: context)
+        }
         
         observable = createSelfCleaningObservable(observable: observable, topic: callTopic)
 
@@ -399,5 +401,5 @@ extension CommunicationManager {
 
         return observable
     }
-    
 }
+
