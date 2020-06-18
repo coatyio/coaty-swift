@@ -38,6 +38,7 @@ protocol CommunicationClient {
     /// MARK: - Pub-Sub methods.
 
     func publish(_ topic: String, message: String)
+    func publish(_ topic: String, message: [UInt8])
     func subscribe(_ topic: String)
     func unsubscribe(_ topic: String)
 }

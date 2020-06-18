@@ -22,7 +22,46 @@ extension CommunicationManager {
     ///   - topic: the topic on which to publish the given payload
     ///   - value: a payload string to be published on the given topic
     /// - Throws: if topic name is invalid
+    @available(*, deprecated)
     public func publishRaw(topic: String, value: String) throws {
+        guard CommunicationTopic.isValidPublicationTopic(topic) else {
+            throw CoatySwiftError.InvalidArgument("Could not publish raw: invalid topic name.")
+        }
+
+        publish(topic: topic, message: value)
+    }
+    
+    /// Publish a value on the given topic. Used to interoperate with external
+    /// clients that subscribe on the given topic.
+    ///
+    /// The topic is an MQTT publication topic, i.e. a non-empty string that
+    /// must not contain the following characters: `NULL (U+0000)`, `#
+    /// (U+0023)`, `+ (U+002B)`.
+    ///
+    /// - Parameters:
+    ///   - topic: the topic on which to publish the given payload
+    ///   - withString: a payload string to be published on the given topic
+    /// - Throws: if topic name is invalid
+    public func publishRaw(topic: String, withString value: String) throws {
+        guard CommunicationTopic.isValidPublicationTopic(topic) else {
+            throw CoatySwiftError.InvalidArgument("Could not publish raw: invalid topic name.")
+        }
+
+        publish(topic: topic, message: value)
+    }
+    
+    /// Publish a value on the given topic. Used to interoperate with external
+    /// clients that subscribe on the given topic.
+    ///
+    /// The topic is an MQTT publication topic, i.e. a non-empty string that
+    /// must not contain the following characters: `NULL (U+0000)`, `#
+    /// (U+0023)`, `+ (U+002B)`.
+    ///
+    /// - Parameters:
+    ///   - topic: the topic on which to publish the given payload
+    ///   - withBinary: a payload bytes array to be published on the given topic
+    /// - Throws: if topic name is invalid
+    public func publishRaw(topic: String, withBinary value: [UInt8]) throws {
         guard CommunicationTopic.isValidPublicationTopic(topic) else {
             throw CoatySwiftError.InvalidArgument("Could not publish raw: invalid topic name.")
         }

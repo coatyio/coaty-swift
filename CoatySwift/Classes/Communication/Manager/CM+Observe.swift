@@ -29,6 +29,8 @@ extension CommunicationManager {
     /// Use this method to interoperate with external systems that publish messages on external topics.
     /// Use this method together with `publishRaw()` to transfer binary data between Coaty agents.
     ///
+    /// In order to decode [UInt8] array named data into String use `String(bytes: data, encoding: .utf8)`
+    ///
     /// - Parameters:
     ///   - topicFilter: the subscription topic
     /// - Returns: an observable emitting any incoming messages as tuples

@@ -103,6 +103,11 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
         mqtt.publish(topic, withString: message, qos: self.qos)
     }
     
+    func publish(_ topic: String, message: [UInt8]) {
+        let message = CocoaMQTTMessage(topic: topic, payload: message, qos: .qos0, retained: false, dup: false)
+        mqtt.publish(message)
+    }
+    
     func subscribe(_ topic: String) {
         mqtt.subscribe(topic, qos: self.qos)
     }

@@ -13,6 +13,11 @@ import RxSwift
 /// between distributed Coaty agents based on the publish-subscribe API of a
 /// `CommunicationClient`.
 public class CommunicationManager {
+    internal enum MessagePayload {
+        case stringPayload(String)
+        case bytesArrayPayload([UInt8])
+    }
+    
     // MARK: - Logger.
 
     internal let log = LogManager.log
@@ -46,7 +51,7 @@ public class CommunicationManager {
     private var deferredSubscriptions = Set<String>()
 
     /// Holds deferred publications (topic, payload) while the communication manager is offline.
-    private var deferredPublications = [(String, String)]()
+    private var deferredPublications = [(String, MessagePayload)]()
 
     /// Ids of all advertised components that should be deadvertised on disconnection.
     internal var deadvertiseIds = [CoatyUUID]()
@@ -198,7 +203,12 @@ public class CommunicationManager {
                     self.deferredPublications.forEach { publication in
                         let topic = publication.0
                         let payload = publication.1
-                        self.client.publish(topic, message: payload)
+                        switch payload {
+                        case .bytesArrayPayload(let bytesArray):
+                            self.client.publish(topic, message: bytesArray)
+                        case .stringPayload(let string):
+                            self.client.publish(topic, message: string)
+                        }
                     }
 
                     self.deferredPublications = []
@@ -301,11 +311,27 @@ public class CommunicationManager {
     ///
     /// - Parameters:
     ///   - topic: the publication topic.
-    ///   - message: the payload message.
+    ///   - message: the payload message as String.
     internal func publish(topic: String, message: String) {
         _ = queue.sync {
             if try! self.communicationState.value() == .offline {
-                self.deferredPublications.append((topic, message))
+                self.deferredPublications.append((topic, MessagePayload.stringPayload(message)))
+            } else {
+                // Attempt to publish. If we are disconnecting, this will fail silently.
+                client.publish(topic, message: message)
+            }
+        }
+    }
+    
+    /// Publish defers publications until the communication manager comes online.
+    ///
+    /// - Parameters:
+    ///   - topic: the publication topic.
+    ///   - message: the payload message as Bytes array.
+    internal func publish(topic: String, message: [UInt8]) {
+        _ = queue.sync {
+            if try! self.communicationState.value() == .offline {
+                self.deferredPublications.append((topic, MessagePayload.bytesArrayPayload(message)))
             } else {
                 // Attempt to publish. If we are disconnecting, this will fail silently.
                 client.publish(topic, message: message)
