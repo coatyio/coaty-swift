@@ -401,5 +401,38 @@ extension CommunicationManager {
 
         return observable
     }
+    
+    /// Observe Query events.
+    ///
+    /// - Returns: an observable emitting incoming Query events
+    public func observeQuery() throws -> Observable<QueryEvent> {
+        let namespace = self.communicationOptions.shouldEnableCrossNamespacing ? nil : self.namespace
+        let queryTopic = CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Query,
+                                                                                  namespace: namespace)
+        
+        var observable = self.messagesFor(.Query)
+            .compactMap { message -> QueryEvent? in
+                let (topic, payload) = message
+                
+                guard let queryEvent: QueryEvent = PayloadCoder.decode(payload) else {
+                    return nil
+                }
+                
+                queryEvent.type = .Query
+                queryEvent.sourceId = topic.sourceId
+                
+                queryEvent.retrieveHandler = { (retrieveEvent: RetrieveEvent) in
+                    self.publishRetrieve(event: retrieveEvent, correlationId: topic.correlationId!)
+                }
+                
+                return queryEvent
+        }
+        
+        observable = createSelfCleaningObservable(observable: observable, topic: queryTopic)
+        
+        self.subscribe(topic: queryTopic)
+        
+        return observable
+    }
 }
 

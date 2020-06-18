@@ -370,6 +370,23 @@ extension CommunicationManager {
         return observable
     }
     
+    /// Publishes a retrieve in response to a Query event. Not accessible by
+    /// the application programmer, it is just a convenience method for reacting
+    /// upon a query.
+    ///
+    /// - Parameters:
+    ///   - event: the Retrieve event that should be sent out.
+    internal func publishRetrieve(event: RetrieveEvent,
+                                  correlationId: String) {
+        event.sourceId = self.identity.objectId
+        let topic = CommunicationTopic.createTopicStringByLevelsForPublish(namespace: self.namespace,
+                                                                           sourceId: event.sourceId!,
+                                                                           eventType: .Retrieve,
+                                                                           correlationId: correlationId)
+        
+        publish(topic: topic, message: event.json)
+    }
+    
     /// Publishes a return in response to a call event. Not accessible by the
     /// application programmer, it is just a convenience method for reacting
     /// upon a call.
