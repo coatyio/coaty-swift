@@ -23,28 +23,33 @@ this guide.
 
 ## Table of Contents
 
-- [Getting started](#getting-started)
-- [Necessary background knowledge](#necessary-background-knowledge)
-- [Coaty(Swift) terminology](#coatyswift-terminology)
-- [Setup instructions and requirements](#setup-instructions-and-requirements)
-  - [mDNS broker discovery support](#mdns-broker-discovery-support)
-- [Communication patterns](#communication-patterns)
-  - [Publish an Advertise event (one-way)](#publish-an-advertise-event-one-way)
-  - [Observe an Advertise event (one-way)](#observe-an-advertise-event-one-way)
-  - [Publish a Discover event and observe Resolve events (two-way)](#publish-a-discover-event-and-observe-resolve-events-two-way)
-  - [Observe a Discover event (two-way)](#observe-a-discover-event-two-way)
-- [Bootstrapping a Coaty container](#bootstrapping-a-coaty-container)
-- [Creating controllers](#creating-controllers)
-- [Custom object types](#custom-object-types)
-- [FAQ](#faq)
-  - [Interacting with controllers](#interacting-with-controllers)
-  - [Managing Observable subscriptions](#managing-observable-subscriptions)
-  - [Communication State vs Operating State](#communication-state-vs-operating-state)
-  - [Inspecting Coaty object types and AnyCodables](#inspecting-coaty-object-types-and-anycodables)
-  - [Distributed lifecycle management](#distributed-lifecycle-management)
-  - [Event echo suppression](#event-echo-suppression)
-  - [Terminology](#terminology)
-- [Additional resources](#additional-resources)
+- [CoatySwift Developer Guide](#coatyswift-developer-guide)
+  - [Table of Contents](#table-of-contents)
+  - [Getting started](#getting-started)
+  - [Necessary background knowledge](#necessary-background-knowledge)
+  - [Coaty(Swift) terminology](#coatyswift-terminology)
+  - [Setup instructions and requirements](#setup-instructions-and-requirements)
+    - [mDNS broker discovery support](#mdns-broker-discovery-support)
+  - [Communication patterns](#communication-patterns)
+    - [Publish an Advertise event (one-way)](#publish-an-advertise-event-one-way)
+    - [Observe an Advertise event (one-way)](#observe-an-advertise-event-one-way)
+    - [Publish a Discover event and observe Resolve events (two-way)](#publish-a-discover-event-and-observe-resolve-events-two-way)
+    - [Observe a Discover event (two-way)](#observe-a-discover-event-two-way)
+  - [Bootstrapping a Coaty container](#bootstrapping-a-coaty-container)
+  - [Creating controllers](#creating-controllers)
+  - [Custom object types](#custom-object-types)
+    - [Class registration](#class-registration)
+    - [Initializers](#initializers)
+    - [Decodable methods](#decodable-methods)
+  - [FAQ](#faq)
+    - [Interacting with controllers](#interacting-with-controllers)
+    - [Managing Observable subscriptions](#managing-observable-subscriptions)
+    - [Communication State vs Operating State](#communication-state-vs-operating-state)
+    - [Inspecting Coaty object types and AnyCodables](#inspecting-coaty-object-types-and-anycodables)
+    - [Distributed lifecycle management](#distributed-lifecycle-management)
+    - [Event echo suppression](#event-echo-suppression)
+    - [Terminology](#terminology)
+  - [Additional resources](#additional-resources)
 
 ## Getting started
 
@@ -52,9 +57,9 @@ If you want a short, concise look into CoatySwift, feel free to check out the
 [CoatySwift Tutorial](https://coatyio.github.io/coaty-swift/tutorial/index.html)
 with a step-by-step guide on how to set up a basic CoatySwift application. The
 source code of this tutorial can be found in the
-[Example](https://github.com/coatyio/coaty-swift/tree/master/Example) Xcode
+[CoatySwiftExample](https://github.com/coatyio/coaty-swift/tree/master/CoatySwiftExample) Xcode
 folder of the CoatySwift repo. Just clone the repo, run `pod install` on the
-Example folder and open the new  `xcworkspace` in Xcode.
+repo root folder and open the new  `xcworkspace` in Xcode.
 
 You can find additional examples in the `swift` sections of the
 [coaty-examples](https://github.com/coatyio/coaty-examples) repo on GitHub. You
@@ -106,7 +111,7 @@ are familiar with the following programming concepts:
 
 - Every container has a __configuration__: Defines options for the container, as
   well as the controllers. There are many options available. You can check out
-  example configs in the sections below, or the configs found in the `Example`
+  example configs in the sections below, or the configs found in the `CoatySwiftExample`
   folder in the CoatySwift Xcode project.
 
 ## Setup instructions and requirements
