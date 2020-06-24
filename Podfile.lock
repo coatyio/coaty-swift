@@ -1,5 +1,5 @@
 PODS:
-  - CoatySwift (2.0.1):
+  - CoatySwift (2.1.0):
     - CocoaMQTT (~> 1.2.5)
     - RxCocoa (~> 5.1.1)
     - RxSwift (~> 5.1.1)
@@ -43,7 +43,7 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  CoatySwift: 761fbae9b0507b9fff88f4a2859706562f48d4f2
+  CoatySwift: 2e475c7a41a47c03305b6cced4c2502a021febb7
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   CocoaMQTT: a61490ed3b328011c5d75169a77781983e2bb221
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001

@@ -14,7 +14,7 @@
     <a title="CommunicationManager Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">CoatySwift 2.0.1 Docs</a></p>
+        <p><a href="../index.html">CoatySwift 2.1.0 Docs</a></p>
         <p class="header-right"><a href="https://github.com/coatyio/coaty-swift"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -287,6 +287,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/ObjectFilterOperator.html">ObjectFilterOperator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ObjectMatcher.html">ObjectMatcher</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/OperatingState.html">OperatingState</a>
@@ -631,6 +634,8 @@ the character <code>NULL (U+0000)</code>.</p>
 
 <p>Use this method to interoperate with external systems that publish messages on external topics.
 Use this method together with <code>publishRaw()</code> to transfer binary data between Coaty agents.</p>
+
+<p>In order to decode [UInt8] array named data into String use <code>String(bytes: data, encoding: .utf8)</code></p>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
     if topic filter is invalid
@@ -1028,9 +1033,9 @@ the following characters: <code>NULL (U+0000)</code>, <code># (U+0023)</code>, <
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10CoatySwift20CommunicationManagerC11observeCall11operationId02RxB010ObservableCyAA0F5EventCGSS_tKF"></a>
-                    <a name="//apple_ref/swift/Method/observeCall(operationId:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC11observeCall11operationId02RxB010ObservableCyAA0F5EventCGSS_tKF">observeCall(operationId:<wbr>)</a>
+                    <a name="/s:10CoatySwift20CommunicationManagerC11observeCall11operationId7context02RxB010ObservableCyAA0F5EventCGSS_AA0A6ObjectCSgtKF"></a>
+                    <a name="//apple_ref/swift/Method/observeCall(operationId:context:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC11observeCall11operationId7context02RxB010ObservableCyAA0F5EventCGSS_AA0A6ObjectCSgtKF">observeCall(operationId:<wbr>context:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1062,10 +1067,6 @@ match (checked by using <code>ObjectMatcher.matchesFilter</code>), or</li>
     <p>You can also invoke <code>observeCall</code> <em>without</em> context parameter
 and realize a custom matching logic with an RxJS <code>filter</code> operator.</p>
 
-</div><div class="aside aside-todo">
-    <p class="aside-title">Todo</p>
-    <p>We are missing the optional context parameter.</p>
-
 </div><div class="aside aside-throws">
     <p class="aside-title">Throws</p>
     <p>if operationId is invalid</p>
@@ -1077,7 +1078,7 @@ and realize a custom matching logic with an RxJS <code>filter</code> operator.</
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">observeCall</span><span class="p">(</span><span class="nv">operationId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/CallEvent.html">CallEvent</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">observeCall</span><span class="p">(</span><span class="nv">operationId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">context</span><span class="p">:</span> <span class="kt"><a href="../Classes/CoatyObject.html">CoatyObject</a></span><span class="p">?)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/CallEvent.html">CallEvent</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1097,6 +1098,18 @@ and realize a custom matching logic with an RxJS <code>filter</code> operator.</
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a context object to be matched against the Call event data&rsquo;s context filter (optional)</p>
+                                </div>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -1104,6 +1117,37 @@ and realize a custom matching logic with an RxJS <code>filter</code> operator.</
                         <h4>Return Value</h4>
                         <p>an observable emitting incoming Call events
 whose context filter matches the given context</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC12observeQuery02RxB010ObservableCyAA0F5EventCGyKF"></a>
+                    <a name="//apple_ref/swift/Method/observeQuery()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC12observeQuery02RxB010ObservableCyAA0F5EventCGyKF">observeQuery()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Observe Query events.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">observeQuery</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/QueryEvent.html">QueryEvent</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an observable emitting incoming Query events</p>
                       </div>
                     </section>
                   </div>
@@ -1151,7 +1195,8 @@ must not contain the following characters: <code>NULL (U+0000)</code>, <code>#
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">publishRaw</span><span class="p">(</span><span class="nv">topic</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">publishRaw</span><span class="p">(</span><span class="nv">topic</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span></code></pre>
 
                         </div>
                       </div>
@@ -1180,6 +1225,142 @@ must not contain the following characters: <code>NULL (U+0000)</code>, <code>#
                               <td>
                                 <div>
                                   <p>a payload string to be published on the given topic</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC10publishRaw5topic10withStringySS_SStKF"></a>
+                    <a name="//apple_ref/swift/Method/publishRaw(topic:withString:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC10publishRaw5topic10withStringySS_SStKF">publishRaw(topic:<wbr>withString:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Publish a value on the given topic. Used to interoperate with external
+clients that subscribe on the given topic.</p>
+
+<p>The topic is an MQTT publication topic, i.e. a non-empty string that
+must not contain the following characters: <code>NULL (U+0000)</code>, <code>#
+(U+0023)</code>, <code>+ (U+002B)</code>.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    if topic name is invalid
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">publishRaw</span><span class="p">(</span><span class="nv">topic</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">withString</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>topic</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the topic on which to publish the given payload</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>withString</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a payload string to be published on the given topic</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift20CommunicationManagerC10publishRaw5topic10withBinaryySS_Says5UInt8VGtKF"></a>
+                    <a name="//apple_ref/swift/Method/publishRaw(topic:withBinary:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift20CommunicationManagerC10publishRaw5topic10withBinaryySS_Says5UInt8VGtKF">publishRaw(topic:<wbr>withBinary:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Publish a value on the given topic. Used to interoperate with external
+clients that subscribe on the given topic.</p>
+
+<p>The topic is an MQTT publication topic, i.e. a non-empty string that
+must not contain the following characters: <code>NULL (U+0000)</code>, <code>#
+(U+0023)</code>, <code>+ (U+002B)</code>.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    if topic name is invalid
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">publishRaw</span><span class="p">(</span><span class="nv">topic</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">withBinary</span> <span class="nv">value</span><span class="p">:</span> <span class="p">[</span><span class="kt">UInt8</span><span class="p">])</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>topic</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the topic on which to publish the given payload</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>withBinary</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a payload bytes array to be published on the given topic</p>
                                 </div>
                               </td>
                             </tr>

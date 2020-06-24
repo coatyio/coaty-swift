@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Components Class Reference</title>
+    <title>ObjectMatcher Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/Components" class="dashAnchor"></a>
-    <a title="Components Class Reference"></a>
+    <a name="//apple_ref/swift/Enum/ObjectMatcher" class="dashAnchor"></a>
+    <a title="ObjectMatcher Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">CoatySwift 2.1.0 Docs</a></p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">CoatySwift Reference</a>
         <img id="carat" src="../img/carat.png" />
-        Components Class Reference
+        ObjectMatcher Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -347,26 +347,38 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>Components</h1>
+            <h1>ObjectMatcher</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Components</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">ObjectMatcher</span></code></pre>
 
                 </div>
               </div>
-            <p>Defines the application-specific container components to be registered
-with a Coaty Container.</p>
+            <p>Provides a static <code>matchesFilter</code> method to match an object against a
+given object filter. Useful for retrieving matching objects on Query events
+without using a database adapter. Also useful to filter out Coaty objects
+that match given filter conditions before publishing with Advertise or
+Channel events.</p>
 
           </section>
           <section class="section task-group-section">
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Public%20methods."></a>
+                <a name="//apple_ref/swift/Section/Public methods." class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Public%20methods."></a>
+                  <h3 class="section-name"><p>Public methods.</p>
+</h3>
+                </div>
+              </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10CoatySwift10ComponentsC11controllersSDySSAA10ControllerCmGvp"></a>
-                    <a name="//apple_ref/swift/Property/controllers" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift10ComponentsC11controllersSDySSAA10ControllerCmGvp">controllers</a>
+                    <a name="/s:10CoatySwift13ObjectMatcherO13matchesFilter3obj6filterSbAA0aC0CSg_AA0cF0CSgtFZ"></a>
+                    <a name="//apple_ref/swift/Method/matchesFilter(obj:filter:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift13ObjectMatcherO13matchesFilter3obj6filterSbAA0aC0CSg_AA0cF0CSgtFZ">matchesFilter(obj:<wbr>filter:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -374,85 +386,16 @@ with a Coaty Container.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Application-specific controller classes to be registered
-with the runtime container under the given key.</p>
+                        <p>Determines whether the given object matches the given context filter.
+Note that if you pass in an <code><a href="../Classes/ObjectFilter.html">ObjectFilter</a></code>, only the filter conditions are
+heeded for the result.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">controllers</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt"><a href="../Classes/Controller.html">Controller</a></span><span class="o">.</span><span class="k">Type</span><span class="p">]</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10CoatySwift10ComponentsC11objectTypesSayAA0A6ObjectCmGvp"></a>
-                    <a name="//apple_ref/swift/Property/objectTypes" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift10ComponentsC11objectTypesSayAA0A6ObjectCmGvp">objectTypes</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>All <em>custom</em>, i.e. application-specific Coaty object types
-for which Swift class definitions are defined in the application.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">objectTypes</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/CoatyObject.html">CoatyObject</a></span><span class="o">.</span><span class="k">Type</span><span class="p">]</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10CoatySwift10ComponentsC11controllers11objectTypesACSDySSAA10ControllerCmG_SayAA0A6ObjectCmGtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(controllers:objectTypes:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift10ComponentsC11controllers11objectTypesACSDySSAA10ControllerCmG_SayAA0A6ObjectCmGtcfc">init(controllers:<wbr>objectTypes:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a new instance of Components.</p>
-
-<p>Register your application-specific Coaty controller types and object types here.</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    <p>The configuration options for
-controller classes given here are specified in the controller
-configuration under a key that equals the key under which
-the controller type is registered here.</p>
-
-</div><div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    <p>Only register your custom object types; there is no need to register Coaty
-<em>core</em> object types, as they are registered implicitly.</p>
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">controllers</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt"><a href="../Classes/Controller.html">Controller</a></span><span class="o">.</span><span class="k">Type</span><span class="p">],</span> <span class="nv">objectTypes</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/CoatyObject.html">CoatyObject</a></span><span class="o">.</span><span class="k">Type</span><span class="p">])</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">matchesFilter</span><span class="p">(</span><span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="../Classes/CoatyObject.html">CoatyObject</a></span><span class="p">?,</span> <span class="nv">filter</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:10CoatySwift13ContextFiltera">ContextFilter</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -463,29 +406,33 @@ the controller type is registered here.</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>controllers</em>
+                                <em>obj</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>Application-specific Coaty controller classes to be registered with the runtime container under the given key.</p>
+                                  <p>The object to pass the filter on (optional).</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
                               <td>
                                 <code>
-                                <em>objectTypes</em>
+                                <em>filter</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>Application-specific Coaty object type classes which are defined in the application.</p>
+                                  <p>The context filter to apply (optional).</p>
                                 </div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>true: on match; false otherwise</p>
                       </div>
                     </section>
                   </div>

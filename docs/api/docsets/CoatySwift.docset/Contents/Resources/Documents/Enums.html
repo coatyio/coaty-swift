@@ -14,7 +14,7 @@
     <a title="Enumerations  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">CoatySwift 2.0.1 Docs</a></p>
+        <p><a href="index.html">CoatySwift 2.1.0 Docs</a></p>
         <p class="header-right"><a href="https://github.com/coatyio/coaty-swift"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -287,6 +287,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Enums/ObjectFilterOperator.html">ObjectFilterOperator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/ObjectMatcher.html">ObjectMatcher</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/OperatingState.html">OperatingState</a>
@@ -762,6 +765,38 @@ rapidly than specified in their currently recommended update rate.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">ObjectFilterOperator</span> <span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift13ObjectMatcherO"></a>
+                    <a name="//apple_ref/swift/Enum/ObjectMatcher" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift13ObjectMatcherO">ObjectMatcher</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Provides a static <code>matchesFilter</code> method to match an object against a
+given object filter. Useful for retrieving matching objects on Query events
+without using a database adapter. Also useful to filter out Coaty objects
+that match given filter conditions before publishing with Advertise or
+Channel events.</p>
+
+                        <a href="Enums/ObjectMatcher.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">ObjectMatcher</span></code></pre>
 
                         </div>
                       </div>

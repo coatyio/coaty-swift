@@ -1,5 +1,24 @@
 # Changelog
 
+<a name="2.1.0"></a>
+## [2.1.0](https://github.com/coatyio/coaty-swift/compare/2.0.1...2.1.0) (2020-06-24)
+
+This minor release adds yet unsupported features in communication patterns: object matching for query-retrieve event
+and object filtering for call-return event. Additionally the CoatySwift framework is now augmented with unit tests
+implemented as an XCode target.
+
+### Features
+
+* **Raw events:** extend `CommunicationManager.publishRaw` to enable raw bytes array publishing. `CommunicationManager.publishRaw(:topic:value)` is now deprecated, use `CommunicationManager.publishRaw(:topic:withString)` instead
+  ([70f2dc0](https://github.com/coatyio/coaty-swift/commit/70f2dc0))
+* **Call event:** implement filter matching for Call event
+  ([611d455](https://github.com/coatyio/coaty-swift/commit/611d455))
+* **Query event:** implement `CommunicationManager.observeQuery` functionality
+  ([b556ed7](https://github.com/coatyio/coaty-swift/commit/b556ed7))
+* **Object matcher:** implement object matcher with necessary changes to AnyCodable; 
+  add tests for ObjectMatcher
+  ([a5a54d2](https://github.com/coatyio/coaty-swift/commit/a5a54d2))
+
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/coatyio/coaty-swift/compare/2.0.0...2.0.1) (2020-04-27)
 
