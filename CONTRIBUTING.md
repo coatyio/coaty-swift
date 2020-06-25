@@ -17,8 +17,12 @@ If you wish to contribute please follow the guidelines described in this documen
 ## Workflow
 
 Contributions should be incorporated into the repository using pull requests on
-a separate branch. We use the [GitHub Pull Request Workflow](https://guides.github.com/introduction/flow/).
-The mentioned link is the recommended documentation to read and understand this workflow.
+a separate branch. We use the [GitHub Pull Request
+Workflow](https://guides.github.com/introduction/flow/). The mentioned link is
+the recommended documentation to read and understand this workflow.
+
+Our Git development workflow includes the following steps as described
+[here](https://github.com/coatyio/coaty-js/blob/master/CONTRIBUTING.md#workflow).
 
 ## Git Commit Style
 
