@@ -19,6 +19,7 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
     // MARK: - Protocol fields.
     
     var rawMQTTMessages = PublishSubject<(String, [UInt8])>()
+    var ioValueMessages = PublishSubject<(String, [UInt8])>()
     var messages = PublishSubject<(CommunicationTopic, String)>()
     var communicationState = BehaviorSubject(value: CommunicationState.offline)
     var delegate: Startable
@@ -148,7 +149,9 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
         
         do {
             let topic = try CommunicationTopic(message.topic)
-            if let payloadString = message.string {
+            if topic.eventType == .IoValue {
+                ioValueMessages.onNext((message.topic, message.payload))
+            } else if let payloadString = message.string {
                 messages.onNext((topic, payloadString))
             }
         } catch {

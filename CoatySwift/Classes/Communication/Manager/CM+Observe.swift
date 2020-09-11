@@ -436,5 +436,168 @@ extension CommunicationManager {
         
         return observable
     }
-}
+    
+    // MARK: - IO Routing
+    
+    internal func _observeAssociate() {
+        self.ioNodes.forEach { ioNode in
+            _ = try? self._observeAssociate(ioNodeName: ioNode.name)
+                .subscribe(onNext: { associateEvent in
+                    self.handleAssociate(event: associateEvent)
+                })
+                .disposed(by: self.disposeBag)
+        }
+    }
+    
+    private func _observeAssociate(ioNodeName: String) throws -> Observable<AssociateEvent> {
+        guard CommunicationTopic.isValidEventTypeFilter(filter: ioNodeName) else {
+            throw CoatySwiftError.InvalidArgument("\(ioNodeName) is not a valid context name.")
+        }
+        
+        let namespace = self.communicationOptions.shouldEnableCrossNamespacing ? nil : self.namespace
+        let associateTopic = CommunicationTopic.createTopicStringByLevelsForSubscribe(eventType: .Associate,
+                                                                                      eventTypeFilter: ioNodeName,
+                                                                                      namespace: namespace,
+                                                                                      correlationId: nil)
+        
+        var observable = self.messagesFor(.Associate, ioNodeName)
+            .compactMap { message -> AssociateEvent? in
+                let (topic, payload) = message
+                
+                guard let associateEvent: AssociateEvent = PayloadCoder.decode(payload) else {
+                    return nil
+                }
+                
+                associateEvent.type = .Associate
+                associateEvent.sourceId = topic.sourceId
+                
+                return associateEvent
+        }
+        
+        observable = createSelfCleaningObservable(observable: observable, topic: associateTopic)
+        
+        self.subscribe(topic: associateTopic)
+        
+        return observable
+    }
+    
+    internal func observeDiscoverIoNodes() {
+        if self.ioNodes.isEmpty {
+            return
+        }
+        
+        _ = self.observeDiscover().filter { event -> Bool in
+            event.data.isDiscoveringTypes() && event.data.isCoreTypeCompatible(.IoNode)
+        }.subscribe(onNext: { event in
+            self.ioNodes.forEach { ioNode in
+                event.resolve(resolveEvent: ResolveEvent.with(object: ioNode))
+            }
+        })
+        .disposed(by: self.disposeBag)
+    }
+    
+    /// Observe IO state events for the given IO source or actor.
+    ///
+    /// When subscribed the subject immediately emits the current association
+    /// state.
+    ///
+    /// Subscriptions to the returned subject are **automatically
+    /// unsubscribed** when the communication manager is stopped, in order to
+    /// release system resources and to avoid memory leaks.
+    ///
+    /// - Returns: a subject emitting IO state events for the given IO source or
+    /// actor
+    public func observeIoState(ioPoint: IoPoint) -> BehaviorSubject<IoStateEvent>{
+        return self._observeIoState(ioPointId: ioPoint.objectId)
+    }
+    
+    private func _observeIoState(ioPointId: CoatyUUID) -> BehaviorSubject<IoStateEvent> {
+        if let item = self.observedIoStateItems[ioPointId.string] as? IoStateItem {
+            return item.subject
+        } else {
+            // Compute initial IO state for the subject.
+            var hasAssociations = false
+            var updateRate: Int? = nil
+            if let srcItems = self.ioSourceItems[ioPointId.string] as? IoSourceItem {
+                hasAssociations = true
+                updateRate = srcItems.updateRate
+            } else {
+                self.ioActorItems.forEach { _, value in
+                    // Force cast is safe, since the value must be of type NSMutableDictionary
+                    let sourceItems = value as! NSMutableDictionary
+                    // It is not certain if sourceIds is not nil, hence an optional casting
+                    let sourceIds = sourceItems[ioPointId.string] as? NSMutableArray
+                    if sourceIds != nil {
+                        hasAssociations = true
+                        // Update rate is never delivered to IO actors.
+                        updateRate = nil
+                    }
+                }
+            }
+            let item = IoStateItem(initialValue: IoStateEvent.with(hasAssociations: hasAssociations, updateRate: updateRate))
+            self.observedIoStateItems[ioPointId.string] = item
+            
+            return item.subject
+        }
+    }
+    
+    /// Observe IO values for the given IO actor.
+    ///
+    /// Depending on the data format specification of the IO actor
+    /// (`IoActor.useRawIoValues`), values emitted by the observable are either
+    /// raw binary ([UInt8] array) or decoded as JSON objects (Any type).
+    ///
+    /// Subscriptions to the returned observable are **automatically
+    /// unsubscribed** when the communication manager is stopped, in order to
+    /// release system resources and to avoid memory leaks.
+    ///
+    /// - Returns: an observable emitting inbound values for the IO actor
+    public func observeIoValue(ioActor: IoActor) -> Observable<Any> {
+        let ioActorId = ioActor.objectId
+        var item = self.observedIoValueItems[ioActorId.string] as? PublishSubject<Any>
+        if item == nil {
+            item = PublishSubject<Any>()
+            self.observedIoValueItems[ioActorId.string] = item
+        }
+        
+        // Handle incoming IoValues in a separate function
+        self._handleIoValues()
 
+        return item!.asObservable()
+    }
+
+    private func _handleIoValues() {
+        if self.ioValueObservable == nil {
+            self.ioValueObservable = Observable.merge(client.rawMQTTMessages, client.ioValueMessages)
+            self.ioValueObservable!
+                .subscribe(onNext: { topic, payload in
+                    // Lookup registered IO actor items for the given IO route and dispatch IO value
+                    // to the corresponding IO actors.
+                    // items: Dictionary of CoatyUUID to [CoatyUUID]
+                    if let items = self.ioActorItems[topic] as? NSMutableDictionary {
+                        items.forEach { actorId, _ in
+                            // Force cast is safe, since we are sure of the type of actorId.
+                            let actorIdString = actorId as! String
+                            let actorId = CoatyUUID(uuidString: actorIdString)!
+                            if let ioValueItem = self.observedIoValueItems[actorId.string] as? PublishSubject<Any> {
+                                if let ioActor = self.findIoPointById(objectId: actorId) as? IoActor {
+                                    if let value = ioActor.useRawIoValues, value {
+                                        ioValueItem.onNext(payload)
+                                    } else {
+                                        if let jsonString = NSString(bytes: payload,
+                                                                     length: payload.count,
+                                                                     encoding: String.Encoding.utf8.rawValue) as String? {
+                                            if let anyCodable: AnyCodable = PayloadCoder.decode(jsonString) {
+                                                ioValueItem.onNext(anyCodable.value)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                })
+                .disposed(by: self.disposeBag)
+        }
+    }
+}

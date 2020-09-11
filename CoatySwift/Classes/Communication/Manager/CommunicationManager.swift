@@ -25,7 +25,7 @@ public class CommunicationManager {
     // MARK: - Properties.
 
     /// Dispose bag for observable subscriptions to be disposed when client ends.
-    private var disposeBag = DisposeBag()
+    internal var disposeBag = DisposeBag()
     private var isDisposed = false
 
     /// Gets the namespace for communication as specified in the configuration
@@ -34,6 +34,7 @@ public class CommunicationManager {
     private (set) public var namespace: String
 
     internal var communicationOptions: CommunicationOptions
+    internal var commonOptions: CommonOptions?
     private var subscriptions = [String: Int]()
     
     // Container identity for public and internal use.
@@ -62,12 +63,40 @@ public class CommunicationManager {
 
     /// The communication client that offers the required publisher-subscriber API.
     internal var client: CommunicationClient!
+    
+    // MARK: IORouting properties.
+    
+    /// IO state observables for own IO sources and actors (mapped by IO point ID).
+    /// Key: CoatyUUID, Value: IoStateItem
+    internal var observedIoStateItems: NSMutableDictionary = .init()
+    
+    /// IO value observables for own IO actors (mapped by IO actor ID).
+    /// Key: CoatyUUID, Value: PublishSubject(Any)
+    internal var observedIoValueItems: NSMutableDictionary = .init()
+    
+    /// Own IO sources with associating route, actor ids, and updateRate (mapped
+    /// by IO source ID).
+    /// Key: CoatyUUID, Value: IoSourceItem
+    internal var ioSourceItems: NSMutableDictionary = .init()
+    
+    /// Own IO actors with associated source ids (mapped by associating route).
+    /// Key: String, Value: NSMutableDictionary of type: Key: CoatyUUID, Value: NSMutableArray (holding CoatyUUID values)
+    internal var ioActorItems: NSMutableDictionary = .init()
+    
+    /// Observable on which IoValue events are emitted.
+    internal var ioValueObservable: Observable<(String, [UInt8])>? = nil
+    
+    /// Associated IONodes.
+    internal var ioNodes: [IoNode] = []
 
     // MARK: - Initializers.
 
-    public init(identity: Identity, communicationOptions: CommunicationOptions) {
+    public init(identity: Identity,
+                communicationOptions: CommunicationOptions,
+                commonOptions: CommonOptions?) {
         self.identity = identity
         self.communicationOptions = communicationOptions
+        self.commonOptions = commonOptions
         self.namespace = communicationOptions.namespace ?? DEFAULT_NAMESPACE
         try! initializeNamespace()
         
@@ -79,6 +108,8 @@ public class CommunicationManager {
         setupOperatingStateLogging()
         setupCommunicationStateLogging()
         setupOnConnectHandler()
+        
+        try! self._initIoNodes()
         
         if self.communicationOptions.shouldAutoStart && !mqttClientOptions.shouldTryMDNSDiscovery {
             self.didReceiveStart()
@@ -123,11 +154,16 @@ public class CommunicationManager {
         let mqttClientOptions = self.communicationOptions.mqttClientOptions!
         initializeMQTTClientId(mqttClientOptions)
         try! initializeNamespace()
+        try! _initIoNodes()
         initializeDeadvertisements()
         
+        // Listen to Associate events published by IO Routers.
+        _observeAssociate()
+        // Listen to Discover events for IoNodes.
+        observeDiscoverIoNodes()
         // Listen to Discover events for Identity.
         observeDiscoverIdentity()
-
+        
         let lastWill = self.getLastWill()
         self.client.connect(lastWillTopic: lastWill.topic, lastWillMessage: lastWill.msg)
         updateOperatingState(.started)
@@ -140,6 +176,8 @@ public class CommunicationManager {
         // NOTE: This does not change or adjust the last will.
         deadvertiseIdentity()
 
+        self.unobserveIoStateAndValue()
+        
         self.disposeBag = DisposeBag()
         self.client.disconnect()
         self.deferredSubscriptions = Set<String>()
@@ -159,10 +197,6 @@ public class CommunicationManager {
         // The Server MAY allow ClientId’s that contain more than 23 encoded bytes.
         // The Server MAY allow ClientId’s that contain characters not included in the list given above. 
         let id = self.identity.objectId.string;
-        if self.communicationOptions.useProtocolCompliantClientId == false {
-            mqttClientOptions.clientId = "Coaty\(id)"
-            return
-        }
         mqttClientOptions.clientId = "Coaty" + String(id.replacingOccurrences(of: "-", with: "").prefix(18))
     }
 
@@ -184,6 +218,11 @@ public class CommunicationManager {
         // Make sure the identity is added to the deadvertiseIds array in order to
         // send out a correct last will message.
         deadvertiseIds.append(self.identity.objectId)
+        
+        // Deadvertise IO nodes when unjoining.
+        self.ioNodes.forEach { ioNode in
+            deadvertiseIds.append(ioNode.objectId)
+        }
     }
 
     /// Setup for the handler method that is invoked when the communication state of the client changes to online.
@@ -193,6 +232,7 @@ public class CommunicationManager {
             .subscribe { _ in
 
                 self.advertiseIdentity()
+                self.advertiseIoNodes()
 
                 // Publish possible deferred subscriptions and publications.
                 _ = self.queue.sync {
@@ -242,12 +282,19 @@ public class CommunicationManager {
         return (lastWillTopic,  deadvertiseEvent.json)
     }
 
-    // MARK: - Identity lifecycle management.
+    // MARK: - Identity and IoNodes lifecycle management.
 
     private func advertiseIdentity() {
         // Advertise identity once.
         // (cp. CommunicationManager.observeDiscoverIdentity)
         try! publishAdvertise(AdvertiseEvent.with(object: self.identity))
+    }
+    
+    private func advertiseIoNodes() {
+        // Advertise IO nodes when joining (cp. _observeDiscoverIoNodes).
+        self.ioNodes.forEach { ioNode in
+            try? self.publishAdvertise(AdvertiseEvent.with(object: ioNode))
+        }
     }
 
     private func deadvertiseIdentity() {
@@ -343,6 +390,265 @@ public class CommunicationManager {
     private func updateOperatingState(_ state: OperatingState) {
         self.operatingState.onNext(state)
     }
+    
+    // MARK: - IO Routing
+    
+    private func _initIoNodes() throws {
+        // Set up IO Nodes.
+        if let ioNodesConfig = self.commonOptions?.ioContextNodes, !ioNodesConfig.isEmpty {
+            self.ioNodes = try ioNodesConfig.keys.filter({ contextName -> Bool in
+                if CommunicationTopic.isValidEventTypeFilter(filter: contextName) {
+                    return true
+                } else {
+                    throw CoatySwiftError.InvalidConfiguration("ioContextName \(contextName) in ioContextNodes contains invalid characters")
+                }
+            }).map({ contextName -> IoNode in
+                // Force unwrapping is safe.
+                let ioNodeConfig = ioNodesConfig[contextName]!
+                
+                return IoNode(coreType: .IoNode,
+                              objectType: CoreType.IoNode.objectType,
+                              objectId: .init(),
+                              name: contextName,
+                              ioSources: ioNodeConfig.ioSources ?? [],
+                              ioActors: ioNodeConfig.ioActors ?? [],
+                              characteristics: ioNodeConfig.characteristics)
+            }).filter({ node -> Bool in
+                node.ioSources.count > 0 || node.ioActors.count > 0
+            })
+        }
+    }
+    
+    /// Gets the IO node for the given IO context name, as configured in the
+    /// configuration common options.
+    ///
+    /// Returns `nil` if no IO node is configured for the context name.
+    public func getIoNodeByContext(contextName: String) -> IoNode? {
+        return self.ioNodes.first { ioNode -> Bool in
+            return ioNode.name == contextName
+        }
+    }
+    
+    /// Creates a new IO route for routing IO values of the given IO source to associated IO
+    /// actors.
+    ///
+    /// This method is called by IO routers to associate IO sources with IO actors. An IO
+    /// source publishes IO values on this route; an associated IO actor observes this route
+    /// to receive these values.
+    ///
+    /// - Parameter ioSource: the IO source object
+    /// - Returns: an associating topic for routing IO values
+    public func createIoRoute(ioSource: IoSource) -> String {
+        return CommunicationTopic.createTopicStringByLevelsForPublish(namespace: self.namespace,
+                                                                      sourceId: ioSource.objectId,
+                                                                      eventType: .IoValue)
+    }
+
+    internal func findIoPointById(objectId: CoatyUUID) -> IoPoint? {
+        for ioNode in self.ioNodes {
+            if let source = (ioNode.ioSources.first { $0.objectId == objectId }) {
+                return source
+            } else if let actor = (ioNode.ioActors.first { $0.objectId == objectId }) {
+                return actor
+            }
+        }
+        return nil
+    }
+    
+    internal func handleAssociate(event: AssociateEvent) {
+        let ioSourceId = event.data.ioSourceId
+        let ioActorId = event.data.ioActorId
+        let ioActor = self.findIoPointById(objectId: ioActorId) as? IoActor
+        let isIoSourceAssociated = self.findIoPointById(objectId: ioSourceId) != nil
+        let isIoActorAssociated = ioActor != nil
+
+        if !isIoSourceAssociated && !isIoActorAssociated {
+            return
+        }
+
+        let ioRoute = event.data.associatingRoute
+
+        // Update own IO source associations
+        if isIoSourceAssociated {
+            self.updateIoSourceItems(ioSourceId: ioSourceId, ioActorId: ioActorId, ioRoute: ioRoute, updateRate: event.data.updateRate)
+        }
+
+        // Update own IO actor associations
+        if isIoActorAssociated {
+            if let ioRoute = ioRoute {
+                self.associateIoActorItems(ioSourceId: ioSourceId, ioActor: ioActor!, ioRoute: ioRoute, isExternalRoute: event.data.isExternalRoute!)
+            } else {
+                self.disassociateIoActorItems(ioSourceId: ioSourceId, ioActorId: ioActorId, currentIoRoute: nil, newIoRoute: nil)
+            }
+        }
+
+        // Dispatch IO state events to associated observables
+        if isIoSourceAssociated {
+            if let item = self.observedIoStateItems[ioSourceId.string] as? IoStateItem {
+                let items = self.ioSourceItems[ioSourceId.string] as? IoSourceItem
+                
+                let hasAssociations = (items != nil) && (items!.actorIds.count != 0)
+                let updateRate: Int? = (items != nil) ? items!.updateRate : nil
+                
+                item.dispatchNext(message: IoStateEvent.with(hasAssociations: hasAssociations,
+                                                             updateRate: updateRate))
+            }
+        }
+
+        if isIoActorAssociated {
+            if let item = self.observedIoStateItems[ioActorId.string] as? IoStateItem {
+                var actorIds: NSMutableDictionary?
+                if let ioRoute = ioRoute {
+                    actorIds = self.ioActorItems[ioRoute] as? NSMutableDictionary
+                }
+                
+                item.dispatchNext(message: IoStateEvent.with(hasAssociations:
+                    actorIds != nil &&
+                    actorIds![ioActorId.string] != nil &&
+                    (actorIds![ioActorId.string] as! NSMutableArray).count > 0)
+                )
+            }
+        }
+    }
+    
+    private func updateIoSourceItems(ioSourceId: CoatyUUID, ioActorId: CoatyUUID, ioRoute: String?, updateRate: Int?) {
+        if let ioRoute = ioRoute {
+            if self.ioSourceItems[ioSourceId.string] == nil {
+                let items = IoSourceItem(associatingRoute: ioRoute,
+                                         actorsIds: [ioActorId],
+                                         updateRate: updateRate)
+                self.ioSourceItems[ioSourceId.string] = items
+            } else if let items = self.ioSourceItems[ioSourceId.string] as? IoSourceItem {
+                if items.associatingRoute == ioRoute {
+                    if items.actorIds.firstIndex(of: ioActorId) == nil {
+                        items.actorIds.append(ioActorId)
+                    }
+                } else {
+                    // Disassociate current IO actors due to a route change.
+                    let previousRoute = items.associatingRoute
+                    items.associatingRoute = ioRoute
+                    items.actorIds.forEach { actorId in
+                        self.disassociateIoActorItems(ioSourceId: ioSourceId, ioActorId: actorId, currentIoRoute: previousRoute, newIoRoute: nil)
+                    }
+                    items.actorIds = [ioActorId]
+                }
+                items.updateRate = updateRate
+            }
+        } else {
+            if let items = self.ioSourceItems[ioSourceId.string] as? IoSourceItem {
+                let i = items.actorIds.firstIndex(of: ioActorId)
+                if let i = i {
+                    items.actorIds.remove(at: i)
+                }
+                items.updateRate = updateRate
+                if items.actorIds.isEmpty {
+                    self.ioSourceItems.removeObject(forKey: ioSourceId.string)
+                }
+            }
+        }
+    }
+    
+    private func associateIoActorItems(ioSourceId: CoatyUUID, ioActor: IoActor, ioRoute: String, isExternalRoute: Bool) {
+        let ioActorId = ioActor.objectId
+        
+        // Disassociate any active association for the given IO source and IO actor.
+        self.disassociateIoActorItems(ioSourceId: ioSourceId, ioActorId: ioActorId, currentIoRoute: nil, newIoRoute: ioRoute)
+        
+        let items = self.ioActorItems[ioRoute] as? NSMutableDictionary
+        if items == nil {
+            let newItems = NSMutableDictionary()
+            let mutableArray = NSMutableArray(array: [ioSourceId])
+            newItems[ioActorId.string] = mutableArray
+            self.ioActorItems[ioRoute] = newItems
+            self.subscribe(topic: ioRoute)
+        } else if let items = items {
+            let sourceIds = items[ioActorId.string] as? [CoatyUUID]
+            if sourceIds == nil {
+                let mutableArray = NSMutableArray(array: [ioSourceId])
+                items[ioActorId.string] = mutableArray
+            } else if var sourceIds = sourceIds {
+                if sourceIds.firstIndex(of: ioSourceId) == nil {
+                    sourceIds.append(ioSourceId)
+                }
+            }
+        }
+    }
+    
+    private func disassociateIoActorItems(ioSourceId: CoatyUUID,
+                                          ioActorId: CoatyUUID,
+                                          currentIoRoute: String?,
+                                          newIoRoute: String?) {
+        var ioRoutesToUnsubscribe: [String] = []
+        let handler = { (items: NSMutableDictionary, route: String) in
+            if let newIoRoute = newIoRoute, newIoRoute == route {
+                return
+            }
+            let sourceIds = items[ioActorId.string] as? NSMutableArray
+            if let sourceIds = sourceIds {
+                let element = sourceIds.first { elem -> Bool in
+                    if let elem = elem as? CoatyUUID, elem == ioSourceId {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+                
+                if let element = element {
+                    sourceIds.remove(element)
+                }
+                if sourceIds.count == 0 {
+                    items.removeObject(forKey: ioActorId.string)
+                }
+                if items.count == 0 {
+                    ioRoutesToUnsubscribe.append(route)
+                }
+            }
+        }
+        
+        if let currentIoRoute = currentIoRoute {
+            if let items = self.ioActorItems[currentIoRoute] as? NSMutableDictionary {
+                handler(items, currentIoRoute)
+            }
+        } else {
+            self.ioActorItems.forEach { key, value in
+                guard let items = value as? NSMutableDictionary, let key = key as? String else {
+                    return
+                }
+                handler(items, key)
+            }
+        }
+        
+        ioRoutesToUnsubscribe.forEach { route in
+            self.ioActorItems.removeObject(forKey: route)
+            self.unsubscribe(topic: route)
+        }
+    }
+    
+    private func unobserveIoStateAndValue() {
+        // Dispatch IO state events to all IO state observers.
+        self.observedIoStateItems.forEach { _, value in
+            let item = value as! IoStateItem
+            item.dispatchNext(message: IoStateEvent.with(hasAssociations: false, updateRate: nil))
+            
+            // Ensure subscriptions on IO state observables are unsubscribed automatically.
+            item.dispatchComplete()
+        }
+        
+        // Clean up the current IO routes of all IO actors.
+        self.ioActorItems.forEach { key, _ in
+            let ioRoute = key as! String
+            self.unsubscribe(topic: ioRoute)
+        }
+        
+        // Ensure subscriptions on IO value item observables are unsubscribed automatically.
+        self.observedIoValueItems.forEach { _, value in
+            let item = value as! PublishSubject<Any>
+            item.onCompleted()
+        }
+        
+        // Reset ioValueObservable for restart.
+        self.ioValueObservable = nil
+    }
 }
 
 extension CommunicationManager: Startable {
@@ -352,5 +658,41 @@ extension CommunicationManager: Startable {
     func didReceiveStart() {
         self.start();
     }
+}
 
+class IoStateItem {
+    var subject: BehaviorSubject<IoStateEvent>
+    
+    init(initialValue: IoStateEvent) {
+        self.subject = BehaviorSubject<IoStateEvent>.init(value: initialValue)
+    }
+    
+    func dispatchNext(message: IoStateEvent) {
+        self.subject.onNext(message)
+    }
+    
+    func dispatchComplete() {
+        self.subject.onCompleted()
+    }
+    
+    func dispatchError(error: Swift.Error) {
+        self.subject.onError(error)
+    }
+}
+
+/// Convenience class use by class attribute `IoSourceItems`
+internal class IoSourceItem {
+    var associatingRoute: String
+    
+    var actorIds: [CoatyUUID]
+    
+    var updateRate: Int?
+    
+    init(associatingRoute: String,
+         actorsIds: [CoatyUUID],
+         updateRate: Int?) {
+        self.associatingRoute = associatingRoute
+        self.actorIds = actorsIds
+        self.updateRate = updateRate
+    }
 }

@@ -14,7 +14,7 @@
     <a title="DiscoverEventData Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">CoatySwift 2.1.0 Docs</a></p>
+        <p><a href="../index.html">CoatySwift 2.2.0 Docs</a></p>
         <p class="header-right"><a href="https://github.com/coatyio/coaty-swift"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -57,6 +57,15 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/AnyCoatyObjectDecodable.html">AnyCoatyObjectDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssociateEvent.html">AssociateEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssociateEventData.html">AssociateEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BasicIoRouter.html">BasicIoRouter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/CallEvent.html">CallEvent</a>
@@ -152,10 +161,37 @@
                 <a href="../Classes/IoActor.html">IoActor</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/IoActorController.html">IoActorController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoContext.html">IoContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoNode.html">IoNode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/IoPoint.html">IoPoint</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/IoRouter.html">IoRouter</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/IoSource.html">IoSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoSourceController.html">IoSourceController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10CoatySwift12IoStateEventC">IoStateEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoStateEventData.html">IoStateEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoValueEvent.html">IoValueEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoValueEventData.html">IoValueEventData</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Location.html">Location</a>
@@ -228,6 +264,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/ReturnEventData.html">ReturnEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RuleBasedIoRouter.html">RuleBasedIoRouter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Runtime.html">Runtime</a>
@@ -323,6 +362,12 @@
               <li class="nav-group-task">
                 <a href="../Structs/CoatyTimestamp.html">CoatyTimestamp</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IoAssociationRule.html">IoAssociationRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IoNodeDefinition.html">IoNodeDefinition</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -336,6 +381,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:10CoatySwift13ExecutionInfoa">ExecutionInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10CoatySwift26IoRoutingRuleConditionFunca">IoRoutingRuleConditionFunc</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:10CoatySwift12ReturnResulta">ReturnResult</a>
@@ -542,6 +590,57 @@ Should not be used in combination with objectTypes.
                       <div>
                         <h4>Return Value</h4>
                         <p>true, if the specified core type is contained in the coreTypes property;
+false otherwise.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift17DiscoverEventDataC22isObjectTypeCompatible06objectH0SbSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/isObjectTypeCompatible(objectType:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift17DiscoverEventDataC22isObjectTypeCompatible06objectH0SbSS_tF">isObjectTypeCompatible(objectType:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determines whether the given ObjectType is compatible with this event data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isObjectTypeCompatible</span><span class="p">(</span><span class="nv">objectType</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>objectType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>name of the object type to check</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>true, if the specified type is contained in the objectTypes property;
 false otherwise.</p>
                       </div>
                     </section>

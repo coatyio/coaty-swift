@@ -9,13 +9,20 @@
 /* Begin PBXBuildFile section */
 		5C413D29C3C51314A825292F /* Pods_CoatySwiftExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A45E87FD5E136E3F76DDFC /* Pods_CoatySwiftExample.framework */; };
 		6462F5723286A036D41440BB /* Pods_CoatySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C697987018DB42B4AC29FBE /* Pods_CoatySwift.framework */; };
+		9E3C8FC124B488EC002159AA /* IoStateEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3C8FC024B488EC002159AA /* IoStateEvent.swift */; };
+		9E3C8FC324B488F7002159AA /* IoValueEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3C8FC224B488F7002159AA /* IoValueEvent.swift */; };
+		9E73C8FF24A4CCE70010AA20 /* AssociateEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E73C8FE24A4CCE70010AA20 /* AssociateEvent.swift */; };
+		9E73C91024A4DE640010AA20 /* BasicIoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E73C90F24A4DE640010AA20 /* BasicIoRouter.swift */; };
+		9E73C91224A4DE740010AA20 /* IoActorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E73C91124A4DE740010AA20 /* IoActorController.swift */; };
+		9E73C91424A4DE900010AA20 /* RuleBasedIoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E73C91324A4DE900010AA20 /* RuleBasedIoRouter.swift */; };
+		9E73C91624A4DEA50010AA20 /* IoSourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E73C91524A4DEA50010AA20 /* IoSourceController.swift */; };
+		9E73C91824A4DEC10010AA20 /* IoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E73C91724A4DEC10010AA20 /* IoRouter.swift */; };
 		9E774E04249B74DD00EF888A /* CoatySwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 9E774E02249B74DD00EF888A /* CoatySwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9E774E11249B752100EF888A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E774E10249B752100EF888A /* AppDelegate.swift */; };
 		9E774E18249B752100EF888A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E774E16249B752100EF888A /* Main.storyboard */; };
 		9E774E1A249B752600EF888A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E774E19249B752600EF888A /* Assets.xcassets */; };
 		9E774E1D249B752600EF888A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E774E1B249B752600EF888A /* LaunchScreen.storyboard */; };
 		9E774E29249B75B500EF888A /* CoatySwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E774E28249B75B500EF888A /* CoatySwiftTests.swift */; };
-		9E774E2B249B75B500EF888A /* CoatySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E774DFF249B74DD00EF888A /* CoatySwift.framework */; };
 		9E774E7B249B772B00EF888A /* DbConnectionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E774E33249B772A00EF888A /* DbConnectionInfo.swift */; };
 		9E774E7C249B772B00EF888A /* CommunicationEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E774E36249B772A00EF888A /* CommunicationEventType.swift */; };
 		9E774E7D249B772B00EF888A /* OperatingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E774E37249B772A00EF888A /* OperatingState.swift */; };
@@ -87,16 +94,6 @@
 		AE4DFA1A4213C170796F6C92 /* Pods_CoatySwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16EF88BE31BAF804947F69C9 /* Pods_CoatySwiftTests.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		9E774E2C249B75B500EF888A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9E774DF6249B74DD00EF888A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9E774DFE249B74DD00EF888A;
-			remoteInfo = CoatySwift;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		16EF88BE31BAF804947F69C9 /* Pods_CoatySwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoatySwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FDD64CF850D324EA2D2CFDB /* Pods-CoatySwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift.debug.xcconfig"; path = "Target Support Files/Pods-CoatySwift/Pods-CoatySwift.debug.xcconfig"; sourceTree = "<group>"; };
@@ -104,6 +101,14 @@
 		7636EE82655C81F0D35299C0 /* Pods-CoatySwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwift.release.xcconfig"; path = "Target Support Files/Pods-CoatySwift/Pods-CoatySwift.release.xcconfig"; sourceTree = "<group>"; };
 		7C697987018DB42B4AC29FBE /* Pods_CoatySwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoatySwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96A39A5460A0A922D5AEEA51 /* Pods-CoatySwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwiftTests.debug.xcconfig"; path = "Target Support Files/Pods-CoatySwiftTests/Pods-CoatySwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9E3C8FC024B488EC002159AA /* IoStateEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IoStateEvent.swift; sourceTree = "<group>"; };
+		9E3C8FC224B488F7002159AA /* IoValueEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IoValueEvent.swift; sourceTree = "<group>"; };
+		9E73C8FE24A4CCE70010AA20 /* AssociateEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociateEvent.swift; sourceTree = "<group>"; };
+		9E73C90F24A4DE640010AA20 /* BasicIoRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicIoRouter.swift; sourceTree = "<group>"; };
+		9E73C91124A4DE740010AA20 /* IoActorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IoActorController.swift; sourceTree = "<group>"; };
+		9E73C91324A4DE900010AA20 /* RuleBasedIoRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleBasedIoRouter.swift; sourceTree = "<group>"; };
+		9E73C91524A4DEA50010AA20 /* IoSourceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IoSourceController.swift; sourceTree = "<group>"; };
+		9E73C91724A4DEC10010AA20 /* IoRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IoRouter.swift; sourceTree = "<group>"; };
 		9E774DFF249B74DD00EF888A /* CoatySwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoatySwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E774E02249B74DD00EF888A /* CoatySwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoatySwift.h; sourceTree = "<group>"; };
 		9E774E03249B74DD00EF888A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -210,7 +215,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E774E2B249B75B500EF888A /* CoatySwift.framework in Frameworks */,
 				AE4DFA1A4213C170796F6C92 /* Pods_CoatySwiftTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,6 +233,18 @@
 				EB83FE8DA50CD1980485E4D7 /* Pods-CoatySwiftTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		9E73C90024A4CE720010AA20 /* IORouting */ = {
+			isa = PBXGroup;
+			children = (
+				9E73C90F24A4DE640010AA20 /* BasicIoRouter.swift */,
+				9E73C91124A4DE740010AA20 /* IoActorController.swift */,
+				9E73C91724A4DEC10010AA20 /* IoRouter.swift */,
+				9E73C91524A4DEA50010AA20 /* IoSourceController.swift */,
+				9E73C91324A4DE900010AA20 /* RuleBasedIoRouter.swift */,
+			);
+			path = IORouting;
 			sourceTree = "<group>";
 		};
 		9E774DF5249B74DD00EF888A = {
@@ -293,6 +309,7 @@
 		9E774E31249B770300EF888A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				9E73C90024A4CE720010AA20 /* IORouting */,
 				9E774E5D249B772B00EF888A /* Common */,
 				9E774E34249B772A00EF888A /* Communication */,
 				9E774E32249B772A00EF888A /* DB */,
@@ -360,6 +377,9 @@
 				9E774E4A249B772A00EF888A /* ResolveEvent.swift */,
 				9E774E4B249B772A00EF888A /* RetrieveEvent.swift */,
 				9E774E4C249B772A00EF888A /* AdvertiseEvent.swift */,
+				9E73C8FE24A4CCE70010AA20 /* AssociateEvent.swift */,
+				9E3C8FC024B488EC002159AA /* IoStateEvent.swift */,
+				9E3C8FC224B488F7002159AA /* IoValueEvent.swift */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -530,7 +550,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				9E774E2D249B75B500EF888A /* PBXTargetDependency */,
 			);
 			name = CoatySwiftTests;
 			productName = CoatySwiftTests;
@@ -715,6 +734,7 @@
 			files = (
 				9E774EB4249B772B00EF888A /* Task.swift in Sources */,
 				9E774EA8249B772B00EF888A /* PayloadCoder.swift in Sources */,
+				9E73C91624A4DEA50010AA20 /* IoSourceController.swift in Sources */,
 				9E774E80249B772B00EF888A /* CommunicationTopic.swift in Sources */,
 				9E774E8C249B772B00EF888A /* CompleteEvent.swift in Sources */,
 				9E774E94249B772B00EF888A /* Startable.swift in Sources */,
@@ -722,18 +742,23 @@
 				9E774E86249B772B00EF888A /* UpdateEvent.swift in Sources */,
 				9E774E8E249B772B00EF888A /* ResolveEvent.swift in Sources */,
 				9E774EA0249B772B00EF888A /* _AnyDecodable.swift in Sources */,
+				9E73C91024A4DE640010AA20 /* BasicIoRouter.swift in Sources */,
 				9E774E8B249B772B00EF888A /* ReturnEvent.swift in Sources */,
 				9E774E84249B772B00EF888A /* CM+Util.swift in Sources */,
 				9E774E8A249B772B00EF888A /* QueryEvent.swift in Sources */,
 				9E774EA7249B772B00EF888A /* Decoder+Context.swift in Sources */,
 				9E774E8D249B772B00EF888A /* CallEvent.swift in Sources */,
+				9E3C8FC324B488F7002159AA /* IoValueEvent.swift in Sources */,
 				9E774E7B249B772B00EF888A /* DbConnectionInfo.swift in Sources */,
 				9E774E9C249B772B00EF888A /* Configuration.swift in Sources */,
+				9E73C91824A4DEC10010AA20 /* IoRouter.swift in Sources */,
 				9E774E7C249B772B00EF888A /* CommunicationEventType.swift in Sources */,
 				9E774E90249B772B00EF888A /* AdvertiseEvent.swift in Sources */,
 				9E774E7F249B772B00EF888A /* CommunicationConstants.swift in Sources */,
+				9E73C91424A4DE900010AA20 /* RuleBasedIoRouter.swift in Sources */,
 				9E774EA5249B772B00EF888A /* CoatyUUID.swift in Sources */,
 				9E774EAE249B772B00EF888A /* Identity.swift in Sources */,
+				9E3C8FC124B488EC002159AA /* IoStateEvent.swift in Sources */,
 				9E774E93249B772B00EF888A /* BonjourResolver.swift in Sources */,
 				9E774E85249B772B00EF888A /* ChannelEvent.swift in Sources */,
 				9E774E98249B772B00EF888A /* Controller.swift in Sources */,
@@ -745,6 +770,7 @@
 				9E774E8F249B772B00EF888A /* RetrieveEvent.swift in Sources */,
 				9E774E95249B772B00EF888A /* BonjourConfiguration.swift in Sources */,
 				9E774EC9249B9E7E00EF888A /* ObjectMatcher.swift in Sources */,
+				9E73C8FF24A4CCE70010AA20 /* AssociateEvent.swift in Sources */,
 				9E774EAD249B772B00EF888A /* CoatyObject.swift in Sources */,
 				9E774EA2249B772B00EF888A /* AnyEncodable.swift in Sources */,
 				9E774EB7249B772B00EF888A /* IoPoint.swift in Sources */,
@@ -764,6 +790,7 @@
 				9E774EB6249B772B00EF888A /* Annotation.swift in Sources */,
 				9E774EA4249B772B00EF888A /* Codable+JSON.swift in Sources */,
 				9E774E99249B772B00EF888A /* Container.swift in Sources */,
+				9E73C91224A4DE740010AA20 /* IoActorController.swift in Sources */,
 				9E774EB5249B772B00EF888A /* CoreType.swift in Sources */,
 				9E774EAF249B772B00EF888A /* Log.swift in Sources */,
 				9E774EAB249B772B00EF888A /* ObjectJoinCondition.swift in Sources */,
@@ -801,14 +828,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		9E774E2D249B75B500EF888A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9E774DFE249B74DD00EF888A /* CoatySwift */;
-			targetProxy = 9E774E2C249B75B500EF888A /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		9E774E16249B752100EF888A /* Main.storyboard */ = {
@@ -1039,6 +1058,7 @@
 			baseConfigurationReference = 96A39A5460A0A922D5AEEA51 /* Pods-CoatySwiftTests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PWZ4LSK3S5;
 				INFOPLIST_FILE = CoatySwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1057,6 +1077,7 @@
 			baseConfigurationReference = EB83FE8DA50CD1980485E4D7 /* Pods-CoatySwiftTests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PWZ4LSK3S5;
 				INFOPLIST_FILE = CoatySwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

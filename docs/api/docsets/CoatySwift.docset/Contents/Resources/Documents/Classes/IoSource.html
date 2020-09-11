@@ -14,7 +14,7 @@
     <a title="IoSource Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">CoatySwift 2.1.0 Docs</a></p>
+        <p><a href="../index.html">CoatySwift 2.2.0 Docs</a></p>
         <p class="header-right"><a href="https://github.com/coatyio/coaty-swift"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -57,6 +57,15 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/AnyCoatyObjectDecodable.html">AnyCoatyObjectDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssociateEvent.html">AssociateEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssociateEventData.html">AssociateEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BasicIoRouter.html">BasicIoRouter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/CallEvent.html">CallEvent</a>
@@ -152,10 +161,37 @@
                 <a href="../Classes/IoActor.html">IoActor</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/IoActorController.html">IoActorController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoContext.html">IoContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoNode.html">IoNode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/IoPoint.html">IoPoint</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/IoRouter.html">IoRouter</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/IoSource.html">IoSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoSourceController.html">IoSourceController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10CoatySwift12IoStateEventC">IoStateEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoStateEventData.html">IoStateEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoValueEvent.html">IoValueEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoValueEventData.html">IoValueEventData</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Location.html">Location</a>
@@ -228,6 +264,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/ReturnEventData.html">ReturnEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RuleBasedIoRouter.html">RuleBasedIoRouter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Runtime.html">Runtime</a>
@@ -323,6 +362,12 @@
               <li class="nav-group-task">
                 <a href="../Structs/CoatyTimestamp.html">CoatyTimestamp</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IoAssociationRule.html">IoAssociationRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IoNodeDefinition.html">IoNodeDefinition</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -336,6 +381,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:10CoatySwift13ExecutionInfoa">ExecutionInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10CoatySwift26IoRoutingRuleConditionFunca">IoRoutingRuleConditionFunc</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:10CoatySwift12ReturnResulta">ReturnResult</a>
@@ -463,12 +511,69 @@ object with specific properties.</p>
                       <div class="abstract">
                         <p>The backpressure strategy for publishing IO values (optional).</p>
 
+<p>If not specified, the value defaults to
+<code><a href="../Enums/IoSourceBackpressureStrategy.html#/s:10CoatySwift28IoSourceBackpressureStrategyO7DefaultyA2CmF">IoSourceBackpressureStrategy.Default</a></code>.</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">updateStrategy</span><span class="p">:</span> <span class="kt"><a href="../Enums/IoSourceBackpressureStrategy.html">IoSourceBackpressureStrategy</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initializers."></a>
+                <a name="//apple_ref/swift/Section/Initializers." class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Initializers."></a>
+                  <h3 class="section-name"><p>Initializers.</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift8IoSourceC9valueType14updateStrategy06useRawC6Values0G4Rate13externalRoute4name06objectF00P2IdACSS_AA0cd12BackpressureH0OSgSbSgSiSgSSSgS2SAA0A4UUIDCtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(valueType:updateStrategy:useRawIoValues:updateRate:externalRoute:name:objectType:objectId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift8IoSourceC9valueType14updateStrategy06useRawC6Values0G4Rate13externalRoute4name06objectF00P2IdACSS_AA0cd12BackpressureH0OSgSbSgSiSgSSSgS2SAA0A4UUIDCtcfc">init(valueType:<wbr>updateStrategy:<wbr>useRawIoValues:<wbr>updateRate:<wbr>externalRoute:<wbr>name:<wbr>objectType:<wbr>objectId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Default initializer for an <code>IoSource</code> object.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">valueType</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+
+     <span class="nv">updateStrategy</span><span class="p">:</span> <span class="kt"><a href="../Enums/IoSourceBackpressureStrategy.html">IoSourceBackpressureStrategy</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+
+     <span class="nv">useRawIoValues</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
+
+     <span class="nv">updateRate</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+
+     <span class="nv">externalRoute</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+
+     <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"IoSourceObject"</span><span class="p">,</span>
+
+     <span class="nv">objectType</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kt">IoSource</span><span class="o">.</span><span class="n"><a href="../Classes/IoSource.html#/s:10CoatySwift8IoSourceC10objectTypeSSvpZ">objectType</a></span><span class="p">,</span>
+
+     <span class="nv">objectId</span><span class="p">:</span> <span class="kt"><a href="../Classes/CoatyUUID.html">CoatyUUID</a></span> <span class="o">=</span> <span class="o">.</span><span class="nf">init</span><span class="p">())</span></code></pre>
 
                         </div>
                       </div>

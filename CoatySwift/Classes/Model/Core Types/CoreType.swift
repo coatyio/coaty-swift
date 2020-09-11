@@ -18,6 +18,8 @@ public enum CoreType: String, Codable {
     case Task = "Task"
     case IoSource = "IoSource"
     case IoActor = "IoActor"
+    case IoNode = "IoNode"
+    case IoContext = "IoContext"
     case Identity = "Identity"
     case Log = "Log"
     case Location = "Location"
@@ -30,6 +32,8 @@ public enum CoreType: String, Codable {
         case Task = "coaty.Task"
         case IoSource = "coaty.IoSource"
         case IoActor = "coaty.IoActor"
+        case IoNode = "coaty.IoNode"
+        case IoContext = "coaty.IoContext"
         case Identity = "coaty.Identity"
         case Log = "coaty.Log"
         case Location = "coaty.Location"
@@ -50,6 +54,10 @@ public enum CoreType: String, Codable {
             return CoatySwift.IoSource.self
         case .IoActor:
             return CoatySwift.IoActor.self
+        case .IoNode:
+            return CoatySwift.IoNode.self
+        case .IoContext:
+            return CoatySwift.IoContext.self
         case .Identity:
             return CoatySwift.Identity.self
         case .Log:
@@ -77,6 +85,10 @@ public enum CoreType: String, Codable {
             return self.IoSource
         case ObjectType.IoActor.rawValue:
             return self.IoActor
+        case ObjectType.IoNode.rawValue:
+            return self.IoNode
+        case ObjectType.IoContext.rawValue:
+            return self.IoContext
         case ObjectType.Identity.rawValue:
             return self.Identity
         case ObjectType.Log.rawValue:
@@ -98,6 +110,8 @@ public enum CoreType: String, Codable {
         _ = CoatySwift.Task.objectType
         _ = CoatySwift.IoSource.objectType
         _ = CoatySwift.IoActor.objectType
+        _ = CoatySwift.IoNode.objectType
+        _ = CoatySwift.IoContext.objectType
         _ = CoatySwift.Identity.objectType
         _ = CoatySwift.Log.objectType
         _ = CoatySwift.Location.objectType
@@ -119,6 +133,10 @@ public enum CoreType: String, Codable {
             return ObjectType.IoSource.rawValue
         case .IoActor:
             return ObjectType.IoActor.rawValue
+        case .IoNode:
+            return ObjectType.IoNode.rawValue
+        case .IoContext:
+            return ObjectType.IoContext.rawValue
         case .Identity:
             return ObjectType.Identity.rawValue
         case .Log:

@@ -103,8 +103,8 @@ extension CommunicationManager {
             publish(topic: topicForObjectType, message: event.json)
         }
 
-        // Ensure a Deadvertise event is emitted for an advertised Identity.
-        if event.data.object.coreType == .Identity {
+        // Ensure a Deadvertise event is emitted for an advertised Identity and IoNode.
+        if event.data.object.coreType == .Identity || event.data.object.coreType == .IoNode {
             
             // Add if not existing already in deadvertiseIds.
             if !deadvertiseIds.contains(event.data.object.objectId) {
@@ -442,5 +442,38 @@ extension CommunicationManager {
                                                                            correlationId: correlationId)
         publish(topic: topic, message: event.json)
     }
-
+    
+    // MARK: - IO Routing
+    
+    /// Publish the given IoValue event.
+    ///
+    /// No publication is performed if the event's IO source is currently not
+    /// associated with any IO actor.
+    ///
+    /// - Parameter event: the IoValue event for publishing
+    public func publishIoValue(event: IoValueEvent) {
+        let items = self.ioSourceItems[event.ioSource!.objectId.string] as? IoSourceItem
+        if let items = items {
+            event.topic = items.associatingRoute
+            event.sourceId = self.identity.objectId
+            self.publish(topic: event.topic!, message: event.json)
+        }
+    }
+    
+    /// Called by an IO router to associate or disassociate an IO source with an
+    /// IO actor.
+    ///
+    /// - Parameter event: the Associate event to be published
+    internal func publishAssociate(event: AssociateEvent) throws {
+        guard let eventTypeFilter = event.ioContextName, CommunicationTopic.isValidEventTypeFilter(filter: eventTypeFilter) else {
+            throw CoatySwiftError.InvalidArgument("Associate: Invalid eventTypeFilter")
+        }
+        
+        let topic = CommunicationTopic.createTopicStringByLevelsForPublish(namespace: self.namespace,
+                                                                           sourceId: self.identity.objectId,
+                                                                           eventType: .Associate,
+                                                                           eventTypeFilter: eventTypeFilter)
+        
+        self.publish(topic: topic, message: event.json)
+    }
 }

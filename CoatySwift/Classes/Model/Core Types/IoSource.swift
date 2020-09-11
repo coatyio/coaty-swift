@@ -7,6 +7,31 @@
 
 import Foundation
 
+/// Defines strategies for coping with IO sources that produce IO values more
+/// rapidly than specified in their currently recommended update rate.
+public enum IoSourceBackpressureStrategy: Int, Codable {
+
+    /// Use a default strategy for publishing values: If no recommended
+    /// update rate is assigned to the IO source, use the `None` strategy;
+    /// otherwise use the `Sample` strategy.
+    case Default
+
+    /// Publish all values immediately. Note that this strategy ignores
+    /// the recommended update rate assigned to the IO source.
+    case None
+
+    /// Publish the most recent values within periodic time intervals
+    /// according to the recommended update rate assigned to the IO source.
+    /// If no update rate is given, fall back to the `None` strategy.
+    case Sample
+
+    /// Only publish a value if a particular timespan has
+    /// passed without it publishing another value. The timespan is
+    /// determined by the recommended update rate assigned to the IO source.
+    /// If no update rate is given, fall back to the `None` strategy.
+    case Throttle
+}
+
 /// Defines meta information of an IO source.
 open class IoSource: IoPoint {
     
@@ -34,15 +59,20 @@ open class IoSource: IoPoint {
     public var valueType: String
 
     /// The backpressure strategy for publishing IO values (optional).
+    ///
+    /// If not specified, the value defaults to
+    /// `IoSourceBackpressureStrategy.Default`.
+    ///
     public var updateStrategy: IoSourceBackpressureStrategy?
     
     // MARK: - Initializers.
     
     /// Default initializer for an `IoSource` object.
-    init(valueType: String,
+    public init(valueType: String,
          updateStrategy: IoSourceBackpressureStrategy? = nil,
-         updateRate: Double? = nil,
-         externalTopic: String? = nil,
+         useRawIoValues: Bool? = false,
+         updateRate: Int? = nil,
+         externalRoute: String? = nil,
          name: String = "IoSourceObject",
          objectType: String = IoSource.objectType,
          objectId: CoatyUUID = .init()) {
@@ -52,8 +82,9 @@ open class IoSource: IoPoint {
                    objectType: objectType,
                    objectId: objectId,
                    name: name,
+                   useRawIoValues: useRawIoValues,
                    updateRate: updateRate,
-                   externalTopic: externalTopic)
+                   externalRoute: externalRoute)
     }
     
     // MARK: - Codable methods.
@@ -78,29 +109,4 @@ open class IoSource: IoPoint {
         try container.encode(valueType, forKey: .valueType)
         try container.encodeIfPresent(updateStrategy, forKey: .updateStrategy)
     }
-}
-
-/// Defines strategies for coping with IO sources that produce IO values more
-/// rapidly than specified in their currently recommended update rate.
-public enum IoSourceBackpressureStrategy: Int, Codable {
-
-    /// Use a default strategy for publishing values: If no recommended
-    /// update rate is assigned to the IO source, use the `None` strategy;
-    /// otherwise use the `Sample` strategy.
-    case Default
-
-    /// Publish all values immediately. Note that this strategy ignores
-    /// the recommended update rate assigned to the IO source.
-    case None
-
-    /// Publish the most recent values within periodic time intervals
-    /// according to the recommended update rate assigned to the IO source.
-    /// If no update rate is given, fall back to the `None` strategy.
-    case Sample
-
-    /// Only publish a value if a particular timespan has
-    /// passed without it publishing another value. The timespan is
-    /// determined by the recommended update rate assigned to the IO source.
-    /// If no update rate is given, fall back to the `None` strategy.
-    case Throttle
 }

@@ -14,7 +14,7 @@
     <a title="CommonOptions Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">CoatySwift 2.1.0 Docs</a></p>
+        <p><a href="../index.html">CoatySwift 2.2.0 Docs</a></p>
         <p class="header-right"><a href="https://github.com/coatyio/coaty-swift"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -57,6 +57,15 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/AnyCoatyObjectDecodable.html">AnyCoatyObjectDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssociateEvent.html">AssociateEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssociateEventData.html">AssociateEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BasicIoRouter.html">BasicIoRouter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/CallEvent.html">CallEvent</a>
@@ -152,10 +161,37 @@
                 <a href="../Classes/IoActor.html">IoActor</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/IoActorController.html">IoActorController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoContext.html">IoContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoNode.html">IoNode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/IoPoint.html">IoPoint</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/IoRouter.html">IoRouter</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/IoSource.html">IoSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoSourceController.html">IoSourceController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10CoatySwift12IoStateEventC">IoStateEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoStateEventData.html">IoStateEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoValueEvent.html">IoValueEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoValueEventData.html">IoValueEventData</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Location.html">Location</a>
@@ -228,6 +264,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/ReturnEventData.html">ReturnEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RuleBasedIoRouter.html">RuleBasedIoRouter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Runtime.html">Runtime</a>
@@ -323,6 +362,12 @@
               <li class="nav-group-task">
                 <a href="../Structs/CoatyTimestamp.html">CoatyTimestamp</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IoAssociationRule.html">IoAssociationRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IoNodeDefinition.html">IoNodeDefinition</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -336,6 +381,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:10CoatySwift13ExecutionInfoa">ExecutionInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10CoatySwift26IoRoutingRuleConditionFunca">IoRoutingRuleConditionFunc</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:10CoatySwift12ReturnResulta">ReturnResult</a>
@@ -360,6 +408,40 @@
           <section class="section task-group-section">
             <div class="task-group">
               <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift13CommonOptionsC14ioContextNodesSDySSAA16IoNodeDefinitionVGSgvp"></a>
+                    <a name="//apple_ref/swift/Property/ioContextNodes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift13CommonOptionsC14ioContextNodesSDySSAA16IoNodeDefinitionVGSgvp">ioContextNodes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Specify IO nodes associated with IO contexts for IO routing (optional).</p>
+
+<p>Each IO node definition is hashed by the IO context name the node should
+be associated with. An IO node definition includes IO sources and/or IO
+actors, and node-specific characteristics to be used for IO routing.</p>
+
+<p>If neither IO sources nor IO actors are specified for an IO node, its
+node definition is ignored.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">ioContextNodes</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt"><a href="../Structs/IoNodeDefinition.html">IoNodeDefinition</a></span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -482,9 +564,9 @@ errors, warnings, and informational messages.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10CoatySwift13CommonOptionsC13agentIdentity0E4Info5extra8logLevelACSDySSypGSg_AA05AgentG0CSgAiA0ab3LogJ0OSgtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(agentIdentity:agentInfo:extra:logLevel:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift13CommonOptionsC13agentIdentity0E4Info5extra8logLevelACSDySSypGSg_AA05AgentG0CSgAiA0ab3LogJ0OSgtcfc">init(agentIdentity:<wbr>agentInfo:<wbr>extra:<wbr>logLevel:<wbr>)</a>
+                    <a name="/s:10CoatySwift13CommonOptionsC14ioContextNodes13agentIdentity0H4Info5extra8logLevelACSDySSAA16IoNodeDefinitionVGSg_SDySSypGSgAA05AgentJ0CSgAnA0ab3LogM0OSgtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(ioContextNodes:agentIdentity:agentInfo:extra:logLevel:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift13CommonOptionsC14ioContextNodes13agentIdentity0H4Info5extra8logLevelACSDySSAA16IoNodeDefinitionVGSg_SDySSypGSgAA05AgentJ0CSgAnA0ab3LogM0OSgtcfc">init(ioContextNodes:<wbr>agentIdentity:<wbr>agentInfo:<wbr>extra:<wbr>logLevel:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -499,13 +581,15 @@ errors, warnings, and informational messages.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">agentIdentity</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">ioContextNodes</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt"><a href="../Structs/IoNodeDefinition.html">IoNodeDefinition</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
 
-     <span class="nv">agentInfo</span><span class="p">:</span> <span class="kt"><a href="../Classes/AgentInfo.html">AgentInfo</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">agentIdentity</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
 
-     <span class="nv">extra</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">agentInfo</span><span class="p">:</span> <span class="kt"><a href="../Classes/AgentInfo.html">AgentInfo</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
 
-     <span class="nv">logLevel</span><span class="p">:</span> <span class="kt"><a href="../Enums/CoatySwiftLogLevel.html">CoatySwiftLogLevel</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+            <span class="nv">extra</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+
+            <span class="nv">logLevel</span><span class="p">:</span> <span class="kt"><a href="../Enums/CoatySwiftLogLevel.html">CoatySwiftLogLevel</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

@@ -11,8 +11,8 @@ internal enum CommunicationEventType: String {
     case Advertise = "ADV"
     case Deadvertise = "DAD"
     case Channel = "CHN"
-    case Associate = "ASC" // ignored, not yet supported
-    case IoValue = "IOV"  // ignored, not yet supported
+    case Associate = "ASC"
+    case IoValue = "IOV"
 
     // Event types for Coaty two-way messages
     case Discover = "DSC"

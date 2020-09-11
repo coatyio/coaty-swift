@@ -14,7 +14,7 @@
     <a title="IoPoint Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">CoatySwift 2.1.0 Docs</a></p>
+        <p><a href="../index.html">CoatySwift 2.2.0 Docs</a></p>
         <p class="header-right"><a href="https://github.com/coatyio/coaty-swift"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -57,6 +57,15 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/AnyCoatyObjectDecodable.html">AnyCoatyObjectDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssociateEvent.html">AssociateEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssociateEventData.html">AssociateEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BasicIoRouter.html">BasicIoRouter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/CallEvent.html">CallEvent</a>
@@ -152,10 +161,37 @@
                 <a href="../Classes/IoActor.html">IoActor</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/IoActorController.html">IoActorController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoContext.html">IoContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoNode.html">IoNode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/IoPoint.html">IoPoint</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/IoRouter.html">IoRouter</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/IoSource.html">IoSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoSourceController.html">IoSourceController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10CoatySwift12IoStateEventC">IoStateEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoStateEventData.html">IoStateEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoValueEvent.html">IoValueEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/IoValueEventData.html">IoValueEventData</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Location.html">Location</a>
@@ -228,6 +264,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/ReturnEventData.html">ReturnEventData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RuleBasedIoRouter.html">RuleBasedIoRouter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Runtime.html">Runtime</a>
@@ -323,6 +362,12 @@
               <li class="nav-group-task">
                 <a href="../Structs/CoatyTimestamp.html">CoatyTimestamp</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IoAssociationRule.html">IoAssociationRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IoNodeDefinition.html">IoNodeDefinition</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -336,6 +381,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:10CoatySwift13ExecutionInfoa">ExecutionInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10CoatySwift26IoRoutingRuleConditionFunca">IoRoutingRuleConditionFunc</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:10CoatySwift12ReturnResulta">ReturnResult</a>
@@ -375,9 +423,50 @@ For instantiation use one of the concrete subtypes <code><a href="../Classes/IoS
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10CoatySwift7IoPointC10updateRateSdSgvp"></a>
+                    <a name="/s:10CoatySwift7IoPointC06useRawC6ValuesSbSgvp"></a>
+                    <a name="//apple_ref/swift/Property/useRawIoValues" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift7IoPointC06useRawC6ValuesSbSgvp">useRawIoValues</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determines whether IO values published by IO sources or received by IO
+actors should be treated as raw data that is not encoded/decoded as JSON
+objects.</p>
+
+<p>In order to associate an IO source with an IO actor their values of this
+property must match, i.e. <strong>both</strong> properties must be either true or false
+to ensure that IO values transmitted between an IO source and and an IO actor
+can be properly encoded and decoded on each side.</p>
+
+<p>Set this property to true to indicate that the IO source or IO actor
+should handle IO values in raw data format, i.e as a byte array of type
+<code>[UInt8]</code>.</p>
+
+<p>If set to false (default), the IO values sent by an IO source should be
+encodable as JSON and decodable as JSON by an associated IO actor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">useRawIoValues</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift7IoPointC10updateRateSiSgvp"></a>
                     <a name="//apple_ref/swift/Property/updateRate" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift7IoPointC10updateRateSdSgvp">updateRate</a>
+                    <a class="token" href="#/s:10CoatySwift7IoPointC10updateRateSiSgvp">updateRate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -400,7 +489,7 @@ If undefined, there is no limit on the rate of published events.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">updateRate</span><span class="p">:</span> <span class="kt">Double</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">updateRate</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -410,9 +499,9 @@ If undefined, there is no limit on the rate of published events.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10CoatySwift7IoPointC13externalTopicSSSgvp"></a>
-                    <a name="//apple_ref/swift/Property/externalTopic" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10CoatySwift7IoPointC13externalTopicSSSgvp">externalTopic</a>
+                    <a name="/s:10CoatySwift7IoPointC13externalRouteSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/externalRoute" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift7IoPointC13externalRouteSSSgvp">externalRoute</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -420,17 +509,29 @@ If undefined, there is no limit on the rate of published events.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A communication topic used for routing values from external sources to
-internal IO actors or from internal IO sources to external sinks (optional).
-Used only for predefined external topics that are not generated by the IO router
-dynamically, but defined by an external (i.e. non-Coaty) component instead.</p>
+                        <p>A topic specification used for routing IO values from <em>external</em> sources
+to Coaty-defined IO actors or from Coaty-defined IO sources to <em>external</em>
+sinks (optional).</p>
+
+<p>Only used for associating routes that are not created by an IO router,
+but defined by an external non-Coaty component.</p>
+<div class="aside aside-remark">
+    <p class="aside-title">Remark</p>
+    Note that the format of an external route is binding-specifc. In
+order to deliver IO values from/to an external source/actor, the format
+of the external route must correspond with the configured communication
+binding. That means, it must be in a valid format and must not have a
+Coaty-event-like shape. As the external route must be publishable and
+subscribable, it must not be pattern-based (no wildcard tokens allowed).
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">externalTopic</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">externalRoute</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>

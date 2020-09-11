@@ -264,6 +264,16 @@ public class DiscoverEventData: CommunicationEventData {
         return self.coreTypes?.contains(coreType) ?? false
     }
     
+    /// Determines whether the given ObjectType is compatible with this event data.
+    /// - Returns: true, if the specified type is contained in the objectTypes property;
+    /// false otherwise.
+    /// 
+    /// - Parameter objectType: name of the object type to check
+    public func isObjectTypeCompatible(objectType: String) -> Bool {
+        return self.objectTypes != nil
+            && (self.objectTypes!.first(where: { t -> Bool in t == objectType }) != nil)
+    }
+    
     ///  Determines whether this event data discovers an object based on an object ID.
     public func isDiscoveringObjectId() -> Bool {
         return externalId == nil && objectId != nil

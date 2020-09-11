@@ -17,6 +17,9 @@ protocol CommunicationClient {
     /// Observable emitting *raw* (topic, payload) MQTT messages.
     var rawMQTTMessages: PublishSubject<(String, [UInt8])> { get }
     
+    /// Observable emitting IoValue messages with *raw* payload.
+    var ioValueMessages: PublishSubject<(String, [UInt8])> { get }
+    
     /// Observable emitting (parsed topic, payload) values.
     var messages: PublishSubject<(CommunicationTopic, String)> { get }
     

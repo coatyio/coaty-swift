@@ -73,10 +73,32 @@ public class Configuration {
     }
 }
 
+/// A convenience struct used to define an IoNode
+public struct IoNodeDefinition {
+    var ioSources: [IoSource]?
+    var ioActors: [IoActor]?
+    var characteristics: [String: Any]?
+    
+    public init(ioSources: [IoSource]?, ioActors: [IoActor]?, characteristics: [String: Any]?) {
+        self.ioSources = ioSources
+        self.ioActors = ioActors
+        self.characteristics = characteristics
+    }
+}
 
 /// Common options shared by container components.
 public class CommonOptions {
-
+    
+    /// Specify IO nodes associated with IO contexts for IO routing (optional).
+    ///
+    /// Each IO node definition is hashed by the IO context name the node should
+    /// be associated with. An IO node definition includes IO sources and/or IO
+    /// actors, and node-specific characteristics to be used for IO routing.
+    ///
+    /// If neither IO sources nor IO actors are specified for an IO node, its
+    /// node definition is ignored.
+    public var ioContextNodes: [String: IoNodeDefinition]?
+    
     /// Property-value pairs to be configured on the identity object of the agent
     /// container (optional). Usually, an expressive `name` of the identity is
     /// configured here.
@@ -98,10 +120,12 @@ public class CommonOptions {
     public var logLevel = CoatySwiftLogLevel.error
     
     /// Create a new CommonOptions instance.
-    public init(agentIdentity: [String: Any]? = nil,
-         agentInfo: AgentInfo? = nil,
-         extra: [String: Any]? = nil,
-         logLevel: CoatySwiftLogLevel? = nil) {
+    public init(ioContextNodes: [String: IoNodeDefinition]? = nil,
+                agentIdentity: [String: Any]? = nil,
+                agentInfo: AgentInfo? = nil,
+                extra: [String: Any]? = nil,
+                logLevel: CoatySwiftLogLevel? = nil) {
+        self.ioContextNodes = ioContextNodes
         self.agentIdentity = agentIdentity
         self.agentInfo = agentInfo
         if let extra = extra {
@@ -160,6 +184,7 @@ public class CommunicationOptions {
     /// By default, non-compliant Client IDs of the form "Coaty<uuid>" are used where
     /// <uuid> specifies the `objectId` of the communication manager's `identity` object.
     /// If you experience issues with a specific broker, specify this option as `true`.
+    @available(*, deprecated)
     public var useProtocolCompliantClientId: Bool = false
     
     /// Create a new CommunicationOptions instance.

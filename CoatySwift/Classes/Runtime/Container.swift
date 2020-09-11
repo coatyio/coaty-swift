@@ -165,7 +165,7 @@ public class Container {
         self.runtime = runtime
         
         // Create CommunicationManager.
-        let communicationManager = CommunicationManager(identity: self.identity!, communicationOptions: configuration.communication)
+        let communicationManager = CommunicationManager(identity: self.identity!, communicationOptions: configuration.communication, commonOptions: configuration.common)
         self.communicationManager = communicationManager
         self.operatingState = communicationManager.operatingState.asObservable()
 

@@ -35,6 +35,11 @@ this guide.
     - [Observe an Advertise event (one-way)](#observe-an-advertise-event-one-way)
     - [Publish a Discover event and observe Resolve events (two-way)](#publish-a-discover-event-and-observe-resolve-events-two-way)
     - [Observe a Discover event (two-way)](#observe-a-discover-event-two-way)
+  - [IO Routing](#io-routing)
+    - [IO Routing implementation](#io-routing-implementation)
+      - [SourcesAgent](#sourcesagent)
+      - [NormalStateActorAgent](#normalstateactoragent)
+      - [EmergencyStateActorAgent](#emergencystateactoragent)
   - [Bootstrapping a Coaty container](#bootstrapping-a-coaty-container)
   - [Creating controllers](#creating-controllers)
   - [Custom object types](#custom-object-types)
@@ -82,7 +87,7 @@ are familiar with the following programming concepts:
 
 > __TL;DR__
 >
-> - Every iOS/iPadOS/macOS app hosts a Coaty __agent__
+> - Every iOS/iPadOS/macOS app hosts one or more Coaty __agents__ (usually one)
 > - Every Coaty agent holds one __container__
 > - Every container has
 >   - 1...n __controllers__
@@ -293,6 +298,197 @@ self.communicationManager
     })
     .disposed(by: self.disposeBag)
 ```
+
+## IO Routing
+**Note**: Please refer to coaty-js Developer Guide for general informations (concepts, constraints and communication event flow) regarding [IO Routing](https://coatyio.github.io/coaty-js/man/developer-guide/#io-routing).
+
+### IO Routing implementation
+IO router classes and controller for IO sources/IO actors are provided in the IORouting directory of CoatySwift.
+
+The following example defines a temperature measurement routing scenario with three temperature sensor sources (each with a different strategy for publishing values) and two actors with compatible data value types and formats. The IO context for this scenario defines an operating state, either normal or emergency. In each state, exactly one of the two actors should consume IO values emitted by both sources.
+
+**Note**: This example is fully implemented in [Coaty example on IO Routing]((https://github.com/coatyio/coaty-examples/tree/master/iorouting/swift)).
+
+#### SourcesAgent
+```swift
+// At first define a class which will represent the context for IO Routing
+// This class extends IoContext class with an additional property operatingState
+// Make sure to follow all the steps from section ´Custom object types´ (in this Developer Guide) while subclassing IoContext
+class TemperatureIoContext: IoContext {
+    var operatingState: String
+    
+    override class var objectType: String {
+        return register(objectType: "coaty.TemperatureIoContext", with: self)
+    }
+    
+    init(coreType: CoreType, objectType: String, objectId: CoatyUUID, name: String, operatingState: String) {
+        self.operatingState = operatingState
+        super.init(coreType: coreType, objectType: objectType, objectId: objectId, name: name)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case operatingState
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.operatingState = try container.decode(String.self, forKey: .operatingState)
+        try super.init(from: decoder)
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(operatingState, forKey: .operatingState)
+    }
+}
+
+// Common context for IO routing
+let ioContext = TemperatureIoContext(coreType: .IoContext,
+                                    objectType: "coaty.TemperatureIoContext",
+                                    objectId: CoatyUUID(uuidString: "b61740a6-95d7-4d1a-8be5-53f3aa1e0b79")!,
+                                    name: "TemperatureMeasurement",
+                                    operatingState: "normal")
+
+// Initialize IoSource for .None Strategy.
+// This strategy simply publishes all values as they are being sent.
+let source1 = IoSource(valueType: "coaty.test.Temperature[Celsius]",
+                        updateStrategy: .None,
+                        name: "Temperature Source 1",
+                        objectType: CoreType.IoSource.rawValue,
+                        objectId: CoatyUUID(uuidString: "c547e5cd-ef99-4ccd-b109-fc472fc2d421")!)
+
+// Initialize IoSource for .Sample Strategy.
+// This strategy means: Publish the most recent values within periodic time intervals
+// according to the recommended update rate assigned to the IO source. More information in documentation.
+let source2 = IoSource(valueType: "coaty.test.Temperature[Celsius]",
+                        updateStrategy: .Sample,
+                        updateRate: 5000,
+                        name: "Temperature Source 2",
+                        objectType: CoreType.IoSource.rawValue,
+                        objectId: CoatyUUID(uuidString: "2e9949f7-a8ef-435b-88a9-527c0a9414c3")!)
+
+// Initialize IoSource for .Throttle Strategy.
+// This strategy means: Only publish a value if a particular timespan has 
+// passed without it publishing another value. More information in documentation.
+let source3 = IoSource(valueType: "coaty.test.Temperature[Celsius]",
+                        updateStrategy: .Throttle,
+                        updateRate: 5000,
+                        name: "Temperature Source 3",
+                        objectType: CoreType.IoSource.rawValue,
+                        objectId: CoatyUUID(uuidString: "200cc37b-df20-4425-a16f-5c0b42d04dbb")!)
+
+// Configuration of agent1 with an IoNode for three io sources in common options
+let ioNodeDefinition = IoNodeDefinition(ioSources: [source1, source2, source3],
+                                        ioActors: nil,
+                                        characteristics: nil)
+
+let commonOptions = CommonOptions(ioContextNodes: ["TemperatureMeasurement" : ioNodeDefinition],
+                                logLevel: .info)
+```
+#### NormalStateActorAgent
+```swift
+let actor1 = IoActor(valueType: "coaty.test.Temperature[Celsius]",
+                    updateRate: 5000,
+                    name: "Temperature Actor 1",
+                    objectType: CoreType.IoActor.rawValue,
+                    objectId: CoatyUUID(uuidString: "a731fc40-c0f8-486f-b5b6-b653c3cabaea")!)
+
+// Configuration of agent 2 with an IoNode for actor 1 in common options
+let ioNodeDefinition = IoNodeDefinition(ioSources: nil,
+                                        ioActors: [actor1],
+                                        characteristics: nil)
+
+let commonOptions = CommonOptions(ioContextNodes: ["TemperatureMeasurement" : ioNodeDefinition],
+                                logLevel: .info)
+```
+
+#### EmergencyStateActorAgent
+```swift
+// Temperature Actor 2 (Emergency operating state).
+let actor2 = IoActor(valueType: "coaty.test.Temperature[Celsius]",
+                    updateRate: 5000,
+                    name: "Temperature Actor 2",
+                    objectType: CoreType.IoActor.rawValue,
+                    objectId: CoatyUUID(uuidString: "a60a74f3-3d26-446f-a358-911867544944")!)
+
+// Configuration of agent 3 with an IoNode for actor2 in common options
+let ioNodeDefinition = IoNodeDefinition(ioSources: nil,
+                                        ioActors: [actor1],
+                                        characteristics: nil)
+
+let commonOptions = CommonOptions(ioContextNodes: ["TemperatureMeasurement" : ioNodeDefinition],
+                                logLevel: .info)
+```
+
+Use the RuleBasedIoRouter controller class to realize rule-based routing of data from IO sources to IO actors. By defining application-specific routing rules you can associate IO sources with IO actors based on arbitrary application context.
+
+```swift
+// Configure the rules used by the RuleBasedIoRouter.
+let condition1: IoRoutingRuleConditionFunc = { (source, sourceNode, actor, actorNode, context, router) -> Bool in
+    guard let operatingStateResponsibility = actorNode.characteristics?["isResponsibleForOperatingState"] as? String,
+        let context = context as? TemperatureIoContext else {
+        return false
+    }
+    return operatingStateResponsibility == "normal" && context.operatingState == "normal"
+}
+
+let condition2: IoRoutingRuleConditionFunc = { (source, sourceNode, actor, actorNode, context, router) -> Bool in
+    guard let operatingStateResponsibility = actorNode.characteristics?["isResponsibleForOperatingState"] as? String,
+        let context = context as? TemperatureIoContext else {
+        return false
+    }
+    return operatingStateResponsibility == "emergency" && context.operatingState == "emergency"
+}
+
+let rules: [IoAssociationRule] = [
+    IoAssociationRule(name: "Route temperature sources to normal actors if operating state is normal",
+                        valueType: "coaty.test.Temperature[Celsius]",
+                        condition: condition1),
+    IoAssociationRule(name: "Route temperature sources to emergency actors if operating state is emergency",
+                        valueType: "coaty.test.Temperature[Celsius]",
+                        condition: condition2)
+]
+
+// Configure the required options for a RuleBasedIoRouter
+let routerOptions = ControllerOptions(extra: ["ioContext" : ioContext, "rules": rules])
+        
+// Controller options are always mapped by the controller class name as String.
+// This variable is later used in the construction of the Configuration object.
+let controllers = ControllerConfig(controllerOptions: ["RuleBasedIoRouter": routerOptions])
+```
+
+An IO router makes its IO context available by advertisement and for discovery (by core type, object type or object Id) and listens for Update-Complete events on its IO context. To trigger reevaluation of association rules by an IO router, simply publish an Update event for the discovered IO context object.
+```swift
+var ioContext: TemperatureIoContext
+
+// Discover temperature measurement context from IO router
+coatyContainer?
+    .communicationManager?
+    .publishDiscover(DiscoverEvent.with(objectTypes: ["coaty.test.TemperatureIoContext"])).subscribe(onNext: { resolve in
+        self.ioContext = resolve.data.object as! TemperatureIoContext
+    })
+
+// Change context operating state to trigger rerouting from sources to emergency actors
+self.ioContext.operatingState = "normal"
+
+coatyContainer?.communicationManager
+    .publishUpdate(UpdateEvent.with(object: ioContext)).subscribe(onNext: { complete
+        // Updated object is returned.
+        self.ioContext = complete.data.object as! TemperatureIoContext
+    })
+```
+
+The Communication Manager supports methods to control IO routing in your agent: Use publishIoValue to send IO value data for an IO source. Use observeIoState and observeIoValue to receive IO state changes and IO values for an IO actor.
+
+To further simplify management of IO sources and IO actors, the framework provides specific controller classes on top of these methods:
+
+IoSourceController: Provides data transfer rate controlled publishing of IO values for IO sources and monitoring of changes in the association state of IO sources. This controller respects the backpressure strategy of an IO source in order to cope with IO values that are more rapidly produced than specified in the recommended update rate.
+
+IoActorController: Provides convenience methods for observing IO values and for monitoring changes in the association state of specific IO actors. Note that this controller class caches the latest IO value received for the given IO actor (using BehaviorSubjects). When subscribed, the current value (or nil if none exists yet) is emitted immediately. Due to this behavior the cached value of the observable will also be emitted after reassociation. If this is not desired use self.communicationManager.observeIoValue instead. This method doesn’t cache any previously emitted value.
+
+Take a look at these controllers in action in the [CoatySwift Example on IO Routing](https://github.com/coatyio/coaty-examples/tree/master/iorouting/swift)
 
 ## Bootstrapping a Coaty container
 

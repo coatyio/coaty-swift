@@ -65,20 +65,16 @@ class CommunicationTopic {
         guard let (eventType, eventTypeFilter) = try CommunicationTopic.extractEventType(eventName) else {
             throw CoatySwiftError.InvalidArgument("Invalid topic event type: \(eventName)")
         }
-        
-        guard eventType != .Associate && eventType != .IoValue else {
-            throw CoatySwiftError.InvalidArgument("Topic event type \(eventName) not yet supported")
-        }
 
         if eventType.isOneWay {
             if corrId != nil {
                 throw CoatySwiftError.InvalidArgument("Topic has correlation id for one-way \(eventType) event")
             }
-            if (eventType == .Advertise || eventType == .Channel) &&
+            if (eventType == .Advertise || eventType == .Channel || eventType == .Associate) &&
                 (eventTypeFilter == nil || eventTypeFilter!.isEmpty) {
                 throw CoatySwiftError.InvalidArgument("Topic missing event filter for \(eventType) event")
             }
-            if  eventType != .Advertise && eventType != .Channel && eventTypeFilter != nil {
+            if  eventType != .Advertise && eventType != .Channel && eventType != .Associate && eventTypeFilter != nil {
                 throw CoatySwiftError.InvalidArgument("Topic has event filter for \(eventType) event")
             }
         } else {
