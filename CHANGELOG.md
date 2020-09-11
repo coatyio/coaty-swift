@@ -1,5 +1,15 @@
 # Changelog
 
+<a name="2.2.0"></a>
+## [2.2.0](https://github.com/coatyio/coaty-swift/compare/2.1.0...2.2.0) (2020-09-11)
+
+This release adds yet unsupported IO Routing feature to CoatySwift.
+
+### Features
+
+* **IO Routing:** implement io routing
+  ([1178230](https://github.com/coatyio/coaty-swift/commit/1178230))
+
 <a name="2.1.0"></a>
 ## [2.1.0](https://github.com/coatyio/coaty-swift/compare/2.0.1...2.1.0) (2020-06-24)
 
