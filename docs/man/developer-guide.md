@@ -305,7 +305,7 @@ self.communicationManager
 ### IO Routing implementation
 IO router classes and controller for IO sources/IO actors are provided in the IORouting directory of CoatySwift.
 
-The following example defines a temperature measurement routing scenario with three temperature sensor sources (each with a different strategy for publishing values) and two actors with compatible data value types and formats. The IO context for this scenario defines an operating state, either normal or emergency. In each state, exactly one of the two actors should consume IO values emitted by both sources.
+The following example defines a temperature measurement routing scenario with three temperature sensor sources (each with a different strategy for publishing values) and two actors with compatible data value types and formats. The IO context for this scenario defines an operating state, either normal or emergency. In each state, exactly one of the two actors should consume IO values emitted by the sources.
 
 **Note**: This example is fully implemented in [Coaty example on IO Routing]((https://github.com/coatyio/coaty-examples/tree/master/iorouting/swift)).
 
@@ -313,7 +313,8 @@ The following example defines a temperature measurement routing scenario with th
 ```swift
 // At first define a class which will represent the context for IO Routing
 // This class extends IoContext class with an additional property operatingState
-// Make sure to follow all the steps from section ´Custom object types´ (in this Developer Guide) while subclassing IoContext
+// Make sure to follow all the steps from section ´Custom object types´ 
+// (in this Developer Guide) while subclassing IoContext
 class TemperatureIoContext: IoContext {
     var operatingState: String
     
@@ -488,7 +489,7 @@ IoSourceController: Provides data transfer rate controlled publishing of IO valu
 
 IoActorController: Provides convenience methods for observing IO values and for monitoring changes in the association state of specific IO actors. Note that this controller class caches the latest IO value received for the given IO actor (using BehaviorSubjects). When subscribed, the current value (or nil if none exists yet) is emitted immediately. Due to this behavior the cached value of the observable will also be emitted after reassociation. If this is not desired use self.communicationManager.observeIoValue instead. This method doesn’t cache any previously emitted value.
 
-Take a look at these controllers in action in the [CoatySwift Example on IO Routing](https://github.com/coatyio/coaty-examples/tree/master/iorouting/swift)
+Take a look at these controllers in action in the [CoatySwift Example on IO Routing](https://github.com/coatyio/coaty-examples/tree/master/io-routing/swift)
 
 ## Bootstrapping a Coaty container
 
