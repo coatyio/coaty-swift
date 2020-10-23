@@ -198,12 +198,6 @@ application:
 - __Call - Return__: Request execution of a remote operation and receive results
   by Return events.
 
-> __NOTE__:
->
->Although Coaty itself also specifices __IoValue__ and __Associate__ events,
->these are currently **not** included in CoatySwift and therefore are left out
->of the documentation.
-
 We differentiate between __one-way__ and __two-way__ events. Advertise,
 Deadvertise and Channel are one-way events. Discover-Resolve, Query-Retrieve,
 Update-Complete and Call-Return are two-way events.
