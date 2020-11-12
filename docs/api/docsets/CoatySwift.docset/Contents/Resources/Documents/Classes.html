@@ -14,7 +14,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">CoatySwift 2.2.0 Docs</a></p>
+        <p><a href="index.html">CoatySwift 2.2.1 Docs</a></p>
         <p class="header-right"><a href="https://github.com/coatyio/coaty-swift"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -233,6 +233,9 @@
                 <a href="Classes/ObjectJoinCondition.html">ObjectJoinCondition</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/ObjectLifecycleController.html">ObjectLifecycleController</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/OrderByProperty.html">OrderByProperty</a>
               </li>
               <li class="nav-group-task">
@@ -367,6 +370,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/IoNodeDefinition.html">IoNodeDefinition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ObjectLifecycleInfo.html">ObjectLifecycleInfo</a>
               </li>
             </ul>
           </li>
@@ -1451,6 +1457,57 @@ between distributed Coaty agents based on the publish-subscribe API of a
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">CommunicationManager</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10CoatySwift25ObjectLifecycleControllerC"></a>
+                    <a name="//apple_ref/swift/Class/ObjectLifecycleController" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10CoatySwift25ObjectLifecycleControllerC">ObjectLifecycleController</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Keeps track of agents or specific Coaty objects in a Coaty network by
+monitoring agent identities or custom object types.</p>
+
+<p>This controller observes advertisements and deadvertisements of such objects
+and discovers them. Changes are emitted on corresponding observables that
+applications can subscribe to.</p>
+
+<p>You can use this controller either standalone by adding it to the container
+components or extend your custom controller class from this controller class.</p>
+
+<p>If you want to keep track of custom object types (not agent identities), you
+have to implement the remote side of the distributed object lifecycle
+management explicitely, i.e. advertise/readvertise/deadvertise your custom
+objects and observe/resolve corresponding Discover events. To facilitate
+this, this controller provides convenience methods:
+<code>advertiseDiscoverableObject</code>, <code>readvertiseDiscoverableObject</code>, and
+<code>deadvertiseDiscoverableObject</code>.</p>
+
+<p>Usually, a custom object should have the object ID of its agent identity,
+i.e. <code><a href="Classes/Container.html#/s:10CoatySwift9ContainerC8identityAA8IdentityCSgvp">Container.identity</a></code>, set as its <code>parentObjectId</code> in order to be
+automatically deadvertised when the agent terminates abnormally. You can
+automate this by passing <code>true</code> to the optional parameter
+<code>shouldSetParentObjectId</code> of method <code>advertiseDiscoverableObject</code> (<code>true</code> is
+also the default parameter value).</p>
+
+                        <a href="Classes/ObjectLifecycleController.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ObjectLifecycleController</span> <span class="p">:</span> <span class="kt"><a href="Classes/Controller.html">Controller</a></span></code></pre>
 
                         </div>
                       </div>

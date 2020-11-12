@@ -1,5 +1,15 @@
 # Changelog
 
+<a name="2.2.1"></a>
+## [2.2.1](https://github.com/coatyio/coaty-swift/compare/2.2.0...2.2.1) (2020-11-11)
+
+This minor release adds ObjectLifecycleController class to CoatySwift.
+
+### Features
+
+* **ObjectLifecycleController:** implement ObjectLifecycleController class with a corresponding test.
+  ([9af8ca8](https://github.com/coatyio/coaty-swift/commit/9af8ca8))
+
 <a name="2.2.0"></a>
 ## [2.2.0](https://github.com/coatyio/coaty-swift/compare/2.1.0...2.2.0) (2020-09-11)
 

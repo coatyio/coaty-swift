@@ -7,7 +7,7 @@ author_url: https://coaty.io
 github_url: https://github.com/coatyio/coaty-swift
 readme: README.md
 module: CoatySwift
-module_version: 2.1.0
+module_version: 2.2.1
 podspec: CoatySwift.podspec
 min_acl: public
 include: CoatySwift/Classes/**/*.swift
