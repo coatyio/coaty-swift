@@ -51,7 +51,7 @@ public struct ObjectLifecycleInfo {
 /// automate this by passing `true` to the optional parameter
 /// `shouldSetParentObjectId` of method `advertiseDiscoverableObject` (`true` is
 /// also the default parameter value).
-public class ObjectLifecycleController: Controller {
+open class ObjectLifecycleController: Controller {
 
     // - MARK: Public methods
     
