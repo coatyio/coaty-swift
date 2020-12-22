@@ -18,4 +18,7 @@ public enum CoatySwiftError: Error {
     
     /// Invalid configuration option.
     case InvalidConfiguration(String)
+    
+    /// An error that occured during runtime.
+    case RuntimeError(String)
 }

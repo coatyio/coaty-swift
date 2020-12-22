@@ -40,6 +40,7 @@ this guide.
       - [SourcesAgent](#sourcesagent)
       - [NormalStateActorAgent](#normalstateactoragent)
       - [EmergencyStateActorAgent](#emergencystateactoragent)
+  - [Sensor Things API](#sensor-things-api)
   - [Bootstrapping a Coaty container](#bootstrapping-a-coaty-container)
   - [Creating controllers](#creating-controllers)
   - [Custom object types](#custom-object-types)
@@ -483,7 +484,14 @@ IoSourceController: Provides data transfer rate controlled publishing of IO valu
 
 IoActorController: Provides convenience methods for observing IO values and for monitoring changes in the association state of specific IO actors. Note that this controller class caches the latest IO value received for the given IO actor (using BehaviorSubjects). When subscribed, the current value (or nil if none exists yet) is emitted immediately. Due to this behavior the cached value of the observable will also be emitted after reassociation. If this is not desired use self.communicationManager.observeIoValue instead. This method doesn’t cache any previously emitted value.
 
-Take a look at these controllers in action in the [CoatySwift Example on IO Routing](https://github.com/coatyio/coaty-examples/tree/master/io-routing/swift)
+Take a look at these controllers in action in the [CoatySwift Example on IO
+Routing](https://github.com/coatyio/coaty-examples/tree/master/io-routing/swift)
+
+## Sensor Things API
+
+If you want to learn how to use Sensor Things API implementation in Coaty Swift
+please refer to [Coaty Swift Sensor Things
+Guide](https://github.com/coatyio/coaty-swift/man/sensor-things-guide.md).
 
 ## Bootstrapping a Coaty container
 

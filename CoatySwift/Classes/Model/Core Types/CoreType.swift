@@ -118,6 +118,13 @@ public enum CoreType: String, Codable {
         _ = CoatySwift.Snapshot.objectType
     }
     
+    static func registerSensorThingsTypes() {
+        _ = CoatySwift.Sensor.objectType
+        _ = CoatySwift.Thing.objectType
+        _ = CoatySwift.FeatureOfInterest.objectType
+        _ = CoatySwift.Observation.objectType
+    }
+    
     /// Gets the object type of this core type.
     public var objectType: String {
         switch self {
@@ -145,7 +152,7 @@ public enum CoreType: String, Codable {
             return ObjectType.Location.rawValue
         case .Snapshot:
             return ObjectType.Snapshot.rawValue
-        }
+}
     }
     
     // MARK: - Codable methods.

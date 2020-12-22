@@ -95,6 +95,21 @@
 		9E774EC1249B7BCC00EF888A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E774EC0249B7BCC00EF888A /* SceneDelegate.swift */; };
 		9E774EC3249B9D6200EF888A /* ObjectMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E774EC2249B9D6200EF888A /* ObjectMatcherTests.swift */; };
 		9E774EC9249B9E7E00EF888A /* ObjectMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E774EC8249B9E7E00EF888A /* ObjectMatcher.swift */; };
+		9EB36B61259211A60057C65E /* CoatyTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB36B60259211A60057C65E /* CoatyTimeInterval.swift */; };
+		9EB36B66259211AE0057C65E /* FeatureOfInterest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB36B65259211AE0057C65E /* FeatureOfInterest.swift */; };
+		9EB36B6B259211B40057C65E /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB36B6A259211B40057C65E /* Observation.swift */; };
+		9EB36B70259211BD0057C65E /* ObservedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB36B6F259211BD0057C65E /* ObservedProperty.swift */; };
+		9EB36B75259211C20057C65E /* Polygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB36B74259211C20057C65E /* Polygon.swift */; };
+		9EB36B7A259211C90057C65E /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB36B79259211C90057C65E /* Sensor.swift */; };
+		9EB36B7F259211D00057C65E /* SensorIo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB36B7E259211D00057C65E /* SensorIo.swift */; };
+		9EB36B84259211E30057C65E /* SensorObserverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB36B83259211E30057C65E /* SensorObserverController.swift */; };
+		9EB36B89259211EC0057C65E /* SensorSourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB36B88259211EC0057C65E /* SensorSourceController.swift */; };
+		9EB36B8E259211F00057C65E /* Thing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB36B8D259211F00057C65E /* Thing.swift */; };
+		9EB36B93259211F90057C65E /* ThingObserverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB36B92259211F90057C65E /* ThingObserverController.swift */; };
+		9EB36B982592120E0057C65E /* ThingSensorObservationObserverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB36B972592120E0057C65E /* ThingSensorObservationObserverController.swift */; };
+		9EB36B9D259212170057C65E /* UnitOfMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB36B9C259212170057C65E /* UnitOfMeasurement.swift */; };
+		9EB36BB5259213000057C65E /* SensorThingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB36BB4259213000057C65E /* SensorThingsTests.swift */; };
+		9EB36BC0259213380057C65E /* SensorThingsMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB36BBF259213380057C65E /* SensorThingsMocks.swift */; };
 		AE4DFA1A4213C170796F6C92 /* Pods_CoatySwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16EF88BE31BAF804947F69C9 /* Pods_CoatySwiftTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -197,6 +212,21 @@
 		9E774EC0249B7BCC00EF888A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		9E774EC2249B9D6200EF888A /* ObjectMatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectMatcherTests.swift; sourceTree = "<group>"; };
 		9E774EC8249B9E7E00EF888A /* ObjectMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectMatcher.swift; sourceTree = "<group>"; };
+		9EB36B60259211A60057C65E /* CoatyTimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoatyTimeInterval.swift; sourceTree = "<group>"; };
+		9EB36B65259211AE0057C65E /* FeatureOfInterest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureOfInterest.swift; sourceTree = "<group>"; };
+		9EB36B6A259211B40057C65E /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
+		9EB36B6F259211BD0057C65E /* ObservedProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservedProperty.swift; sourceTree = "<group>"; };
+		9EB36B74259211C20057C65E /* Polygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Polygon.swift; sourceTree = "<group>"; };
+		9EB36B79259211C90057C65E /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
+		9EB36B7E259211D00057C65E /* SensorIo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorIo.swift; sourceTree = "<group>"; };
+		9EB36B83259211E30057C65E /* SensorObserverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorObserverController.swift; sourceTree = "<group>"; };
+		9EB36B88259211EC0057C65E /* SensorSourceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorSourceController.swift; sourceTree = "<group>"; };
+		9EB36B8D259211F00057C65E /* Thing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thing.swift; sourceTree = "<group>"; };
+		9EB36B92259211F90057C65E /* ThingObserverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingObserverController.swift; sourceTree = "<group>"; };
+		9EB36B972592120E0057C65E /* ThingSensorObservationObserverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingSensorObservationObserverController.swift; sourceTree = "<group>"; };
+		9EB36B9C259212170057C65E /* UnitOfMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitOfMeasurement.swift; sourceTree = "<group>"; };
+		9EB36BB4259213000057C65E /* SensorThingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorThingsTests.swift; sourceTree = "<group>"; };
+		9EB36BBF259213380057C65E /* SensorThingsMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorThingsMocks.swift; sourceTree = "<group>"; };
 		C7CAB33D6E997173792965FE /* Pods-CoatySwiftExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwiftExample.debug.xcconfig"; path = "Target Support Files/Pods-CoatySwiftExample/Pods-CoatySwiftExample.debug.xcconfig"; sourceTree = "<group>"; };
 		EB83FE8DA50CD1980485E4D7 /* Pods-CoatySwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwiftTests.release.xcconfig"; path = "Target Support Files/Pods-CoatySwiftTests/Pods-CoatySwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		F0C4D974CDC04835C077CBA0 /* Pods-CoatySwiftExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoatySwiftExample.release.xcconfig"; path = "Target Support Files/Pods-CoatySwiftExample/Pods-CoatySwiftExample.release.xcconfig"; sourceTree = "<group>"; };
@@ -318,6 +348,8 @@
 				9E774E28249B75B500EF888A /* CoatySwiftTests.swift */,
 				9E774EC2249B9D6200EF888A /* ObjectMatcherTests.swift */,
 				9E3033F2255D490500021821 /* ObjectLifecycleControllerTests.swift */,
+				9EB36BB4259213000057C65E /* SensorThingsTests.swift */,
+				9EB36BBF259213380057C65E /* SensorThingsMocks.swift */,
 				9E774E2A249B75B500EF888A /* Info.plist */,
 			);
 			path = CoatySwiftTests;
@@ -326,6 +358,7 @@
 		9E774E31249B770300EF888A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				9EB36B5C259211830057C65E /* SensorThings */,
 				9E55CDA1255AA38D00F411DA /* Controller */,
 				9E73C90024A4CE720010AA20 /* IORouting */,
 				9E774E5D249B772B00EF888A /* Common */,
@@ -493,6 +526,26 @@
 				9E774E7A249B772B00EF888A /* IoPoint.swift */,
 			);
 			path = "Core Types";
+			sourceTree = "<group>";
+		};
+		9EB36B5C259211830057C65E /* SensorThings */ = {
+			isa = PBXGroup;
+			children = (
+				9EB36B60259211A60057C65E /* CoatyTimeInterval.swift */,
+				9EB36B65259211AE0057C65E /* FeatureOfInterest.swift */,
+				9EB36B6A259211B40057C65E /* Observation.swift */,
+				9EB36B6F259211BD0057C65E /* ObservedProperty.swift */,
+				9EB36B74259211C20057C65E /* Polygon.swift */,
+				9EB36B79259211C90057C65E /* Sensor.swift */,
+				9EB36B7E259211D00057C65E /* SensorIo.swift */,
+				9EB36B83259211E30057C65E /* SensorObserverController.swift */,
+				9EB36B88259211EC0057C65E /* SensorSourceController.swift */,
+				9EB36B8D259211F00057C65E /* Thing.swift */,
+				9EB36B92259211F90057C65E /* ThingObserverController.swift */,
+				9EB36B972592120E0057C65E /* ThingSensorObservationObserverController.swift */,
+				9EB36B9C259212170057C65E /* UnitOfMeasurement.swift */,
+			);
+			path = SensorThings;
 			sourceTree = "<group>";
 		};
 		E38B4147A62870790AEB1CE3 /* Frameworks */ = {
@@ -754,23 +807,30 @@
 			files = (
 				9E774EB4249B772B00EF888A /* Task.swift in Sources */,
 				9E774EA8249B772B00EF888A /* PayloadCoder.swift in Sources */,
+				9EB36B89259211EC0057C65E /* SensorSourceController.swift in Sources */,
 				9E73C91624A4DEA50010AA20 /* IoSourceController.swift in Sources */,
 				9E774E80249B772B00EF888A /* CommunicationTopic.swift in Sources */,
 				9E774E8C249B772B00EF888A /* CompleteEvent.swift in Sources */,
+				9EB36B93259211F90057C65E /* ThingObserverController.swift in Sources */,
 				9E774E94249B772B00EF888A /* Startable.swift in Sources */,
 				9E774E9F249B772B00EF888A /* AnyDecodable.swift in Sources */,
 				9E55CDA4255AA3BD00F411DA /* ObjectLifecycleController.swift in Sources */,
 				9E774E86249B772B00EF888A /* UpdateEvent.swift in Sources */,
+				9EB36B7A259211C90057C65E /* Sensor.swift in Sources */,
 				9E774E8E249B772B00EF888A /* ResolveEvent.swift in Sources */,
+				9EB36B7F259211D00057C65E /* SensorIo.swift in Sources */,
 				9E774EA0249B772B00EF888A /* _AnyDecodable.swift in Sources */,
 				9E73C91024A4DE640010AA20 /* BasicIoRouter.swift in Sources */,
 				9E774E8B249B772B00EF888A /* ReturnEvent.swift in Sources */,
 				9E774E84249B772B00EF888A /* CM+Util.swift in Sources */,
 				9E774E8A249B772B00EF888A /* QueryEvent.swift in Sources */,
+				9EB36B9D259212170057C65E /* UnitOfMeasurement.swift in Sources */,
+				9EB36B8E259211F00057C65E /* Thing.swift in Sources */,
 				9E774EA7249B772B00EF888A /* Decoder+Context.swift in Sources */,
 				9E774E8D249B772B00EF888A /* CallEvent.swift in Sources */,
 				9E3C8FC324B488F7002159AA /* IoValueEvent.swift in Sources */,
 				9E774E7B249B772B00EF888A /* DbConnectionInfo.swift in Sources */,
+				9EB36B66259211AE0057C65E /* FeatureOfInterest.swift in Sources */,
 				9E774E9C249B772B00EF888A /* Configuration.swift in Sources */,
 				9E73C91824A4DEC10010AA20 /* IoRouter.swift in Sources */,
 				9E774E7C249B772B00EF888A /* CommunicationEventType.swift in Sources */,
@@ -799,11 +859,13 @@
 				9E774EA1249B772B00EF888A /* AnyCodable.swift in Sources */,
 				9E774EB0249B772B00EF888A /* Snapshot.swift in Sources */,
 				9E774E89249B772B00EF888A /* DiscoverEvent.swift in Sources */,
+				9EB36B84259211E30057C65E /* SensorObserverController.swift in Sources */,
 				9E774EAC249B772B00EF888A /* Location.swift in Sources */,
 				9E774E82249B772B00EF888A /* CM+Observe.swift in Sources */,
 				9E774E97249B772B00EF888A /* Runtime.swift in Sources */,
 				9E774E96249B772B00EF888A /* CommunicationClient.swift in Sources */,
 				9E774E92249B772B00EF888A /* CocoaMQTTClient.swift in Sources */,
+				9EB36B61259211A60057C65E /* CoatyTimeInterval.swift in Sources */,
 				9E774E81249B772B00EF888A /* CommunicationManager.swift in Sources */,
 				9E774EB2249B772B00EF888A /* IoActor.swift in Sources */,
 				9E774EA3249B772B00EF888A /* _AnyEncodable.swift in Sources */,
@@ -818,10 +880,14 @@
 				9E774EAF249B772B00EF888A /* Log.swift in Sources */,
 				9E774EAB249B772B00EF888A /* ObjectJoinCondition.swift in Sources */,
 				9E774EB3249B772B00EF888A /* IoSource.swift in Sources */,
+				9EB36B75259211C20057C65E /* Polygon.swift in Sources */,
+				9EB36B982592120E0057C65E /* ThingSensorObservationObserverController.swift in Sources */,
 				9E774EA6249B772B00EF888A /* CoatySwiftError.swift in Sources */,
 				9E774EAA249B772B00EF888A /* ObjectFilter.swift in Sources */,
+				9EB36B70259211BD0057C65E /* ObservedProperty.swift in Sources */,
 				9E774E9D249B772B00EF888A /* LogManager.swift in Sources */,
 				9E774EA9249B772B00EF888A /* CoatyTimestamp.swift in Sources */,
+				9EB36B6B259211B40057C65E /* Observation.swift in Sources */,
 				9E774E88249B772B00EF888A /* CommunicationEvent.swift in Sources */,
 				9E774E7E249B772B00EF888A /* CommunicationState.swift in Sources */,
 				9E774E7D249B772B00EF888A /* OperatingState.swift in Sources */,
@@ -846,6 +912,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E3033F3255D490500021821 /* ObjectLifecycleControllerTests.swift in Sources */,
+				9EB36BB5259213000057C65E /* SensorThingsTests.swift in Sources */,
+				9EB36BC0259213380057C65E /* SensorThingsMocks.swift in Sources */,
 				9E774E29249B75B500EF888A /* CoatySwiftTests.swift in Sources */,
 				9E774EC3249B9D6200EF888A /* ObjectMatcherTests.swift in Sources */,
 			);

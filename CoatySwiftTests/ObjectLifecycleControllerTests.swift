@@ -129,13 +129,19 @@ class ObjectLifecycleControllerTests: XCTestCase {
         // Advertise the created test object from the second agent
         coatyAgent1Container.communicationManager?.publishAdvertise(try! AdvertiseEvent.with(object: testLog))
         
+        sleep(1)
+        
         // Change the existing object and advertise again from the second agent
         testLog.logMessage = "Modifed for test purposes. Ignore."
         coatyAgent1Container.communicationManager?.publishAdvertise(try! AdvertiseEvent.with(object: testLog))
         
+        sleep(1)
+        
         // Removed
         coatyAgent1Container.communicationManager?.publishDeadvertise(DeadvertiseEvent.with(objectIds: [testLog.objectId]))
         
-        wait(for: [expectation1, expectation2, expectation3], timeout: 5)
+        sleep(1)
+        
+        wait(for: [expectation1, expectation2, expectation3], timeout: 20)
     }
 }

@@ -58,6 +58,9 @@ public class Container {
         // Ensure all Coaty core object types are registered.
         CoreType.registerCoreObjectTypes()
         
+        // Ensure all SensorThings object types are registered.
+        CoreType.registerSensorThingsTypes()
+        
         container.resolveComponents(components, configuration)
         return container
     }
