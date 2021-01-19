@@ -1,10 +1,10 @@
 PODS:
-  - CoatySwift (2.2.1):
+  - CoatySwift (2.3.0):
     - CocoaMQTT (~> 1.2.5)
     - RxCocoa (~> 5.1.1)
     - RxSwift (~> 5.1.1)
     - XCGLogger (~> 7.0.1)
-  - CocoaAsyncSocket (7.6.4)
+  - CocoaAsyncSocket (7.6.5)
   - CocoaMQTT (1.2.5):
     - CocoaAsyncSocket (~> 7.6.3)
   - ObjcExceptionBridging (1.0.1):
@@ -43,8 +43,8 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  CoatySwift: b3ad6abc85f592de27b71026758951b5749f93e6
-  CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
+  CoatySwift: 41de138b2595004913d7efe2318d1ae94d0c7549
+  CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   CocoaMQTT: a61490ed3b328011c5d75169a77781983e2bb221
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601

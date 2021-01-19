@@ -1,5 +1,15 @@
 # Changelog
 
+<a name="2.3.0"></a>
+## [2.3.0](https://github.com/coatyio/coaty-swift/compare/2.2.1...2.3.0) (2021-01-19)
+
+This release adds yet unsupported SensorThings API to CoatySwift.
+
+### Features
+
+* **SensorThings API:** implement sensor things with corresponding tests
+  ([ce98ff9](https://github.com/coatyio/coaty-swift/commit/1178230))
+
 <a name="2.2.1"></a>
 ## [2.2.1](https://github.com/coatyio/coaty-swift/compare/2.2.0...2.2.1) (2020-11-11)
 

@@ -2071,6 +2071,650 @@
       "symbol": "IoNodeDefinition.init(ioSources:ioActors:characteristics:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/FeatureOfInterest.swift",
+      "line": 19,
+      "symbol": "FeatureOfInterest.objectType",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/FeatureOfInterest.swift",
+      "line": 19,
+      "symbol": "FeatureOfInterest.objectType",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/FeatureOfInterest.swift",
+      "line": 36,
+      "symbol": "FeatureOfInterest.init(description:encodingType:metadata:name:objectId:externalId:parentObjectId:objectType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/FeatureOfInterest.swift",
+      "line": 36,
+      "symbol": "FeatureOfInterest.init(description:encodingType:metadata:name:objectId:externalId:parentObjectId:objectType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/FeatureOfInterest.swift",
+      "line": 64,
+      "symbol": "FeatureOfInterest.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/FeatureOfInterest.swift",
+      "line": 64,
+      "symbol": "FeatureOfInterest.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/FeatureOfInterest.swift",
+      "line": 72,
+      "symbol": "FeatureOfInterest.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/FeatureOfInterest.swift",
+      "line": 72,
+      "symbol": "FeatureOfInterest.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Observation.swift",
+      "line": 14,
+      "symbol": "Observation.objectType",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Observation.swift",
+      "line": 14,
+      "symbol": "Observation.objectType",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Observation.swift",
+      "line": 50,
+      "symbol": "Observation.init(phenomenonTime:result:resultTime:resultQuality:validTime:parameters:featureOfInterest:name:objectId:externalId:parentObjectId:objectType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Observation.swift",
+      "line": 50,
+      "symbol": "Observation.init(phenomenonTime:result:resultTime:resultQuality:validTime:parameters:featureOfInterest:name:objectId:externalId:parentObjectId:objectType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Observation.swift",
+      "line": 94,
+      "symbol": "Observation.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Observation.swift",
+      "line": 94,
+      "symbol": "Observation.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Observation.swift",
+      "line": 107,
+      "symbol": "Observation.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Observation.swift",
+      "line": 107,
+      "symbol": "Observation.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/ObservedProperty.swift",
+      "line": 22,
+      "symbol": "ObservedProperty.init(name:definition:description:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/ObservedProperty.swift",
+      "line": 22,
+      "symbol": "ObservedProperty.init(name:definition:description:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Polygon.swift",
+      "line": 31,
+      "symbol": "Polygon.init(coordinates:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Polygon.swift",
+      "line": 31,
+      "symbol": "Polygon.init(coordinates:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Polygon.swift",
+      "line": 46,
+      "symbol": "GeoJsonObject.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Polygon.swift",
+      "line": 46,
+      "symbol": "GeoJsonObject.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Polygon.swift",
+      "line": 47,
+      "symbol": "GeoJsonObject.bbox",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Polygon.swift",
+      "line": 47,
+      "symbol": "GeoJsonObject.bbox",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Polygon.swift",
+      "line": 53,
+      "symbol": "GeoJsonType.Polygon",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Polygon.swift",
+      "line": 53,
+      "symbol": "GeoJsonType.Polygon",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Polygon.swift",
+      "line": 56,
+      "symbol": "BBox",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Polygon.swift",
+      "line": 56,
+      "symbol": "BBox",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Polygon.swift",
+      "line": 58,
+      "symbol": "BBox.array",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Polygon.swift",
+      "line": 58,
+      "symbol": "BBox.array",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 15,
+      "symbol": "Sensor.objectType",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 15,
+      "symbol": "Sensor.objectType",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 75,
+      "symbol": "Sensor.init(description:encodingType:metadata:unitOfMeasurement:observationType:observedArea:phenomenonTime:resultTime:observedProperty:name:objectId:externalId:parentObjectId:objectType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 75,
+      "symbol": "Sensor.init(description:encodingType:metadata:unitOfMeasurement:observationType:observedArea:phenomenonTime:resultTime:observedProperty:name:objectId:externalId:parentObjectId:objectType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 122,
+      "symbol": "Sensor.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 122,
+      "symbol": "Sensor.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 137,
+      "symbol": "Sensor.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 137,
+      "symbol": "Sensor.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 164,
+      "symbol": "SensorEncodingTypes.PDF",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 164,
+      "symbol": "SensorEncodingTypes.PDF",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 165,
+      "symbol": "SensorEncodingTypes.SENSOR_ML",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 165,
+      "symbol": "SensorEncodingTypes.SENSOR_ML",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 174,
+      "symbol": "EncodingTypes.GEO_JSON",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 174,
+      "symbol": "EncodingTypes.GEO_JSON",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 196,
+      "symbol": "ObservationType.category_observation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 196,
+      "symbol": "ObservationType.category_observation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 197,
+      "symbol": "ObservationType.count_observation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 197,
+      "symbol": "ObservationType.count_observation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 198,
+      "symbol": "ObservationType.measurement",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 198,
+      "symbol": "ObservationType.measurement",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 199,
+      "symbol": "ObservationType.observation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 199,
+      "symbol": "ObservationType.observation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 200,
+      "symbol": "ObservationType.truth_observation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 200,
+      "symbol": "ObservationType.truth_observation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 204,
+      "symbol": "SensorThingsTypes",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 204,
+      "symbol": "SensorThingsTypes",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 205,
+      "symbol": "SensorThingsTypes.OBJECT_TYPE_FEATURE_OF_INTEREST",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 205,
+      "symbol": "SensorThingsTypes.OBJECT_TYPE_FEATURE_OF_INTEREST",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 206,
+      "symbol": "SensorThingsTypes.OBJECT_TYPE_OBSERVATION",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 206,
+      "symbol": "SensorThingsTypes.OBJECT_TYPE_OBSERVATION",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 207,
+      "symbol": "SensorThingsTypes.OBJECT_TYPE_SENSOR",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 207,
+      "symbol": "SensorThingsTypes.OBJECT_TYPE_SENSOR",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 208,
+      "symbol": "SensorThingsTypes.OBJECT_TYPE_THING",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Sensor.swift",
+      "line": 208,
+      "symbol": "SensorThingsTypes.OBJECT_TYPE_THING",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 16,
+      "symbol": "SensorIo.init(parameters:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 16,
+      "symbol": "SensorIo.init(parameters:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 18,
+      "symbol": "SensorIo.parameters",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 18,
+      "symbol": "SensorIo.parameters",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 20,
+      "symbol": "SensorIo.read(callback:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 20,
+      "symbol": "SensorIo.read(callback:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 24,
+      "symbol": "SensorIo.write(value:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 24,
+      "symbol": "SensorIo.write(value:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 50,
+      "symbol": "ISensorIo.init(parameters:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 50,
+      "symbol": "ISensorIo.init(parameters:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 52,
+      "symbol": "ISensorIo.parameters",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 52,
+      "symbol": "ISensorIo.parameters",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 54,
+      "symbol": "ISensorIo.read(callback:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 54,
+      "symbol": "ISensorIo.read(callback:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 56,
+      "symbol": "ISensorIo.write(value:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorIo.swift",
+      "line": 56,
+      "symbol": "ISensorIo.write(value:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorSourceController.swift",
+      "line": 509,
+      "symbol": "SensorDefinition.init(parameters:sensor:io:samplingInterval:observationPublicationType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/SensorSourceController.swift",
+      "line": 509,
+      "symbol": "SensorDefinition.init(parameters:sensor:io:samplingInterval:observationPublicationType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Thing.swift",
+      "line": 16,
+      "symbol": "Thing.objectType",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Thing.swift",
+      "line": 16,
+      "symbol": "Thing.objectType",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Thing.swift",
+      "line": 30,
+      "symbol": "Thing.init(description:properties:name:objectId:externalId:parentObjectId:locationId:objectType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Thing.swift",
+      "line": 30,
+      "symbol": "Thing.init(description:properties:name:objectId:externalId:parentObjectId:locationId:objectType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Thing.swift",
+      "line": 57,
+      "symbol": "Thing.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Thing.swift",
+      "line": 57,
+      "symbol": "Thing.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Thing.swift",
+      "line": 64,
+      "symbol": "Thing.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/Thing.swift",
+      "line": 64,
+      "symbol": "Thing.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/UnitOfMeasurement.swift",
+      "line": 27,
+      "symbol": "UnitOfMeasurement.init(name:symbol:definition:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/lukaszzalewski/Repos/coaty-swift/CoatySwift/Classes/SensorThings/UnitOfMeasurement.swift",
+      "line": 27,
+      "symbol": "UnitOfMeasurement.init(name:symbol:definition:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
     }
   ],
   "source_directory": "/Users/lukaszzalewski/Repos/coaty-swift"
