@@ -15,6 +15,7 @@
 		9E3C8FC124B488EC002159AA /* IoStateEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3C8FC024B488EC002159AA /* IoStateEvent.swift */; };
 		9E3C8FC324B488F7002159AA /* IoValueEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3C8FC224B488F7002159AA /* IoValueEvent.swift */; };
 		9E55CDA4255AA3BD00F411DA /* ObjectLifecycleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E55CDA3255AA3BD00F411DA /* ObjectLifecycleController.swift */; };
+		9E58734525B8608A00BD0193 /* DecentralizedLoggingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E58734425B8608A00BD0193 /* DecentralizedLoggingTest.swift */; };
 		9E73C8FF24A4CCE70010AA20 /* AssociateEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E73C8FE24A4CCE70010AA20 /* AssociateEvent.swift */; };
 		9E73C91024A4DE640010AA20 /* BasicIoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E73C90F24A4DE640010AA20 /* BasicIoRouter.swift */; };
 		9E73C91224A4DE740010AA20 /* IoActorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E73C91124A4DE740010AA20 /* IoActorController.swift */; };
@@ -126,6 +127,7 @@
 		9E3C8FC024B488EC002159AA /* IoStateEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IoStateEvent.swift; sourceTree = "<group>"; };
 		9E3C8FC224B488F7002159AA /* IoValueEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IoValueEvent.swift; sourceTree = "<group>"; };
 		9E55CDA3255AA3BD00F411DA /* ObjectLifecycleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectLifecycleController.swift; sourceTree = "<group>"; };
+		9E58734425B8608A00BD0193 /* DecentralizedLoggingTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecentralizedLoggingTest.swift; sourceTree = "<group>"; };
 		9E73C8FE24A4CCE70010AA20 /* AssociateEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociateEvent.swift; sourceTree = "<group>"; };
 		9E73C90F24A4DE640010AA20 /* BasicIoRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicIoRouter.swift; sourceTree = "<group>"; };
 		9E73C91124A4DE740010AA20 /* IoActorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IoActorController.swift; sourceTree = "<group>"; };
@@ -299,7 +301,6 @@
 				9E774E01249B74DD00EF888A /* CoatySwift */,
 				9E774E0F249B752100EF888A /* CoatySwiftExample */,
 				9E774E27249B75B500EF888A /* CoatySwiftTests */,
-				9E774E00249B74DD00EF888A /* Products */,
 				1E4C3100FB66DDBCB65CBBC9 /* Pods */,
 				E38B4147A62870790AEB1CE3 /* Frameworks */,
 			);
@@ -313,6 +314,7 @@
 				9E774E26249B75B500EF888A /* CoatySwiftTests.xctest */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		9E774E01249B74DD00EF888A /* CoatySwift */ = {
@@ -350,6 +352,8 @@
 				9E3033F2255D490500021821 /* ObjectLifecycleControllerTests.swift */,
 				9EB36BB4259213000057C65E /* SensorThingsTests.swift */,
 				9EB36BBF259213380057C65E /* SensorThingsMocks.swift */,
+				9E58734425B8608A00BD0193 /* DecentralizedLoggingTest.swift */,
+				9E774E00249B74DD00EF888A /* Products */,
 				9E774E2A249B75B500EF888A /* Info.plist */,
 			);
 			path = CoatySwiftTests;
@@ -913,6 +917,7 @@
 			files = (
 				9E3033F3255D490500021821 /* ObjectLifecycleControllerTests.swift in Sources */,
 				9EB36BB5259213000057C65E /* SensorThingsTests.swift in Sources */,
+				9E58734525B8608A00BD0193 /* DecentralizedLoggingTest.swift in Sources */,
 				9EB36BC0259213380057C65E /* SensorThingsMocks.swift in Sources */,
 				9E774E29249B75B500EF888A /* CoatySwiftTests.swift in Sources */,
 				9E774EC3249B9D6200EF888A /* ObjectMatcherTests.swift in Sources */,

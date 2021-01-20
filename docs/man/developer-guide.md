@@ -41,6 +41,7 @@ this guide.
       - [NormalStateActorAgent](#normalstateactoragent)
       - [EmergencyStateActorAgent](#emergencystateactoragent)
   - [Sensor Things API](#sensor-things-api)
+  - [Decentralized Logging](#decentralized-logging)
   - [Bootstrapping a Coaty container](#bootstrapping-a-coaty-container)
   - [Creating controllers](#creating-controllers)
   - [Custom object types](#custom-object-types)
@@ -492,6 +493,67 @@ Routing](https://github.com/coatyio/coaty-examples/tree/master/io-routing/swift)
 If you want to learn how to use Sensor Things API implementation in Coaty Swift
 please refer to [Coaty Swift Sensor Things
 Guide](https://github.com/coatyio/coaty-swift/man/sensor-things-guide.md).
+
+## Decentralized Logging
+
+The Coaty framework provides the object type `Log` for decentralized structured
+logging of any kind of informational events in your Coaty agents, such as
+errors, warnings, system and application-specific messages. Log objects are
+usually published to interested parties using an Advertise event. These log
+objects can then be collected and ingested into external processing pipelines
+such as the [ELK Stack](https://www.elastic.co/elk-stack).
+
+A controller can publish a log object by creating and advertising a `Log`
+object. You can specify the level of logging (debug, info, warning, error,
+fatal), the message to log, its creation timestamp, and other optional
+information about the host environment in which this log object is created. You
+can also extend the `Log` object with custom property-value pairs.
+
+You can also specify log tags as an array of string values in the `Log.logTags`
+property. Tags are used to categorize or filter log output. Agents may introduce
+specific tags, such as "service" or "app", usually defined at design time.
+
+You can also specify log labels as a set of key-value label pairs in the
+`logLabels` property. It can be used to add context-specific information to a
+log object. For example, labels are useful in providing multi-dimensional data
+along a log entry to be exploited by external logging services, such as
+Prometheus.
+
+For convenience, the base `Controller` class provides methods for
+publishing/advertising log objects:
+
+* `logDebug`
+* `logInfo`
+* `logWarning`
+* `logError`
+* `logFatal`
+
+The base `Controller` class also defines a protected method
+`extendLogObject(log: Log)` which is invoked by the controller whenever one of
+the above log methods is called. The controller first creates a `Log` object
+with appropriate property values and passes it to this method before advertising
+it. You can overwrite this method to additionally set certain properties (such
+as `Log.hostname` or `Log.logLabels`). For example, a Node.js agent could add
+the hostname and other host characteristics to the `Log` object like this:
+
+```swift
+override func extendLogObject(log: Log) {
+    log.logHost.hostname = hostname;
+    log.logLabels = [
+        "operatingState": self.communicationManager.operatingState
+    ]
+}
+```
+
+To collect all log objects advertised by agent controllers, implement a logging
+controller that observes Advertise events on the core type `Log`. Take a look at
+the Hello World example of the Coaty framework to see how this is implemented in
+detail.
+
+Future versions of the framework could include predefined logging controllers
+that collect `Log` entries, store them persistently; output them to file or
+console, and provide a query interface for analyzing and visualizing log entries
+by external tools.
 
 ## Bootstrapping a Coaty container
 
