@@ -1,5 +1,15 @@
 # Changelog
 
+<a name="2.3.1"></a>
+## [2.3.1](https://github.com/coatyio/coaty-swift/compare/2.3.0...2.3.1) (2021-01-20)
+
+This release adds decentralized logging functionality to the Controller class.
+
+### Features
+
+* **Decentralized logging:** extend base controller class with decentralized logging functionality; add corresponding test and a new section in developer guide
+  ([4e333e3](https://github.com/coatyio/coaty-swift/commit/4e333e3))
+
 <a name="2.3.0"></a>
 ## [2.3.0](https://github.com/coatyio/coaty-swift/compare/2.2.1...2.3.0) (2021-01-19)
 
