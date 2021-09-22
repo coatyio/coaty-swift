@@ -75,7 +75,7 @@ open class ObjectLifecycleController: Controller {
     /// - Returns: an observable emitting changes concerning tracked objects of the
     /// given core type
     public func observeObjectLifecycleInfoByCoreType(coreType: CoreType,
-                                                     objectFilter: ((CoatyObject) -> Bool)?) -> Observable<ObjectLifecycleInfo>{
+                                                     objectFilter: ((CoatyObject) -> Bool)? = nil) -> Observable<ObjectLifecycleInfo>{
         return self._observeObjectLifecycleInfo(coreType: coreType, objectType: nil, objectFilter: objectFilter)
     }
     
@@ -98,7 +98,7 @@ open class ObjectLifecycleController: Controller {
     /// - Returns: an observable emitting changes concerning tracked objects of the
     /// given object type
     public func observeObjectLifecycleInfoByObjectType(with objectType: String,
-                                                       objectFilter: ((CoatyObject) -> Bool)?) -> Observable<ObjectLifecycleInfo> {
+                                                       objectFilter: ((CoatyObject) -> Bool)? = nil) -> Observable<ObjectLifecycleInfo> {
         return self._observeObjectLifecycleInfo(coreType: nil, objectType: objectType, objectFilter: objectFilter)
     }
     
@@ -180,10 +180,10 @@ open class ObjectLifecycleController: Controller {
     
     private func _observeObjectLifecycleInfo(coreType coreTypeParameter: CoreType?,
                                              objectType: String?,
-                                             objectFilter: ((CoatyObject) -> Bool)?) -> Observable<ObjectLifecycleInfo> {
+                                             objectFilter: ((CoatyObject) -> Bool)? = nil) -> Observable<ObjectLifecycleInfo> {
         // Used because Swift does not allow function parameters mutation
         // and this parameter is not used again in the calling function
-        var coreType: CoreType?
+        var coreType = coreTypeParameter
         
         if coreTypeParameter == nil && objectType == nil {
             coreType = CoreType.Identity
