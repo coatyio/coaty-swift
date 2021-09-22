@@ -14,7 +14,7 @@ this guide.
 >
 > We would like to note that more information about the internals and
 > basics of the __Coaty__ framework can be found in [Coaty Communication
-> Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/). The
+> Protocol](https://coatyio.github.io/coaty-js/man/communication-events/). The
 > [Coaty JS Developer
 > Guide](https://coatyio.github.io/coaty-js/man/developer-guide/), even though
 > written for TypeScript, shares many similarities with CoatySwift and we
@@ -172,7 +172,7 @@ config.communication = CommunicationOptions(mqttClientOptions: mqttClientOptions
 ## Communication patterns
 
 Citing the [Coaty Protocol
-Documentation](https://coatyio.github.io/coaty-js/man/communication-protocol/#events-and-event-patterns):
+Documentation](https://coatyio.github.io/coaty-js/man/communication-events/#event-patterns):
 
 The framework uses a minimum set of predefined events and event patterns to
 discover, distribute, and share object information in a decentralized
@@ -1066,6 +1066,6 @@ as close as possible to the reference implementation. Therefore, we suggest
 checking out these resources as well:
 
 - [In a Nutshell](https://coaty.io/nutshell)
-- [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-protocol/)
+- [Communication Protocol](https://coatyio.github.io/coaty-js/man/communication-events/)
 - [Coaty JS Developer Guide](https://coatyio.github.io/coaty-js/man/developer-guide/)
 - [Coaty JS Project](https://github.com/coatyio/coaty-js)
