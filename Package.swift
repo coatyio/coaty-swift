@@ -23,7 +23,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/lukasz-zet/CocoaMQTT", .branch("master")),
+        .package(url: "https://github.com/emqx/CocoaMQTT", from: "2.0.6"),
         .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "5.1.1"),
         .package(url: "https://github.com/DaveWoodCom/XCGLogger.git", from: "7.0.1")
     ],

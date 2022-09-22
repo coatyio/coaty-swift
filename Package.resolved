@@ -2,21 +2,21 @@
   "object": {
     "pins": [
       {
-        "package": "CocoaAsyncSocket",
-        "repositoryURL": "https://github.com/robbiehanson/CocoaAsyncSocket",
+        "package": "CocoaMQTT",
+        "repositoryURL": "https://github.com/emqx/CocoaMQTT",
         "state": {
           "branch": null,
-          "revision": "dbdc00669c1ced63b27c3c5f052ee4d28f10150c",
-          "version": "7.6.5"
+          "revision": "2bb3a92eb40dbe21d4deed57e37da68459239406",
+          "version": "2.0.7"
         }
       },
       {
-        "package": "CocoaMQTT",
-        "repositoryURL": "https://github.com/lukasz-zet/CocoaMQTT",
+        "package": "MqttCocoaAsyncSocket",
+        "repositoryURL": "https://github.com/leeway1208/MqttCocoaAsyncSocket",
         "state": {
-          "branch": "master",
-          "revision": "c1f6ea58a4ff81569860fe27f255fbabd13538e3",
-          "version": null
+          "branch": null,
+          "revision": "e26a04366bf5553b22e9e4a2468abf456c5fbe4d",
+          "version": "1.0.4"
         }
       },
       {
