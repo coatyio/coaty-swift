@@ -29,7 +29,7 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
     /// CocoaMQTT MQTT client.
     private var mqtt: CocoaMQTT!
     private var discovery: BonjourResolver?
-    private var qos: CocoaMQTTQOS!
+    private var qos: CocoaMQTTQoS!
     
     // MARK: - Initializer.
     
@@ -70,16 +70,16 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
         // mqtt.dispatchQueue = DispatchQueue.global(qos: .userInitiated)
 
         switch mqttClientOptions.qos {
-            case 1: self.qos = .qos1
-            case 2: self.qos = .qos2
-            default: self.qos = .qos0
+            case 1: self.qos = CocoaMQTTQoS.qos1
+            case 2: self.qos = CocoaMQTTQoS.qos2
+            default: self.qos = CocoaMQTTQoS.qos0
         }
     }
     
     // MARK: - Communication methods.
     
     func connect(lastWillTopic: String, lastWillMessage: String) {
-        let willMessage = CocoaMQTTWill(topic: lastWillTopic, message: lastWillMessage)
+        let willMessage = CocoaMQTTMessage(topic: lastWillTopic, string: lastWillMessage)
         willMessage.qos = self.qos
         mqtt.willMessage = willMessage
         
@@ -105,7 +105,7 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
     }
     
     func publish(_ topic: String, message: [UInt8]) {
-        let message = CocoaMQTTMessage(topic: topic, payload: message, qos: .qos0, retained: false, dup: false)
+        let message = CocoaMQTTMessage(topic: topic, payload: message, qos: .qos0, retained: false)
         mqtt.publish(message)
     }
     
@@ -159,16 +159,12 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
         }
     }
     
-    func mqtt(_ mqtt: CocoaMQTT, didReceive trust: SecTrust, completionHandler: @escaping (Bool) -> Void) {
-        completionHandler(true)
+    func mqtt(_ mqtt: CocoaMQTT, didSubscribeTopics success: NSDictionary, failed: [String]) {
+        log.debug("Subscribed to topics \(success.allKeys).")
     }
     
-    func mqtt(_ mqtt: CocoaMQTT, didSubscribeTopic topics: [String]) {
-        log.debug("Subscribed to topics \(topics).")
-    }
-    
-    func mqtt(_ mqtt: CocoaMQTT, didUnsubscribeTopic topic: String) {
-        log.debug("Unsubscribed from topic \(topic).")
+    func mqtt(_ mqtt: CocoaMQTT, didUnsubscribeTopics topics: [String]) {
+        log.debug("Unsubscribed from topics \(topics).")
     }
     
     func mqttDidPing(_ mqtt: CocoaMQTT) {
@@ -191,6 +187,10 @@ internal class CocoaMQTTClient: CommunicationClient, CocoaMQTTDelegate {
             mqtt.port = brokerPort
             self.connectNext()
         }
+    }
+    
+    func mqtt(_ mqtt: CocoaMQTT, didReceive trust: SecTrust, completionHandler: @escaping (Bool) -> Void) {
+        completionHandler(true)
     }
 }
 
