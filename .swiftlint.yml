@@ -1,5 +1,5 @@
 included:
-    - CoatySwift/Classes
+    - Source
 
 disabled_rules:
     - trailing_whitespace

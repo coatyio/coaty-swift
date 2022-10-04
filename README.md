@@ -81,7 +81,7 @@ You can add the CoatySwift pod to the Podfile of your app as follows:
 
 ```ruby
 target 'MyApp' do
-  pod 'CoatySwift', '~> 2.2.0'
+  pod 'CoatySwift', '~> 2.4.0'
 end
 ```
 
