@@ -8,19 +8,27 @@
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
     
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a title="CoatySwift  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">CoatySwift 2.2.1 Docs</a></p>
-        <p class="header-right"><a href="https://github.com/coatyio/coaty-swift"><img src="img/gh.png"/>View on GitHub</a></p>
+        <p><a href="index.html">CoatySwift 2.4.0 Docs</a></p>
+        <p class="header-right"><a href="https://github.com/coatyio/coaty-swift"><img src="img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
+          <form role="search" action="search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
       </div>
     </header>
     <div class="content-wrapper">
       <p id="breadcrumbs">
         <a href="index.html">CoatySwift Reference</a>
-        <img id="carat" src="img/carat.png" />
+        <img id="carat" src="img/carat.png" alt=""/>
         CoatySwift  Reference
       </p>
     </div>
@@ -495,11 +503,16 @@
             
             <h1 id='coaty-swift' class='heading'>Coaty Swift</h1>
 
-<p><a href="https://coaty.io"><img src="https://img.shields.io/badge/Powered%20by-Coaty%202-FF8C00.svg" alt="Powered by Coaty 2"></a>
-<a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/swift-5-FF4029.svg" alt="Swift version"></a>
-<a href="https://cocoapods.org/pods/CoatySwift"><img src="https://img.shields.io/cocoapods/v/CoatySwift.svg?style=flat" alt="Pod version"></a>
-<a href="https://cocoapods.org/pods/CoatySwift"><img src="https://img.shields.io/cocoapods/p/CoatySwift.svg?style=flat" alt="Pod platform"></a>
-<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a></p>
+<p><a href="https://coaty.io"><img src="https://img.shields.io/badge/Powered%20by-Coaty%202-FF8C00.svg" alt="Powered by Coaty
+2"></a>
+<a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/swift-5-FF4029.svg" alt="Swift
+version"></a>
+<a href="https://cocoapods.org/pods/CoatySwift"><img src="https://img.shields.io/cocoapods/v/CoatySwift.svg?style=flat" alt="Pod
+version"></a>
+<a href="https://cocoapods.org/pods/CoatySwift"><img src="https://img.shields.io/cocoapods/p/CoatySwift.svg?style=flat" alt="Pod
+platform"></a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License:
+MIT"></a></p>
 
 <blockquote>
 <p><a href="https://coatyio.github.io/coaty-swift/man/migration-guide/">Ready to upgrade to CoatySwift
@@ -539,33 +552,24 @@ share, query, and persist hierarchically typed data.</li>
 out the following resources:</p>
 
 <ul>
-<li><a href="https://coatyio.github.io/coaty-swift/tutorial/index.html">Tutorial</a> - shows
-how to set up a minimal CoatySwift app.</li>
-<li><a href="https://coatyio.github.io/coaty-swift/man/developer-guide/">Developer Guide</a> - explains
-how to develop a CoatySwift app.</li>
-<li><a href="https://coatyio.github.io/coaty-swift/api/index.html">API Documentation</a> - the
-source code documentation of public types and members of the CoatySwift framework.</li>
-<li><a href="https://coatyio.github.io/coaty-swift/man/design-rationale/">Design Rationale</a> - in case
-you want to know why certain things have been implemented in a particular way
-in the CoatySwift implementation.</li>
+<li><a href="https://coatyio.github.io/coaty-swift/tutorial/index.html">Tutorial</a> -
+shows how to set up a minimal CoatySwift app.</li>
+<li><a href="https://coatyio.github.io/coaty-swift/man/developer-guide/">Developer
+Guide</a> -
+explains how to develop a CoatySwift app.</li>
+<li><a href="https://coatyio.github.io/coaty-swift/api/index.html">API Documentation</a> -
+the source code documentation of public types and members of the CoatySwift
+framework.</li>
+<li><a href="https://coatyio.github.io/coaty-swift/man/design-rationale/">Design
+Rationale</a> - in
+case you want to know why certain things have been implemented in a
+particular way in the CoatySwift implementation.</li>
 </ul>
 <h2 id='getting-started' class='heading'>Getting started</h2>
 
-<p>To build and run Coaty agents with the CoatySwift technology stack you need
-XCode 10.2 or higher. CoatySwift is available through
-<a href="https://cocoapods.org">CocoaPods</a>. Ensure you have installed <strong>at least</strong>
-version <code>1.8.4</code> of CocoaPods, i.e. running <code>pod --version</code> should yield <code>1.8.4</code>
-or higher.</p>
+<p>Coaty Swift now supports both Swift Package Manager and CocoaPods!</p>
 
-<p>You can add the CoatySwift pod to the Podfile of your app as follows:</p>
-<pre class="highlight ruby"><code><span class="n">target</span> <span class="s1">'MyApp'</span> <span class="k">do</span>
-  <span class="n">pod</span> <span class="s1">'CoatySwift'</span><span class="p">,</span> <span class="s1">'~&gt; 2.2.0'</span>
-<span class="k">end</span>
-</code></pre>
-
-<p>Then, run a <code>pod install</code>.</p>
-
-<p>CoatySwift is compatible with the the following deployment targets:</p>
+<p>It is compatible with the the following deployment targets:</p>
 
 <table><thead>
 <tr>
@@ -582,15 +586,41 @@ or higher.</p>
 <td>10.14+</td>
 </tr>
 </tbody></table>
+<h3 id='cocoapods' class='heading'>CocoaPods</h3>
+
+<p>To use Coaty Swift with Cocoapods you need XCode 10.2 or higher. CoatySwift is
+available through <a href="https://cocoapods.org">CocoaPods</a>. Ensure you have installed
+<strong>at least</strong> version <code>1.8.4</code> of CocoaPods, i.e. running <code>pod --version</code> should
+yield <code>1.8.4</code> or higher.</p>
+
+<p>You can add the CoatySwift pod to the Podfile of your app as follows:</p>
+<pre class="highlight ruby"><code><span class="n">target</span> <span class="s1">'MyApp'</span> <span class="k">do</span>
+  <span class="n">pod</span> <span class="s1">'CoatySwift'</span><span class="p">,</span> <span class="s1">'~&gt; 2.2.0'</span>
+<span class="k">end</span>
+</code></pre>
+
+<p>Then, run a <code>pod install</code>.</p>
+<h3 id='swift-package-manager' class='heading'>Swift Package Manager</h3>
+
+<p>To use CoatySwift with Swift Package Manager you need XCode 11.0 or higher. The
+Swift Package Manager is a package manager integrated into the swift compiler.</p>
+
+<p>Once you have your Swift package set up, add CoatySwift by modifying the
+<code>dependencies</code> attribute in your <code>Package.swift</code> file.</p>
+<pre class="highlight swift"><code><span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
+    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/coatyio/coaty-swift"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"2.4.0"</span><span class="p">),</span>
+<span class="p">]</span>
+</code></pre>
 <h2 id='examples' class='heading'>Examples</h2>
 
 <p>If you want a short, concise look into CoatySwift, feel free to check out the
 <a href="https://coatyio.github.io/coaty-swift/tutorial/index.html">CoatySwift Tutorial</a>
-with a step-by-step guide on how to set up a basic CoatySwift application. The
-source code of this tutorial can be found in the
-<a href="https://github.com/coatyio/coaty-swift/tree/master/CoatySwiftExample">CoatySwiftExample</a> Xcode
-target of the CoatySwift repo. Just clone the repo, run <code>pod install</code> on the
-root folder and open the new <code>xcworkspace</code> in Xcode.</p>
+with a step-by-step guide on how to set up a basic CoatySwift application. </p>
+
+<p>The source code of this tutorial can be found in the
+<a href="https://github.com/coatyio/coaty-swift/tree/master/Example">CoatySwiftExample</a>
+Xcode project inside of the CoatySwift repo. Just clone the repo, open the
+<code>Example.xcodeproj</code> file and run the project on a device / simulator.</p>
 
 <p>You can find additional examples in the <code>swift</code> sections of the
 <a href="https://github.com/coatyio/coaty-examples">coaty-examples</a> repo on GitHub. You
@@ -600,11 +630,14 @@ intended to be used along with them. These projects can serve as blueprints for
 how to design CoatySwift applications.</p>
 <h2 id='testing' class='heading'>Testing</h2>
 
-<p>If you want to run unit tests on CoatySwift, look at 
-(<a href="https://github.com/coatyio/coaty-swift/tree/master/CoatySwiftTests">https://github.com/coatyio/coaty-swift/tree/master/CoatySwiftTests</a>)
-Xcode target of the CoatySwift repo. Just clone the repo, run <code>pod install</code> on the
-root folder and open the new <code>xcworkspace</code> in Xcode. Then select the Test Navigator
-in Navigator View, enable chosen tests and run them.</p>
+<p>If you want to run unit tests on CoatySwift, look at
+(<a href="https://github.com/coatyio/coaty-swift/tree/master/Tests">https://github.com/coatyio/coaty-swift/tree/master/Tests</a>) Xcode target of the
+CoatySwift repo. Just clone the repo and wait for XCode to fetch all of the
+required dependencies. Then select the Test Navigator in Navigator View, enable
+chosen tests and run them. Plese note that an MQTT Broker must be present to
+test some of the functionality (running on <code>localhost:1883</code>) - you may use the
+Coaty Development Broker, as described in e.g.
+<a href="https://github.com/coatyio/coaty-examples/tree/master/hello-world/js">coaty-examples/hello-world/js</a>.</p>
 <h2 id='contributing' class='heading'>Contributing</h2>
 
 <p>If you like CoatySwift, please consider &#x2605; starring <a href="https://github.com/coatyio/coaty-swift">the project on
@@ -628,10 +661,14 @@ International License</a>.</p>
 CoatySwift depends on:</p>
 
 <ul>
-<li>RxSwift <a href="https://github.com/ReactiveX/RxSwift/blob/master/LICENSE.md">MIT License</a></li>
-<li>CocoaMQTT <a href="https://github.com/emqtt/CocoaMQTT/blob/master/LICENSE">MIT License</a></li>
-<li>XCGLogger <a href="https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt">MIT License</a></li>
-<li>AnyCodable <a href="https://github.com/Flight-School/AnyCodable/blob/master/LICENSE.md">MIT License</a></li>
+<li>RxSwift <a href="https://github.com/ReactiveX/RxSwift/blob/master/LICENSE.md">MIT
+License</a></li>
+<li>CocoaMQTT <a href="https://github.com/emqtt/CocoaMQTT/blob/master/LICENSE">MIT
+License</a></li>
+<li>XCGLogger <a href="https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt">MIT
+License</a></li>
+<li>AnyCodable <a href="https://github.com/Flight-School/AnyCodable/blob/master/LICENSE.md">MIT
+License</a></li>
 </ul>
 <h2 id='credits' class='heading'>Credits</h2>
 
@@ -648,10 +685,9 @@ implemented and contributed to CoatySwift:</p>
         </section>
         <section id="footer">
           <p>Code and documentation © 2019 Siemens AG.</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
   </body>
-</div>
 </html>

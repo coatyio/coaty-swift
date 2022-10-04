@@ -1,10 +1,15 @@
 # Coaty Swift
 
-[![Powered by Coaty 2](https://img.shields.io/badge/Powered%20by-Coaty%202-FF8C00.svg)](https://coaty.io)
-[![Swift version](https://img.shields.io/badge/swift-5-FF4029.svg)](https://developer.apple.com/swift/)
-[![Pod version](https://img.shields.io/cocoapods/v/CoatySwift.svg?style=flat)](https://cocoapods.org/pods/CoatySwift)
-[![Pod platform](https://img.shields.io/cocoapods/p/CoatySwift.svg?style=flat)](https://cocoapods.org/pods/CoatySwift)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Powered by Coaty
+2](https://img.shields.io/badge/Powered%20by-Coaty%202-FF8C00.svg)](https://coaty.io)
+[![Swift
+version](https://img.shields.io/badge/swift-5-FF4029.svg)](https://developer.apple.com/swift/)
+[![Pod
+version](https://img.shields.io/cocoapods/v/CoatySwift.svg?style=flat)](https://cocoapods.org/pods/CoatySwift)
+[![Pod
+platform](https://img.shields.io/cocoapods/p/CoatySwift.svg?style=flat)](https://cocoapods.org/pods/CoatySwift)
+[![License:
+MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 > [Ready to upgrade to CoatySwift
 > 2?](https://coatyio.github.io/coaty-swift/man/migration-guide/)
@@ -41,23 +46,36 @@ efficient way. The key properties of the CoatySwift framework include:
 If you are new to CoatySwift and would like to learn more, we recommend checking
 out the following resources:
 
-* [Tutorial](https://coatyio.github.io/coaty-swift/tutorial/index.html) - shows
-  how to set up a minimal CoatySwift app.
-* [Developer Guide](https://coatyio.github.io/coaty-swift/man/developer-guide/) - explains
-  how to develop a CoatySwift app.
-* [API Documentation](https://coatyio.github.io/coaty-swift/api/index.html) - the
-  source code documentation of public types and members of the CoatySwift framework.
-* [Design Rationale](https://coatyio.github.io/coaty-swift/man/design-rationale/) - in case
-  you want to know why certain things have been implemented in a particular way
-  in the CoatySwift implementation.
+-   [Tutorial](https://coatyio.github.io/coaty-swift/tutorial/index.html) -
+    shows how to set up a minimal CoatySwift app.
+-   [Developer
+    Guide](https://coatyio.github.io/coaty-swift/man/developer-guide/) -
+    explains how to develop a CoatySwift app.
+-   [API Documentation](https://coatyio.github.io/coaty-swift/api/index.html) -
+    the source code documentation of public types and members of the CoatySwift
+    framework.
+-   [Design
+    Rationale](https://coatyio.github.io/coaty-swift/man/design-rationale/) - in
+    case you want to know why certain things have been implemented in a
+    particular way in the CoatySwift implementation.
 
 ## Getting started
 
-To build and run Coaty agents with the CoatySwift technology stack you need
-XCode 10.2 or higher. CoatySwift is available through
-[CocoaPods](https://cocoapods.org). Ensure you have installed **at least**
-version `1.8.4` of CocoaPods, i.e. running `pod --version` should yield `1.8.4`
-or higher.
+Coaty Swift now supports both Swift Package Manager and CocoaPods!
+
+It is compatible with the the following deployment targets:
+
+| Deployment Target | Compatibility |
+| ----------------- | ------------- |
+| iOS               | 9.0+          |
+| macOS             | 10.14+        |
+
+### CocoaPods
+
+To use Coaty Swift with Cocoapods you need XCode 10.2 or higher. CoatySwift is
+available through [CocoaPods](https://cocoapods.org). Ensure you have installed
+**at least** version `1.8.4` of CocoaPods, i.e. running `pod --version` should
+yield `1.8.4` or higher.
 
 You can add the CoatySwift pod to the Podfile of your app as follows:
 
@@ -69,22 +87,30 @@ end
 
 Then, run a `pod install`.
 
-CoatySwift is compatible with the the following deployment targets:
+### Swift Package Manager
 
-| Deployment Target     | Compatibility     |
-|-------------------    |---------------    |
-| iOS                   | 9.0+              |
-| macOS                 | 10.14+            |
+To use CoatySwift with Swift Package Manager you need XCode 11.0 or higher. The
+Swift Package Manager is a package manager integrated into the swift compiler.
+
+Once you have your Swift package set up, add CoatySwift by modifying the
+`dependencies` attribute in your `Package.swift` file.
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/coatyio/coaty-swift", from: "2.4.0"),
+]
+```
 
 ## Examples
 
 If you want a short, concise look into CoatySwift, feel free to check out the
 [CoatySwift Tutorial](https://coatyio.github.io/coaty-swift/tutorial/index.html)
-with a step-by-step guide on how to set up a basic CoatySwift application. The
-source code of this tutorial can be found in the
-[CoatySwiftExample](https://github.com/coatyio/coaty-swift/tree/master/CoatySwiftExample) Xcode
-target of the CoatySwift repo. Just clone the repo, run `pod install` on the
-root folder and open the new `xcworkspace` in Xcode.
+with a step-by-step guide on how to set up a basic CoatySwift application. 
+
+The source code of this tutorial can be found in the
+[CoatySwiftExample](https://github.com/coatyio/coaty-swift/tree/master/Example)
+Xcode project inside of the CoatySwift repo. Just clone the repo, open the
+`Example.xcodeproj` file and run the project on a device / simulator.
 
 You can find additional examples in the `swift` sections of the
 [coaty-examples](https://github.com/coatyio/coaty-examples) repo on GitHub. You
@@ -95,11 +121,14 @@ how to design CoatySwift applications.
 
 ## Testing
 
-If you want to run unit tests on CoatySwift, look at 
-(https://github.com/coatyio/coaty-swift/tree/master/CoatySwiftTests)
-Xcode target of the CoatySwift repo. Just clone the repo, run `pod install` on the
-root folder and open the new `xcworkspace` in Xcode. Then select the Test Navigator
-in Navigator View, enable chosen tests and run them.
+If you want to run unit tests on CoatySwift, look at
+(https://github.com/coatyio/coaty-swift/tree/master/Tests) Xcode target of the
+CoatySwift repo. Just clone the repo and wait for XCode to fetch all of the
+required dependencies. Then select the Test Navigator in Navigator View, enable
+chosen tests and run them. Plese note that an MQTT Broker must be present to
+test some of the functionality (running on `localhost:1883`) - you may use the
+Coaty Development Broker, as described in e.g.
+[coaty-examples/hello-world/js](https://github.com/coatyio/coaty-examples/tree/master/hello-world/js).
 
 ## Contributing
 
@@ -124,16 +153,20 @@ International License](http://creativecommons.org/licenses/by-sa/4.0/).
 The following list displays all the relevant licenses for third-party software
 CoatySwift depends on:
 
-* RxSwift [MIT License](https://github.com/ReactiveX/RxSwift/blob/master/LICENSE.md)
-* CocoaMQTT [MIT License](https://github.com/emqtt/CocoaMQTT/blob/master/LICENSE)
-* XCGLogger [MIT License](https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt)
-* AnyCodable [MIT License](https://github.com/Flight-School/AnyCodable/blob/master/LICENSE.md)
+-   RxSwift [MIT
+    License](https://github.com/ReactiveX/RxSwift/blob/master/LICENSE.md)
+-   CocoaMQTT [MIT
+    License](https://github.com/emqtt/CocoaMQTT/blob/master/LICENSE)
+-   XCGLogger [MIT
+    License](https://github.com/DaveWoodCom/XCGLogger/blob/master/LICENSE.txt)
+-   AnyCodable [MIT
+    License](https://github.com/Flight-School/AnyCodable/blob/master/LICENSE.md)
 
 ## Credits
 
-Last but certainly not least, a big *Thank You!* to the folks who designed,
+Last but certainly not least, a big _Thank You!_ to the folks who designed,
 implemented and contributed to CoatySwift:
 
-* Sandra Grujovic [@melloskitten](https://github.com/melloskitten)
-* Johannes Rohwer [@johannesrohwer](https://github.com/johannesrohwer)
-* Łukasz Zalewski [@lukasz-zet](https://github.com/lukasz-zet)
+-   Sandra Grujovic [@melloskitten](https://github.com/melloskitten)
+-   Johannes Rohwer [@johannesrohwer](https://github.com/johannesrohwer)
+-   Łukasz Zalewski [@lukasz-zet](https://github.com/lukasz-zet)

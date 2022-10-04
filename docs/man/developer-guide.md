@@ -64,9 +64,9 @@ If you want a short, concise look into CoatySwift, feel free to check out the
 [CoatySwift Tutorial](https://coatyio.github.io/coaty-swift/tutorial/index.html)
 with a step-by-step guide on how to set up a basic CoatySwift application. The
 source code of this tutorial can be found in the
-[CoatySwiftExample](https://github.com/coatyio/coaty-swift/tree/master/CoatySwiftExample) Xcode
-folder of the CoatySwift repo. Just clone the repo, run `pod install` on the
-repo root folder and open the new  `xcworkspace` in Xcode.
+[CoatySwiftExample](https://github.com/coatyio/coaty-swift/tree/master/Example)
+Xcode folder of the CoatySwift repo. Just clone the repo, and open the
+`Example/Example.xcodeproj` using XCode.
 
 You can find additional examples in the `swift` sections of the
 [coaty-examples](https://github.com/coatyio/coaty-examples) repo on GitHub. You
@@ -138,20 +138,33 @@ are familiar with the following programming concepts:
   - [HiveMQ](https://www.hivemq.com/)
   - [VerneMQ](https://vernemq.com/)
 
-- __Integrate CoatySwift in your project__: CoatySwift is available through
-  [CocoaPods](https://cocoapods.org). Ensure you have installed **at least**
-  version `1.8.4` of CocoaPods, i.e. running `pod --version` should yield `1.8.4` or higher.
+- __Integrate CoatySwift in your project__: CoatySwift is available through both
+  [CocoaPods](https://cocoapods.org) and [Swift Package
+  Manager](https://www.swift.org/package-manager/). 
+  
+  - CocoaPods: Ensure you have installed **at least** version `1.8.4` of
+  CocoaPods, i.e. running `pod --version` should yield `1.8.4` or higher.
 
   You can add the CoatySwift pod to the Podfile of your app as follows:
 
    ```ruby
    target 'MyApp' do
-   pod 'CoatySwift', '~> 2.0'
+   pod 'CoatySwift', '~> 2.4.0'
    end
    ```
 
    Then run a `pod install` for a new installation or a `pod update CoatySwift`
    to update the pod to the specified version.
+
+  - Swift Package Manager: Once you have your Swift package set up, add
+  CoatySwift by modifying the `dependencies` attribute in your `Package.swift`
+  file.
+
+  ```swift
+  dependencies: [
+      .package(url: "https://github.com/coatyio/coaty-swift", from: "2.4.0"),
+  ]
+  ```
 
 ### mDNS broker discovery support
 

@@ -42,13 +42,15 @@ allows automatic generation of changelogs. These conventions can form the basis
 for automatic version bumping and CHANGELOG management when cutting a new
 release.
 
-> **Note**: The current build process does not support automatic versioning and changelog
-> management. However, it is intended to add this feature in a future release.
+> **Note**: The current build process does not support automatic versioning and
+> changelog management. However, it is intended to add this feature in a future
+> release.
 
 ## License and Copyright Notice
 
-CoatySwift source code is licensed under the [MIT License](https://opensource.org/licenses/MIT).
-Attach a license and copyright notice to the top of each created source files as follows:
+CoatySwift source code is licensed under the [MIT
+License](https://opensource.org/licenses/MIT). Attach a license and copyright
+notice to the top of each created source files as follows:
 
 ```swift
 // Copyright (c) <year> <contributor>. Licensed under the MIT License.
@@ -75,24 +77,19 @@ configuration that can also be used in Coaty application projects.
 
 ## Build CoatySwift
 
-You need XCode 10.2 or higher. Ensure you have installed **at least** version
-`1.8.4` of [CocoaPods](https://cocoapods.org), i.e. running `pod --version`
-should yield `1.8.4` or higher.
+You need XCode 11.0 or higher (needed for Swift Package Manager).
 
-To build and run the CoatySwiftExample application including the CoatySwift framework, run
-`pod install` on the CoatySwift root folder and open the new `xcworkspace`
-in Xcode.
+To build and run the CoatySwiftExample application including the CoatySwift
+framework, open the `Example/Example.xcodeproj` in the CoatySwift root folder
+and press Run.
 
 ## Develop CoatySwift using XCode
 
-After cloning the repository onto your local machine run `pod install` in the
-root directory and open the newly created `.xcworkspace` file. Perform the
-development changes in the CoatySwift target (target is the blue icon in the
-left sidebar). Each time after you add a new file/change the structure of
-folders/delete any file you need to run `pod install` in the root directory, to
-make the changes visible to the XCode build system. You don’t have to relaunch
-XCode for this to work. After `pod install` has completed copying all the new
-files and setting everything up press `CMD + b` to build the project.
+After cloning the repository onto your local machine, open the root using XCode.
+Wait for XCode to fetch all of the dependencies. Perform the development changes
+in the CoatySwift target. After rebuilding the package, changes should be
+visible in e.g. Example project.
+
 Autocompletion should work in the new/modified files now. If this is not the
 case try: 1) cleaning the build folder 2) relaunching XCode. In case those steps
 do not solve the problem try removing /DerivedData directory from your local
@@ -116,44 +113,45 @@ repository root.
 
 ## Test CoatySwift
 
-To test the CoatySwift framework using included Unit Tests, run
-`pod install` on the CoatySwift root folder and open the new `xcworkspace`
-in Xcode. Then select Test Navigator Tab in Navigator View, enable required 
+To test the CoatySwift framework using included Unit Tests, clone the project
+and open it's root folder using XCode. Wait for it to fetch all of the required
+dependencies. Then select Test Navigator Tab in Navigator View, enable required
 tests and run them. Results can be seen in the Report Navigator tab.
 
 ## Release CoatySwift
 
 Before releasing a new CoatySwift version, ensure to test the framework code
-against the example in the `CoatySwiftExample` Xcode target of the CoatySwift repo and the
-examples in the `swift` sections of the
-[coaty-examples](https://github.com/coatyio/coaty-examples) repo on GitHub.
-Also follow the guide on how to test the framework (see above) and ensure that all tests 
-pass successfully.
+against the example in the `Example/Example.xcodeproj` of the CoatySwift repo
+and the examples in the `swift` sections of the
+[coaty-examples](https://github.com/coatyio/coaty-examples) repo on GitHub. Also
+follow the guide on how to test the framework (see above) and ensure that all
+tests pass successfully.
 
 You can also use `pod lib lint` to validate the Pod locally using the files in
-the CoatySwift working directory.
+the CoatySwift working directory (only for CocoaPods).
+
+### CocoaPods
 
 In order to release a new CoatySwift version on CocoaPods, you have to follow
 these steps:
 
 1. Update the pod version in the `CoatySwift.podspec` file located in the
    repository root. Follow [semantic versioning](https://semver.org/).
-2. Run `pod update` on the root folder of CoatySwift and build the CoatySwiftExample target
-   with Xcode.
-3. Generate Coaty framework documentation. First, update the `module_version` in
+
+2. Generate Coaty framework documentation. First, update the `module_version` in
    the `.jazzy.yaml` file to match the version number from step 1.
 
    ```sh
    jazzy
    ```
 
-4. Manually update `CHANGELOG.md` with release information from the conventional
+3. Manually update `CHANGELOG.md` with release information from the conventional
    commits. Take a look at the Coaty JS
    [CHANGELOG](https://github.com/coatyio/coaty-js/blob/master/CHANGELOG.md) to
    see how the format should look like.
-5. Commit with message `chore(release): v[pod version]` and push all your
+4. Commit with message `chore(release): v[pod version]` and push all your
    changes to the develop branch.
-6. Create an annotated `git` tag for the new pod version and push it. Make sure
+5. Create an annotated `git` tag for the new pod version and push it. Make sure
    that `[pod version]` matches the version number from step 1.
 
    ```sh
@@ -161,27 +159,33 @@ these steps:
    git push origin --tags
    ```
 
-7. Merge the local develop branch into local master and push master. This
+6. Merge the local develop branch into local master and push master. This
    ensures GitHub Pages automatically regenerates the CoatySwift documentation
    website.
-8. You now need to check whether the pod passes verification. Run the following command:
+7. You now need to check whether the pod passes verification. Run the following
+   command:
 
    ```sh
    pod spec lint CoatySwift.podspec
    ```
 
-9. If the previous step was successful, deploy the new Podspec to make it
+8. If the previous step was successful, deploy the new Podspec to make it
    publicly available:
 
    ```sh
    pod trunk push CoatySwift.podspec
    ```
 
-   This step assumes that you have already registered an account on
-   [CocoaPods
+   This step assumes that you have already registered an account on [CocoaPods
    Trunk](https://guides.cocoapods.org/making/getting-setup-with-trunk.html) and
    have been added as a library owner for the CoatySwift pod.
 
+### Swift Package Manager
+
+Swift Package Manager does not require a manual release process. As soon as the
+newest version has been pushed to the repository, it can be used by anyone.
+
 ---
-Copyright (c) 2019 Siemens AG. This work is licensed under a
-[Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
+Copyright (c) 2019 Siemens AG. This work is licensed under a [Creative Commons
+Attribution-ShareAlike 4.0 International
+License](http://creativecommons.org/licenses/by-sa/4.0/).

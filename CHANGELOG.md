@@ -1,5 +1,15 @@
 # Changelog
 
+<a name="2.4.0"></a>
+## [2.4.0](https://github.com/coatyio/coaty-swift/compare/2.3.1...2.4.0) (2022-10-04)
+
+This release adds support for Swift Package Manager and cleans up the library structure.
+
+### Features
+
+* **Swift Package Manager:** add support for swift package manager; set spm as default package manager; clean up the library structure
+  ([4e333e3](https://github.com/coatyio/coaty-swift/commit/4e333e3))
+
 <a name="2.3.1"></a>
 ## [2.3.1](https://github.com/coatyio/coaty-swift/compare/2.3.0...2.3.1) (2021-01-20)
 

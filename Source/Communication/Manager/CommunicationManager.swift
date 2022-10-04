@@ -235,7 +235,7 @@ public class CommunicationManager {
                 self.advertiseIoNodes()
 
                 // Publish possible deferred subscriptions and publications.
-                _ = self.queue.sync {
+                self.queue.sync {
                     self.deferredSubscriptions.forEach { topic in
                         self.client.subscribe(topic)
                     }
@@ -320,7 +320,7 @@ public class CommunicationManager {
     ///
     /// - Parameter topic: topic name.
     internal func subscribe(topic: String) {
-        _ = queue.sync {
+        queue.sync {
             self.deferredSubscriptions.insert(topic)
 
             // Subscribe if the client is online.
@@ -341,7 +341,7 @@ public class CommunicationManager {
     }
 
     internal func unsubscribe(topic: String) {
-        _ = queue.sync {
+        queue.sync {
             if let count = self.subscriptions[topic] {
                 if count == 1 {
                     client.unsubscribe(topic)
@@ -360,7 +360,7 @@ public class CommunicationManager {
     ///   - topic: the publication topic.
     ///   - message: the payload message as String.
     internal func publish(topic: String, message: String) {
-        _ = queue.sync {
+        queue.sync {
             if try! self.communicationState.value() == .offline {
                 self.deferredPublications.append((topic, MessagePayload.stringPayload(message)))
             } else {
@@ -376,7 +376,7 @@ public class CommunicationManager {
     ///   - topic: the publication topic.
     ///   - message: the payload message as Bytes array.
     internal func publish(topic: String, message: [UInt8]) {
-        _ = queue.sync {
+        queue.sync {
             if try! self.communicationState.value() == .offline {
                 self.deferredPublications.append((topic, MessagePayload.bytesArrayPayload(message)))
             } else {
